@@ -1,0 +1,101 @@
+# docker-compose configuration for running SpineAI on dev.
+#
+# Usage:
+#   $ ./install-spineai-docker-dev-service.sh
+#   $ systemctl start spineai-docker-dev
+#
+version: '3.7'
+services:
+  spineai-backend:
+    image: spineai/spineai-backend:latest
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.backend
+      cache_from:
+        - spineai/spineai-backend:latest
+      labels:
+        - "maintainer=billy@spineai.com"
+    ports:
+      - "8008:8008"
+    networks:
+      - api
+    volumes:
+      - type: volume
+        source: "database"
+        target: "/database"
+      - "./logs:/logs"
+    restart: unless-stopped
+  spineai-api:
+    image: spineai/spineai-api:latest
+    environment:
+      - NODE_ENV=docker-dev
+    ports:
+      - "8080:8080"
+    networks:
+      - api
+    volumes:
+      - type: volume
+        source: "database"
+        target: "/database"
+    restart: unless-stopped
+  spineai-frontend:
+    image: spineai/spineai-frontend:latest
+    environment:
+      - NODE_ENV=docker-dev
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - api
+    volumes:
+      - type: volume
+        source: "database"
+        target: "/database"
+      - type: volume
+        source: "upload"
+        target: "/upload"
+      - type: volume
+        source: "certbot-etc"
+        target: "/etc/letsencrypt"
+        read_only: true
+      - type: bind
+        source: "./config/express.yml"
+        target: "/app/express/config/docker-dev.yml"
+      - type: bind
+        source: "./config/restify.yml"
+        target: "/app/angular/config/docker-dev.yml"
+    restart: unless-stopped
+  certbot-get:
+    image: certbot/dns-cloudflare:v1.3.0
+    volumes:
+      - type: volume
+        source: "certbot-etc"
+        target: "/etc/letsencrypt"
+      - type: bind
+        source: "../frontend/docker/cloudflare.ini"
+        target: "/opt/certbot/cloudflare.ini"
+        read_only: true
+    command: "certonly -n --dns-cloudflare --dns-cloudflare-credentials ./cloudflare.ini -d *.spineai.com --email billy@spineai.com --agree-tos"
+  certbot-renew:
+    image: certbot/dns-cloudflare:v1.3.0
+    volumes:
+      - type: volume
+        source: "certbot-etc"
+        target: "/etc/letsencrypt"
+      - type: bind
+        source: "../frontend/docker/cloudflare.ini"
+        target: "/opt/certbot/cloudflare.ini"
+        read_only: true
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; chmod -R 775 /etc/letsencrypt; sleep 12h & wait $${!}; done;'"
+    restart: unless-stopped
+
+volumes:
+  upload:
+    name: spineai-upload
+  database:
+    name: spineai-database
+  certbot-etc:
+    name: spineai-certbot-etc
+
+networks:
+  api:

@@ -1,0 +1,4 @@
+spineai:
+  classification:
+    canal:
+      engine: 'xsegment'

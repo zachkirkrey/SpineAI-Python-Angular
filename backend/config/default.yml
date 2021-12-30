@@ -1,0 +1,47 @@
+spineai:
+  runtime:
+    debug: False
+    daemon: True
+    input:
+      # Optional initial directory to read studies from.
+      location: ''
+    # If True, continue listening for database events.
+    storage:
+      # One of: (sqlite3)
+      engine: 'sqlite3'
+      location: 'database.db'
+      # If true, instruct PonyORM to print SQL commands.
+      # See https://docs.ponyorm.org/firststeps.html#using-the-debug-mode
+      debug: False
+  logging:
+    # See https://docs.python.org/3/library/logging.html#logging-levels
+    loglevel: 20
+    logfile: '/tmp/spineai_backend.log'
+    stdout_logfile: '/tmp/spineai_backend.stdout'
+  classification:
+    gpu:
+      memory_fraction: 0.6
+    settings:
+      # TODO(billy): Make classification settings per-type and more expressive.
+      do_classify: true
+    canal:
+      # One of: (bilwaj, xsegment)
+      engine: 'bilwaj'
+    disc:
+      # One of: (bilwaj)
+      engine: 'bilwaj'
+    foramen:
+      # One of: (bilwaj)
+      engine: 'bilwaj'
+  report:
+    types:
+      - 'HTML_VIEWER'
+      - 'PDF_SIMPLE'
+      - 'JSON'
+  dicom:
+    aet: 'THESEUSAI'
+    listen_port: 11112
+    remote_ae_host: '192.168.4.200'
+    remote_ae_port: 4242
+  http_server:
+    port: 8008

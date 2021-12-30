@@ -1,0 +1,52 @@
+<div class="image">
+
+    <div class="slice"
+        [ngStyle]="{'background-image': setImage(images.rawUrls), 'filter': 'brightness(' + brightness + ')'}">
+    </div>
+
+    <div *ngIf="showSegmentation" class="slice-segmentation" [ngStyle]="{'background-image': setImage(images.segUrls)}">
+    </div>
+
+    <canvas #cutlineCanvas
+      *ngIf="cutlinesEnabled"
+      [height]="cutlineCanvasHeight"
+      [width]="cutlineCanvasWidth"></canvas>
+
+    <div class="label">{{ label }}</div>
+    <div *ngIf="showControls" class="buttons flex">
+        <button (click)="setBrightness(-0.1)">
+            <i class="fa fa-minus"></i>
+        </button>
+        <button (click)="setBrightness(0.1)">
+            <i class="fa fa-plus"></i>
+        </button>
+    </div>
+</div>
+
+<div *ngIf="showControls" class="slider flex">
+
+    <button (click)="slide(-1)">
+        <i class="fa fa-chevron-left"></i>
+    </button>
+
+    <input type="range"
+           [(ngModel)]="index"
+           (ngModelChange)="changeIndex()"
+           min="0" [max]="images.rawUrls.length - 1"
+           [ngStyle]="reverse && {'direction': 'rtl'}"
+           class="flex-1">
+
+    <button (click)="slide(1)">
+        <i class="fa fa-chevron-right"></i>
+    </button>
+
+</div>
+
+<ng-container *ngIf="numImages > 1">
+  <ng-container *ngFor="let url of images.rawUrls">
+    <img src="{{ url }}" style="display: none;" />
+  </ng-container>
+  <ng-container *ngFor="let url of images.segUrls">
+    <img src="{{ url }}" style="display: none;" />
+  </ng-container>
+</ng-container>

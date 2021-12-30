@@ -1,0 +1,28 @@
+<div #el class="bars">
+
+  <input
+      type="range"
+      min="0" [max]="bars.length - 1"
+      [(ngModel)]="visualIndex"
+      (ngModelChange)="changed($event)"
+      [style.width.px]="el.offsetHeight">
+
+  <div class="bar" *ngFor="let bar of bars; index as i"
+       [ngStyle]="{'background': i === visualIndex ? 'var(--light-color)' : ''}">
+
+    <span [ngStyle]="{'width.%': bar.value / max_value * 100 }" [class]="bar.intensity"></span>
+
+    <div class="bar-tooltip" [class]="bar.intensity" *ngIf="i === visualIndex">
+      <p><b>{{bar.value}}mm²</b></p>
+      <p>
+      <b>{{bar.narrowing}}% narrower</b> than<br />
+      nearby areas.
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- just occupy space for tooltip -->
+<div class="box"></div>

@@ -1,0 +1,10 @@
+.expo*
+.git*
+docs*
+gitlab*
+metabase*
+misc*
+backend/upload*
+backend/output*
+backend/database.db
+backend/testdata*

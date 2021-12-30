@@ -1,0 +1,34 @@
+# Default configuration.
+restify:
+  port: 8080
+sequelize:
+  # Init settings are passed to new Sequelize().
+  init:
+    dialect: 'sqlite'
+    storage: '../../backend/database.db'
+    define:
+      freezeTableName: true
+      timestamps: false
+api:
+  apilog:
+    enabled: true
+  # json_to_csv is a key: value map of CSV column -> CSV value, used to convert
+  # JSON reports into CSVs.
+  json_to_csv:
+    Study UUID: 'study.uuid'
+    Study Name: 'study.name'
+    Study Instance UID: 'study.study_instance_uid'
+    Accession Number: 'study.accession_number'
+    Patient Age: 'study.patient_age'
+    Patient Name: 'study.patient_name'
+    Patient Size: 'study.patient_size'
+    Patient Sex: 'study.patient_sex'
+    Report Creation Datetime: 'report.completed_datetime'
+    '# Total Canal Slices': 'reportJson.canal_segmentation.all_canal_areas.length'
+    '# Narrow Canal Slices': 'reportJson.measurements.canal_narrowing.num_narrow_slices'
+    Surgery Recommended: 'reportJson.measurements.canal_narrowing.surgery_recommended'
+    SpineAI Smart L1/L2 Slice: 'reportJson.canal_segmentation.canal_slices.length > 0 ? reportJson.canal_segmentation.canal_slices[0] : "N/A"'
+    SpineAI Smart L2/L3 Slice: 'reportJson.canal_segmentation.canal_slices.length > 1 ? reportJson.canal_segmentation.canal_slices[1] : "N/A"'
+    SpineAI Smart L3/L4 Slice: 'reportJson.canal_segmentation.canal_slices.length > 2 ? reportJson.canal_segmentation.canal_slices[2] : "N/A"'
+    SpineAI Smart L4/L5 Slice: 'reportJson.canal_segmentation.canal_slices.length > 3 ? reportJson.canal_segmentation.canal_slices[3] : "N/A"'
+    SpineAI Smart L5/S1 Slice: 'reportJson.canal_segmentation.canal_slices.length > 4 ? reportJson.canal_segmentation.canal_slices[4] : "N/A"'

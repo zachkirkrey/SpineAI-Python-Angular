@@ -1,0 +1,65 @@
+# docker-compose configuration to run Postgres for CI/CD.
+#
+# Usage:
+#   $ docker-compose up
+version: '3.7'
+services:
+  postgres-gitlab:
+    image: postgres:12.3
+    env_file: postgres.env
+    ports:
+      - 5432:5432
+    networks:
+      - postgres-network
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    volumes:
+      - type: bind
+        source: ./postgres.conf
+        target: /etc/postgresql/postgresql.conf
+      - type: volume
+        source: postgres-data
+        target: /var/lib/postgresql/data
+      - type: volume
+        source: "certbot-etc"
+        target: "/etc/letsencrypt"
+        read_only: true
+    restart: unless-stopped
+  pgadmin:
+    depends_on:
+      - "postgres-gitlab"
+    image: dpage/pgadmin4:4
+    env_file: pgadmin.env
+    ports:
+      - 5433:443
+    networks:
+      - postgres-network
+    volumes:
+      - type: bind
+        source: ./pgadmin-servers.json
+        target: /pgadmin4/servers.json
+      - type: volume
+        source: "certbot-etc"
+        target: "/etc/letsencrypt"
+        read_only: true
+        # TODO(billy): pgadmin requires SSL files to be /certs/server.crt and
+        # /certs/server.key. We should either find a way to override or ln -s
+        # this. (Not sure if mounting from docker's _data is safe.)
+      - type: bind
+        source: /var/lib/docker/volumes/spineai-certbot-etc/_data/live/spineai.com/fullchain.pem
+        target: /certs/server.cert
+      - type: bind
+        source: /var/lib/docker/volumes/spineai-certbot-etc/_data/live/spineai.com/privkey.pem
+        target: /certs/server.key
+    restart: unless-stopped
+    restart: unless-stopped
+
+
+volumes:
+  postgres-data:
+  certbot-etc:
+    # This volume is defined and populated in /docker/dev.docker-compose.yml
+    name: spineai-certbot-etc
+    external: true
+
+networks:
+  postgres-network:

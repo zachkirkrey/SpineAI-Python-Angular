@@ -1,0 +1,5 @@
+%syntax-version=1.0.0
+%project=spineai-gitlab
+
+schema 2020-06-06T11:53:36Z Billy Cao <billy@spineai.com> # Add schema for SpineAI studies.
+study [schema] 2020-06-06T12:18:55Z Billy Cao <billy@spineai.com> # Create table for storing Studies.

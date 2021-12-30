@@ -1,0 +1,38 @@
+{
+  "$id": "https://spineai.com/spineai-report.schema.json",
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "title": "Theseus AI Spine Report",
+  "type": "object",
+  "properties": {
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "report_date": {
+      "type": "string",
+      "description": "The date this report was created, MM/DD/YYYY."
+    },
+    "measurements": {
+      "type": "object",
+      "description": "Aggregate measurements related to this Study.",
+      "properties": {
+        "canal_narrowing": {
+          "type": "object",
+          "description": "Measurements related to canal stenosis.",
+          "properties": {
+            "num_narrow_slices": {
+              "type": "integer",
+              "description": "The number of slices considered 'narrow'"
+            },
+            "surgery_recommended": {
+              "type": "boolean",
+              "description": "Theseus AI determination of whether surgery is recommended for this study."
+            }
+          }
+        }
+      }
+    }
+  }
+}

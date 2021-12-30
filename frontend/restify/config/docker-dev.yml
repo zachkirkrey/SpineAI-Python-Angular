@@ -1,0 +1,5 @@
+# Configuration overrides for running on Docker on dev.
+sequelize:
+  init:
+    dialect: 'sqlite'
+    storage: '/database/database.sqlite3'

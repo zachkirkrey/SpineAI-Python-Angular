@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700&amp;subset=latin-ext,vietnamese');
+
+@import 'assets/sass/variables';
+
+:root {
+    --background: #f1f3f7;
+    --primary-color: #376fb6;
+    --secondary-color: #ef5127;
+    --yellow-color: #f7ae2b;
+    --dark-color: #10212b;
+    --medium-color: #cbcdd1;
+    --light-color: #ffffff;
+    --border-color: #e9ecf3;
+    --box-shadow: 0px 0px 35px 0px rgba(0, 0, 0, 0.18);
+    --indent: 2vmax;
+}
+
+body {
+  font-family: $fontFamily;
+  line-height: $lineHeight;
+  color: $mainTextColor;
+}
+
+strong {
+  font-size: 16px;
+  margin-right: 5px;
+}
+
+.custom-button {
+  padding: 7px 20px;
+  border: 0;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background-color: $blue;
+  color: $white;
+
+  i {
+    margin-right: 5px;
+  }
+
+  &.disabled {
+    background-color: $white;
+    color: $textColor;
+  }
+
+  &.outlined {
+    background-color: $white;
+    color: $blue;
+    border: 1px solid $blue;
+  }
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

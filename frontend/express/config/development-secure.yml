@@ -1,0 +1,6 @@
+webserver:
+  cors:
+    origin: '*'
+  password:
+    enabled: true
+    password: "$pine@idevelopmenttestuser!"

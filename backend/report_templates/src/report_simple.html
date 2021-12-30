@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link href="./assets/css/styles.css" rel="stylesheet" />
+
+</head>
+
+<body class="report_simple">
+
+{% macro feedback_url(usefulness, has_bug="") -%}
+https://docs.google.com/forms/d/e/1FAIpQLSeM5iCSe38RHsaODVo2BdDVBmz02EQ7FUsnWx10xBApaisGCg/viewform?usp=pp_url&entry.333263115={{ usefulness }}&entry.1434893941={{ has_bug }}&entry.808425796={{ report_id }}
+{%- endmacro %}
+
+{# Calculate canal template vars. #}
+{% set canal_vars = [] %}
+{% set canal_Ls = ['L5/S1', 'L4/5', 'L3/4', 'L2/3', 'L1/2'] %}
+
+{% set canal_severe_threshold = 0.33 %}
+{% set canal_moderate_threshold = 0.67 %}
+{% set canal_mild_threshold = 1.0 %}
+
+{# We use a list and do append to get global variable behavior. #}
+{% set num_findings = [] %}
+{% for i in range([canal_segmentation.canal_slices|length, 5]|min) %}
+  {% set percent_of_nearest = canal_segmentation.canal_percentage_of_nearest_slices[i] %}
+  {% if percent_of_nearest < canal_severe_threshold %}
+    {% set class='severe' %}
+    {% set severity='Severe' %}
+    {% do num_findings.append(true) %}
+  {% elif percent_of_nearest < canal_moderate_threshold %}
+    {% set class='moderate' %}
+    {% set severity='Moderate' %}
+    {% do num_findings.append(true) %}
+  {% elif percent_of_nearest < canal_mild_threshold %}
+    {% set class='mild' %}
+    {% set severity='Mild' %}
+  {% else %}
+    {% set class="" %}
+    {% set severity='Normal' %}
+  {% endif %}
+
+  {% do canal_vars.append({
+    'index': canal_segmentation.canal_slices[i],
+    'seg_image': canal_segmentation.canal_seg_images[i],
+    'slice_image': canal_segmentation.canal_slice_images[i],
+    'area': '%.01f' | format(canal_segmentation.canal_areas[i]),
+    'percent_of_expected': '%.01f' | format(100 * canal_segmentation.canal_areas[i] / canal_segmentation.canal_expected_areas[i]),
+    'percent_of_nearest': '%.01f' | format(percent_of_nearest * 100),
+    'percent_narrowing': '%.01f' | format((1 - percent_of_nearest) * 100),
+    'class': class,
+    'severity': severity,
+    'L': canal_Ls[i],
+  }) %}
+{% endfor %}
+
+<div class="wrapper">
+  <div class="page">
+    <div class="disclaimer">
+      <p><span class="strong">For Research Use Only</span>: This product is in the research phase of development and has not been demonstrated to be safe or effective for clinical use. Any use of this product and the associated information is for research only and not for a diagnostic, therapeutic or other clinical purpose.</p>
+    </div>
+    <div class="header clearfix">
+      <div class="title_block left">
+        <h1 class="title">Spine Report</h1>
+      </div>
+      <div class="subtitle_block left">
+        <div class="highlight">
+          <p>Results based on</p>
+          <p>more than 40,000 patients.</p>
+        </div>
+        <div class="metadata clearfix">
+          <div class="metadata_item left">
+            <p>Age</p>
+            <p>{{ study.patient_age_years|int or "UNKNOWN" }}</p>
+          </div>
+          <div class="metadata_item left">
+            <p>Height</p>
+            <p>{{ study.patient_height_inches|int or "UNKNOWN" }}</p>
+          </div>
+          <div class="metadata_item left">
+            <p>Sex</p>
+            <p>{{ study.patient_sex_enum.name }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="feedback_block left">
+        <p class="feedback_title">Provide feedback with one click:</p>
+        <p><a href="{{ feedback_url(5) }}" target="_blank">This report was useful.</a></p>
+        <p><a href="{{ feedback_url(1) }}" target="_blank">This report was not useful.</a></p>
+        <p><a href="{{ feedback_url('', 'Yes') }}" target="_blank">This report has an error.</a></p>
+      </div>
+      <img class="badge" src="assets/img/theseus-badge-blue.png" />
+    </div>
+
+    <div class="content">
+      <h2>Imaging Data</h2>
+
+      <div class="canal_segmentation">
+        <div class="image_header clearfix">
+          <h3 class="left">Canal Area</h3>
+          <div class="image_legend">
+            <div class="image_legend_border"></div>
+            <div class="image_legend_item">
+              <span class="mild">Mild</span>&lt; 33% narrowing
+            </div>
+            <div class="image_legend_item">
+              <span class="moderate">Moderate</span>33 - 67% narrowing
+            </div>
+            <div class="image_legend_item">
+              <span class="severe">Severe</span>&gt; 67% narrowing
+            </div>
+          </div>
+        </div>
+        <div class="annotation_legend">
+          <p>Grading, Area, % Narrowing</p>
+        </div>
+        <div class="canal_images clearfix">
+          {% for i in range(canal_vars|length - 1, -1, -1) %}
+            <div class="canal_slice left">
+              <img class="canal_img" src="{{ canal_vars[i].slice_image }}" />
+              <img class="canal_img seg" src="{{ canal_vars[i].seg_image }}" />
+              <p class="img_label">{{ canal_vars[i].L }}</span>
+              <div class="annotation_label {{ canal_vars[i].class }}">
+                <span class="{{ canal_vars[i].class }}">{{ canal_vars[i].severity }}</span>
+                <p class="annotataion_txt">{{ canal_vars[i].area }}mm<sup>2</sup>,&nbsp;{{ canal_vars[i].percent_narrowing }}%</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div> <!-- /canal_segmentation -->
+
+      <h2>Analysis</h2>
+
+      <div class="canal_analysis clearfix">
+        <h3>Canal Area</h3>
+
+        <div class="analysis_table left">
+          <table class="analysis">
+            <tr class="headers">
+              <th>Canal</th>
+              <th>Area</th>
+              <th>% Narrowing</th>
+            </tr>
+            {% for i in range(canal_vars|length - 1, -1, -1) %}
+            <tr class="{{ canal_vars[i].class }}">
+              <td>{{ canal_vars[i].L }}</td>
+              <td>{{ canal_vars[i].area }} mm<sup>2</sup></td>
+              <td>{{ canal_vars[i].percent_narrowing }}%</td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div> <!-- /analysis_table -->
+        
+        <div class="findings left">
+          <p class="title">Findings</p>
+          <div class="findings_txt">
+            {% if num_findings|length > 0 %}
+              {% for i in range(canal_vars|length - 1, -1 , -1) %}
+                {% if canal_vars[i].class == 'severe' or canal_vars[i].class == 'moderate' %}
+                <p>
+                  <span class="canal_label {{ canal_vars[i].class }}">
+                    {{ canal_vars[i].L }}
+                  </span>
+                  canal area indicates <span class="{{ canal_vars[i].class }}">{{ canal_vars[i].percent_narrowing }}%</span> stenosis.
+                </p>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              <p>No significant findings.</p>
+            {% endif %}
+          </div> <!-- /findings_txt -->
+
+          <div class="sub_findings clearfix">
+            <div class="recommendation left">
+              <h4>Recommendation</h4>
+              <div class="confidence">
+                {% for i in range(12) %}
+                  {% if i < 3 %}
+                    <div class="confidence_box {{ 'green' if measurements.canal_narrowing.num_narrow_slices - i > 0 }}"></div>
+                  {% elif i < 5 %}
+                    <div class="confidence_box {{ 'yellow' if measurements.canal_narrowing.num_narrow_slices - i > 0 }}"></div>
+                  {% elif i < 12 %}
+                    <div class="confidence_box {{ 'red' if measurements.canal_narrowing.num_narrow_slices - i > 0 }}"></div>
+                  {% endif %}
+                {% endfor %}
+                <p>Biomarkers indicating surgery</p>
+              </div>
+              {% if measurements.canal_narrowing.surgery_recommended %}
+                <div class="surgical_header surgery">Surgical Consultation Recommended</div>
+              {% else %}
+                <div class="surgical_header">No recommendation</div>
+              {% endif %}
+            </div>
+            <div class="decision left">
+              <h4>Decision</h4>
+              <div class="option">
+                <div class="checkbox"></div><p>Surgical Consult</p>
+              </div>
+              <div class="option">
+                <div class="checkbox"></div><p>Physical Therapy</p>
+              </div>
+              <div class="option">
+                <div class="checkbox"></div><p>Other&nbsp;_____________</p>
+              </div>
+            </div>
+          </div>
+        </div> <!-- /findings -->
+      </div> <!-- /canal_analysis -->
+
+      <div class="footer clearfix">
+        <p class="left">[DRAFT]</p>
+        <p class="right">Report generated on {{ report_date }}. Spine report by Theseus AI.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PAGE 1</p>
+      </div>
+    </div>
+  </div> <!-- /page -->
+
+</div> <!-- /wrapper -->
+</body>
+</html>

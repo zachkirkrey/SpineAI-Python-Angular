@@ -1,0 +1,46 @@
+<div class="flex">
+  <h3>Mri details</h3>
+  <span class="flex-1"></span>
+  <input id="checkbox" type="checkbox" [(ngModel)]="showSegmentation">
+  <label for="checkbox">Highlight segmentation</label>
+</div>
+
+
+<div>
+  <p>Axial View</p>
+
+  <app-image-viewer
+      [index]="axialIndex"
+      [images]="axialImages"
+      [reverse]="reverseAxial"
+      [cutlines]="report.measurements.cutlines.axial"
+      [cutlineIndex]="sagittalIndex"
+      [showSegmentation]="showSegmentation"
+      (indexChanged)="setAxialIndex($event)">
+  </app-image-viewer>
+</div>
+
+<div class="flex-column">
+  <p class="spacer">&nbsp;</p>
+  <app-detail-bars
+      [index]="axialIndex"
+      [values]="report.canal_segmentation.all_canal_areas"
+      [narrowing]="report.measurements.canal_narrowing.narrowing"
+      [reverse]="reverseAxial"
+      (indexChanged)="setAxialIndex($event)"
+      class="flex-1">
+  </app-detail-bars>
+</div>
+
+<div>
+  <p>Sagittal View</p>
+
+  <app-image-viewer
+      [images]="sagittalImages"
+      [index]="sagittalIndex"
+      [showSegmentation]="showSegmentation"
+      [cutlines]="report.measurements.cutlines.sagittal"
+      [cutlineIndex]="axialIndex"
+      (indexChanged)="setSagittalIndex($event)">
+  </app-image-viewer>
+</div>

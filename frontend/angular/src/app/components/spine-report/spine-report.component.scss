@@ -1,0 +1,377 @@
+/* Begin imported from angular report v2 root styles.scss */
+
+@import url("https://fonts.googleapis.com/css?family=Barlow:400,700&display=swap");
+
+:root {
+    --background: #f1f3f7;
+    --primary-color: #376fb6;
+    --secondary-color: #ef5127;
+    --yellow-color: #f7ae2b;
+    --dark-color: #10212b;
+    --medium-color: #cbcdd1;
+    --light-color: #ffffff;
+    --border-color: #e9ecf3;
+    --box-shadow: 0px 0px 35px 0px rgba(0, 0, 0, 0.18);
+    --indent: 2vmax;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    outline: none;
+}
+
+html {
+    font-family: Barlow, serif;
+}
+
+html,
+body {
+    height: 100%;
+    background-color: var(--light-color);
+    overflow: hidden;
+    color: var(--dark-color);
+}
+
+h3 {
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+p,
+label,
+li,
+span {
+    font-size: 14px;
+}
+
+.flex {
+    display: flex;
+}
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+.center {
+    align-items: center;
+    justify-content: center;
+}
+.flex-1 {
+    flex: 1;
+}
+.card {
+    background-color: var(--light-color);
+    border-radius: 3px;
+    border: 1px solid var(--border-color);
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background-color: #99999f80;
+    padding: 5vmin;
+}
+
+.button {
+    min-width: 90px;
+    height: 40px;
+    border-radius: 3px;
+    border: 1px solid var(--medium-color);
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.1s ease-out;
+    &:hover {
+        filter: brightness(0.9);
+    }
+    &:focus {
+        box-shadow: 0 0 0 2px var(--medium-color);
+    }
+    &:active {
+        box-shadow: 0 0 0 4px var(--medium-color);
+    }
+}
+
+a[menuButton] {
+    text-decoration: none;
+    padding: 16px;
+    cursor: pointer;
+    color: var(--dark-color);
+    min-width: 150px;
+    &:active,
+    &:hover {
+        color: var(--primary-color);
+    }
+    &:visited {
+        color: var(--dark-color);
+    }
+}
+/* End imported from angular report v2 root styles.scss */
+
+:host {
+    display: grid;
+    gap: var(--indent);
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.topbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-between;
+    align-items: center;
+    grid-column: span 3;
+    h1 {
+        font-size: 32px;
+        min-width: 300px;
+    }
+
+    .buttons {
+        button {
+            &:hover {
+                filter: brightness(0.9);
+            }
+            &:focus {
+                box-shadow: 0 0 0 2px var(--medium-color);
+            }
+            &:active {
+                box-shadow: 0 0 0 4px var(--medium-color);
+            }
+            &:nth-of-type(1) {
+                padding: 0;
+                background-color: var(--light-color);
+                color: var(--primary-color);
+                display: inline-flex;
+                align-items: center;
+                .fa {
+                    height: 100%;
+                    display: inline-flex;
+                }
+                .fa-download {
+                    padding-left: 8px;
+                    margin-right: 8px;
+                }
+                .fa-chevron-down {
+                    margin-left: 8px;
+                    padding: 0 8px;
+                    border-left: 1px solid var(--medium-color);
+                }
+            }
+            &:nth-of-type(2) {
+                padding: 8px;
+                margin-left: 16px;
+                background-color: var(--primary-color);
+                color: var(--light-color);
+                .fa-share-alt {
+                    margin-right: 8px;
+                }
+            }
+        }
+    }
+}
+
+section {
+    grid-column: span 3;
+    align-self: baseline;
+
+    .tabs {
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .tabs > button {
+        cursor: pointer;
+        border: none;
+        font-weight: bold;
+        text-transform: uppercase;
+        background-color: var(--light-color);
+        color: var(--medium-color);
+        height: 52px;
+        &:first-of-type {
+            border-radius: 3px 0 0 0;
+        }
+        &:last-of-type {
+            border-radius: 0 3px 0 0;
+        }
+        &.active {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+        }
+        &:hover,
+        &:focus {
+            filter: brightness(0.9);
+        }
+    }
+}
+
+aside {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2vh;
+    grid-column: span 3;
+    align-self: baseline;
+    & > div {
+        padding: 16px;
+        align-self: baseline;
+        h3 {
+            margin-bottom: 16px;
+            i {
+                color: var(--medium-color);
+                cursor: pointer;
+            }
+        }
+    }
+    & > .recommendation {
+      &.surgery {
+        background-color: var(--secondary-color);
+      }
+
+        min-height: 140px;
+        background-color: var(--primary-color);
+        color: var(--light-color);
+        p {
+            font-size: 28px;
+            line-height: 28px;
+            span {
+                font-size: 28px;
+                font-weight: bold;
+            }
+        }
+    }
+
+    & > .risk-score {
+        min-height: 120px;
+        background-color: var(--light-color);
+    }
+    & > div:nth-child(3) {
+        min-height: 120px;
+        background-color: var(--light-color);
+    }
+}
+
+@media screen and (orientation: landscape) and (min-width: 1024px) {
+    section {
+        grid-column: span 2;
+    }
+    aside {
+        grid-column: span 1;
+    }
+}
+
+/* ======= */
+
+@import url("https://fonts.googleapis.com/css?family=Barlow:400,700&display=swap");
+
+:root {
+    --background: #f1f3f7;
+    --primary-color: #376fb6;
+    --secondary-color: #ef5127;
+    --yellow-color: #f7ae2b;
+    --dark-color: #10212b;
+    --medium-color: #cbcdd1;
+    --light-color: #ffffff;
+    --border-color: #e9ecf3;
+    --box-shadow: 0px 0px 35px 0px rgba(0, 0, 0, 0.18);
+    --indent: 2vmax;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    outline: none;
+}
+
+html {
+    font-family: Barlow, serif;
+}
+
+html,
+body {
+    height: 100%;
+    background-color: var(--light-color);
+    overflow: hidden;
+    color: var(--dark-color);
+}
+
+h3 {
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+p,
+label,
+li,
+span {
+    font-size: 14px;
+}
+
+.flex {
+    display: flex;
+}
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+.center {
+    align-items: center;
+    justify-content: center;
+}
+.flex-1 {
+    flex: 1;
+}
+.card {
+    background-color: var(--light-color);
+    border-radius: 3px;
+    border: 1px solid var(--border-color);
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background-color: #99999f80;
+    padding: 5vmin;
+}
+
+.button {
+    min-width: 90px;
+    height: 40px;
+    border-radius: 3px;
+    border: 1px solid var(--medium-color);
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.1s ease-out;
+    &:hover {
+        filter: brightness(0.9);
+    }
+    &:focus {
+        box-shadow: 0 0 0 2px var(--medium-color);
+    }
+    &:active {
+        box-shadow: 0 0 0 4px var(--medium-color);
+    }
+}
+
+a[menuButton] {
+    text-decoration: none;
+    padding: 16px;
+    cursor: pointer;
+    color: var(--dark-color);
+    min-width: 150px;
+    &:active,
+    &:hover {
+        color: var(--primary-color);
+    }
+    &:visited {
+        color: var(--dark-color);
+    }
+}

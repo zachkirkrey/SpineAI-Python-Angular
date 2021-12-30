@@ -1,0 +1,65 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.row {
+  margin: 16px 0;
+}
+.pad {
+  padding: 4px;
+}
+
+.flex-grow-container {
+  display: flex;
+}
+.flex-grow-container > * {
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.inline-container > * {
+  display: inline;
+}
+.left-container > * {
+  float: left;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: " "; /* 1 */
+  display: table; /* 2 */
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+
+input {
+  margin-top: 0.5em;
+}
+
+.error {
+  color: red;
+}
+.code {
+  font-family: monospace;
+}
+
+#question_spec {
+  font-size: 0.8em;
+  background-color: #CCC;
+  display: none;
+}
+
+.survey_question:nth-child(n+2) {
+  display: none;
+}
+.questions-container {
+  background-color: #EEE;
+}

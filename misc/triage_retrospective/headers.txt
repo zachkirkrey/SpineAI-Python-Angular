@@ -1,0 +1,307 @@
+Start Date
+End Date
+Recipient Last Name
+Recipient First Name
+Recipient Email
+External Data Reference
+What is your preferred language?\n\n(Ã\x82Â¿CuÃ\x83Â¡l es su idioma preferido?)
+Please enter the patient's MRN: [Field-MRN]
+What is your first name? [Field-RecipientFirstName]
+What is your last name? [Field-RecipientLastName]
+What is your date of birth? [Field-Date%20of%20Birth]
+Are you male or female?
+Are you completing this survey at home or at the UCLA Spine Center?
+Is this your first visit at the UCLA Spine Clinic?
+Have you had spine surgery since your last visit?
+Please enter the date of surgery: (Please click on the month and the year to select the correct date of your surgery)
+We'd like to follow up with you to see how you are recovering post-surgery. Please provide your email address below.
+Which of the following is the main reason for your visit today?
+Please specify your ethnicity. - Selected Choice
+Please specify your ethnicity. - Other - Text
+Do you have or have you ever been diagnosed with the following Cardiovascular conditions?
+Do you have or have you ever been diagnosed with the following Bone conditions?
+Do you smoke cigarettes?
+How many packs per day? - Packs
+How many years have you smoked cigarettes?
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Leg
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Thigh
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Thigh
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Foot
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Foot
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Leg
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Arm
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Forearm
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Forearm
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Thoracic
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Anterior head
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Arm
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Hand
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Hand
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Lumbar
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Lumbar2
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Cervical
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Thoracic3
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Arm4
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Forearm5
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Hand6
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Arm7
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Forearm8
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Hand9
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Thigh10
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Leg11
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Foot12
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Thigh13
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Leg14
+Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Foot15
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Leg
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Thigh
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Thigh
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Foot
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Foot
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Leg
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Arm
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Forearm
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Forearm
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Thoracic
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Anterior head
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Arm
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Hand
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Hand
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Lumbar
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Lumbar16
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Cervical
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Thoracic17
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Arm18
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Forearm19
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Hand20
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Arm21
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Forearm22
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Hand23
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Thigh24
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Leg25
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Foot26
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Thigh27
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Leg28
+Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Foot29
+How severe is your pain today?\n\n(0 = no pain; 10 = worst possible pain) - Pain Intensity
+Please select the statement that best describes your MOBILITY today.
+Please select the statement that best describes your SELF-CARE today.
+Please select the statement that best describes your USUAL ACTIVITIES (e.g. work, study, housework, family or leisure activities) today.
+Please select the statement that best describes your PAIN/DISCOMFORT today.
+Please select the statement that best describes your ANXIETY/DEPRESSION today.
+Your health TODAY is:\n\n(Remember: 0 = the worst health you can imagine; 100 = the best health you can imagine.) - Health Level
+Pain Intensity
+Personal Care (washing, dressing, etc.)
+Lifting
+Walking
+Sitting
+Standing
+Sleeping
+Sex Life
+Social
+Travelling
+In general, would you say your health is:
+Does your health now limit you to doing moderate activities, such as moving a table, pushing a vacuum cleaner, bowling, or playing golf?
+Does your health now limit you while climbing several flights of stairs?
+During the past 4 weeks, have you accomplished less than you would like in your work or other activities as a result of your physical health?
+During the past 4 weeks, were you limited to the kind of work or other activities as a result of your physical health?
+During the past 4 weeks, have you accomplished less than you would like in your work or other activities as a result of your emotional problems (such as feeling depressed or anxious)?
+During the past 4 weeks, have you performed work or activities less carefully than usual, as a result of your emotional problems?
+During the past 4 weeks, how much did pain interfere with your normal work (including both work outside the home and housework)?
+How much of the time during the past 4 weeks have you felt calm and peaceful?
+How much of the time during the past 4 weeks did you have a lot of energy?
+How much of the time during the past 4 weeks have you felt downhearted and blue?
+During the past four weeks, how much of the time has your physical health or emotional problems interfered with social activities (e.g. visiting with friends/relatives, etc.)?
+Have you already had surgery?
+Which one of the following best describes the amount of pain you have experienced during the past 6 months?
+Which one of the following best describes the amount of pain you have experienced over the last month?
+During the past 6 months, have you been a very nervous person?
+If you had to spend the rest of your life with your back shape as it is right now, how would you feel about it?
+What is your current level of activity?
+How do you look in clothes?
+In the past 6 months, have you felt so down in the dumps that nothing could cheer you up?
+Do you experience back pain when at rest?
+What is your current level of work / school activity?
+Which of the following best describes the appearance of your trunkÃ\x8dÂ¾ defined as the human body except for the head and extremities?
+Which one of the following best describes your medication usage for your back? - Selected Choice
+Which one of the following best describes your medication usage for your back? - Other medication type and usage (Weekly or less or Daily) - Text
+Does your back limit your ability to do things around the house?
+Have you felt calm and peaceful during the past 6 months?
+Do you feel that your back condition affects your personal relationships?
+Are you and/or your family experiencing financial difficulties because of your back?
+In the past 6 months have you felt down hearted and blue?
+In the last 3 months have you taken any sick days from work/school due to back pain and if so how many?
+Do you go out more or less than your friends?
+Do you feel attractive with your current back condition?
+Have you been a happy person during the past 6 months?
+Are you satisfied with the results of your back management?
+Would you have the same management again if you had the same condition?Ã¢â\x82¬â\x80¹
+On a scale of 1 to 9, with 1 being very low and 9 being extremely high, how would you rate your self image?
+Compared with before treatment, how do you feel you now look?
+Has your back treatment changed your function and daily activity?
+Has your back treatment changed your ability to enjoy sports/hobbies?
+Has your back treatment (Increased/Not changed/Decreased) your back pain?
+Has your treatment changed your confidence in personal relationships with others?
+Has your treatment changed the way others view you?
+Has your treatment changed your self-image.
+Pain Intensity30
+Personal Care (washing, dressing, etc.)31
+Lifting32
+Reading
+Headaches
+Concentration
+Work
+Driving
+Sleeping33
+Recreation
+Por favor inserte el identificador del paciente (MRN): [Field-MRN]
+Ã\x82Â¿CuÃ\x83Â¡l es su Nombre? [Field-RecipientFirstName]
+Ã\x82Â¿CuÃ\x83Â¡l es su Apellido? [Field-RecipientLastName]
+Ã\x82Â¿CuÃ\x83Â¡l es su fecha de nacimiento? [Field-Date%20Of%20Birth]
+Ã\x82Â¿Es usted hombre o mujer?
+Ã\x82Â¿EstÃ\x83Â¡ completando este cuestionario en casa o en UCLA Spine Center?
+Ã\x82Â¿Es esta su primera visita a la UCLA Spine Clinic?
+Ã\x82Â¿Ha tenido cirugÃ\x83Â\xada de columna vertebral desde su Ã\x83Âºltima visita?
+Por favor inserte la fecha de la cirugÃ\x83Â\xada: (Por favor haga clic en el mes y el aÃ\x83Â±o para seleccionar la fecha correcta de su cirugÃ\x83Â\xada)
+Nos gustarÃ\x83Â\xada ver cÃ\x83Â³mo se estÃ\x83Â¡ recuperando despuÃ\x83Â©s de la cirugÃ\x83Â\xada. Por favor, indique su direcciÃ\x83Â³n de correo electrÃ\x83Â³nico aquÃ\x83Â\xad:
+Ã\x82Â¿CuÃ\x83Â¡l es la razÃ\x83Â³n principal de su visita a nuestra clÃ\x83Â\xadnica hoy?
+Ã\x82Â¿Ha sido diagnosticado(a) con alguna de las siguientes condiciones Cardiovasculares?
+Ã\x82Â¿Ha sido diagnosticado(a) con alguna de las siguientes condiciones de Hueso?
+Ã\x82Â¿Fuma cigarrillos?
+Ã\x82Â¿CuÃ\x83Â¡ntos paquetes al dÃ\x83Â\xada? - Paquetes
+Ã\x82Â¿CuÃ\x83Â¡ntos aÃ\x83Â±os ha fumado cigarrillos?
+Marque en la escala de abajo el nÃ\x83Âºmero que mejor describa la intensidad de su dolor durante el dÃ\x83Â\xada de hoy. (0 = Sin dolor; 10 = Demasiado dolor) - Dolor
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Right Leg
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Left Thigh
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Right Thigh
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Left Foot
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Right Foot
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Left Leg
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Right Arm
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Left Forearm
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Right Forearm
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Thoracic
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Anterior head
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Left Arm
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Right Hand
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Left Hand
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Lumbar
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Lumbar34
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Cervical
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Thoracic35
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Right Arm36
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Right Forearm37
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Right Hand38
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Left Arm39
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Left Forearm40
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Left Hand41
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Right Thigh42
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Right Leg43
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Right Foot44
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Left Thigh45
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Left Leg46
+Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botÃ\x83Â³n "Next". - Left Foot47
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Right Leg
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Left Thigh
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Right Thigh
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Left Foot
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Right Foot
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Left Leg
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Right Arm
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Left Forearm
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Right Forearm
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Thoracic
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Anterior head
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Left Arm
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Right Hand
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Left Hand
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Lumbar
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Lumbar48
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Cervical
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Thoracic49
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Right Arm50
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Right Forearm51
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Right Hand52
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Left Arm53
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Left Forearm54
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Left Hand55
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Right Thigh56
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Right Leg57
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Right Foot58
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Left Thigh59
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Left Leg60
+Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botÃ\x83Â³n "Next" - Left Foot61
+Por favor marque la casilla que mejor describa su MOVILIDAD hoy:
+Por favor marque la casilla que mejor describa su CUIDADO PERSONAL hoy:
+Por favor marque la casilla que mejor describa sus ACTIVIDADES DE TODOS LOS DÃ\x83Â\x8dAS (Ej.: trabajar, estudiar, hacer las tareas domeÃ\x8cÂ\x81sticas, actividades familiares o actividades de ocio) hoy:
+Por favor marque la casilla que mejor describa su DOLOR / MALESTAR hoy:
+Por favor marque la casilla que mejor describa su ANSIEDAD / DEPRESIOÃ\x8cÂ\x81N hoy:
+Su salud HOY es: (Recuerde: 0 = la peor salud que pueda imaginar, 100 = la mejor salud que pueda imaginar). - Nivel de Salud
+Intensidad del dolor de cuello
+Cuidados personales (lavarse, vestirse, etc.)
+Levantar pesos
+Lectura
+Dolor de cabeza
+Concentrarse en algo
+Trabajo y actividades habituales
+ConduccioÃ\x8cÂ\x81n de vehÃ\x83Â\xadculos
+SuenÃ\x8cÆ\x92o
+Actividades de ocio
+Generalmente usted dirÃ\x83Â\xada que su salud es:
+Ã\x82Â¿Su salud ahora lo limita a hacer  actividades moderadas , como mover una mesa, empujar una aspiradora, jugar bolos o jugar al golf?
+Ã\x82Â¿Su salud ahora lo limita al subir  varios  tramos de escaleras?
+Ã\x82Â¿Durante las Ã\x83Âºltimas 4 semanas, ha logrado menos de lo que le gustarÃ\x83Â\xada en su trabajo u otras actividades como resultado de su salud fÃ\x83Â\xadsica?
+Ã\x82Â¿  Durante las Ã\x83Âºltimas 4 semanas  ,estuvo limitado al  tipo  de trabajo u otras actividades como resultado de su salud fÃ\x83Â\xadsica?
+Ã\x82Â¿CuÃ\x83Â¡ntas veces durante las Ã\x83Âºltimas 4 semanas te has sentido tranquilo y en paz?
+Ã\x82Â¿CuÃ\x83Â¡ntas veces durante las Ã\x83Âºltimas 4 semanas tuviste mucha energÃ\x83Â\xada?
+Ã\x82Â¿CuÃ\x83Â¡ntas veces durante las Ã\x83Âºltimas 4 semanas te has sentido abatido y triste?
+Durante las Ã\x83Âºltimas cuatro semanas, Ã\x82Â¿cuÃ\x83Â¡nto tiempo ha interferido su salud fÃ\x83Â\xadsica o problemas emocionales con las actividades sociales (por ejemplo, visitar a amigos / familiares, etc.)?
+Intensidad del dolor
+Cuidado Personal (lavarse, vestirse, etc.)
+Levantar pesos62
+Caminar
+Sentarse
+Pararse
+Dormir
+Vida sexual
+Vida social
+Viajar
+Ã\x82Â¿Ya ha tenido cirugÃ\x83Â\xada?
+Ã\x82Â¿CuaÃ\x8cÂ\x81nto dolor ha tenido en los uÃ\x8cÂ\x81ltimos 6 meses?
+Ã\x82Â¿CuaÃ\x8cÂ\x81nto dolor ha tenido en el uÃ\x8cÂ\x81ltimo mes?
+Durante los uÃ\x8cÂ\x81ltimos 6 meses, Ã\x82Â¿cuaÃ\x8cÂ\x81nto tiempo estuvo muy nervioso?
+Si tuviera que pasar el resto de su vida con la espalda como la tiene ahora, Ã\x82Â¿coÃ\x8cÂ\x81mo se sentiriÃ\x8cÂ\x81a?
+Ã\x82Â¿CuaÃ\x8cÂ\x81l es su nivel de actividad actual?
+Ã\x82Â¿CoÃ\x8cÂ\x81mo le queda la ropa?
+Durante los uÃ\x8cÂ\x81ltimos 6 meses, Ã\x82Â¿se sintioÃ\x8cÂ\x81 tan bajo de moral que nada podiÃ\x8cÂ\x81a animarle?
+Ã\x82Â¿Tiene dolor de espalda en reposo?
+Ã\x82Â¿CuaÃ\x8cÂ\x81l es su nivel actual de actividad laboral o escolar?
+Ã\x82Â¿CoÃ\x8cÂ\x81mo describiriÃ\x8cÂ\x81a el aspecto de su cuerpo (sin tener en cuenta el de la cara y extremidades)?
+Ã\x82Â¿Toma medicamentos para su espalda? - Selected Choice
+Ã\x82Â¿Toma medicamentos para su espalda? - Otros (1 a la semana o menos) - Text
+Ã\x82Â¿Le limita la espalda la capacidad para realizar sus actividades habituales por casa?
+Durante los uÃ\x8cÂ\x81ltimos 6 meses, Ã\x82Â¿cuaÃ\x8cÂ\x81nto tiempo se sintioÃ\x8cÂ\x81 calmado y tranquilo?
+Ã\x82Â¿Cree que el estado de su espalda influye en sus relaciones personales?
+Ã\x82Â¿Ud. o su familia tienen dificultades econoÃ\x8cÂ\x81micas por su espalda?
+En los uÃ\x8cÂ\x81ltimos 6 meses, Ã\x82Â¿se ha sentido desanimado y triste?
+En los uÃ\x8cÂ\x81ltimos 3 meses, Ã\x82Â¿cuaÃ\x8cÂ\x81ntos diÃ\x8cÂ\x81as ha faltado al trabajo o al colegio debido al dolor de espalda?
+Ã\x82Â¿Le dificulta la situacioÃ\x8cÂ\x81n de su espalda salir de casa con sus amigos o su familia?
+Ã\x82Â¿Se siente atractivo/a con el estado actual de su espalda?
+Durante los uÃ\x8cÂ\x81ltimos 6 meses, Ã\x82Â¿cuaÃ\x8cÂ\x81nto tiempo se sintioÃ\x8cÂ\x81 feliz?
+Ã\x82Â¿EstaÃ\x8cÂ\x81 satisfecho con los resultados del tratamiento?
+Ã\x82Â¿AceptarÃ\x83Â\xada el mismo tratamiento otra vez si estuviera en la misma situacioÃ\x8cÂ\x81n?
+En una escala del 1 al 9, siendo 1 la puntuaciÃ\x83Â³n mÃ\x83Â¡s baja y 9 la mÃ\x83Â¡s alta, Ã\x82Â¿CÃ\x83Â³mo calificarÃ\x83Â\xada su autoimagen?
+Indique cÃ\x83Â³mo siente que se ve actualmente en comparaciÃ\x83Â³n con antes de recibir el tratamiento de su espalda.
+Indique cÃ\x83Â³mo el tratamiento de su espalda ha cambiado sus funciones y actividades de la vida diaria.
+Indique cÃ\x83Â³mo el tratamiento de su espalda ha cambiado su capacidad para disfrutar de los deportes o de otras aficiones.
+El tratamiento (ha) ____________ el dolor de la espalda?
+Indique cÃ\x83Â³mo el tratamiento de su espalda ha cambiado su confianza en sus relaciones personales con los demÃ\x83Â¡s.
+Indique cÃ\x83Â³mo el tratamiento de su espalda ha cambiado la forma en cÃ\x83Â³mo lo(a) ven los demÃ\x83Â¡s.
+Indique cÃ\x83Â³mo el tratamiento de su espalda ha cambiado su autoimagen.
+MRN
+Date of Birth
+Gender
+First Name
+Last Name
+Date Of Birth63
+Recipient ID

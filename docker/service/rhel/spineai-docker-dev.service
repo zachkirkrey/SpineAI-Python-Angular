@@ -1,0 +1,17 @@
+# /etc/systemd/system/spineai-docker.dev.service
+
+[Unit]
+Description=Docker Compose service for SpineAI.dev
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=simple
+RemainAfterExit=yes
+WorkingDirectory=/opt/spineai/spineai/docker
+ExecStart=/usr/local/bin/docker-compose -f dev.docker-compose.yml -f ucla.docker-compose.yml -f enable-gpu.docker-compose.yml up spineai-frontend spineai-api spineai-backend
+ExecStop=/usr/local/bin/docker-compose -f dev.docker-compose.yml -f ucla.docker-compose.yml -f enable-gpu.docker-compose.yml down
+TimeoutStartSec=0
+
+[Install]
+WantedBy=multi-user.target

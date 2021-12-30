@@ -1,0 +1,48 @@
+@import 'src/assets/sass/variables';
+
+@import 'src/assets/uplor/plugins/datatable/jquery.dataTables.min';
+@import '/src/assets/uplor/plugins/datatable/dataTables.bootstrap4.min';
+
+
+
+.spinner-wrapper {
+  min-height: 80px;
+}
+.box-spinner {
+  display: inline-block;
+  position: fixed;
+  left: calc(50% - 40px);
+  width: 80px;
+  height: 80px;
+  margin: auto;
+}
+.box-spinner div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 16px;
+  background: $blue;
+  animation: box-spinner 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.box-spinner div:nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s;
+}
+.box-spinner div:nth-child(2) {
+  left: 32px;
+  animation-delay: -0.12s;
+}
+.box-spinner div:nth-child(3) {
+  left: 56px;
+  animation-delay: 0;
+}
+@keyframes box-spinner {
+  0% {
+    top: 8px;
+    height: 64px;
+  }
+  50%, 100% {
+    top: 24px;
+    height: 32px;
+  }
+}

@@ -1,0 +1,27 @@
+webserver:
+  session:
+    secret: '4302454267'
+  https:
+    enabled: false
+    redirectHTTP: false
+    # certFile: "/etc/letsencrypt/live/spineai.com/fullchain.pem"
+    # keyFile: "/etc/letsencrypt/live/spineai.com/privkey.pem"
+  password:
+    enabled: false
+    # NOTE(billy): We accept storing passwords in plaintext in git for dev.
+    # For prod, we should use a real secret storage for any secrets.
+    password: "$pine@iUCLAu3?r+%pf&t"
+restifyClient:
+  # url: 'http://spineai-api:8080'
+  url: 'http://localhost:8080'
+uploadService:
+  uploadDir: "/tmp/upload"
+oauth2:
+  isEnabled: true
+  appURI: 'http://lapspaiap01.medctr.ucla.edu/'
+  authURL: 'https://mylogin.it.uclahealth.org/oauth2/v1'
+  authScopes: 'openid profile email'
+  clientId: '0oaaqf5nasru5jPoD2p7'
+  clientSecret: 'jQCmeJn316r758wv0SSb_E1NlqTBW4wlp2ZAyYyD'
+  redirectURI: 'http://lapspaiap01.medctr.ucla.edu/oauth2/login'
+  logoutRedirectURI: 'http://lapspaiap01.medctr.ucla.edu/oauth2/logout'

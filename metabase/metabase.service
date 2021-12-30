@@ -1,0 +1,17 @@
+# /etc/systemd/system/metabase.service
+
+[Unit]
+Description=Metabase service for Theseus AI
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=simple
+RemainAfterExit=yes
+WorkingDirectory=/opt/spineai/spineai/metabase
+ExecStart=/usr/local/bin/docker-compose up metabase nginx-metabase
+ExecStop=/usr/local/bin/docker-compose down
+TimeoutStartSec=0
+
+[Install]
+WantedBy=multi-user.target

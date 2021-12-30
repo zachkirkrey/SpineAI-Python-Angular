@@ -1,0 +1,525 @@
+bcrypt-hash-work-factor: 8
+ignore-spanish: True
+spanish-mapping:
+  start-col: 165
+  end-col: 317
+  # Mapping maps Spanish columns to English columns.
+  # - Columns are 0-indexed. (ie. the first column is #0)
+  # - Mapping is assumed to increment 1:1 to the next listed Spanish column.
+  #   (eg. 10:1 implies 10:1, 11:2, 12:3, and so on.)
+  # - Use NA to specify a Spanish column that has no corresponding English column.
+  mapping:
+    - "165:7"
+    - "176:20"
+    - "190:NA"
+    - "191:34"
+    - "251:95"
+    - "272:119"
+    - "276:155"
+    - "279:NA"
+    - "286:123"
+columns:
+  # Format:
+  # - input: Original column name.
+  # - output: New column name. If null, ignore this column.
+  # - type: One of [DATETIME|TEXT|INTEGER|FLOAT]. Empty to interpret as TEXT.
+  # - datetime_format: Python strptime format if type == DATETIME.
+  # - hash: If true, store the (salted) bcrypt crypto hash of the MRN.
+  #         (The salt is inherent in the resulting hash, per bcrypt standards)
+  # - store_original: If false, do not store the original value for this column.
+  - input: Start Date
+    output: Start Date
+    type: DATETIME
+    datetime_format: '%m/%d/%Y %H:%M'
+  - input: End Date
+    output: End Date
+    type: DATETIME
+    datetime_format: '%m/%d/%Y %H:%M'
+  - input: Recipient Last Name
+    # output: Recipient Last Name
+  - input: Recipient First Name
+    # output: Recipient First Name
+  - input: Recipient Email
+    # output: Recipient Email
+  - input: Distribution Channel
+    output: Distribution Channel
+  - input: What is your preferred language?
+    output: What is your preferred language?
+  - input: "Please enter the patient's MRN: [Field-MRN]"
+    output: Patient MRN
+    hash: true
+    store_original: false
+  - input: "What is your first name? [Field-RecipientFirstName]"
+    # output: Patient First Name
+  - input: "What is your last name? [Field-RecipientLastName]"
+    # output: Patient Last Name
+  - input: "What is your date of birth? [Field-Date%20of%20Birth]"
+    # output: Patient Date of Birth
+  - input: Are you male or female?
+    output: Male or Female
+  - input: Are you completing this survey at home or at the UCLA Spine Center?
+    output: Completing at home or UCLA Spine Center
+  - input: Is this your first visit at the UCLA Spine Clinic?
+    output: First visit at UCLA Spine Clinic
+  - input: Have you had spine surgery since your last visit?
+    output: Had spine surgery since last visit
+  - input: "Please enter the date of surgery: (Please click on the month and the year to select the correct date of your surgery)"
+    output: Date of Surgery
+  - input: We'd like to follow up with you to see how you are recovering post-surgery. Please provide your email address below.
+    # output: Email
+  - input: Which of the following is the main reason for your visit today?
+    output: Reason for visit
+  - input: Please specify your ethnicity. - Selected Choice
+    output: Ethnicity - Selected Choice
+  - input: Please specify your ethnicity. - Other - Text
+    output: Ethnicity - Other - Text
+  - input: Do you have or have you ever been diagnosed with the following Cardiovascular conditions? - Chest pain or pressure
+    output: (Cardiovascular conditions) Chest pain or pressure
+  - input: Do you have or have you ever been diagnosed with the following Cardiovascular conditions? - Poor circulation
+    output: (Cardiovascular conditions) Poor circulation
+  - input: Do you have or have you ever been diagnosed with the following Cardiovascular conditions? - Shortness of breath
+    output: (Cardiovascular conditions) Shortness of breath
+  - input: Do you have or have you ever been diagnosed with the following Cardiovascular conditions? - Arrhythmia or palpitations
+    output: (Cardiovascular conditions) Arrhythmia or palpitations
+  - input: Do you have or have you ever been diagnosed with the following Cardiovascular conditions? - Coronary artery disease
+    output: (Cardiovascular conditions) Coronary artery disease
+  - input: Do you have or have you ever been diagnosed with the following Cardiovascular conditions? - Congestive heart failure
+    output: (Cardiovascular conditions) Congestive heart failure
+  - input: Do you have or have you ever been diagnosed with the following Cardiovascular conditions? - None of these
+    output: (Cardiovascular conditions) None of these
+  - input: Do you have or have you ever been diagnosed with the following Bone conditions? - Osteopenia
+    output: (Bone conditions) Osteopenia
+  - input: Do you have or have you ever been diagnosed with the following Bone conditions? - Osteoporosis
+    output: (Bone conditions) Osteoporosis
+  - input: Do you have or have you ever been diagnosed with the following Bone conditions? - Suffered a bone fracture
+    output: (Bone conditions) Suffered a bone fracture
+  - input: Do you have or have you ever been diagnosed with the following Bone conditions? - None of these
+    output: (Bone conditions) None of these
+  - input: Do you smoke cigarettes?
+    output: Smoke cigarettes
+  - input: How many packs per day? - Packs
+    output: Smoke cigarettes - Packs/day
+  - input: How many years have you smoked cigarettes?
+    output: Smoke cigarettes - Total years
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Leg
+    output: (Pain) Right Leg
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Thigh
+    output: (Pain) Left Thigh
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Thigh
+    output: (Pain) Right Thigh
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Foot
+    output: (Pain) Left Foot
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Foot
+    output: (Pain) Right Foot
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Leg
+    output: (Pain) Left Leg
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Arm
+    output: (Pain) Right Arm
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Forearm
+    output: (Pain) Left Forearm
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Forearm
+    output: (Pain) Right Forearm
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Thoracic
+    output: (Pain) Thoracic
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Anterior head
+    output: (Pain) Anterior head
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Arm
+    output: (Pain) Left Arm
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Hand
+    output: (Pain) Right Hand
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Hand
+    output: (Pain) Left Hand
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Lumbar
+    output: (Pain) Lumbar
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Lumbar2
+    output: (Pain) Lumbar2
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Cervical
+    output: (Pain) Cervical
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Thoracic3
+    output: (Pain) Thoracic3
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Arm4
+    output: (Pain) Right Arm4
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Forearm5
+    output: (Pain) Right Forearm5
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Hand6
+    output: (Pain) Right Hand6
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Arm7
+    output: (Pain) Left Arm7
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Forearm8
+    output: (Pain) Left Forearm8
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Hand9
+    output: (Pain) Left Hand9
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Thigh10
+    output: (Pain) Right Thigh10
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Leg11
+    output: (Pain) Right Leg11
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Right Foot12
+    output: (Pain) Right Foot12
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Thigh13
+    output: (Pain) Left Thigh13
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Leg14
+    output: (Pain) Left Leg14
+  - input: Please indicate the location(s) of your pain on the diagram below (Select up to 10 locations). If you are not in any pain, simply press the "Next" button. - Left Foot15
+    output: (Pain) Left Foot15
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Leg
+    output: (Numbness/Tingling) Right Leg
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Thigh
+    output: (Numbness/Tingling) Left Thigh
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Thigh
+    output: (Numbness/Tingling) Right Thigh
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Foot
+    output: (Numbness/Tingling) Left Foot
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Foot
+    output: (Numbness/Tingling) Right Foot
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Leg
+    output: (Numbness/Tingling) Left Leg
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Arm
+    output: (Numbness/Tingling) Right Arm
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Forearm
+    output: (Numbness/Tingling) Left Forearm
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Forearm
+    output: (Numbness/Tingling) Right Forearm
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Thoracic
+    output: (Numbness/Tingling) Thoracic
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Anterior head
+    output: (Numbness/Tingling) Anterior head
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Arm
+    output: (Numbness/Tingling) Left Arm
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Hand
+    output: (Numbness/Tingling) Right Hand
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Hand
+    output: (Numbness/Tingling) Left Hand
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Lumbar
+    output: (Numbness/Tingling) Lumbar
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Lumbar16
+    output: (Numbness/Tingling) Lumbar16
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Cervical
+    output: (Numbness/Tingling) Cervical
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Thoracic17
+    output: (Numbness/Tingling) Thoracic17
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Arm18
+    output: (Numbness/Tingling) Right Arm18
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Forearm19
+    output: (Numbness/Tingling) Right Forearm19
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Hand20
+    output: (Numbness/Tingling) Right Hand20
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Arm21
+    output: (Numbness/Tingling) Left Arm21
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Forearm22
+    output: (Numbness/Tingling) Left Forearm22
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Hand23
+    output: (Numbness/Tingling) Left Hand23
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Thigh24
+    output: (Numbness/Tingling) Right Thigh24
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Leg25
+    output: (Numbness/Tingling) Right Leg25
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Right Foot26
+    output: (Numbness/Tingling) Right Foot26
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Thigh27
+    output: (Numbness/Tingling) Left Thigh27
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Leg28
+    output: (Numbness/Tingling) Left Leg28
+  - input: Please indicate the location(s) of your numbness/tingling on the diagram below(Select up to 10 locations). If you do not have any numbness/tingling, simply press the "Next" button. - Left Foot29
+    output: (Numbness/Tingling) Left Foot29
+  - input: How severe is your pain today?
+    output: Pain Intensity
+  - input: Please select the statement that best describes your MOBILITY today.
+    output: (Statement) Mobility today
+  - input: Please select the statement that best describes your SELF-CARE today.
+    output: (Statement) Self-care today.
+  - input: Please select the statement that best describes your USUAL ACTIVITIES (e.g. work, study, housework, family or leisure activities) today.
+    output: (Statement) Usual activities today
+  - input: Please select the statement that best describes your PAIN/DISCOMFORT today.
+    output: (Statement) Pain/Discomfort today.
+  - input: Please select the statement that best describes your ANXIETY/DEPRESSION today.
+    output: (Statement) Anxiety/Depression today.
+  - input: Your health TODAY is
+    output: Health Level
+  - input: Pain Intensity
+    output: Pain Intensity (Severity)
+  - input: Personal Care (washing, dressing, etc.)
+    output: Personal Care (washing, dressing, etc.)
+  - input: Lifting
+    output: Lifting
+  - input: Walking
+    output: Walking
+  - input: Sitting
+    output: Sitting
+  - input: Standing
+    output: Standing
+  - input: Sleeping
+    output: Sleeping
+  - input: Sex Life
+    output: Sex Life
+  - input: Social
+    output: Social
+  - input: Travelling
+    output: Traveling
+  - input: "In general, would you say your health is:"
+    output: General Health
+  - input: Does your health now limit you to doing moderate activities, such as moving a table, pushing a vacuum cleaner, bowling, or playing golf?
+    output: Health limited to moderate activities?
+  - input: Does your health now limit you while climbing several flights of stairs?
+    output: Health limited while climbing several flights of stairs?
+  - input: During the past 4 weeks, have you accomplished less than you would like in your work or other activities as a result of your physical health?
+    output: During the past 4 weeks, have you accomplished less than you would like in your work or other activities as a result of your physical health?
+  - input: During the past 4 weeks, were you limited to the kind of work or other activities as a result of your physical health?
+    output: During the past 4 weeks, were you limited to the kind of work or other activities as a result of your physical health?
+  - input: During the past 4 weeks, have you accomplished less than you would like in your work or other activities as a result of your emotional problems (such as feeling depressed or anxious)?
+    output: During the past 4 weeks, have you accomplished less than you would like in your work or other activities as a result of your emotional problems (such as feeling depressed or anxious)?
+  - input: During the past 4 weeks, have you performed work or activities less carefully than usual, as a result of your emotional problems?
+    output: During the past 4 weeks, have you performed work or activities less carefully than usual, as a result of your emotional problems?
+  - input: During the past 4 weeks, how much did pain interfere with your normal work (including both work outside the home and housework)?
+    output: During the past 4 weeks, how much did pain interfere with your normal work (including both work outside the home and housework)?
+  - input: How much of the time during the past 4 weeks have you felt calm and peaceful?
+    output: How much of the time during the past 4 weeks have you felt calm and peaceful?
+  - input: How much of the time during the past 4 weeks did you have a lot of energy?
+    output: How much of the time during the past 4 weeks did you have a lot of energy?
+  - input: How much of the time during the past 4 weeks have you felt downhearted and blue?
+    output: How much of the time during the past 4 weeks have you felt downhearted and blue?
+  - input: During the past four weeks, how much of the time has your physical health or emotional problems interfered with social activities (e.g. visiting with friends/relatives, etc.)?
+    output: During the past four weeks, how much of the time has your physical health or emotional problems interfered with social activities (e.g. visiting with friends/relatives, etc.)?
+  - input: Have you already had surgery?
+    output: Already had surgery?
+  - input: Which one of the following best describes the amount of pain you have experienced during the past 6 months?
+    output: Pain experienced last 6 months
+  - input: Which one of the following best describes the amount of pain you have experienced over the last month?
+    output: Pain experienced last month
+  - input: During the past 6 months, have you been a very nervous person?
+    output: Nervous person past 6 months?
+  - input: If you had to spend the rest of your life with your back shape as it is right now, how would you feel about it?
+    output: If you had to spend the rest of your life with your back shape as it is right now, how would you feel about it?
+  - input: What is your current level of activity?
+    output: Current Level of Activity
+  - input: How do you look in clothes?
+    output: How do you look in clothes?
+  - input: In the past 6 months, have you felt so down in the dumps that nothing could cheer you up?
+    output: In the past 6 months, have you felt so down in the dumps that nothing could cheer you up?
+  - input: Do you experience back pain when at rest?
+    output: Do you experience back pain when at rest?
+  - input: What is your current level of work / school activity?
+    output: Current level of work / school activity?
+  - input: Which of the following best describes the appearance of your trunk; defined as the human body except for the head and extremities?
+    output: Which of the following best describes the appearance of your trunk; defined as the human body except for the head and extremities?
+  - input: Which one of the following best describes your medication usage for your back? - Selected Choice
+    output: Which one of the following best describes your medication usage for your back? - Selected Choice
+  - input: Which one of the following best describes your medication usage for your back? - Other medication type and usage (Weekly or less or Daily) - Text
+    output: Which one of the following best describes your medication usage for your back? - Other medication type and usage (Weekly or less or Daily) - Text
+  - input: Does your back limit your ability to do things around the house?
+    output: Does your back limit your ability to do things around the house?
+  - input: Have you felt calm and peaceful during the past 6 months?
+    output: Have you felt calm and peaceful during the past 6 months?
+  - input: Do you feel that your back condition affects your personal relationships?
+    output: Do you feel that your back condition affects your personal relationships?
+  - input: Are you and/or your family experiencing financial difficulties because of your back?
+    output: Are you and/or your family experiencing financial difficulties because of your back?
+  - input: In the past 6 months have you felt down hearted and blue?
+    output: In the past 6 months have you felt down hearted and blue?
+  - input: In the last 3 months have you taken any sick days from work/school due to back pain and if so how many?
+    output: In the last 3 months have you taken any sick days from work/school due to back pain and if so how many?
+  - input: Do you go out more or less than your friends?
+    output: Do you go out more or less than your friends?
+  - input: Do you feel attractive with your current back condition?
+    output: Do you feel attractive with your current back condition?
+  - input: Have you been a happy person during the past 6 months?
+    output: Have you been a happy person during the past 6 months?
+  - input: Are you satisfied with the results of your back management?
+    output: Are you satisfied with the results of your back management?
+  - input: Would you have the same management again if you had the same condition?​
+    output: Would you have the same management again if you had the same condition?
+  - input: On a scale of 1 to 9, with 1 being very low and 9 being extremely high, how would you rate your self image?
+    output: On a scale of 1 to 9, with 1 being very low and 9 being extremely high, how would you rate your self image?
+  - input: Compared with before treatment, how do you feel you now look?
+    output: Compared with before treatment, how do you feel you now look?
+  - input: Has your back treatment changed your function and daily activity?
+    output: Has your back treatment changed your function and daily activity?
+  - input: Has your back treatment changed your ability to enjoy sports/hobbies?
+    output: Has your back treatment changed your ability to enjoy sports/hobbies?
+  - input: Has your back treatment (Increased/Not changed/Decreased) your back pain?
+    output: Has your back treatment (Increased/Not changed/Decreased) your back pain?
+  - input: Has your treatment changed your confidence in personal relationships with others?
+    output: Has your treatment changed your confidence in personal relationships with others?
+  - input: Has your treatment changed the way others view you?
+    output: Has your treatment changed the way others view you?
+  - input: Has your treatment changed your self-image.
+    output: Has your treatment changed your self-image.
+  - input: Pain Intensity30
+    output: Pain Intensity (2)
+  - input: Personal Care (washing, dressing, etc.)31
+    output: Personal Care (2)
+  - input: Lifting32
+    output: Lifting (2)
+  - input: Reading
+    output: Reading
+  - input: Headaches
+    output: Headaches
+  - input: Concentration
+    output: Concentration
+  - input: Work
+    output: Work
+  - input: Driving
+    output: Driving
+  - input: Sleeping33
+    output: Sleeping (2)
+  - input: Recreation
+    output: Recreation
+  - input: "Por favor inserte el identificador del paciente (MRN): [Field-MRN]"
+  - input: "¿Cuál es su Nombre? [Field-RecipientFirstName]"
+  - input: "¿Cuál es su Apellido? [Field-RecipientLastName]"
+  - input: "¿Cuál es su fecha de nacimiento? [Field-Date%20Of%20Birth]"
+  - input: ¿Es usted hombre o mujer?
+  - input: ¿Está completando este cuestionario en casa o en UCLA Spine Center?
+  - input: ¿Es esta su primera visita a la UCLA Spine Clinic?
+  - input: ¿Ha tenido cirugía de columna vertebral desde su última visita?
+  - input: "Por favor inserte la fecha de la cirugía: (Por favor haga clic en el mes y el año para seleccionar la fecha correcta de su cirugía)"
+  - input: "Nos gustaría ver cómo se está recuperando después de la cirugía. Por favor, indique su dirección de correo electrónico aquí:"
+  - input: ¿Cuál es la razón principal de su visita a nuestra clínica hoy?
+  - input: ¿Ha sido diagnosticado(a) con alguna de las siguientes condiciones Cardiovasculares? - Dolor de pecho
+  - input: ¿Ha sido diagnosticado(a) con alguna de las siguientes condiciones Cardiovasculares? - Mala circulación
+  - input: ¿Ha sido diagnosticado(a) con alguna de las siguientes condiciones Cardiovasculares? - Falta de aliento 
+  - input: ¿Ha sido diagnosticado(a) con alguna de las siguientes condiciones Cardiovasculares? - Arritmia o palpitaciones
+  - input: ¿Ha sido diagnosticado(a) con alguna de las siguientes condiciones Cardiovasculares? - Cardiopatía isquémica
+  - input: ¿Ha sido diagnosticado(a) con alguna de las siguientes condiciones Cardiovasculares? -  La insuficiencia cardíaca congestiva
+  - input: ¿Ha sido diagnosticado(a) con alguna de las siguientes condiciones Cardiovasculares? - No he sido disgnosticado(a) con ninguna de las condiciones presentadas
+  - input: ¿Ha sido diagnosticado(a) con alguna de las siguientes condiciones de Hueso? - Osteopenia
+  - input: ¿Ha sido diagnosticado(a) con alguna de las siguientes condiciones de Hueso? - Osteoporosis
+  - input: ¿Ha sido diagnosticado(a) con alguna de las siguientes condiciones de Hueso? - Sufrió una fractura de hueso
+  - input: ¿Ha sido diagnosticado(a) con alguna de las siguientes condiciones de Hueso? - No he sido disgnosticado(a) con ninguna de las condiciones presentadas
+  - input: ¿Fuma cigarrillos?
+  - input: ¿Cuántos paquetes al día? - Paquetes
+  - input: ¿Cuántos años ha fumado cigarrillos?
+  - input: Marque en la escala de abajo el número que mejor describa la intensidad de su dolor durante el día de hoy. (0 = Sin dolor; 10 = Demasiado dolor) - Dolor
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Right Leg
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Left Thigh
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Right Thigh
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Left Foot
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Right Foot
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Left Leg
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Right Arm
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Left Forearm
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Right Forearm
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Thoracic
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Anterior head
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Left Arm
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Right Hand
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Left Hand
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Lumbar
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Lumbar34
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Cervical
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Thoracic35
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Right Arm36
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Right Forearm37
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Right Hand38
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Left Arm39
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Left Forearm40
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Left Hand41
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Right Thigh42
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Right Leg43
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Right Foot44
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Left Thigh45
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Left Leg46
+  - input: Indique en el diagrama de abajo las zonas donde siente dolor (Seleccione hasta 10 zonas). Si no siente dolor, simplemente presione el botón "Next". - Left Foot47
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Right Leg
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Left Thigh
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Right Thigh
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Left Foot
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Right Foot
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Left Leg
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Right Arm
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Left Forearm
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Right Forearm
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Thoracic
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Anterior head
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Left Arm
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Right Hand
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Left Hand
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Lumbar
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Lumbar48
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Cervical
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Thoracic49
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Right Arm50
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Right Forearm51
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Right Hand52
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Left Arm53
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Left Forearm54
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Left Hand55
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Right Thigh56
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Right Leg57
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Right Foot58
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Left Thigh59
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Left Leg60
+  - input: Indique en el diagrama de abajo las zonas donde siente entumecimiento u hormigueo (Seleccione hasta 10 zonas). Si no siente entumecimiento u hormigueo, simplemente presione el botón "Next" - Left Foot61
+  - input: "Por favor marque la casilla que mejor describa su MOVILIDAD hoy:"
+  - input: "Por favor marque la casilla que mejor describa su CUIDADO PERSONAL hoy:"
+  - input: "Por favor marque la casilla que mejor describa sus ACTIVIDADES DE TODOS LOS DÍAS (Ej.: trabajar, estudiar, hacer las tareas domésticas, actividades familiares o actividades de ocio) hoy:"
+  - input: "Por favor marque la casilla que mejor describa su DOLOR / MALESTAR hoy:"
+  - input: "Por favor marque la casilla que mejor describa su ANSIEDAD / DEPRESIÓN hoy:"
+  - input: "Su salud HOY es: (Recuerde: 0 = la peor salud que pueda imaginar, 100 = la mejor salud que pueda imaginar). - Nivel de Salud"
+  - input: Intensidad del dolor de cuello
+  - input: Cuidados personales (lavarse, vestirse, etc.)
+  - input: Levantar pesos
+  - input: Lectura
+  - input: Dolor de cabeza
+  - input: Concentrarse en algo
+  - input: Trabajo y actividades habituales
+  - input: Conducción de vehículos
+  - input: Sueño
+  - input: Actividades de ocio
+  - input: "Generalmente usted diría que su salud es:"
+  - input: ¿Su salud ahora lo limita a hacer  actividades moderadas , como mover una mesa, empujar una aspiradora, jugar bolos o jugar al golf?
+  - input: ¿Su salud ahora lo limita al subir  varios  tramos de escaleras?
+  - input: ¿Durante las últimas 4 semanas, ha logrado menos de lo que le gustaría en su trabajo u otras actividades como resultado de su salud física?
+  - input: ¿  Durante las últimas 4 semanas  ,estuvo limitado al  tipo  de trabajo u otras actividades como resultado de su salud física?
+  - input: ¿Cuántas veces durante las últimas 4 semanas te has sentido tranquilo y en paz?
+  - input: ¿Cuántas veces durante las últimas 4 semanas tuviste mucha energía?
+  - input: ¿Cuántas veces durante las últimas 4 semanas te has sentido abatido y triste?
+  - input: Durante las últimas cuatro semanas, ¿cuánto tiempo ha interferido su salud física o problemas emocionales con las actividades sociales (por ejemplo, visitar a amigos / familiares, etc.)?
+  - input: Intensidad del dolor
+  - input: Cuidado Personal (lavarse, vestirse, etc.)
+  - input: Levantar pesos62
+  - input: Caminar
+  - input: Sentarse
+  - input: Pararse
+  - input: Dormir
+  - input: Vida sexual
+  - input: Vida social
+  - input: Viajar
+  - input: ¿Ya ha tenido cirugía?
+  - input: ¿Cuánto dolor ha tenido en los últimos 6 meses?
+  - input: ¿Cuánto dolor ha tenido en el último mes?
+  - input: Durante los últimos 6 meses, ¿cuánto tiempo estuvo muy nervioso?
+  - input: Si tuviera que pasar el resto de su vida con la espalda como la tiene ahora, ¿cómo se sentiría?
+  - input: ¿Cuál es su nivel de actividad actual?
+  - input: ¿Cómo le queda la ropa?
+  - input: Durante los últimos 6 meses, ¿se sintió tan bajo de moral que nada podía animarle?
+  - input: ¿Tiene dolor de espalda en reposo?
+  - input: ¿Cuál es su nivel actual de actividad laboral o escolar?
+  - input: ¿Cómo describiría el aspecto de su cuerpo (sin tener en cuenta el de la cara y extremidades)?
+  - input: ¿Toma medicamentos para su espalda? - Selected Choice
+  - input: ¿Toma medicamentos para su espalda? - Otros (1 a la semana o menos) - Text
+  - input: ¿Le limita la espalda la capacidad para realizar sus actividades habituales por casa?
+  - input: Durante los últimos 6 meses, ¿cuánto tiempo se sintió calmado y tranquilo?
+  - input: ¿Cree que el estado de su espalda influye en sus relaciones personales?
+  - input: ¿Ud. o su familia tienen dificultades económicas por su espalda?
+  - input: En los últimos 6 meses, ¿se ha sentido desanimado y triste?
+  - input: En los últimos 3 meses, ¿cuántos días ha faltado al trabajo o al colegio debido al dolor de espalda?
+  - input: ¿Le dificulta la situación de su espalda salir de casa con sus amigos o su familia?
+  - input: ¿Se siente atractivo/a con el estado actual de su espalda?
+  - input: Durante los últimos 6 meses, ¿cuánto tiempo se sintió feliz?
+  - input: ¿Está satisfecho con los resultados del tratamiento?
+  - input: ¿Aceptaría el mismo tratamiento otra vez si estuviera en la misma situación?
+  - input: En una escala del 1 al 9, siendo 1 la puntuación más baja y 9 la más alta, ¿Cómo calificaría su autoimagen?
+  - input: Indique cómo siente que se ve actualmente en comparación con antes de recibir el tratamiento de su espalda.
+  - input: Indique cómo el tratamiento de su espalda ha cambiado sus funciones y actividades de la vida diaria.
+  - input: Indique cómo el tratamiento de su espalda ha cambiado su capacidad para disfrutar de los deportes o de otras aficiones.
+  - input: El tratamiento (ha) ____________ el dolor de la espalda?
+  - input: Indique cómo el tratamiento de su espalda ha cambiado su confianza en sus relaciones personales con los demás.
+  - input: Indique cómo el tratamiento de su espalda ha cambiado la forma en cómo lo(a) ven los demás.
+  - input: Indique cómo el tratamiento de su espalda ha cambiado su autoimagen.
+  - input: MRN
+  - input: Date of Birth
+  - input: Gender
+  - input: First Name
+  - input: Last Name
+  - input: Date Of Birth63
+  - input: Recipient ID

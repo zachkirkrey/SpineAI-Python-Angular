@@ -1,0 +1,82 @@
+<form>
+  <div class="row">
+    <div class="col-12">
+      <div id="page-header">
+        <label>
+          <strong>Exports: </strong>
+        </label>
+        <br />
+        <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&count=1000" target="_top" class="custom-button">
+            <i class="fa fa-download"></i>
+            <span>Area CSV</span>
+        </a>
+        <br />
+        <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_heights&count=1000" target="_top" class="custom-button">
+            <i class="fa fa-download"></i>
+            <span>Vertical Diameter CSV</span>
+        </a>
+        <br />
+        <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_widths&count=1000" target="_top" class="custom-button">
+            <i class="fa fa-download"></i>
+            <span>Horizontal Diameter CSV</span>
+        </a>
+
+      </div>
+      <div class="spinner-wrapper" *ngIf="!index_complete">
+        <!-- This weird tree of divs is required for CSS only spinner -->
+        <div class="box-spinner"><div></div><div></div><div></div></div>
+      </div>
+      <div class="error" *ngIf="index_error">
+        <span>Error: {{ index_error }}</span>
+      </div>
+      <div class="table-responsive">
+        <table id="reports_table"
+               class="table table-striped table-bordered"
+               *ngIf="index_complete && !index_error">
+          <thead>
+            <tr>
+              <th>Created</th>
+              <th>Project Name</th>
+              <th>Patient Name</th>
+              <th>Report</th>
+              <th>Recommendation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr #report_rows *ngFor="let metadata of index">
+              <td>{{ metadata.creation_datetime }}</td>
+              <td>{{ metadata.name }}</td>
+              <td>{{ metadata.patient_name }}</td>
+              <td>
+                <ng-template [ngIf]="metadata.Reports.length" [ngIfElse]="noReport">
+                  <ng-template [ngIf]="metadata.Reports[0].state == 'PROCESSED'"
+                               [ngIfElse]="reportNotProcessed">
+                    <a href="/study/{{ metadata.uuid }}">Report</a>&nbsp;&nbsp;&#124;&nbsp;
+                    <a href="{{ api_url }}/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid={{ metadata.uuid }}">Viewer</a>
+                  </ng-template>
+                  <ng-template #reportNotProcessed>
+                    <span *ngIf="metadata.Reports[0].state; let state">
+                      <ng-template [ngIf]="state == 'NEW'"
+                                   [ngIfElse]="reportStateElse">
+                        UNPROCESSED
+                      </ng-template>
+                      <ng-template #reportStateElse>
+                        {{ state }}
+                      </ng-template>
+                    </span>
+                  </ng-template>
+                </ng-template>
+                <ng-template #noReport>
+                  Not Found
+                </ng-template>
+              </td>
+              <td>
+                <div class="recommendation_cell" [attr.data-study-id]="metadata.id"></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div> <!-- /table-responsive -->
+    </div>
+  </div> <!-- /row -->
+</form>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SimpleTagger</title>
+  <link rel='stylesheet' href='style.css' />
+  <link rel='stylesheet' href='highlight-within-textarea/jquery.highlight-within-textarea.css' />
+</head>
+<body>
+  <div class="inline-container">
+    <h1>SimpleTagger</h1>
+    <p>&nbsp;by&nbsp;</p>
+    <img src="img/theseus-horizontal.png" alt="Theseus AI" height="10px"/>
+  </div>
+	<p>Welcome to SimpleTagger v0.1 by Theseus AI!</p>
+	<p>This application takes a simple CSV and allows for annotations.</p>
+  <hr />
+	<br />
+	<form id="setup_tagging">
+    <p>To begin tagging CSVs, answer the following questions:</p>
+	  <div class="row">
+	    <label for="questions">
+        Input CSV:&nbsp;
+        (<a id="toggle_question_spec" href="javascript:;" onclick="showQuestionSpec();">Show Spec</a>)
+      </label><br />
+      <div id="question_spec" class="row pad">
+        Questions CSV should:
+        <ol>
+          <li>
+            Start with a header row containing all field names (header can be any value but must be in the order below).
+          </li>
+          <li>
+            Contain the following columns in the following order:
+            <ul>
+              <li>
+                MRN Number
+              </li>
+              <li>
+                MRI Report
+              </li>
+              <li>
+                Accession Number
+              </li>
+            </ul>
+          </li>
+          <li>Conform to <a href="https://tools.ietf.org/html/rfc4180">IETF RFC 4180</a></li>
+        </ol>
+      </div>
+	    <input type="file" name="input" id="input"/>
+	  </div>
+	  <div class="row">
+	    <input type="submit" value="Begin Tagging!" required/>
+	  </div>
+	</form>
+  <div id="status" class="row">
+  </div>
+
+  <div id="survey" style="display: none;">
+    <p>Comma separated values to highlight:</p>
+    <input type="text" name="highlight" id="highlight" value="L1, L2, L3, L4, L5, S1, spondy" size="60" />
+  </div>
+	<script
+	  src="https://code.jquery.com/jquery-3.5.1.js"
+	  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+	  crossorigin="anonymous"></script>
+  <script src="jquery-csv/src/jquery.csv.js"></script>
+  <script src="highlight-within-textarea/jquery.highlight-within-textarea.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+

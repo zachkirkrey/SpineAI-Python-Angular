@@ -1,0 +1,321 @@
+$mobile-width: 414px;
+$tablet-width: 768px;
+$desktop-width: 1024px;
+
+@mixin mobile {
+  @media screen and (max-width: #{$mobile-width}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$desktop-width}) {
+    @content;
+  }
+}
+
+/*
+ * Border radius
+ */
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+/*
+ * Convert Pixels to EM
+ */
+$browser-context: 14;
+@function em($pixels, $context: $browser-context) {
+  @if (unitless($pixels)) {
+    $pixels: $pixels * 1px;
+  }
+
+  @if (unitless($context)) {
+    $context: $context * 1px;
+  }
+
+  @return $pixels / $context * 1em;
+}
+
+/*
+ * Create a button with the specified property settings
+ */
+@mixin app-button($width, $height, $font-size, $border-radius, $bg-color: $black) {
+  @if (unitless($width)) {
+    $width: $width * 1px;
+  }
+
+  @if (unitless($height)) {
+    $height: $height * 1px;
+  }
+
+  @if (unitless($font-size)) {
+    $font-size: $font-size * 1px;
+  }
+
+  @if (unitless($border-radius)) {
+    $border-radius: $border-radius * 1px;
+  }
+
+  cursor: pointer;
+  width: $width;
+  height: $height;
+  background-color: $bg-color;
+  color: $white;
+  font-size: $font-size;
+  font-family: "proxima_novasemibold", Arial, sans-serif;
+  line-height: 1.67;
+  letter-spacing: 1px;
+  @include border-radius($border-radius);
+
+  &:disabled {
+    background-color: $disabled-button;
+  }
+}
+
+/*
+ * Create a styled checkbox that looks more like a radio button
+ */
+@mixin app-checkbox($checked-bg-color, $border-color) {
+  position: relative;
+  $size: 22px;
+
+  label {
+    background-color: $white;
+    border: 1px solid $border-color;
+    border-radius: 25%;
+    cursor: pointer;
+    height: $size;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: $size;
+    margin-bottom: 0;
+
+    &:after {
+      border: 2px solid $white;
+      border-top: none;
+      border-right: none;
+      content: "";
+      height: 6px;
+      left: 4px;
+      opacity: 0;
+      position: absolute;
+      top: 6px;
+      transform: rotate(-45deg);
+      width: 12px;
+    }
+  }
+
+  input[type='checkbox'], input[type='radio'] {
+    visibility: hidden;
+    height: $size;
+    width: $size;
+
+    &:checked + label {
+      background-color: $checked-bg-color;
+      border-color: $border-color;
+    }
+
+    &:checked + label:after {
+      opacity: 1;
+    }
+  }
+}
+
+/**
+ * Styles foreground text or other content with the appropriate PSP personality colors
+ */
+@mixin pspPersonalityColors() {
+  &.red,
+  &.u {
+    color: $psp-red;
+  }
+
+  &.blue,
+  &.h {
+    color: $psp-blue;
+  }
+
+  &.green,
+  &.b {
+    color: $psp-green;
+  }
+
+  &.hub {
+    color: $psp-hub;
+  }
+}
+
+/**
+ * Styles backrounds with the appropriate PSP personality colors
+ */
+@mixin pspBackgroundPersonalityColors() {
+  &.red,
+  &.u {
+    background-color: $psp-red;
+  }
+
+  &.blue,
+  &.h {
+    background-color: $psp-blue;
+  }
+
+  &.green,
+  &.b {
+    background-color: $psp-green;
+  }
+
+  &.hub {
+    background-color: $psp-hub;
+  }
+}
+
+@mixin pspPersonalityBarColors($image-directory-path) {
+  &.red-green,
+  &.red-blue,
+  &.blue-green {
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+
+  &.red-green {
+    background-image: url('#{$image-directory-path}red-green_bar.svg');
+  }
+
+  &.red-blue {
+    background-image: url('#{$image-directory-path}red-blue_bar.svg');
+  }
+
+  &.blue-green {
+    background-image: url('#{$image-directory-path}blue-green_bar.svg');
+  }
+}
+
+/**
+ * Styles for Insurance Check
+ */
+ @mixin label-checkbox-style($checked-bg-color, $border-color, $size) {
+  visibility: hidden;
+  position: absolute;
+  height: $size;
+  width: $size;
+
+  &:checked + span {
+    // background-color: $almost-white;
+    // border-color: $border-color;
+  }
+
+  &:checked + span:after {
+    opacity: 1;
+  }
+
+  + span {
+    background-color: $white;
+    border: 1px solid $extra-lighter-gray;
+    border-radius: $size * 0.1;
+    cursor: pointer;
+    height: $size;
+    width: $size;
+    margin-bottom: 0;
+    display: inline-block;
+    position: relative;
+    margin-right: 10px;
+
+    &:after {
+      content: "";
+      opacity: 0;
+      position: absolute;
+      top: $size * 0.11;
+      left: $size * 0.1;
+      width: $size * 0.7;
+      height: $size * 0.7;
+      border-radius: $size * 0.075;
+      background-color: $psp-red;
+    }
+
+    + * {
+      flex: 1;
+      line-height: 1.4;
+    }
+  }
+}
+
+@mixin app-label-checkbox($checked-bg-color, $border-color, $size: 22px) {
+  position: relative;
+  margin: 0;
+  display: flex;
+  cursor: pointer;
+
+  input[type='checkbox'] {
+    @include label-checkbox-style($checked-bg-color, $border-color, $size);
+  }
+
+  input[type='radio'] {
+    @include label-checkbox-style($checked-bg-color, $border-color, $size);
+
+    // + span {
+    //   border-radius: 50%;
+    // }
+  }
+}
+
+/*
+ * Create a button with the specified property settings
+ */
+ @mixin icon-check-button($width, $height, $font-size, $border-radius, $active-color: $psp-red) {
+  @if (unitless($width)) {
+    $width: $width * 1px;
+  }
+
+  @if (unitless($height)) {
+    $height: $height * 1px;
+  }
+
+  @if (unitless($font-size)) {
+    $font-size: $font-size * 1px;
+  }
+
+  @if (unitless($border-radius)) {
+    $border-radius: $border-radius * 1px;
+  }
+
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: $width;
+  height: $height;
+  border: solid 1px $extra-lighter-gray;
+  @include border-radius($border-radius);
+
+  img {
+    margin-bottom: 16px;
+  }
+
+  div {
+    font-family: "proxima_novasemibold", Arial, sans-serif;
+    font-size: $font-size;
+    line-height: 0.91;
+    letter-spacing: 0.8px;
+    color: $mostly-black;
+  }
+
+  &.actived {
+    border-color: $active-color;
+
+    div {
+      color: $active-color;
+    }
+  }
+}

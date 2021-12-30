@@ -1,0 +1,3 @@
+[submodule "misc/xtagger/static/jquery-csv"]
+	path = misc/xtagger/static/jquery-csv
+	url = https://github.com/typeiii/jquery-csv.git

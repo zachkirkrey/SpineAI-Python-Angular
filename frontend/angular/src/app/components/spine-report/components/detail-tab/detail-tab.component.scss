@@ -1,0 +1,22 @@
+:host {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    padding: 24px;
+
+    & > div:first-child {
+        grid-column: 1/-1;
+        align-items: center;
+        input {
+            margin-right: 8px;
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+        }
+    }
+
+    & > div:not(:first-child) > p {
+        font-size: 24px;
+        margin-bottom: 16px;
+    }
+}

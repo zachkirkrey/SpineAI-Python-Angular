@@ -1,0 +1,53 @@
+<div class="flex">
+
+    <h3>Summary</h3>
+
+    <span class="flex-1"></span>
+
+    <input id="checkbox" type="checkbox" [(ngModel)]="showSegmentation">
+    <label for="checkbox">Show segmentation</label>
+
+</div>
+
+<div class="canal">
+
+    <p>Canal</p>
+
+    <div class="flex">
+        <app-image-viewer *ngFor="let level of discLevels"
+          [images]="level.images"
+          [label]="level.level + ' (' + (level.viewSliceIndex + 1) + ')'"
+          [showSegmentation]="showSegmentation">
+        </app-image-viewer>
+    </div>
+</div>
+<div class="mid-sagittal">
+
+    <p>Mid-sagittal view</p>
+    <app-image-viewer
+        [images]="sagittalImages"
+        [index]="this.midSagittalIndex"
+        [showSegmentation]="showSegmentation">
+    </app-image-viewer>
+</div>
+<div class="findings">
+    <p>Findings</p>
+
+    <table class="fw">
+
+        <tr>
+            <th>Canal</th>
+            <th>Area</th>
+            <th>% Narrowing</th>
+        </tr>
+        <tr *ngFor="let level of discLevels">
+            <td>{{ level.level }}</td>
+            <td [class]="level.intensity">{{level.area}} mm²</td>
+            <td>
+                {{level.narrowing}}%
+                <span class="badge" [class]="level.intensity">{{level.intensity}}</span>
+            </td>
+        </tr>
+    </table>
+    
+</div>

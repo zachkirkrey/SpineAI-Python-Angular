@@ -1,0 +1,31 @@
+{
+  "name": "spineai-restify",
+  "version": "1.0.0",
+  "description": "REST API for SpineAI backend database",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha"
+  },
+  "author": "billy@spineai.com",
+  "license": "",
+  "dependencies": {
+    "config": "^3.3.1",
+    "csv-writer": "^1.6.0",
+    "debug": "^4.3.1",
+    "finale-rest": "^1.1.1",
+    "js-yaml": "^3.13.1",
+    "node-yaml": "^4.0.1",
+    "restify": "^8.5.1",
+    "restify-cors-middleware": "^1.1.1",
+    "sequelize": "^5.21.7",
+    "sqlite3": "^4.1.1",
+    "uuid": "^3.4.0",
+    "yargs": "^15.3.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.1.1",
+    "supertest": "^4.0.2"
+  }
+}

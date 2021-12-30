@@ -1,0 +1,623 @@
+// Global vars.
+
+$grey: #505050;
+$blue: #376fb6;
+
+$mild: #505050;
+$moderate: #f6ae2d;
+$severe: #ef5127;
+
+$box_green: green;
+$box_yellow: yellow;
+$box_red: red;
+
+@font-face {
+  font-family: 'Roboto';
+  src: url("../bin/Roboto-Regular.ttf");
+}
+
+// For wkhtmltopdf.
+
+@media print {
+  .new-page {
+    page-break-before: always;
+  }
+}
+
+// Helper styles.
+
+@mixin flipY() {
+  -moz-transform: scaleY(-1);
+  -o-transform: scaleY(-1);
+  -webkit-transform: scaleY(-1);
+  transform: scaleY(-1);
+  filter: FlipV;
+  -ms-filter: "FlipV";
+}
+
+.left {
+  float: left;
+}
+
+@mixin clearfix() {
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+
+.clearfix {
+  @include clearfix;
+}
+
+// Global helper styles.
+
+.red {
+  color: red;
+}
+
+// Tag styles.
+
+body {
+  font-size: 24px;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+h1 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 3.2em;
+  text-transform: none;
+  margin: 0;
+}
+
+h2 {
+  color: $blue;
+  font-size: 1.4em;
+  margin: .3em 0;
+}
+
+h3 {
+  text-transform: none;
+  font-size: 1.8em;
+  margin: 0;
+  padding: .3em 0;
+}
+
+h4 {
+  margin: .3em 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  margin: 0;
+}
+
+strong {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+span.mild {
+  color: $mild;
+}
+span.severe {
+  color: $severe;
+}
+span.moderate {
+  color: $moderate;
+}
+
+// Main styles.
+
+.page {
+  padding-top: 50px;
+}
+
+.wrapper {
+  margin: 0 auto;
+  width: 1650px; /* 11in * 150 dpi */
+}
+
+.disclaimer {
+  margin-top: -20px;
+  margin-bottom: 10px;
+  padding: 3px 12px;
+  border: 1px solid black;
+
+  text-transform: none;
+  font-size: .8em;
+
+  .strong {
+    font-weight: bold;
+  }
+}
+
+.header {
+  padding-top: 16px;
+  margin-bottom: .5em;
+  position: relative;
+
+  .logo_img {
+    height: 40px;
+    width: auto;
+    margin-bottom: .6em;
+  }
+
+  .badge {
+    height: 120px;
+    width: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .title_block {
+    width: 510px;
+  }
+
+  .subtitle_block {
+    margin-right: 0.5em;
+
+    & > div:first-child{
+      margin-bottom: .7em;
+    }
+
+    .highlight {
+      border-left: 5px solid $blue;
+      padding-left: 9px;
+      padding-left: 14px;
+    }
+
+    .metadata {
+      .metadata_item {
+        padding-right: 3em;
+      }
+    }
+  }
+
+  .feedback_block {
+    margin-top: -15px;
+    padding: 15px 30px;
+    border: 1px solid $blue;
+    text-transform: none;
+
+    .feedback_title {
+      margin-bottom: .4em;
+    }
+  }
+}
+
+img.large {
+  height: 384px;
+  width: 384px;
+}
+
+img.spine {
+}
+
+img.flip {
+  @include flipY;
+}
+
+img.seg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.img_label {
+  color: white;
+  display: block;
+  position: absolute;
+  top: .5em;
+  left: .5em;
+  margin: 0;
+}
+
+.image_header {
+  h3 {
+    padding-left: .25em;
+  }
+  .image_legend {
+    position: relative;
+
+    .image_legend_border {
+      position: absolute;
+      top: .25em;
+
+      height: 2.5em;
+      border: 1px solid black;
+      width: 99%;
+    }
+    .image_legend_item {
+      @extend .left;
+      margin-left: 4em;
+      text-transform: none;
+
+      span {
+        text-transform: uppercase;
+        margin-right: .5em;
+        line-height: 3.2em;
+      }
+    }
+  }
+}
+
+.foramen_segmentation {
+  padding-top: .6em;
+  padding-bottom: .8em;
+
+  .foramen_images {
+    width: 100%;
+  
+    .foramen_left,
+    .foramen_right {
+      width: 48%;
+      position: relative;
+    }
+  
+    .foramen_annotation_legend {
+      position: absolute;
+      top: 5px;
+      left: 414px;
+      font-size: .8em;
+      text-transform: none;
+      color: $grey;
+    }
+  
+    .foramen_annotation {
+      position: absolute;
+  
+      .horizontal_line {
+        height: 0.8em;
+        margin-right: .2em;
+        border-bottom: 2px solid $grey;
+      }
+      .foramen_label {
+        padding: 0 3px;
+      }
+      .annotation_txt {
+        text-transform: none;
+      }
+    }
+  
+    .foramen_annotation.moderate {
+      .horizontal_line {
+        border-bottom: 2px solid $moderate;
+      }
+      .foramen_label {
+        background: $moderate;
+        color: white;
+      }
+      .severity {
+        color: $moderate;
+      }
+    }
+  
+    .foramen_annotation.severe {
+      .horizontal_line {
+        border-bottom: 2px solid $severe;
+      }
+      .foramen_label {
+        background: $severe;
+        color: white;
+      }
+      .severity {
+        color: $severe;
+      }
+    }
+  
+  }
+}
+
+.canal_segmentation {
+  min-height: 395px;
+  padding-bottom: 20px;
+
+  .annotation_legend {
+    padding: 0 0 .2em;
+
+    font-size: .8em;
+    text-transform: none;
+    color: $grey;
+
+  }
+
+  .canal_images {
+    width: 100%;
+  
+    .canal_slice {
+      position: relative;
+      padding-right: 10px;
+      
+      .canal_img {
+        height: 320px;
+        width: 320px;
+      }
+
+      .canal_img.seg {
+        position: absolute;
+        top: 0; left: 0;
+      }
+  
+      .canal_label {
+        color: white;
+        position: absolute;
+        top: 0; left: 0;
+        margin: .2em;
+      }
+
+      .annotation_label {
+        padding-top: .25em;
+        padding-left: 6px;
+
+        .annottion_txt {
+          text-transform: none;
+        }
+      }
+      .annotation_label.moderate {
+        border-left: 3px solid $moderate;
+      }
+      .annotation_label.severe {
+        border-left: 3px solid $severe;
+      }
+    }
+  }
+}
+
+$analysis_table_width: 48%;
+.analysis_table {
+  width: $analysis_table_width;
+}
+
+table.analysis {
+  width: 90%;
+
+  $bg-color: #dde2e8;
+  // border-collapse: separate;
+  border-spacing: 0;
+
+  tr.headers {
+    text-transform: uppercase;
+    font-size: .9em;
+  }
+
+  // Set the column widths.
+  tr:nth-child(1) {
+    th:nth-child(1) {
+      width: 122px;
+    }
+    th:nth-child(2) {
+      width: 122px;
+    }
+    th:nth-child(3) {
+      width: 194px;
+    }
+    th:nth-child(4) {
+      width: 274px;
+    }
+
+  }
+
+  tr {
+    text-transform: none;
+    margin: 7px 0;
+    font-size: .92em;
+
+    th, td {
+      text-align: center;
+      padding: 7px 0;
+    }
+  }
+
+  tr:nth-child(even) {
+    background: $bg-color;
+    // td {
+    //   background: $bg-color;
+    // }
+  }
+
+  tr.severe {
+    td:nth-child(n+2) {
+      color: $severe;
+    }
+  }
+
+  tr.moderate {
+    td:nth-child(n+2) {
+      color: $moderate;
+    }
+  }
+
+}
+
+.page2 {
+  h2 {
+    margin-top: 0;
+    margin-bottom: .1em;
+  }
+}
+
+.foramen_analysis {
+  padding-bottom: 30px;
+
+  h3 {
+    font-size: 1.6em;
+    margin-bottom: .1em;
+  }
+  // TODO(billy): Consider combinging these styles with canal_analysis to
+  // reduce reptition.
+  .findings {
+    width: 98% - $analysis_table_width;
+
+    .title {
+      text-transform: uppercase;
+    }
+
+    .findings_txt {
+      margin-top: 1em;
+    }
+
+    p {
+      text-transform: none;
+      font-size: 0.9em;
+      margin-bottom: 0.25em;
+    }
+
+    .foramen_label {
+      font-weight: bold;
+    }
+    .foramen_label.moderate {
+      color: $moderate;
+    }
+    .foramen_label.severe {
+      color: $severe;
+    }
+  }
+}
+
+.canal_analysis {
+  padding-bottom: 20px;
+  min-height: 240px;
+  
+  h3 {
+    font-size: 1.6em;
+    margin-top: .4em;
+    margin-bottom: .1em;
+  }
+
+  .findings {
+    width: 98% - $analysis_table_width;
+
+    .title {
+      text-transform: uppercase;
+    }
+
+    .findings_txt {
+      margin-top: 1em;
+    }
+
+    p {
+      text-transform: none;
+      font-size: 0.9em;
+      margin-bottom: 0.25em;
+    }
+
+    .canal_label {
+      font-weight: bold;
+    }
+    .canal_label.moderate {
+      color: $moderate;
+    }
+    .canal_label.severe {
+      color: $severe;
+    }
+  }
+
+}
+
+.footer {
+  position: relative;
+  text-transform: none;
+
+  .right {
+    position: absolute;
+    right: 0;
+  }
+}
+
+
+/* Styles for report_simple.html */
+$simple_analysis_table_width: 38%;
+.report_simple .analysis_table {
+  width: $simple_analysis_table_width;
+}
+.report_simple .canal_analysis {
+  height: 425px;
+
+  .findings {
+    width: 98% - $simple_analysis_table_width;
+
+    .findings_txt {
+      min-height: 150px;
+      margin-top: 0.5em;
+      margin-bottom: 1em;
+    }
+    
+    .sub_findings {
+
+      .recommendation {
+        width: 60%;
+
+        .surgical_header {
+          color: $grey;
+          font-size: 1em;
+          margin-top: .3em;
+        }
+        .surgical_header.surgery {
+          text-transform: none;
+          color: $box_red;
+        }
+
+        .confidence {
+          @include clearfix;
+
+          margin-top: .5em;
+          text-transform: none;
+
+          .confidence_box {
+            height: 1.2em;
+            width: 0.74em;
+            border: 1px solid black;
+            float: left;
+            margin-right: .15em;
+          }
+          .confidence_box.green {
+            background: $box_green;
+          }
+          .confidence_box.yellow {
+            background: $box_yellow;
+          }
+          .confidence_box.red {
+            background: $box_red;
+          }
+
+          p {
+            float: left;
+            line-height: 1.2em;
+            margin-left: .4em;
+          }
+        }
+      }
+
+      .decision {
+        width: 38%;
+
+        .option {
+          @include clearfix;
+
+          .checkbox {
+            height: 1em;
+            width: 1em;
+            border: 1px solid black;
+            margin-right: .5em;
+            float: left;
+          }
+
+          p {
+            width: 200px;
+            display: block;
+            float: left;
+          }
+
+        }
+      }
+    }
+  }
+}

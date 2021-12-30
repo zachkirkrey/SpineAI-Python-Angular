@@ -1,0 +1,14 @@
+spineai:
+  runtime:
+    input:
+      location: '/input'
+    storage:
+      engine: 'sqlite3'
+      location: '/database/database.sqlite3'
+  logging:
+    logfile: '/tmp/spineai_backend.log'
+  dicom:
+    aet: 'THESEUSAI'
+    listen_port: 8001
+    remote_ae_host: '10.7.1.54'
+    remote_ae_port: 4100

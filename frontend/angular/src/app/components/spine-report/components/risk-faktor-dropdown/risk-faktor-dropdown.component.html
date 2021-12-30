@@ -1,0 +1,30 @@
+<div class="flex">
+
+    <h3>{{ data.title }}</h3>
+
+    <span class="badge flex center" [ngClass]="{'up': data.risk, 'down': !data.risk}">
+
+        <i class="fa" [ngClass]="{'fa-arrow-up': data.risk, 'fa-arrow-down': !data.risk}"></i>
+
+        Risk
+
+    </span>
+
+    <span style="flex: 1"></span>
+
+    <i (click)="opened = !opened" class="fa" [ngClass]="{'fa-plus': !opened, 'fa-minus': opened}"></i>
+
+</div>
+
+
+<div *ngIf="opened">
+    
+    <p>{{data.text}}</p>
+
+    <ul>
+        <li *ngFor="let advice of data.advices">
+            {{advice}}
+        </li>
+    </ul>
+
+</div>

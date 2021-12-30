@@ -1,0 +1,5 @@
+webserver:
+  cors:
+    origin: '*'
+  password:
+    enabled: false

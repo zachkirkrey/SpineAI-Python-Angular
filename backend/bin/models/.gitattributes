@@ -1,0 +1,4 @@
+disk/UNet.hdf5 filter=lfs diff=lfs merge=lfs -text
+foramen/UNet.hdf5 filter=lfs diff=lfs merge=lfs -text
+canal/UNet256.hdf5 filter=lfs diff=lfs merge=lfs -text
+canal/UNet160.hdf5 filter=lfs diff=lfs merge=lfs -text

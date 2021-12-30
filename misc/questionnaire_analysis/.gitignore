@@ -1,0 +1,6 @@
+*.swp
+*.pyc
+*.sqo
+*.db
+
+headers_copy.txt

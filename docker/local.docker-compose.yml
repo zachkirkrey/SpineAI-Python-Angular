@@ -1,0 +1,44 @@
+# docker-compose configuration for running SpineAI locally.
+#
+# Usage:
+#   $ docker-compose -f local.docker-compose.yml up
+#
+version: '3.7'
+services:
+  spineai-frontend:
+    image: spineai/spineai-frontend:latest
+    environment:
+      - NODE_ENV=docker-local
+    ports:
+      - "80:80"
+    networks:
+      - api
+    restart: unless-stopped
+  spineai-api:
+    image: spineai/spineai-api:latest
+    environment:
+      - NODE_ENV=docker-local
+    ports:
+      - "8080:8080"
+    networks:
+      - api
+    volumes:
+      - type: volume
+        source: "database"
+        target: "/database"
+    restart: unless-stopped
+  spineai-backend:
+    image: spineai/spineai-backend:latest
+    volumes:
+      - type: volume
+        source: "database"
+        target: "/database"
+      - "./logs:/logs"
+    restart: unless-stopped
+
+volumes:
+  database:
+    name: spineai-database
+
+networks:
+  api:

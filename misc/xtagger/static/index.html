@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>XTagger</title>
+  <link rel='stylesheet' href='style.css' />
+</head>
+<body>
+  <div class="inline-container">
+    <h1>XTagger</h1>
+    <p>&nbsp;by&nbsp;</p>
+    <img src="img/theseus-horizontal.png" alt="Theseus AI" height="10px"/>
+  </div>
+	<p>Welcome to XTagger by Theseus AI!</p>
+  <p>Have privacy or security concerns? No data is transmitted between Theseus AI and your computer except to render this page on first load. All data remains on your local machine.</p>
+  <p>Download this page (<b>File</b> -&gt; <b>Save Page As...</b>) to run locally, no internet connection required!</p>
+  <hr />
+	<br />
+	<form id="setup_tagging">
+    <p>To begin tagging images, answer the following questions:</p>
+	  <div class="row">
+	    <label for="name">Your Name:</label>
+	    <input type="text" name="name" id="name" placeholder="Jane Doe" required />
+	  </div>
+	  <div class="row">
+	    <label for="image_type">What are you tagging?</label><br />
+	    <input type="radio" name="image_type" value="indivdidual" id="individual" checked="checked" />
+	    <label for="individual">Individual Images</label>
+	    <input type="radio" name="image_type" value="image_sets" id="image_sets" disabled />
+	    <label for="image_sets">Image Sets (Coming Soon)</label>
+	  </div>
+	  <div class="row">
+	    <label for="images">Local images to tag:</label><br />
+	    <input type="file" name="images" id="images" multiple required/>
+	  </div>
+	  <div class="row">
+	    <label for="questions">
+        Questions in CSV format:&nbsp;
+        (<a id="toggle_question_spec" href="javascript:;" onclick="showQuestionSpec();">Show Spec</a>)
+      </label><br />
+      <div id="question_spec" class="row pad">
+        Questions CSV should:
+        <ol>
+          <li>
+            Start with a header row containing all field names.
+          </li>
+          <li>
+            Contain the following fields/columns:
+            <ul>
+              <li>
+                Multiselect
+                <ul><li>Valid fields: ["Y", "N", ""]</li></ul>
+              </li>
+              <li>
+                Question Text
+                <ul><li>Valid fields: Any CSV compliant string.</li></ul>
+              </li>
+              <li>
+                Response 1
+                <ul><li>Valid fields: Any CSV compliant string.</li></ul>
+              </li>
+              <li>
+                Response 2
+                <ul><li>Valid fields: Any CSV compliant string.</li></ul>
+              </li>
+              <li>
+                Response 3
+                <ul><li>Valid fields: Any CSV compliant string.</li></ul>
+              </li>
+              <li>
+                Response 4
+                <ul><li>Valid fields: Any CSV compliant string.</li></ul>
+              </li>
+              <li>
+                Response 5
+                <ul><li>Valid fields: Any CSV compliant string.</li></ul>
+              </li>
+              <li>
+                Response 6
+                <ul><li>Valid fields: Any CSV compliant string.</li></ul>
+              </li>
+              <li>
+                Response 7
+                <ul><li>Valid fields: Any CSV compliant string.</li></ul>
+              </li>
+              <li>
+                Response 8
+                <ul><li>Valid fields: Any CSV compliant string.</li></ul>
+              </li>
+              <li>
+                Response 9
+                <ul><li>Valid fields: Any CSV compliant string.</li></ul>
+              </li>
+              <li>
+                Response 10
+                <ul><li>Valid fields: Any CSV compliant string.</li></ul>
+              </li>
+            </ul>
+          </li>
+          <li>Conform to <a href="https://tools.ietf.org/html/rfc4180">IETF RFC 4180</a></li>
+        </ol>
+        <p>Example valid CSV:</p>
+        <p class="code">
+        Question Text,Multiselect,Response 1,Response 2,Response 3,Response 4,Response 5,Response 6,Response 7,Response 8,Response 9,Response 10<br />
+        Spondylolisthesis Present,N,Yes,No,,,,,,,,<br />
+        Pfirrmann Grade,N,Grade 1,Grade 2,Grade 3,Grade 4,,,,,,<br />
+        Visible Discs,Y,L1/L2,L2/L3,L4/L5,L5/S1,,,,,,<br />
+        Comment Box,,,,,,,,,,,<br />
+        </p>
+      </div>
+	    <input type="file" name="questions" id="questions"/>
+	  </div>
+	  <div class="row">
+	    <input type="submit" value="Begin Tagging!" required/>
+	  </div>
+	</form>
+  <div id="status" class="row">
+  </div>
+
+  <div id="survey">
+  </div>
+	<script
+	  src="https://code.jquery.com/jquery-3.5.1.js"
+	  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+	  crossorigin="anonymous"></script>
+  <script src="jquery-csv/src/jquery.csv.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+

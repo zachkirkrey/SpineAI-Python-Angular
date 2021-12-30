@@ -1,0 +1,8 @@
+# Configuration overrides for unit tests.
+sequelize:
+  init:
+    dialect: 'sqlite'
+    storage: '../../backend/testdata/database/database.db'
+api:
+  apilog:
+    enabled: false

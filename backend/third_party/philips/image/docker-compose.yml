@@ -1,0 +1,7 @@
+version: '3.7'
+services:
+  spineai:
+    build:
+      context: ../../..
+      dockerfile: third_party/philips/image/Dockerfile
+    image: spineai/spineai_philips:latest

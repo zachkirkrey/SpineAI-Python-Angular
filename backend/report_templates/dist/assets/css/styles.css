@@ -1,0 +1,500 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("../bin/Roboto-Regular.ttf");
+}
+@media print {
+  .new-page {
+    page-break-before: always;
+  }
+}
+.left, .image_header .image_legend .image_legend_item {
+  float: left;
+}
+
+.clearfix::after {
+  display: block;
+  content: "";
+  clear: both;
+}
+
+.red {
+  color: red;
+}
+
+body {
+  font-size: 24px;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+h1 {
+  font-family: "Roboto", sans-serif;
+  font-size: 3.2em;
+  text-transform: none;
+  margin: 0;
+}
+
+h2 {
+  color: #376fb6;
+  font-size: 1.4em;
+  margin: 0.3em 0;
+}
+
+h3 {
+  text-transform: none;
+  font-size: 1.8em;
+  margin: 0;
+  padding: 0.3em 0;
+}
+
+h4 {
+  margin: 0.3em 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  margin: 0;
+}
+
+strong {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+span.mild {
+  color: #505050;
+}
+
+span.severe {
+  color: #ef5127;
+}
+
+span.moderate {
+  color: #f6ae2d;
+}
+
+.page {
+  padding-top: 50px;
+}
+
+.wrapper {
+  margin: 0 auto;
+  width: 1650px;
+  /* 11in * 150 dpi */
+}
+
+.disclaimer {
+  margin-top: -20px;
+  margin-bottom: 10px;
+  padding: 3px 12px;
+  border: 1px solid black;
+  text-transform: none;
+  font-size: 0.8em;
+}
+.disclaimer .strong {
+  font-weight: bold;
+}
+
+.header {
+  padding-top: 16px;
+  margin-bottom: 0.5em;
+  position: relative;
+}
+.header .logo_img {
+  height: 40px;
+  width: auto;
+  margin-bottom: 0.6em;
+}
+.header .badge {
+  height: 120px;
+  width: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.header .title_block {
+  width: 510px;
+}
+.header .subtitle_block {
+  margin-right: 0.5em;
+}
+.header .subtitle_block > div:first-child {
+  margin-bottom: 0.7em;
+}
+.header .subtitle_block .highlight {
+  border-left: 5px solid #376fb6;
+  padding-left: 9px;
+  padding-left: 14px;
+}
+.header .subtitle_block .metadata .metadata_item {
+  padding-right: 3em;
+}
+.header .feedback_block {
+  margin-top: -15px;
+  padding: 15px 30px;
+  border: 1px solid #376fb6;
+  text-transform: none;
+}
+.header .feedback_block .feedback_title {
+  margin-bottom: 0.4em;
+}
+
+img.large {
+  height: 384px;
+  width: 384px;
+}
+
+img.flip {
+  -moz-transform: scaleY(-1);
+  -o-transform: scaleY(-1);
+  -webkit-transform: scaleY(-1);
+  transform: scaleY(-1);
+  filter: FlipV;
+  -ms-filter: "FlipV";
+}
+
+img.seg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.img_label {
+  color: white;
+  display: block;
+  position: absolute;
+  top: 0.5em;
+  left: 0.5em;
+  margin: 0;
+}
+
+.image_header h3 {
+  padding-left: 0.25em;
+}
+.image_header .image_legend {
+  position: relative;
+}
+.image_header .image_legend .image_legend_border {
+  position: absolute;
+  top: 0.25em;
+  height: 2.5em;
+  border: 1px solid black;
+  width: 99%;
+}
+.image_header .image_legend .image_legend_item {
+  margin-left: 4em;
+  text-transform: none;
+}
+.image_header .image_legend .image_legend_item span {
+  text-transform: uppercase;
+  margin-right: 0.5em;
+  line-height: 3.2em;
+}
+
+.foramen_segmentation {
+  padding-top: 0.6em;
+  padding-bottom: 0.8em;
+}
+.foramen_segmentation .foramen_images {
+  width: 100%;
+}
+.foramen_segmentation .foramen_images .foramen_left,
+.foramen_segmentation .foramen_images .foramen_right {
+  width: 48%;
+  position: relative;
+}
+.foramen_segmentation .foramen_images .foramen_annotation_legend {
+  position: absolute;
+  top: 5px;
+  left: 414px;
+  font-size: 0.8em;
+  text-transform: none;
+  color: #505050;
+}
+.foramen_segmentation .foramen_images .foramen_annotation {
+  position: absolute;
+}
+.foramen_segmentation .foramen_images .foramen_annotation .horizontal_line {
+  height: 0.8em;
+  margin-right: 0.2em;
+  border-bottom: 2px solid #505050;
+}
+.foramen_segmentation .foramen_images .foramen_annotation .foramen_label {
+  padding: 0 3px;
+}
+.foramen_segmentation .foramen_images .foramen_annotation .annotation_txt {
+  text-transform: none;
+}
+.foramen_segmentation .foramen_images .foramen_annotation.moderate .horizontal_line {
+  border-bottom: 2px solid #f6ae2d;
+}
+.foramen_segmentation .foramen_images .foramen_annotation.moderate .foramen_label {
+  background: #f6ae2d;
+  color: white;
+}
+.foramen_segmentation .foramen_images .foramen_annotation.moderate .severity {
+  color: #f6ae2d;
+}
+.foramen_segmentation .foramen_images .foramen_annotation.severe .horizontal_line {
+  border-bottom: 2px solid #ef5127;
+}
+.foramen_segmentation .foramen_images .foramen_annotation.severe .foramen_label {
+  background: #ef5127;
+  color: white;
+}
+.foramen_segmentation .foramen_images .foramen_annotation.severe .severity {
+  color: #ef5127;
+}
+
+.canal_segmentation {
+  min-height: 395px;
+  padding-bottom: 20px;
+}
+.canal_segmentation .annotation_legend {
+  padding: 0 0 0.2em;
+  font-size: 0.8em;
+  text-transform: none;
+  color: #505050;
+}
+.canal_segmentation .canal_images {
+  width: 100%;
+}
+.canal_segmentation .canal_images .canal_slice {
+  position: relative;
+  padding-right: 10px;
+}
+.canal_segmentation .canal_images .canal_slice .canal_img {
+  height: 320px;
+  width: 320px;
+}
+.canal_segmentation .canal_images .canal_slice .canal_img.seg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.canal_segmentation .canal_images .canal_slice .canal_label {
+  color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0.2em;
+}
+.canal_segmentation .canal_images .canal_slice .annotation_label {
+  padding-top: 0.25em;
+  padding-left: 6px;
+}
+.canal_segmentation .canal_images .canal_slice .annotation_label .annottion_txt {
+  text-transform: none;
+}
+.canal_segmentation .canal_images .canal_slice .annotation_label.moderate {
+  border-left: 3px solid #f6ae2d;
+}
+.canal_segmentation .canal_images .canal_slice .annotation_label.severe {
+  border-left: 3px solid #ef5127;
+}
+
+.analysis_table {
+  width: 48%;
+}
+
+table.analysis {
+  width: 90%;
+  border-spacing: 0;
+}
+table.analysis tr.headers {
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
+table.analysis tr:nth-child(1) th:nth-child(1) {
+  width: 122px;
+}
+table.analysis tr:nth-child(1) th:nth-child(2) {
+  width: 122px;
+}
+table.analysis tr:nth-child(1) th:nth-child(3) {
+  width: 194px;
+}
+table.analysis tr:nth-child(1) th:nth-child(4) {
+  width: 274px;
+}
+table.analysis tr {
+  text-transform: none;
+  margin: 7px 0;
+  font-size: 0.92em;
+}
+table.analysis tr th, table.analysis tr td {
+  text-align: center;
+  padding: 7px 0;
+}
+table.analysis tr:nth-child(even) {
+  background: #dde2e8;
+}
+table.analysis tr.severe td:nth-child(n+2) {
+  color: #ef5127;
+}
+table.analysis tr.moderate td:nth-child(n+2) {
+  color: #f6ae2d;
+}
+
+.page2 h2 {
+  margin-top: 0;
+  margin-bottom: 0.1em;
+}
+
+.foramen_analysis {
+  padding-bottom: 30px;
+}
+.foramen_analysis h3 {
+  font-size: 1.6em;
+  margin-bottom: 0.1em;
+}
+.foramen_analysis .findings {
+  width: 50%;
+}
+.foramen_analysis .findings .title {
+  text-transform: uppercase;
+}
+.foramen_analysis .findings .findings_txt {
+  margin-top: 1em;
+}
+.foramen_analysis .findings p {
+  text-transform: none;
+  font-size: 0.9em;
+  margin-bottom: 0.25em;
+}
+.foramen_analysis .findings .foramen_label {
+  font-weight: bold;
+}
+.foramen_analysis .findings .foramen_label.moderate {
+  color: #f6ae2d;
+}
+.foramen_analysis .findings .foramen_label.severe {
+  color: #ef5127;
+}
+
+.canal_analysis {
+  padding-bottom: 20px;
+  min-height: 240px;
+}
+.canal_analysis h3 {
+  font-size: 1.6em;
+  margin-top: 0.4em;
+  margin-bottom: 0.1em;
+}
+.canal_analysis .findings {
+  width: 50%;
+}
+.canal_analysis .findings .title {
+  text-transform: uppercase;
+}
+.canal_analysis .findings .findings_txt {
+  margin-top: 1em;
+}
+.canal_analysis .findings p {
+  text-transform: none;
+  font-size: 0.9em;
+  margin-bottom: 0.25em;
+}
+.canal_analysis .findings .canal_label {
+  font-weight: bold;
+}
+.canal_analysis .findings .canal_label.moderate {
+  color: #f6ae2d;
+}
+.canal_analysis .findings .canal_label.severe {
+  color: #ef5127;
+}
+
+.footer {
+  position: relative;
+  text-transform: none;
+}
+.footer .right {
+  position: absolute;
+  right: 0;
+}
+
+/* Styles for report_simple.html */
+.report_simple .analysis_table {
+  width: 38%;
+}
+
+.report_simple .canal_analysis {
+  height: 425px;
+}
+.report_simple .canal_analysis .findings {
+  width: 60%;
+}
+.report_simple .canal_analysis .findings .findings_txt {
+  min-height: 150px;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+.report_simple .canal_analysis .findings .sub_findings .recommendation {
+  width: 60%;
+}
+.report_simple .canal_analysis .findings .sub_findings .recommendation .surgical_header {
+  color: #505050;
+  font-size: 1em;
+  margin-top: 0.3em;
+}
+.report_simple .canal_analysis .findings .sub_findings .recommendation .surgical_header.surgery {
+  text-transform: none;
+  color: red;
+}
+.report_simple .canal_analysis .findings .sub_findings .recommendation .confidence {
+  margin-top: 0.5em;
+  text-transform: none;
+}
+.report_simple .canal_analysis .findings .sub_findings .recommendation .confidence::after {
+  display: block;
+  content: "";
+  clear: both;
+}
+.report_simple .canal_analysis .findings .sub_findings .recommendation .confidence .confidence_box {
+  height: 1.2em;
+  width: 0.74em;
+  border: 1px solid black;
+  float: left;
+  margin-right: 0.15em;
+}
+.report_simple .canal_analysis .findings .sub_findings .recommendation .confidence .confidence_box.green {
+  background: green;
+}
+.report_simple .canal_analysis .findings .sub_findings .recommendation .confidence .confidence_box.yellow {
+  background: yellow;
+}
+.report_simple .canal_analysis .findings .sub_findings .recommendation .confidence .confidence_box.red {
+  background: red;
+}
+.report_simple .canal_analysis .findings .sub_findings .recommendation .confidence p {
+  float: left;
+  line-height: 1.2em;
+  margin-left: 0.4em;
+}
+.report_simple .canal_analysis .findings .sub_findings .decision {
+  width: 38%;
+}
+.report_simple .canal_analysis .findings .sub_findings .decision .option::after {
+  display: block;
+  content: "";
+  clear: both;
+}
+.report_simple .canal_analysis .findings .sub_findings .decision .option .checkbox {
+  height: 1em;
+  width: 1em;
+  border: 1px solid black;
+  margin-right: 0.5em;
+  float: left;
+}
+.report_simple .canal_analysis .findings .sub_findings .decision .option p {
+  width: 200px;
+  display: block;
+  float: left;
+}
+
+/*# sourceMappingURL=styles.css.map */

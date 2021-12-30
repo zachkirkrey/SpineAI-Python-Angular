@@ -1,0 +1,12 @@
+webserver:
+  https:
+    enabled: false
+  password:
+    enabled: false
+restifyClient:
+  url: 'http://spineai-api:8080'
+backendService:
+  url: 'http://spineai-backend:8008'
+uploadService:
+  uploadDir: "/upload"
+

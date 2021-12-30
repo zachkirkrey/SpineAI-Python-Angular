@@ -1,0 +1,34 @@
+<div class="backdrop flex-column">
+
+    <div #dialog class="card">
+
+        <div class="header flex">
+
+            <p>Share</p>
+
+            <span class="flex-1">&nbsp;</span>
+
+            <button (click)="close(null)">
+                <i class="fa fa-close"></i>
+            </button>
+            
+        </div>
+
+        <div class="body flex-column">
+
+            <label>Email address <span>(optional)</span></label>
+            <input type="text" placeholder="example@domain.com" [(ngModel)]="data.email">
+
+            <label>Add a message <span>(optional)</span></label>
+            <textarea cols="30" rows="10" placeholder="Enter a message..." [(ngModel)]="data.message"></textarea>
+
+        </div>
+
+        <div class="actions flex">
+            <button class="button" (click)="close(null)">Cancel</button>
+            <button class="button" (click)="close(data)">Send Report</button>
+        </div>
+
+    </div>
+
+</div>

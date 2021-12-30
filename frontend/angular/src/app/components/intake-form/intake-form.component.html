@@ -1,0 +1,62 @@
+<form *ngIf="!uploading" [formGroup]="uploadForm">
+  <div class="row">
+    <div class="col-sm-12 col-xl-5">
+      <div class="form-group">
+        <label class="form-label">
+          <strong>Project name</strong>
+          (OPTIONAL)
+        </label>
+        <input type="text" class="form-control" formControlName="projectName" placeholder="Enter a name for this project">
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group mb-3">
+        <label class="form-label">
+          <strong>Upload a scan</strong>
+          (REQUIRED - DICOM files or .zip archive of DICOM files - <strong>MUST BE ANONYMIZED</strong>)
+        </label>
+        <input type="file" #file class="dropify" data-height="180" (change)="onFilesAdded()" multiple/>
+      </div>
+    </div>
+    <div class="col-sm-12 col-xl-6">
+      <div class="form-group">
+        <label class="form-label">
+          <strong>Patient demographics</strong>
+          (OPTIONAL)
+        </label>
+        <div class="col-sm-12 col-xl-5 pl-0 pr-0">
+          <input class="form-control mb-2" formControlName="age" placeholder="Age">
+          <input class="form-control mb-2" formControlName="height" placeholder="Height (inches)">
+          <select class="form-control" formControlName="sex" placeholder="Sex">
+            <option *ngFor="let sex of validSexValues" [ngValue]="sex">{{ sex }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <button class="custom-button" [disabled]="uploading || uploadSuccessful" (click)="uploadFiles()">
+        Analyze Data
+      </button>
+    </div>
+  </div>
+</form>
+<div *ngIf="uploading && !uploadError" class="processing-container">
+  <strong *ngIf="projectName">Processing data for {{ projectName }}</strong>
+  <strong *ngIf="!projectName">Processing data...</strong>
+  <p>{{ progressMsg }}</p>
+  <div class="progress progress-md my-5">
+    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" [style.width]="(progress | async) + '%'">
+        {{(progress | async) || 0}}%
+    </div>
+  </div>
+</div>
+<div *ngIf="uploadError" class="processing-container">
+  <strong>An error occurred.</strong>
+  <p>HTTP error code: {{ uploadErrorCode }}. See console for details. </p>
+  <div class="my-5">
+    <button class="custom-button outlined" (click)="tryAgain()">
+      <i class="fa fa-rotate-right"></i>
+      Try Again
+    </button>
+  </div>
+</div>

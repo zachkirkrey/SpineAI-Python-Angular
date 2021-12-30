@@ -1,0 +1,54 @@
+# Use this when the first row is used for column headers.
+input_ignore_first_row: True
+
+report_font_family: "Menlo"
+report_font_size: 12
+
+input_column_indicies:
+  # Basic Patient Info
+  mri_no: 1  # This value must be globally unique.
+  render_type: 2  # Either 'RAD' or 'SPINE'
+  classic_mri_report_text: 3
+
+  # SpineAI canal data.
+  canal_area_l1_l2: 4
+  stenosis_percentile_l1_l2: 5
+  canal_area_l2_l3: 6
+  stenosis_percentile_l2_l3: 7
+  canal_area_l3_l4: 8
+  stenosis_percentile_l3_l4: 9
+  canal_area_l4_l5: 10
+  stenosis_percentile_l4_l5: 11
+  canal_area_l5_s1: 12
+  stenosis_percentile_l5_s1: 13
+
+  # Research subject responses.
+  subject_referral: 14
+  subject_urgency: 15
+  subject_confidence: 16
+  subject_notes: 17
+
+input_column_labels:
+  mri_no: "MRI No"
+  render_type: "Show"
+  classic_mri_report_text: "MRI Text"
+
+  # SpineAI canal data.
+  canal_area_l1_l2: "Raw area in mm (L1/L2)"
+  stenosis_percentile_l1_l2: "Stenosis Percentile (L1/L2)"
+  canal_area_l2_l3: "Raw area in mm (L2/L3)"
+  stenosis_percentile_l2_l3: "Stenosis Percentile (L2/L3)"
+  canal_area_l3_l4: "Raw area in mm (L3/L4)"
+  stenosis_percentile_l3_l4: "Stenosis Percentile (L3/L4)"
+  canal_area_l4_l5: "Raw area in mm (L4/L5)"
+  stenosis_percentile_l4_l5: "Stenosis Percentile (L4/L5)"
+  canal_area_l5_s1: "Raw area in mm (L5/S1)"
+  stenosis_percentile_l5_s1: "Stenosis Percentile (L5/S1)"
+
+  # Research subject responses.
+  subject_referral: "Referral"
+  subject_urgency: "Urgency"
+  subject_confidence: "Confidence"
+  subject_notes: "Notes"
+
+

@@ -1,0 +1,9 @@
+<div class="bar"
+     [style.background]='"linear-gradient(to right, var(--primary-color) " + this.threshold_percentage + "%, var(--secondary-color) " + this.threshold_percentage + "%)"'></div>
+
+<div class="risk-tooltip" [style.left]="position">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span>{{score_percentage || "N/A"}}</span>
+</div>

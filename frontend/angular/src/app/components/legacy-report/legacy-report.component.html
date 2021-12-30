@@ -1,0 +1,32 @@
+<div class="d-flex justify-content-between">
+  <div>
+    <strong>Results</strong>
+    <div *ngIf="metadata">{{ metadata.name }}</div>
+  </div>
+  <div>
+    <a [href]="reportSimpleUrl">
+      <button class="custom-button">
+        <i class="fa fa-download"></i>
+        <span>PDF Report</span>
+      </button>
+    </a>
+    <a [href]="reportCSVUrl">
+      <button class="custom-button">
+        <i class="fa fa-th-list"></i>
+        <span>CSV Report</span>
+      </button>
+    </a>
+    <a [href]="viewerUrl">
+      <button id="viewer-button" class="custom-button">
+        <i class="fa fa-external-link"></i>
+        <span>Viewer</span>
+      </button>
+    </a>
+  </div>
+</div>
+<div class="report-container">
+  <div class="card mb-0 text-center">
+    <div *ngIf="errorStr">{{ errorStr }}</div>
+    <iframe *ngIf="reportSimpleUrl" [src]="reportSimpleUrl | safe" height="1000px"></iframe>
+  </div>
+</div>

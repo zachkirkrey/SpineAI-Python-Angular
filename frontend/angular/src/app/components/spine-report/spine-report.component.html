@@ -1,0 +1,102 @@
+<div class="topbar">
+
+  <h1>Spine AI Report
+    <ng-container *ngIf="studyName">
+      - {{ studyName }}
+    </ng-container>
+  </h1>
+
+  <!--
+    <div class="buttons">
+
+    <button #download class="button" (click)="openMenu($event)">
+    <i class="fa fa-download center"></i>
+    <span>Download</span>
+    <i class="fa fa-chevron-down center"></i>
+    </button>
+
+    <app-download-menu *ngIf="menu" @fadeInAndOut [el]="download" (onClose)="onMenuClose()">
+    <a menuButton>Download Report (PDF)</a>
+    <a menuButton>Export Areas (CSV)</a>
+    <a menuButton>Export Diametars (CSV)</a>
+    </app-download-menu>
+
+    <button class="button" (click)="openDialog($event)">
+    <i class="fa fa-share-alt"></i>
+    <span>Share</span>
+    </button>
+
+    </div>
+  -->
+</div>
+
+<section class="card" *ngIf="reportDone">
+
+  <div class="tabs flex">
+    <button class="flex-1" (click)="tab = 1" [ngClass]="{'active': tab === 1}">
+      <i class="fa fa-file"></i>
+      &nbsp;
+      Summary
+    </button>
+    <button class="flex-1" (click)="tab = 2" [ngClass]="{'active': tab === 2}">
+      <i class="fa fa-search-plus"></i>
+      &nbsp;
+      Details
+    </button>
+  </div>
+
+  <ng-container [ngSwitch]="tab">
+
+    <app-summary-tab
+      [report]="report"
+      [images]="images"
+      [sagittalImages]="sagittalImages"
+      @fadeInAndOut *ngSwitchCase="1">
+    </app-summary-tab>
+
+    <app-detail-tab
+      [report]="report"
+      [axialImages]="images"
+      [sagittalImages]="sagittalImages"
+      @fadeInAndOut *ngSwitchCase="2">
+    </app-detail-tab>
+
+  </ng-container>
+
+
+
+</section>
+
+<aside class="flex-column">
+  <div class="card recommendation" *ngIf="reportDone" [ngClass]="{'surgery': report.measurements.canal_narrowing.surgery_recommended == true}">
+    <h3>Recommendation</h3>
+    <p>Surgery consult<br />
+    <span><span *ngIf="report.measurements.canal_narrowing.surgery_recommended == false">not </span>recommended.</span>
+    </p>
+  </div>
+
+  <div class="card risk-score" *ngIf="reportDone">
+
+    <h3>Spine ai risk score <i class="fa fa-info-circle"></i></h3>
+
+    <app-spine-risk-score-bar
+      [score]="report.measurements.canal_narrowing.num_narrow_slices"
+      [threshold]="report.measurements.canal_narrowing.narrow_slices_threshold"></app-spine-risk-score-bar>
+
+  </div>
+
+  <!--
+  <div class="card">
+
+    <h3>risk factor <i class="fa fa-info-circle"></i></h3>
+
+    <app-risk-faktor-dropdown *ngFor="let item of [1,2,3]"></app-risk-faktor-dropdown>
+
+  </div>
+  -->
+</aside>
+
+
+<app-share-dialog *ngIf="share" @fadeInAndOut (onClose)="onDialogClose($event)">
+
+</app-share-dialog>

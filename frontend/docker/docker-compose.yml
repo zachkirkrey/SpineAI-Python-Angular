@@ -1,0 +1,27 @@
+# Build definitions for the SpineAI frontend services.
+#
+# For runtime definitions, see /docker/docker-compose.yml.
+
+version: '3.7'
+services:
+  spineai-api:
+    image: spineai/spineai-api:latest
+    build:
+      context: ..
+      dockerfile: docker/api.Dockerfile
+      cache_from:
+        - spineai/spineai-api:latest
+      labels:
+        - "maintainer=billy@spineai.com"
+  # TODO(billy): Add a directive to restart express in some interval to pick up
+  # renewed letsencrypt certificates.
+  spineai-frontend:
+    image: spineai/spineai-frontend:latest
+    build:
+      context: ..
+      dockerfile: docker/frontend.Dockerfile
+      cache_from:
+        - spineai/spineai-frontend:latest
+      labels:
+        - "maintainer=billy@spineai.com"
+

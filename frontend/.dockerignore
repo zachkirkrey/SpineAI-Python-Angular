@@ -1,0 +1,4 @@
+# Do not include local*.yml configuration files as they can overwrite environment ones.
+# See: https://github.com/lorenwest/node-config/wiki/Configuration-Files
+express/config/local*
+restify/config/local*

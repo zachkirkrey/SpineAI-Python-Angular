@@ -1,0 +1,16 @@
+webserver:
+  https:
+    enabled: true
+    redirectHTTP: true
+    certFile: "/etc/letsencrypt/live/spineai.com/fullchain.pem"
+    keyFile: "/etc/letsencrypt/live/spineai.com/privkey.pem"
+  password:
+    enabled: true
+    # NOTE(billy): We accept storing passwords in plaintext in git for dev.
+    # For prod, we should use a real secret storage for any secrets.
+    password: "$pine@idevelopmenttestuser!"
+restifyClient:
+  url: 'http://spineai-api:8080'
+uploadService:
+  uploadDir: "/upload"
+

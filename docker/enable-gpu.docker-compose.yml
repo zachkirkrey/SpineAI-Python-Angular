@@ -1,0 +1,11 @@
+# Overrides to enable GPU in spineai-backend.
+version: '3.7'
+services:
+  spineai-backend:
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: all
+            capabilities: [gpu]

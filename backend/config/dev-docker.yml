@@ -1,0 +1,9 @@
+spineai:
+  runtime:
+    input:
+      location: '/input'
+    storage:
+      engine: 'sqlite3'
+      location: '/database/database.sqlite3'
+  logging:
+    logfile: '/tmp/spineai_backend.log'

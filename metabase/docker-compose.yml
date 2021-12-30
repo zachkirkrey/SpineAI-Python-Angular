@@ -1,0 +1,46 @@
+version: '3.7'
+services:
+  nginx-metabase:
+    image: nginx
+    container_name: nginx-metabase
+    ports:
+      - "3000:3000"
+    volumes:
+      - type: bind
+        source: "./metabase.nginx.conf"
+        target: "/etc/nginx/conf.d/metabase.nginx.conf"
+      - type: volume
+        source: certbot-etc
+        target: "/etc/letsencrypt"
+        read_only: true
+      - type: volume
+        source: nginx-logs
+        target: "/logs/nginx"
+    networks:
+      - metabase-network
+  metabase:
+    image: metabase/metabase
+    container_name: metabase
+    networks:
+      - metabase-network
+    environment:
+      - MB_DB_FILE=/metabase-data/metabase.db
+    env_file:
+      - metabase.env
+    volumes:
+      - type: volume
+        source: "metabase-data"
+        target: "/metabase-data"
+      - type: bind
+        source: "./databases/"
+        target: "/databases/"
+
+networks:
+  metabase-network:
+
+volumes:
+  nginx-logs:
+  metabase-data:
+  certbot-etc:
+    # This volume is expected to be populated by the main SpineAI app.
+    name: spineai_certbot-etc

@@ -1,0 +1,29 @@
+webserver:
+  cors:
+    origin: false
+  session:
+    secret: '1234567890'
+  https:
+    enabled: false
+    redirectHTTP: false
+    certFile: "example.pem"
+    keyFile: "example-key.pem"
+  password:
+    enabled: true
+    password: "$pine@idevelopmenttestuser!"
+restifyClient:
+  url: 'http://localhost:8080'
+backendService:
+  url: 'http://localhost:8008'
+uploadService:
+  uploadDir: "./upload"
+  maxFileSize: 21474836480 # 20G
+oauth2:
+  isEnabled: false
+  appURI: ''
+  authURL: ''
+  authScopes: ''
+  clientId: ''
+  clientSecret: ''
+  redirectURI: ''
+  logoutRedirectURI: ''

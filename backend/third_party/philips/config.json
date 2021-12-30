@@ -1,0 +1,43 @@
+{
+  "PluginInfo": {
+    "Uid": "@Uid@",
+    "Name": "SpineAI",
+    "Version": "1.0",
+    "Author": "Billy Cao",
+    "Category": "Segmentation",
+    "ClassType": "Segmentation",
+    "PluginPath": "@PluginPath@",
+    "Copyright": "Theseus AI",
+    "Description": "Simplified SpineAI segmentor for Philips ISD",
+    "Enabled": true
+  },
+  "InputParameters": [
+    {
+      "Name": "input_series",
+      "Description": "DICOM series to segment in 1 or more files. Expects 1 DICOM series, either axial or sagittal.",
+      "ValueType": "dcm"
+    }
+  ],
+  "OutputParameters": [
+    {
+      "Name": "segmentation",
+      "Description": "Segmentaiton mask of given series: Foramina segmentation for sagittal series, canal segmentation for sagittal series.",
+      "ValueType": "mask"
+    },
+    {
+      "Name": "recommendation",
+      "Description": "SpineAI recommendation for surgical evaluation.",
+      "ValueType": "string"
+    }
+  ],
+  "ScriptConfig": {
+    "Language": "batch",
+    "LanguageVersion": "1.0",
+    "ExecutablePath": "@ExecutablePath@",
+    "Env": [],
+    "Command": "@PluginPath@",
+    "Args": [ "input_series" ],
+    "ArgsFormat": "spineai/spineai-philips:prod {0}"
+  },
+  "HostConfig": {}
+}

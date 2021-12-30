@@ -1,0 +1,56 @@
+# This Docker image provides all the components necessary to run the SpineAI
+# backend.
+
+# This is a convenience image that provides CUDA, python3, and tensorflow,
+# along with some other machine learning convenience libraries (eg. Conda),
+# built on ubuntu 18.04.3 LTS (bionic)
+FROM tensorflow/tensorflow:2.4.1-gpu
+
+WORKDIR /app
+
+VOLUME /database
+VOLUME /input
+VOLUME /logs
+
+# Install system requirements.
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+    git \
+    libfontconfig \
+    fontconfig \
+    libxrender1 \
+    xfonts-75dpi \
+    xvfb \
+    wget \
+    python3.6-venv \
+    && rm -rf /var/lib/apt/lists/*
+
+# We build wkhtmltox ourselves to include patched QT.
+COPY backend/deps ./deps
+RUN dpkg -i ./deps/wkhtmltox_0.12.5-1.bionic_amd64.deb
+
+# Copy large binary file requirements early to take advantage of Docker layer
+# caching.
+COPY backend/bin ./bin
+
+# Install python requirements with Poetry and pip.
+RUN python3 -m pip install --upgrade pip
+RUN python3 -m pip install --user poetry
+RUN python3 -m poetry config virtualenvs.create false
+COPY backend/pyproject.toml ./pyproject.toml
+# We reuse tensorflow already installed in the base Docker image.
+RUN sed -i '/tensorflow\ =/d' ./pyproject.toml
+RUN python3 -m poetry install --no-dev
+RUN python3 -m poetry run pip install --find-links=deps torchvision
+
+# We copy individual folders to preserve directory structure.
+COPY backend/README.md ./README.md
+COPY backend/report_templates ./report_templates
+COPY backend/runtime ./runtime
+COPY backend/lib ./lib
+COPY backend/config ./config
+COPY backend/app.py .
+
+COPY types/spine-report.schema.json ../types/spine-report.schema.json
+
+ENV ENV="dev-docker"
+ENTRYPOINT ["python3", "app.py"]

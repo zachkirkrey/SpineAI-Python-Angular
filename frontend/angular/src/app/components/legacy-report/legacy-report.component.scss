@@ -1,0 +1,25 @@
+@import 'src/assets/sass/variables';
+
+.report-container {
+  padding: 35px 50px 0;
+  margin-top: 25px;
+  background-color: $greyBg;
+  border: 1px solid $dividerColor;
+  border-radius: $borderRadius;
+
+  .card {
+    height: 700px;
+  }
+}
+
+.custom-button {
+  margin-left: .2em;
+}
+
+button#viewer-button {
+  margin-left: .6em;
+}
+
+iframe {
+  margin-bottom: .5em;
+}

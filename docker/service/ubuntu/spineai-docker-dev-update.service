@@ -1,0 +1,13 @@
+# /etc/systemd/system/spineai-docker.dev.service
+
+[Unit]
+Description=Update SpineAI
+Requires=docker.service
+Before=spineai-docker-dev.service
+
+[Service]
+ExecStart=/opt/spineai/spineai/docker/service/ubuntu/spineai-docker-dev-update.ubuntu.sh
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target

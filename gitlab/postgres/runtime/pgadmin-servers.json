@@ -1,0 +1,17 @@
+{
+	"Servers": {
+		"1": {
+			"Name": "GitLab Server",
+			"Group": "Continuous Integration",
+			"Host": "postgres-gitlab",
+			"Port": 5432,
+			"MaintenanceDB": "gitlab",
+			"Username": "postgres",
+			"SSLMode": "prefer",
+			"Comment": "PostgreSQL for GitLab CI/CD.",
+			"SSLCert": "/etc/letsencrypt/live/spineai.com/fullchain.pem",
+			"SSLKey": "/etc/letsencrypt/live/spineai.com/privkey.pem",
+			"Timeout": 60
+		}
+	}
+}
