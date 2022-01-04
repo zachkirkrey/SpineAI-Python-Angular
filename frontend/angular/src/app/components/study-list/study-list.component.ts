@@ -44,6 +44,7 @@ export class StudyListComponent implements OnInit {
         this.index_error = data['error'];
       } else {
         this.index = data;
+        console.log("index", this.index);
         data.forEach(element => {
           element.Reports = element.Reports.filter(report => report.type == 'PDF_SIMPLE');
           element.Reports.sort(sort_by_creation);

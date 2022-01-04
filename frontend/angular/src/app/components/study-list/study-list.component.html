@@ -2,7 +2,32 @@
   <div class="row">
     <div class="col-12">
       <div id="page-header">
-        <label>
+        <button mat-button [matMenuTriggerFor]="menu">Exports:</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&count=1000" target="_top" class="custom-button">
+              <i class="fa fa-download"></i>
+              <span>Area CSV</span>
+          </a>
+          </button>
+          <button mat-menu-item>
+            <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_heights&count=1000" target="_top" class="custom-button">
+              <i class="fa fa-download"></i>
+              <span>Vertical Diameter CSV</span>
+          </a>
+          </button>
+          <button mat-menu-item>
+            <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_widths&count=1000" target="_top" class="custom-button">
+              <i class="fa fa-download"></i>
+              <span>Horizontal Diameter CSV</span>
+          </a>
+          </button>
+        </mat-menu>
+
+
+        <button mat-button color="primary">show</button>
+
+        <!-- <label>
           <strong>Exports: </strong>
         </label>
         <br />
@@ -19,13 +44,16 @@
         <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_widths&count=1000" target="_top" class="custom-button">
             <i class="fa fa-download"></i>
             <span>Horizontal Diameter CSV</span>
-        </a>
+        </a> -->
+
+       
 
       </div>
       <div class="spinner-wrapper" *ngIf="!index_complete">
+        
         <!-- This weird tree of divs is required for CSS only spinner -->
         <div class="box-spinner"><div></div><div></div><div></div></div>
-      </div>
+              </div>
       <div class="error" *ngIf="index_error">
         <span>Error: {{ index_error }}</span>
       </div>

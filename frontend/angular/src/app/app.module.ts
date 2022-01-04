@@ -7,10 +7,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Router, Routes } from '@angular/router';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatButtonModule} from '@angular/material/button';
 
 import { NgPipesModule } from 'ngx-pipes';
 
 import { AppComponent } from './app.component';
+import {MatMenuModule} from '@angular/material/menu';
 
 import { DebugInfoComponent } from './components/debug-info/debug-info.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
@@ -52,8 +54,10 @@ const appRoutes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    MatButtonModule,
     HttpClientModule,
     MatDatepickerModule,
+    MatMenuModule,
     MatNativeDateModule,
     NgPipesModule,
     ReactiveFormsModule,
