@@ -33,13 +33,13 @@ RUN dpkg -i ./deps/wkhtmltox_0.12.5-1.bionic_amd64.deb
 COPY backend/bin ./bin
 
 # Install python requirements with Poetry and pip.
-RUN python3 -m pip install --upgrade pip
+RUN python3 -m pip install --upgrade pip    
 RUN python3 -m pip install --user poetry
 RUN python3 -m poetry config virtualenvs.create false
 COPY backend/pyproject.toml ./pyproject.toml
 # We reuse tensorflow already installed in the base Docker image.
 RUN sed -i '/tensorflow\ =/d' ./pyproject.toml
-RUN python3 -m poetry install --no-dev
+RUN python3 -m poetry install --no-dev 
 RUN python3 -m poetry run pip install --find-links=deps torchvision
 
 # We copy individual folders to preserve directory structure.

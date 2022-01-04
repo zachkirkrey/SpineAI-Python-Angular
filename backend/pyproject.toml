@@ -17,13 +17,13 @@ pony = "^0.7"
 checksumdir = "^1.1.7"
 tensorflow = "^2.2"
 imread = "^0.7.4"
-simpleitk = {path = "deps/SimpleITK-2.0.2-cp36-cp36m-manylinux1_x86_64.whl"}
+#simpleitk = {path = "deps/SimpleITK-2.0.2-cp36-cp36m-manylinux1_x86_64.whl"}
 webpage2html = {git = "https://github.com/zTrix/webpage2html.git"}
 beautifulsoup4 = "^4.9.1"
 lxml = "^4.5.1"
 requests = "^2.23.0"
 termcolor = "^1.1.0"
-torch = {path = "deps/torch-1.7.1+cu110-cp36-cp36m-linux_x86_64.whl"}
+#torch = {path = "deps/torch-1.7.1+cu110-cp36-cp36m-linux_x86_64.whl"}
 # Unfortunately, since torchvision depends on torch "1.7.1" but we are installing
 # torch "1.7.1+cu110", poetry considers this invalid, so we have to manually
 # manage this dependency ourselves.
@@ -34,13 +34,13 @@ torch = {path = "deps/torch-1.7.1+cu110-cp36-cp36m-linux_x86_64.whl"}
 # https://github.com/pytorch/vision/issues/2310
 #
 # torchvision = {path = "deps/torchvision-0.8.2+cu110-cp36-cp36m-linux_x86_64.whl"}
-xsegment = {path = "deps/xsegment-0.1.3-py3-none-any.whl"}
+#xsegment = {path = "deps/xsegment-0.1.3-py3-none-any.whl"}
 dataclasses = "0.6"
 pyyaml = "^5.4.1"
 pypng = "^0.0.20"
 jsonschema = "^3.2.0"
-levelfinder = {path = "deps/levelfinder-0.0.1-py3-none-any.whl"}
-config2 = {path = "deps/config2-0.3.2-py3-none-any.whl"}
+#levelfinder = {path = "deps/levelfinder-0.0.1-py3-none-any.whl"}
+#config2 = {path = "deps/config2-0.3.2-py3-none-any.whl"}
 pynetdicom = "^1.5.7"
 
 [tool.poetry.dev-dependencies]
