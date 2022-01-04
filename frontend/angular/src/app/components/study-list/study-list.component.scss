@@ -67,8 +67,16 @@
   .export-wrap {
     position: absolute;
     right: 0;
+    display: flex;
+    display: -ms-flexbox;
+    align-items: center;
     .toggle_button{
      margin-right:200px;
     }
   }
+ 
 }
+.export-wrap mat-checkbox#mat-checkbox-1 {
+  color: red;
+}
+

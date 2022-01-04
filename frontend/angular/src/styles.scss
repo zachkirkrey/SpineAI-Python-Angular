@@ -70,3 +70,24 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 div#reports_table_wrapper .col-sm-12.col-md-4:first-child {
     order: 1;
 }
+
+.export-btn.mat-button {
+  background-color: #376fb6;
+  color: #fff;
+}
+.export-btn-list {
+  a.custom-button {
+    color: #505050;
+    background: #fff;
+    padding: 0;
+    &:hover {
+      background: transparent;
+      opacity: 0.6;
+      text-decoration: none;
+    }
+  }
+  button:hover {
+    background: transparent !important;
+  }
+
+}

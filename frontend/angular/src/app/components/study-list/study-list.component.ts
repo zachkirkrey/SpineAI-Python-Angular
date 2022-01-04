@@ -11,6 +11,8 @@ import { environment } from 'src/environments/environment';
 })
 export class StudyListComponent implements OnInit {
 
+
+  isShown = false;
   constructor(
     private exportService: ExportService) { }
 
@@ -58,6 +60,9 @@ export class StudyListComponent implements OnInit {
     });
   }
 
+  toggleShow() {
+    this.isShown = ! this.isShown;
+    }
   ngAfterViewInit() {
     // Ellipsis renderer for datatables.net from
     // https://datatables.net/blog/2016-02-26.
