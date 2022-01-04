@@ -34,30 +34,31 @@
         <span>Error: {{ index_error }}</span>
       </div>
       <div class="table-responsive">
-        <button mat-button [matMenuTriggerFor]="menu">Exports:</button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>
-            <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&count=1000" target="_top" class="custom-button">
-              <i class="fa fa-download"></i>
-              <span>Area CSV</span>
-          </a>
-          </button>
-          <button mat-menu-item>
-            <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_heights&count=1000" target="_top" class="custom-button">
-              <i class="fa fa-download"></i>
-              <span>Vertical Diameter CSV</span>
-          </a>
-          </button>
-          <button mat-menu-item>
-            <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_widths&count=1000" target="_top" class="custom-button">
-              <i class="fa fa-download"></i>
-              <span>Horizontal Diameter CSV</span>
-          </a>
-          </button>
-        </mat-menu>
-
-
-        <button mat-button color="primary">show</button>
+        <div class="export-wrap">
+          <button mat-button color="primary"  class="toggle_button">show</button>
+          <button mat-button [matMenuTriggerFor]="menu">Exports:</button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&count=1000" target="_top" class="custom-button">
+                <i class="fa fa-download"></i>
+                <span>Area CSV</span>
+            </a>
+            </button>
+            <button mat-menu-item>
+              <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_heights&count=1000" target="_top" class="custom-button">
+                <i class="fa fa-download"></i>
+                <span>Vertical Diameter CSV</span>
+            </a>
+            </button>
+            <button mat-menu-item>
+              <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_widths&count=1000" target="_top" class="custom-button">
+                <i class="fa fa-download"></i>
+                <span>Horizontal Diameter CSV</span>
+            </a>
+            </button>
+          </mat-menu>
+          
+        </div>
 
         <table id="reports_table"
                class="table table-striped table-bordered"

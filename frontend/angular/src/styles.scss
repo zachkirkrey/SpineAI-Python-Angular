@@ -53,3 +53,20 @@ strong {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// 4-1-2022
+.dataTables_length{ 
+  label {
+    display: flex;
+    display: -ms-flexbox;
+    align-items: center;
+      select.custom-select {
+        max-width: 100px;
+        margin: 0 10px;
+      }
+  }
+}
+
+div#reports_table_wrapper .col-sm-12.col-md-4:first-child {
+    order: 1;
+}

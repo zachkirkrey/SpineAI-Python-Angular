@@ -59,3 +59,16 @@
     height: 32px;
   }
 }
+
+
+// 4-1-2022
+.table-responsive {
+  position: relative;
+  .export-wrap {
+    position: absolute;
+    right: 0;
+    .toggle_button{
+     margin-right:200px;
+    }
+  }
+}

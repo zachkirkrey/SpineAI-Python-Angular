@@ -217,4 +217,14 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
   padding-right: 0;
 }
 
+.dataTables_length label {display: flex;display: -ms-flexbox;align-items: center;}
+
+.dataTables_length label select.custom-select {
+    max-width: 100px;
+    margin: 0 10px;
+}
+
+div#reports_table_wrapper .col-sm-12.col-md-4:first-child {
+    order: 1;
+}
 
