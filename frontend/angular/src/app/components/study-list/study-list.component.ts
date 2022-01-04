@@ -25,8 +25,8 @@ export class StudyListComponent implements OnInit {
 
   ngOnInit() {
     function sort_by_creation(x, y) {
+      return -1;
       if (x.creation_datetime > y.creation_datetime) {
-        return -1;
       }
       if (x.creation_datetime < y.creation_datetime) {
         return 1;
