@@ -80,11 +80,11 @@
   color: #333;
 }
 
-div#reports_table_wrapper>.row:first-child {
+div#reports_table_wrapper>.row:nth-child(1) {
   display: flex;
 }
 
-div#reports_table_wrapper>.row:first-child div {
+div#reports_table_wrapper>.row:nth-child(1) div {
   width: auto;
   max-width: initial;
   flex: initial;

@@ -91,3 +91,25 @@ div#reports_table_wrapper .col-sm-12.col-md-4:first-child {
   }
 
 }
+
+
+div#reports_table_wrapper>.row:nth-child(1) {
+  display: flex;
+}
+
+div#reports_table_wrapper>.row:nth-child(1) div {
+  width: auto;
+  max-width: initial;
+  flex: initial;
+}
+.export-btn.mat-button {
+  margin-left: 15px;
+}
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: #376fb6;
+}
+
+.table-responsive .export-wrap {
+  justify-content: space-between;
+  width: 575px;
+}
