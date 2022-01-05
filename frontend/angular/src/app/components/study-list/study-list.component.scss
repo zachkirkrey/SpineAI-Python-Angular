@@ -77,6 +77,15 @@
  
 }
 .export-wrap mat-checkbox#mat-checkbox-1 {
-  color: red;
+  color: #333;
 }
 
+div#reports_table_wrapper>.row:first-child {
+  display: flex;
+}
+
+div#reports_table_wrapper>.row:first-child div {
+  width: auto;
+  max-width: initial;
+  flex: initial;
+}
