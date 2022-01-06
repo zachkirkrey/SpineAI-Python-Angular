@@ -55,8 +55,8 @@ export class StudyListComponent implements OnInit {
             if ('error' in data) {
                 this.index_error = data['error'];
             } else {
-                //this.report_index = data;
-                this.report_index = [{ 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }, { 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }, { 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }, { 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }]
+                this.report_index = data;
+                //this.report_index = [{ 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }, { 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }, { 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }, { 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }]
                 console.log("index", this.report_index);
                 data.forEach(element => {
                     element.Reports = element.Reports.filter(report => report.type == 'PDF_SIMPLE');
@@ -86,7 +86,7 @@ export class StudyListComponent implements OnInit {
         } else{
             this.dep =[]
             const obj=   {
-                'time': moment(new Date()).format('DD/MM/YY hh:m'),
+                'time': moment(new Date()).format('DD/MM/YY hh:mm'),
                 'name': value
             }
             this.dep.push(obj);
