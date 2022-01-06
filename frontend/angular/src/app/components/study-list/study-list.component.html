@@ -97,7 +97,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr #report_rows *ngFor="let metadata of report_index; let i = index" [attr.data-index]="i">
+                        <tr #report_rows *ngFor="let metadata of index; let i = index" [attr.data-index]="i">
                            <td>{{ metadata.creation_datetime }}</td>
                             <td>{{ metadata.name }}</td>
                             <td *ngIf="isShown == true">{{ metadata.patient_name }}</td>

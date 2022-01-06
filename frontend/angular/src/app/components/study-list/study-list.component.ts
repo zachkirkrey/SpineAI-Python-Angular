@@ -20,8 +20,8 @@ export class StudyListComponent implements OnInit {
     readonly api_url = environment.api_url;
     readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports`;
 
-    old_index=0
-    report_index = [];
+    old_index = 0
+    index = [];
     index_complete = false;
     index_error: string;
     section: string = '';
@@ -30,7 +30,7 @@ export class StudyListComponent implements OnInit {
     action = []
     report_action = []
     action_index = []
-   actionList = ['Scheduled for Clinic', 'Surgery', 'Additional Testing', 'Injections', 'Physical Therapy', 'RTC/DC', 'Referral']
+    actionList = ['Scheduled for Clinic', 'Surgery', 'Additional Testing', 'Injections', 'Physical Therapy', 'RTC/DC', 'Referral']
 
     @ViewChildren('report_rows') report_rows: QueryList<any>;
 
@@ -55,9 +55,9 @@ export class StudyListComponent implements OnInit {
             if ('error' in data) {
                 this.index_error = data['error'];
             } else {
-                this.report_index = data;
-                //this.report_index = [{ 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }, { 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }, { 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }, { 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }]
-                console.log("index", this.report_index);
+                this.index = data;
+                //this.index = [{ 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }, { 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }, { 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }, { 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }]
+                console.log("index", this.index);
                 data.forEach(element => {
                     element.Reports = element.Reports.filter(report => report.type == 'PDF_SIMPLE');
                     element.Reports.sort(sort_by_creation);
@@ -75,25 +75,25 @@ export class StudyListComponent implements OnInit {
     new_index: any;
     actionValues(value, index) {
         this.new_index = index
-        if(this.new_index === this.old_index){
-         const obj=   {
-                'time': moment(new Date()).format('DD/MM/YY hh:m'),
+        if (this.new_index === this.old_index) {
+            const obj = {
+                'time': moment(new Date()).format("DD/MM/YY hh:mm a"),
                 'name': value
             }
             this.dep.push(obj);
             this.old_index = this.new_index
-            this.report_action[index]= this.dep
-        } else{
-            this.dep =[]
-            const obj=   {
-                'time': moment(new Date()).format('DD/MM/YY hh:mm'),
+            this.report_action[index] = this.dep
+        } else {
+            this.dep = []
+            const obj = {
+                'time': moment(new Date()).format("DD/MM/YY hh:mm a"),
                 'name': value
             }
             this.dep.push(obj);
-            this.report_action[index]=this.dep
+            this.report_action[index] = this.dep
             this.old_index = this.new_index
         }
-        console.log('Indexx',this.report_action)
+        console.log('Indexx', this.report_action)
     }
 
     toggleDisplay(event) {
@@ -216,7 +216,7 @@ export class StudyListComponent implements OnInit {
     }
 
     public exportCSV() {
-        let csvContent = this.exportService.getCsvExport(this.report_index);
+        let csvContent = this.exportService.getCsvExport(this.index);
         let encodedUri = encodeURI(csvContent);
         let link = document.createElement('a');
         link.setAttribute('href', encodedUri);
