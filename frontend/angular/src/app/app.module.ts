@@ -9,6 +9,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatIconModule} from '@angular/material/icon';
 
 import { NgPipesModule } from 'ngx-pipes';
 
@@ -20,6 +21,7 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { IntakeFormComponent } from './components/intake-form/intake-form.component';
 import { LegacyReportComponent, LegacyReportData, SafePipe } from './components/legacy-report/legacy-report.component';
 import { StudyListComponent } from './components/study-list/study-list.component';
+
 
 import * as $ from 'jquery';
 import { FetchFormComponent } from './components/fetch-form/fetch-form.component';
@@ -59,6 +61,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     MatDatepickerModule,
     MatCheckboxModule,
+    MatIconModule,
     MatMenuModule,
     MatNativeDateModule,
     NgPipesModule,

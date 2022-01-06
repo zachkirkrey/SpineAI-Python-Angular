@@ -86,14 +86,14 @@
                             <th>Patient Name</th>
                             <th>Report</th>
                             <th>Recommendation</th>
-                            <th>Action</th>
+                            <th style="min-width: 200px;">Action</th>
                         </tr>
                         <tr *ngIf="isShown == false">
                             <th>Created</th>
                             <th>Project Name</th>
                             <th>Report</th>
                             <th>Recommendation</th>
-                            <th>Action</th>
+                            <th style="min-width: 200px;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -133,6 +133,9 @@
                                         {{item}}
                                     </option>
                                 </select>
+                                <span style="margin-left: 5px;">
+                                    <img width="15px" src="assets/img/save_icon.png" alt=""/>
+                                </span>
                                 <ul *ngIf="action[i]">
                                 <li *ngFor="let report of report_action[i]">
                                     {{report.time}} {{report.name}}

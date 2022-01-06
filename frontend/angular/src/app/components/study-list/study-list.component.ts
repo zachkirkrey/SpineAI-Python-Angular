@@ -206,7 +206,8 @@ export class StudyListComponent implements OnInit {
                     // Render Study UID with ellipsis.
                     targets: 2,
                     render: render_ellipsis(15, true, false, false)
-                }]
+                }],
+                destroy: false
             });
 
             $('#reports_table').on('draw.dt', load_recommendation);
