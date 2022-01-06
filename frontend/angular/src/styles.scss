@@ -55,7 +55,7 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 // 4-1-2022
-.dataTables_length{ 
+.dataTables_length{
   label {
     display: flex;
     display: -ms-flexbox;
@@ -135,3 +135,27 @@ div#reports_table_wrapper>.row:nth-child(1) div {
   line-height: 30px;
 }
 
+
+//6-1-2022
+table#reports_table select {
+    padding: 5px;
+    border: 1px solid #ced4da;
+    background: #fff;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    -webkit-appearance: none;
+  -moz-appearance: none;
+    background-image: url(assets/img/select-arrow.png);
+    background-repeat: no-repeat;
+    background-position: calc(100% - 5px);
+    background-size: 10px;
+    width: 100%;
+
+}
+table#reports_table select::-ms-expand {
+    display: none;
+}
+table#reports_table ul li {
+    font-size: 12px;
+    margin: 5px 0;
+}
