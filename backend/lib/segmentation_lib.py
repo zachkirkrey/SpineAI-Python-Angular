@@ -269,10 +269,6 @@ class CanalSegmentationMixin(Segmentation):
     def get_expected_areas(self, age, height, sex):
         """Returns expected canal areas for the given demographic.
 
-        Model parameters sent directly by Bilwaj Gaonkar. See:
-        https://docs.google.com/document/d/0B-IB07_tW7guNzN0Ti1CQWtNQmJSSTc0U0R5eXRsTlo4WUg0/edit
-        (Document is TheseusAI internal)
-
         Args:
             age: (float|int) Patient's age, in years.
             height: (int|float) Patient's height, in inches.
@@ -431,10 +427,6 @@ class ForamenSegmentationMixin(Segmentation):
         error of the residuals of the population model explained and estimated
         in get_expected_areas().
 
-        These values are pulled from:
-        https://docs.google.com/document/d/1k3wmpKsVBcNxfAIkxwr-4-xfJHdQw5lXmlU4PoLTaEc/edit
-        (TheseusAI internal)
-
         Returns:
             {'left': list(float), 'right': list(float)} Std. dev.s for foramina
                 areas for L5/S1 -> L1/L2.
@@ -448,10 +440,6 @@ class ForamenSegmentationMixin(Segmentation):
         """Gets the population median values for the L1-L5 foramina size.
 
         See paper: https://pubs.rsna.org/doi/full/10.1148/ryai.2019180037
-
-        Additional values (including intercept and std. error):
-        https://docs.google.com/document/d/1k3wmpKsVBcNxfAIkxwr-4-xfJHdQw5lXmlU4PoLTaEc/edit?usp=sharing
-        (TheseusAI internal)
 
         Args:
             age: (int) Integer value of patient's age.

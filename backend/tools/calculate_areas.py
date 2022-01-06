@@ -21,8 +21,7 @@ def main():
     args = parser.parse_args()
 
     # This tool was originally built for the hand segmented images in the UCLA_Validation_500 set, as
-    # described in https://docs.google.com/spreadsheets/d/1K2_17TCEqDgiO2siibRegntfB_HGak7u3Hw834c1Hw0/edit#gid=0
-
+    
     outputs = {}
 
     reader = SimpleITK.ImageSeriesReader()
