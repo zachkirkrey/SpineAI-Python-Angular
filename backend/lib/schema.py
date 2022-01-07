@@ -137,6 +137,7 @@ class Study(db.Entity, StudyMixin):
     image_series = Set('ImageSeries')
 
     reports = Set('Report')
+    action = Set('Action')
 
     @property
     def patient_series(self):
@@ -406,4 +407,11 @@ class ApiLog(db.Entity):
     object_type = Optional(str)
     object_id = Optional(str)
     object_uuid = Optional(str)
+
+
+class Action(db.Entity):
+    id = PrimaryKey(int, auto=True)
+    name = Required(str)
+    creation_datetime = Required(datetime, default=datetime.now)
+    study = Required(Study)
 
