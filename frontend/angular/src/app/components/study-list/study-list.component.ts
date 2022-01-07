@@ -64,15 +64,15 @@ export class StudyListComponent implements OnInit {
         });
     }
 
-    saveAction(id) {
+    saveAction(id, index) {
         let report_Arr = []
-        report_Arr = this.report_action[0]
+        report_Arr = this.report_action[index]
         report_Arr.forEach(element => {
-            this.callSaveAPi(element.name, element.time, id)
+            this.callSaveAPI(element.name, element.time, id)
         });
     }
 
-    callSaveAPi(name, time, study_id) {
+    callSaveAPI(name, time, study_id) {
         let req_data = {
             "name": name,
             "creation_datetime": time,
@@ -194,6 +194,7 @@ export class StudyListComponent implements OnInit {
 
         this.report_rows.changes.subscribe(t => {
             $('#reports_table').DataTable({
+                retrieve: true,
                 pageLength: 25,
                 order: [[0, 'desc']],
                 columnDefs: [{

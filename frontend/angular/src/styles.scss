@@ -187,7 +187,7 @@ table#reports_table td:last-child {
   max-width: 120px;
 }
 
-select.ng-untouched.ng-pristine.ng-valid {
+table#reports_table select {
   width: 75%;
   margin-right: 10px;
 }
@@ -198,6 +198,7 @@ select.ng-untouched.ng-pristine.ng-valid {
 
 .save-icon {
   margin-left: 5px;
+  cursor: pointer;
 }
 
 div#reports_table_length select {

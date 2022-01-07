@@ -1,22 +1,24 @@
 <div class="spinner-wrapper" *ngIf="!tableReady">
-  <!-- This weird tree of divs is required for CSS only spinner -->
-  <div class="box-spinner"><div></div><div></div><div></div></div>
+    <!-- This weird tree of divs is required for CSS only spinner -->
+    <div class="box-spinner">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
 </div>
-<div style="margin-top: 15px">
-  <table id="ingestions_table"
-         class="table table-striped table-bordered"
-         *ngIf="tableReady && ingestions.length">
-      <thead>
-        <th>Accession Number</th>
-        <th>Created</th>
-        <th>State</th>
-      </thead>
-      <tbody>
-        <tr #ingestion_rows *ngFor="let ingestion of ingestions">
-          <td>{{ ingestion.accession_number }}</td>
-          <td>{{ ingestion.creation_datetime }}</td>
-          <td>{{ ingestion.state }}</td>
-        </tr>
-      </tbody>
+<div class="table-responsive" style="margin-top: 15px">
+    <table id="ingestions_table" class="table table-striped table-bordered" *ngIf="tableReady && ingestions.length">
+        <thead>
+            <th>Accession Number</th>
+            <th>Created</th>
+            <th>State</th>
+        </thead>
+        <tbody>
+            <tr #ingestion_rows *ngFor="let ingestion of ingestions">
+                <td>{{ ingestion.accession_number }}</td>
+                <td>{{ ingestion.creation_datetime }}</td>
+                <td>{{ ingestion.state }}</td>
+            </tr>
+        </tbody>
     </table>
 </div>
