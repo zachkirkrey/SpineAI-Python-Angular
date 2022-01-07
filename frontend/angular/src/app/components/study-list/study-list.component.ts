@@ -1,7 +1,5 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-
 import { ExportService } from 'src/app/services/export/export.service';
-
 import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
 
@@ -12,11 +10,7 @@ import * as moment from 'moment';
 })
 export class StudyListComponent implements OnInit {
 
-
-
-    constructor(
-        private exportService: ExportService) { }
-
+    constructor(private exportService: ExportService) { }
     readonly api_url = environment.api_url;
     readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports`;
 
@@ -30,8 +24,9 @@ export class StudyListComponent implements OnInit {
     action = []
     report_action = []
     action_index = []
+    dep = []
+    new_index: any;
     actionList = ['Scheduled for Clinic', 'Surgery', 'Additional Testing', 'Injections', 'Physical Therapy', 'RTC/DC', 'Referral']
-
     @ViewChildren('report_rows') report_rows: QueryList<any>;
 
     ngOnInit() {
@@ -56,12 +51,10 @@ export class StudyListComponent implements OnInit {
                 this.index_error = data['error'];
             } else {
                 this.index = data;
-                //this.index = [{ 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }, { 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }, { 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }, { 'creation_datetime': '2021-12-16', 'name': 'dicom_ucla', 'patient_name': 'Anonymous', 'Reports': [], 'id': '656' }]
                 console.log("index", this.index);
                 data.forEach(element => {
                     element.Reports = element.Reports.filter(report => report.type == 'PDF_SIMPLE');
                     element.Reports.sort(sort_by_creation);
-                    //element.CanalSegmentations.sort(sort_by_creation);
                 });
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
@@ -71,8 +64,7 @@ export class StudyListComponent implements OnInit {
         });
     }
 
-    dep = []
-    new_index: any;
+
     actionValues(value, index) {
         this.new_index = index
         if (this.new_index === this.old_index) {
@@ -98,8 +90,6 @@ export class StudyListComponent implements OnInit {
 
     toggleDisplay(event) {
         console.log("event", event);
-        // this.visibility = false;
-        // this.isShown = false;
         if (event.checked == true) {
             this.isShown = false;
             this.section = 'Show patient name';
@@ -107,25 +97,7 @@ export class StudyListComponent implements OnInit {
             this.isShown = true;
             this.section = 'Hide patient name';
         }
-        // this.isShown=!this.isShown;
-        // console.log("show", this.isShown);
-        // if(this.isShown) {
-        //  this.section = 'Show patient name';
-        // } else if(!this.isShown) {
-        //   this.section = 'Hide patient name';
-
-        // }
     }
-
-
-    // boggleDisplay(){
-    //  this.isShown = true;
-    //  this.visibility = true;
-    //  console.log("show", this.isShown);
-
-    // }
-
-
     ngAfterViewInit() {
         // Ellipsis renderer for datatables.net from
         // https://datatables.net/blog/2016-02-26.
@@ -209,9 +181,7 @@ export class StudyListComponent implements OnInit {
                 }],
                 destroy: false
             });
-
             $('#reports_table').on('draw.dt', load_recommendation);
-
             load_recommendation();
         });
     }

@@ -2,32 +2,8 @@
     <div class="row">
         <div class="col-12">
             <div id="page-header">
-
-                <!-- <label>
-          <strong>Exports: </strong>
-        </label>
-        <br />
-        <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&count=1000" target="_top" class="custom-button">
-            <i class="fa fa-download"></i>
-            <span>Area CSV</span>
-        </a>
-        <br />
-        <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_heights&count=1000" target="_top" class="custom-button">
-            <i class="fa fa-download"></i>
-            <span>Vertical Diameter CSV</span>
-        </a>
-        <br />
-        <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_widths&count=1000" target="_top" class="custom-button">
-            <i class="fa fa-download"></i>
-            <span>Horizontal Diameter CSV</span>
-        </a> -->
-
-
-
             </div>
             <div class="spinner-wrapper" *ngIf="!index_complete">
-
-                <!-- This weird tree of divs is required for CSS only spinner -->
                 <div class="box-spinner">
                     <div></div>
                     <div></div>
@@ -40,37 +16,26 @@
             <div class="table-responsive">
 
                 <div class="export-wrap">
-
-                    <!-- <section class="example-section toggle_button">
-            <mat-checkbox class="example-margin" (click)="toggleDisplay()"></mat-checkbox>
-          </section> -->
                     <section class="example-section" *ngIf="visibility">
                         <mat-checkbox class="example-margin" (change)="toggleDisplay($event)">{{section}}</mat-checkbox>
                     </section>
-                    <!-- <section class="example-section" *ngIf="!visibility">
-            <mat-checkbox class="example-margin" (change)="boggleDisplay()">Show</mat-checkbox>
-          </section> -->
-
                     <button class="export-btn" mat-button [matMenuTriggerFor]="menu">Exports</button>
                     <mat-menu class="export-btn-list custom-export-btn" #menu="matMenu">
                         <button mat-menu-item>
                             <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&count=1000"
                                 target="_top" class="custom-button">
-                                <!-- <i class="fa fa-download"></i> -->
                                 <span>Area </span>
                             </a>
                         </button>
                         <button mat-menu-item>
                             <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_heights&count=1000"
                                 target="_top" class="custom-button">
-                                <!-- <i class="fa fa-download"></i> -->
                                 <span>Vertical Diameter </span>
                             </a>
                         </button>
                         <button mat-menu-item>
                             <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_widths&count=1000"
                                 target="_top" class="custom-button">
-                                <!-- <i class="fa fa-download"></i> -->
                                 <span>Horizontal Diameter </span>
                             </a>
                         </button>
@@ -86,19 +51,19 @@
                             <th>Patient Name</th>
                             <th>Report</th>
                             <th>Recommendation</th>
-                            <th style="min-width: 200px;">Action</th>
+                            <th class="action-report">Action</th>
                         </tr>
                         <tr *ngIf="isShown == false">
                             <th>Created</th>
                             <th>Project Name</th>
                             <th>Report</th>
                             <th>Recommendation</th>
-                            <th style="min-width: 200px;">Action</th>
+                            <th class="action-report">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr #report_rows *ngFor="let metadata of index; let i = index" [attr.data-index]="i">
-                           <td>{{ metadata.creation_datetime }}</td>
+                            <td>{{ metadata.creation_datetime }}</td>
                             <td>{{ metadata.name }}</td>
                             <td *ngIf="isShown == true">{{ metadata.patient_name }}</td>
                             <td>
@@ -129,18 +94,18 @@
                             </td>
                             <td>
                                 <select [(ngModel)]="action[i]" (change)="actionValues(action[i],i)">
-                                    <option *ngFor="let item of actionList" value={{item}} >
+                                    <option *ngFor="let item of actionList" value={{item}}>
                                         {{item}}
                                     </option>
                                 </select>
-                                <span style="margin-left: 5px;">
-                                    <img width="15px" src="assets/img/save_icon.png" alt=""/>
+                                <span class="save-icon">
+                                    <img width="15px" src="assets/img/save_icon.png" alt="" />
                                 </span>
                                 <ul *ngIf="action[i]">
-                                <li *ngFor="let report of report_action[i]">
-                                    {{report.time}} {{report.name}}
-                                 </li>
-                            </ul>
+                                    <li *ngFor="let report of report_action[i]">
+                                        {{report.time}} {{report.name}}
+                                    </li>
+                                </ul>
 
                             </td>
                         </tr>

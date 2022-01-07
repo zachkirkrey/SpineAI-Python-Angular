@@ -3,16 +3,16 @@
 @import 'assets/sass/variables';
 
 :root {
-    --background: #f1f3f7;
-    --primary-color: #376fb6;
-    --secondary-color: #ef5127;
-    --yellow-color: #f7ae2b;
-    --dark-color: #10212b;
-    --medium-color: #cbcdd1;
-    --light-color: #ffffff;
-    --border-color: #e9ecf3;
-    --box-shadow: 0px 0px 35px 0px rgba(0, 0, 0, 0.18);
-    --indent: 2vmax;
+  --background: #f1f3f7;
+  --primary-color: #376fb6;
+  --secondary-color: #ef5127;
+  --yellow-color: #f7ae2b;
+  --dark-color: #10212b;
+  --medium-color: #cbcdd1;
+  --light-color: #ffffff;
+  --border-color: #e9ecf3;
+  --box-shadow: 0px 0px 35px 0px rgba(0, 0, 0, 0.18);
+  --indent: 2vmax;
 }
 
 body {
@@ -51,41 +51,52 @@ strong {
   }
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 // 4-1-2022
-.dataTables_length{
+.dataTables_length {
   label {
     display: flex;
     display: -ms-flexbox;
     align-items: center;
-      select.custom-select {
-        max-width: 100px;
-        margin: 0 10px;
-      }
+
+    select.custom-select {
+      max-width: 100px;
+      margin: 0 10px;
+    }
   }
 }
 
 div#reports_table_wrapper .col-sm-12.col-md-4:first-child {
-    order: 1;
+  order: 1;
 }
 
 .export-btn.mat-button {
   background-color: #376fb6;
   color: #fff;
 }
+
 .export-btn-list {
   a.custom-button {
     color: #505050;
     background: #fff;
     padding: 0;
+
     &:hover {
       background: transparent;
       opacity: 0.6;
       text-decoration: none;
     }
   }
+
   button:hover {
     background: transparent !important;
   }
@@ -102,13 +113,16 @@ div#reports_table_wrapper>.row:nth-child(1) div {
   max-width: initial;
   flex: initial;
 }
+
 .export-btn.mat-button {
   margin-left: 15px;
   position: relative;
   min-width: 104px;
   text-align: left;
 }
-.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
   background-color: #376fb6;
 }
 
@@ -116,6 +130,7 @@ div#reports_table_wrapper>.row:nth-child(1) div {
   justify-content: space-between;
   width: 575px;
 }
+
 .export-btn.mat-button:before {
   content: "";
   border-left: 5px solid transparent;
@@ -126,6 +141,7 @@ div#reports_table_wrapper>.row:nth-child(1) div {
   top: 50%;
   transform: translateY(-50%);
 }
+
 .custom-export-btn a.custom-button {
   font-weight: 500;
 }
@@ -138,33 +154,45 @@ div#reports_table_wrapper>.row:nth-child(1) div {
 
 //6-1-2022
 table#reports_table select {
-    padding: 5px;
-    border: 1px solid #ced4da;
-    background: #fff;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    margin-right: 0 !important;
-    -webkit-appearance: none;
+  padding: 5px;
+  border: 1px solid #ced4da;
+  background: #fff;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  margin-right: 0 !important;
+  -webkit-appearance: none;
   -moz-appearance: none;
-    background: #fff url(assets/img/select-arrow.png);
-    background-repeat: no-repeat;
-    background-position: calc(100% - 5px);
-    background-size: 10px;
-    width: calc(100% - 20px);
+  background: #fff url(assets/img/select-arrow.png);
+  background-repeat: no-repeat;
+  background-position: calc(100% - 5px);
+  background-size: 10px;
+  width: calc(100% - 20px);
 
 }
+
 table#reports_table select::-ms-expand {
-    display: none;
+  display: none;
 }
+
 table#reports_table ul li {
-    font-size: 12px;
-    margin: 5px 0;
+  font-size: 12px;
+  margin: 5px 0;
 }
-table#reports_table th:last-child, table#reports_table td:last-child {
-    max-width: 120px;
+
+table#reports_table th:last-child,
+table#reports_table td:last-child {
+  max-width: 120px;
 }
 
 select.ng-untouched.ng-pristine.ng-valid {
-    width: 75%;
-    margin-right: 10px;
+  width: 75%;
+  margin-right: 10px;
+}
+
+.action-report {
+  min-width: 200px;
+}
+
+.save-icon {
+  margin-left: 5px;
 }
