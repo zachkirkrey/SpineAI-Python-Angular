@@ -27,7 +27,6 @@ const cors = restifyCors({
   allowHeaders: ['Authorization', 'API-Token', 'Content-Range'], //Content-range has size info on lists
   exposeHeaders: ['Authorization', 'API-Token-Expiry', 'Content-Range']
 });
-console.log("1")
 
 server.pre(cors.preflight);
 server.use(cors.actual);
