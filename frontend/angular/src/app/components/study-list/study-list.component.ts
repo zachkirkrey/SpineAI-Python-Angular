@@ -79,7 +79,7 @@ export class StudyListComponent implements OnInit {
             "study": parseInt(study_id)
         }
         $.ajax({
-            url: "http://localhost:8080/action",
+            url: this.action_save_url,
             dataType: 'json',
             type: "POST",
             data: req_data,
