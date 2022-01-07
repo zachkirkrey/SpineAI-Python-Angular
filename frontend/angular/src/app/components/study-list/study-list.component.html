@@ -98,9 +98,10 @@
                                         {{item}}
                                     </option>
                                 </select>
-                                <span class="save-icon">
+                                <span *ngIf="action[i]" class="save-icon" (click)="saveAction(metadata.id)">
                                     <img width="15px" src="assets/img/save_icon.png" alt="" />
                                 </span>
+
                                 <ul *ngIf="action[i]">
                                     <li *ngFor="let report of report_action[i]">
                                         {{report.time}} {{report.name}}

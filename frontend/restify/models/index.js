@@ -3,7 +3,9 @@
  *
  * The SpineAI database is defined in and initialized by Pony ORM in python.
  */
-const { DataTypes } = require('sequelize');
+const {
+    DataTypes
+} = require('sequelize');
 
 /**
  * Defines Sequelize models for many-to-many relationships created by Pony ORM.
@@ -12,26 +14,26 @@ const { DataTypes } = require('sequelize');
  * @param {Object} tableB sequelize.Model
  */
 function defineManyToMany(sequelize, tableA, tableB) {
-  tableAName = tableA.getTableName();
-  tableBName = tableB.getTableName();
-  joinTable = sequelize.define(tableAName + '_' + tableBName, {
-    [tableAName]: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    [tableBName]: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    }
-  });
-  tableA.belongsToMany(tableB, {
-    through: joinTable,
-    foreignKey: tableAName.toLowerCase()
-  });
-  tableB.belongsToMany(tableA, {
-    through: joinTable,
-    foreignKey: tableBName.toLowerCase()
-  });
+    tableAName = tableA.getTableName();
+    tableBName = tableB.getTableName();
+    joinTable = sequelize.define(tableAName + '_' + tableBName, {
+        [tableAName]: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        [tableBName]: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        }
+    });
+    tableA.belongsToMany(tableB, {
+        through: joinTable,
+        foreignKey: tableAName.toLowerCase()
+    });
+    tableB.belongsToMany(tableA, {
+        through: joinTable,
+        foreignKey: tableBName.toLowerCase()
+    });
 }
 
 /**
@@ -59,160 +61,182 @@ function defineManyToMany(sequelize, tableA, tableB) {
  * @param {string} foreignKey Foreign key in tableMany to tableOne. Defaults to tableOne.getTableName().toLowerCase().
  */
 function defineOneToMany(tableOne, tableMany, foreignKey) {
-  tableOneName = tableOne.getTableName();
-  tableManyName = tableMany.getTableName();
-  foreignKey = foreignKey || tableOneName.toLowerCase();
-  tableOne.hasMany(tableMany, {
-    foreignKey: foreignKey
-  });
-
-  oneAsFunc = 'get' + tableOneName;
-  tableMany.prototype[oneAsFunc] = function() {
-    return tableOne.findOne({
-      where: {
-        id: this[foreignKey]
-      }
+    tableOneName = tableOne.getTableName();
+    tableManyName = tableMany.getTableName();
+    foreignKey = foreignKey || tableOneName.toLowerCase();
+    tableOne.hasMany(tableMany, {
+        foreignKey: foreignKey
     });
-  };
+
+    oneAsFunc = 'get' + tableOneName;
+    tableMany.prototype[oneAsFunc] = function () {
+        return tableOne.findOne({
+            where: {
+                id: this[foreignKey]
+            }
+        });
+    };
 }
 
 /**
  * Same as defineOneToMany() but for one-to-one relationships.
-*/
+ */
 function defineOneToOne(tableA, tableB, Aas, Bas, foreignKey) {
-  tableAName = tableA.getTableName();
-  tableBName = tableB.getTableName();
+    tableAName = tableA.getTableName();
+    tableBName = tableB.getTableName();
 
-  // tableA.hasOne(tableB, {
-  //   as: Bas,
-  //   foreignKey: foreignKey
-  // });
+    // tableA.hasOne(tableB, {
+    //   as: Bas,
+    //   foreignKey: foreignKey
+    // });
 
-  // asFunc = 'get' + Aas;
-  // tableB.prototype[asFunc] = function() {
-  //   return tableA.findOne({
-  //     where: {
-  //       id: this[foreignKey]
-  //     }
-  //   });
-  // };
+    // asFunc = 'get' + Aas;
+    // tableB.prototype[asFunc] = function() {
+    //   return tableA.findOne({
+    //     where: {
+    //       id: this[foreignKey]
+    //     }
+    //   });
+    // };
 
-  tableB.belongsTo(tableA, {as: Aas, foreignKey: foreignKey});
+    tableB.belongsTo(tableA, {
+        as: Aas,
+        foreignKey: foreignKey
+    });
 }
 
-module.exports = function(sequelize) {
-  let ApiLog = require('./api-log.js')(sequelize);
-  let CanalSegmentation = require('./canal-segmentation')(sequelize);
-  let Classification = require('./classification')(sequelize);
-  let DiskSegmentation = require('./disk-segmentation')(sequelize);
-  let ImageSeries = require('./image-series')(sequelize);
-  let Image = require('./image.js')(sequelize);
-  let Ingestion = require('./ingestion')(sequelize);
-  let Report = require('./report')(sequelize);
-  let Segmentation = require('./segmentation')(sequelize);
-  let Study = require('./study')(sequelize);
+module.exports = function (sequelize) {
+    let ApiLog = require('./api-log.js')(sequelize);
+    let CanalSegmentation = require('./canal-segmentation')(sequelize);
+    let Classification = require('./classification')(sequelize);
+    let DiskSegmentation = require('./disk-segmentation')(sequelize);
+    let ImageSeries = require('./image-series')(sequelize);
+    let Image = require('./image.js')(sequelize);
+    let Ingestion = require('./ingestion')(sequelize);
+    let Report = require('./report')(sequelize);
+    let Segmentation = require('./segmentation')(sequelize);
+    let Study = require('./study')(sequelize);
+    let Action = require('./action')(sequelize);
 
-  defineOneToMany(Study, Classification);
-  defineOneToMany(Study, Segmentation);
-  defineOneToMany(Study, ImageSeries);
-  defineOneToMany(Classification, Segmentation);
-  defineOneToMany(Study, CanalSegmentation);
-  defineOneToMany(Study, DiskSegmentation);
-  defineOneToMany(ImageSeries, Classification, 'input_series');
-  defineOneToMany(ImageSeries, Image, 'image_series');
+    defineOneToMany(Study, Classification);
+    defineOneToMany(Study, Segmentation);
+    defineOneToMany(Study, ImageSeries);
+    defineOneToMany(Classification, Segmentation);
+    defineOneToMany(Study, CanalSegmentation);
+    defineOneToMany(Study, DiskSegmentation);
+    defineOneToMany(ImageSeries, Classification, 'input_series');
+    defineOneToMany(ImageSeries, Image, 'image_series');
+    defineOneToMany(Study, Action);
 
-  defineOneToOne(
-    Segmentation,
-    CanalSegmentation,
-    'Segmentation',
-    'CanalSegmentation',
-    'segmentation');
-  defineOneToOne(
-    Segmentation,
-    DiskSegmentation,
-    'Segmentation',
-    'DiskSegmentation',
-    'segmentation');
-  defineOneToOne(
-    ImageSeries,
-    Segmentation,
-    'RawSeries',
-    'RawSegmentation',
-    'raw_segmentation_series');
-  defineOneToOne(
-    ImageSeries,
-    Segmentation,
-    'PostprocessedSeries',
-    'PostprocessedSegmentation',
-    'postprocessed_segmentation_series');
-  defineOneToOne(
-    ImageSeries,
-    Segmentation,
-    'PreprocessedSeries',
-    'PreprocessedSegmentation',
-    'preprocessed_patient_series');
+    defineOneToOne(
+        Segmentation,
+        CanalSegmentation,
+        'Segmentation',
+        'CanalSegmentation',
+        'segmentation');
+    defineOneToOne(
+        Segmentation,
+        DiskSegmentation,
+        'Segmentation',
+        'DiskSegmentation',
+        'segmentation');
+    defineOneToOne(
+        ImageSeries,
+        Segmentation,
+        'RawSeries',
+        'RawSegmentation',
+        'raw_segmentation_series');
+    defineOneToOne(
+        ImageSeries,
+        Segmentation,
+        'PostprocessedSeries',
+        'PostprocessedSegmentation',
+        'postprocessed_segmentation_series');
+    defineOneToOne(
+        ImageSeries,
+        Segmentation,
+        'PreprocessedSeries',
+        'PreprocessedSegmentation',
+        'preprocessed_patient_series');
 
-  defineManyToMany(sequelize, Report, Study);
-  defineManyToMany(sequelize, Classification, Report);
+    defineManyToMany(sequelize, Report, Study);
+    defineManyToMany(sequelize, Classification, Report);
 
-  Study.addScope('defaultScope', {});
-  Study.addScope('deep', {
-    include: [
-      { model: Report },
-      { model: CanalSegmentation }
-    ]
-  });
-  Study.addScope('includeDisk', {
-    include: [
-      { model: DiskSegmentation }
-    ]
-  });
-  Study.addScope('includeReports', {
-    include: [
-      { model: Report },
-    ]
-  });
+    Study.addScope('defaultScope', {});
+    Study.addScope('deep', {
+        include: [{
+                model: Report
+            },
+            {
+                model: CanalSegmentation
+            }
+        ]
+    });
+    Study.addScope('includeDisk', {
+        include: [{
+            model: DiskSegmentation
+        }]
+    });
+    Study.addScope('includeReports', {
+        include: [{
+            model: Report
+        }, ]
+    });
+    Study.addScope('includeActions', {
+        include: [{
+            model: Action
+        }, ]
+    });
 
-  CanalSegmentation.addScope('defaultScope', {
-    include: [
-      { model: Segmentation, as: 'Segmentation' }
-    ]
-  });
+    CanalSegmentation.addScope('defaultScope', {
+        include: [{
+            model: Segmentation,
+            as: 'Segmentation'
+        }]
+    });
 
-  DiskSegmentation.addScope('defaultScope', {
-    include: [
-      { model: Segmentation, as: 'Segmentation' }
-    ]
-  });
+    DiskSegmentation.addScope('defaultScope', {
+        include: [{
+            model: Segmentation,
+            as: 'Segmentation'
+        }]
+    });
 
-  Segmentation.addScope('defaultScope', {
-    include: [
-      // { model: ImageSeries, as: 'RawSeries' },
-      { model: ImageSeries, as: 'PostprocessedSeries' },
-      { model: ImageSeries, as: 'PreprocessedSeries' }
-    ]
-  });
+    Segmentation.addScope('defaultScope', {
+        include: [
+            // { model: ImageSeries, as: 'RawSeries' },
+            {
+                model: ImageSeries,
+                as: 'PostprocessedSeries'
+            },
+            {
+                model: ImageSeries,
+                as: 'PreprocessedSeries'
+            }
+        ]
+    });
 
-  ImageSeries.addScope('defaultScope', {
-    attributes: {
-      exclude: ['image_pickled', 'metadata_pickled']
-    },
-    include: [
-      { model: Image }
-    ]
-  });
+    ImageSeries.addScope('defaultScope', {
+        attributes: {
+            exclude: ['image_pickled', 'metadata_pickled']
+        },
+        include: [{
+            model: Image
+        }]
+    });
 
-  Report.addScope('simple', {});
+    Report.addScope('simple', {});
 
-  return {
-    ApiLog: ApiLog,
-    CanalSegmentation: CanalSegmentation,
-    Classification: Classification,
-    DiskSegmentation: DiskSegmentation,
-    ImageSeries: ImageSeries,
-    Ingestion: Ingestion,
-    Report: Report,
-    Segmentation: Segmentation,
-    Study: Study
-  }
+    return {
+        ApiLog: ApiLog,
+        CanalSegmentation: CanalSegmentation,
+        Classification: Classification,
+        DiskSegmentation: DiskSegmentation,
+        ImageSeries: ImageSeries,
+        Ingestion: Ingestion,
+        Report: Report,
+        Segmentation: Segmentation,
+        Study: Study,
+        Action: Action
+    }
 }

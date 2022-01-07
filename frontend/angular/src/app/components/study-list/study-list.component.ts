@@ -13,11 +13,13 @@ export class StudyListComponent implements OnInit {
     constructor(private exportService: ExportService) { }
     readonly api_url = environment.api_url;
     readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports`;
+    readonly action_save_url = `${environment.api_url}/action`;
 
     old_index = 0
     index = [];
     index_complete = false;
     index_error: string;
+    action_error: string;
     section: string = '';
     isShown: boolean = true;
     visibility: Boolean = true;
@@ -40,10 +42,9 @@ export class StudyListComponent implements OnInit {
             }
             return 0;
         }
-
+        // TODO(billy): Create a dev config for this url so this can work during
+        // development.
         $.ajax({
-            // TODO(billy): Create a dev config for this url so this can work during
-            // development.
             url: this.index_url,
             dataType: 'json',
         }).done(function (data) {
@@ -51,7 +52,6 @@ export class StudyListComponent implements OnInit {
                 this.index_error = data['error'];
             } else {
                 this.index = data;
-                console.log("index", this.index);
                 data.forEach(element => {
                     element.Reports = element.Reports.filter(report => report.type == 'PDF_SIMPLE');
                     element.Reports.sort(sort_by_creation);
@@ -64,7 +64,35 @@ export class StudyListComponent implements OnInit {
         });
     }
 
+    saveAction(id) {
+        let report_Arr = []
+        report_Arr = this.report_action[0]
+        report_Arr.forEach(element => {
+            this.callSaveAPi(element.name, element.time, id)
+        });
+    }
 
+    callSaveAPi(name, time, study_id) {
+        let req_data = {
+            "name": name,
+            "creation_datetime": time,
+            "study": parseInt(study_id)
+        }
+        $.ajax({
+            url: "http://localhost:8080/action",
+            dataType: 'json',
+            type: "POST",
+            data: req_data,
+        }).done(function (data) {
+            if ('error' in data) {
+                this.action_error = data['error'];
+            } else {
+            }
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            this.action_error = `Data Not ${this.index_url}.`;
+        }.bind(this)).always(() => {
+        });
+    }
     actionValues(value, index) {
         this.new_index = index
         if (this.new_index === this.old_index) {
@@ -85,11 +113,9 @@ export class StudyListComponent implements OnInit {
             this.report_action[index] = this.dep
             this.old_index = this.new_index
         }
-        console.log('Indexx', this.report_action)
     }
 
     toggleDisplay(event) {
-        console.log("event", event);
         if (event.checked == true) {
             this.isShown = false;
             this.section = 'Show patient name';
