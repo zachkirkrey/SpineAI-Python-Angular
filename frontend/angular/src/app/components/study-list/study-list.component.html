@@ -93,7 +93,7 @@
                                 <div class="recommendation_cell" [attr.data-study-id]="metadata.id"></div>
                             </td>
                             <td>
-                                <select [(ngModel)]="action[i]" (change)="actionValues(action[i],i)">
+                                <select [(ngModel)]="action[i]" name="action" (change)="actionValues(action[i],i)">
                                     <option *ngFor="let item of actionList" value={{item}}>
                                         {{item}}
                                     </option>
