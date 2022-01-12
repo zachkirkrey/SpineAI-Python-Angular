@@ -36,7 +36,7 @@ const appRoutes: Routes = [
   { path: 'intake', component: IntakeFormComponent },
   { path: 'fetch', component: FetchFormComponent },
   { path: '**',
-    redirectTo: '/intake',
+    redirectTo: '/studies',
     pathMatch: 'full'
   },
 ]
