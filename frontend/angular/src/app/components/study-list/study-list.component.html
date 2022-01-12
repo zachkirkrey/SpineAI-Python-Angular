@@ -102,10 +102,14 @@
                                     <img width="15px" src="assets/img/save_icon.png" alt="" />
                                 </span>
 
-                                <ul *ngIf="action[i]">
+                                <ul *ngIf="action[i] || metadata.report_action">
+                                    <li *ngFor="let report of metadata.report_action">
+                                        {{report.time}} {{report.name}}
+                                    </li>
                                     <li *ngFor="let report of report_action[i]">
                                         {{report.time}} {{report.name}}
                                     </li>
+
                                 </ul>
 
                             </td>

@@ -14,6 +14,7 @@ export class StudyListComponent implements OnInit {
     readonly api_url = environment.api_url;
     readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports`;
     readonly action_save_url = `${environment.api_url}/action`;
+    readonly action_fetch_url = `${environment.api_url}/action`;
 
     old_index = 0
     index = [];
@@ -32,6 +33,7 @@ export class StudyListComponent implements OnInit {
     @ViewChildren('report_rows') report_rows: QueryList<any>;
 
     ngOnInit() {
+
         this.section = 'Hide patient name';
         function sort_by_creation(x, y) {
             return -1;
@@ -62,8 +64,67 @@ export class StudyListComponent implements OnInit {
         }.bind(this)).always(() => {
             this.index_complete = true;
         });
+        this.fetchAction()
     }
 
+    fetchAction() {
+        $.ajax({
+            url: this.action_fetch_url,
+            type: "GET",
+        }).done(function (data) {
+            if ('error' in data) {
+                console.log('fetch_action_error', data['error'])
+            } else {
+                console.log('fetch_success_data', data)
+
+                let fetchArr = []
+                let filter_arr = []
+                if (data && data.length > 0) {
+                    const keys = ['name', 'study'],
+                        filtered = data.filter(
+                            (s => o =>
+                                (k => !s.has(k) && s.add(k))
+                                    (keys.map(k => o[k]).join('|'))
+                            )
+                                (new Set)
+                        );
+
+                    filtered.map(x => {
+                        fetchArr.push({
+                            'time': moment(x.creation_datetime).format("DD/MM/YY hh:mm a"),
+                            'name': x.name,
+                            'study': x.study
+                        })
+                    })
+                    this.index.map(x => {
+                        let obj = {
+                            'study': x.id
+                        }
+                        filter_arr.push(this.filterArr(fetchArr, obj))
+                    })
+                    filter_arr.map((y, i) => {
+                        this.index.forEach(x => {
+                            if (y[i].study == x.id) {
+                                x.report_action = y
+                            }
+                        });
+                    })
+                }
+
+                console.log('filter_Arr', filter_arr, this.index)
+            }
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            this.action_error = `Data Not ${this.action_fetch_url}.`;
+        }.bind(this)).always(() => {
+        });
+    }
+    filterArr(arr, criteria) {
+        return arr.filter(function (obj) {
+            return Object.keys(criteria).every(function (c) {
+                return obj[c] == criteria[c];
+            });
+        });
+    }
     saveAction(id, index) {
         let report_Arr = []
         report_Arr = this.report_action[index]
