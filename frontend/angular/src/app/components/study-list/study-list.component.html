@@ -47,8 +47,8 @@
                     <thead>
                         <tr *ngIf="isShown == true">
                             <th>Created</th>
+                            <th>Patient Name</th>
                             <th>Import Id</th>
-                            <th>Project Name</th>
                             <th>Report</th>
                             <th>Recommendation</th>
                             <th class="action-report">Action</th>
@@ -64,8 +64,8 @@
                     <tbody>
                         <tr #report_rows *ngFor="let metadata of index; let i = index" [attr.data-index]="i">
                             <td>{{ metadata.creation_datetime }}</td>
-                            <td>{{ metadata.name }}</td>
                             <td *ngIf="isShown == true">{{ metadata.patient_name }}</td>
+                            <td>{{ metadata.name }}</td>
                             <td>
                                 <ng-template [ngIf]="metadata.Reports.length" [ngIfElse]="noReport">
                                     <ng-template [ngIf]="metadata.Reports[0].state == 'PROCESSED'"
