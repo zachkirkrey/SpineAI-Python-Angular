@@ -89,7 +89,7 @@ export class StudyListComponent implements OnInit {
                                 (new Set)
                         );
 
-                    filtered.map(x => {
+                        data.map(x => {
                         fetchArr.push({
                             'time': moment(x.creation_datetime).format("DD/MM/YY hh:mm a"),
                             'name': x.name,
