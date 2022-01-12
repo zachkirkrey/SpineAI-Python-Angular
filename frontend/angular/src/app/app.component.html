@@ -29,17 +29,17 @@
                                 <button class="custom-button" [ngClass]="{'disabled' : pageType !== 'INTAKE'}"
                                     (click)="onProcessData()">
                                     <i class="fa fa-gears"></i>
-                                    <span>Process Data</span>
+                                    <span>IMPORT</span>
                                 </button>
                                 <button *ngIf="environment.dicom_api_enabled" class="custom-button"
                                     [ngClass]="{'disabled' : pageType !== 'FETCH'}" (click)="onDICOMFetch()">
                                     <i class="fa fa-server"></i>
-                                    <span>DICOM Fetch</span>
+                                    <span>SEARCH PACS</span>
                                 </button>
                                 <button class="custom-button" [ngClass]="{'disabled' : pageType !== 'STUDIES'}"
                                     (click)="onLoadReport()">
                                     <i class="fa fa-archive"></i>
-                                    <span>Report Archive</span>
+                                    <span>MANAGE PATIENTS</span>
                                 </button>
                                 <button id="view_report" class="custom-button"
                                     [ngClass]="{'disabled' : pageType !== 'VIEW_REPORT'}" (click)="onViewReport()"
