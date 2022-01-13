@@ -130,6 +130,14 @@ class Study(db.Entity, StudyMixin):
     patient_sex = Optional(str)
     study_instance_uid = Optional(str, index=True)
 
+    #added new fields for patient
+    mrn = Required(str)
+    email = Required(str)
+    date_of_birth = Required(datetime)
+    phone_number = Required(int)
+    diagnosis = Required(str)
+    created_by = Optional(bool, default=False)
+
     classifications = Set('Classification')
     segmentations = Set('Segmentation')
     canal_segmentations = Set('CanalSegmentation')
