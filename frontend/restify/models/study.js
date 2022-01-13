@@ -50,6 +50,33 @@ module.exports = function(sequelize) {
     study_instance_uid: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    image_file_type: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    mrn: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    date_of_birth: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    phone_number: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    diagnosis: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    created_by: {
+      type: DataTypes.BOOLEAN
     }
   });
 };
