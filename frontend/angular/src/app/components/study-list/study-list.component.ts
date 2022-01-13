@@ -29,6 +29,7 @@ export class StudyListComponent implements OnInit {
     action_index = []
     dep = []
     new_index: any;
+    save_action: boolean = false
     actionList = ['Scheduled for Clinic', 'Surgery', 'Additional Testing', 'Injections', 'Physical Therapy', 'RTC/DC', 'Referral']
     @ViewChildren('report_rows') report_rows: QueryList<any>;
 
@@ -54,6 +55,9 @@ export class StudyListComponent implements OnInit {
                 this.index_error = data['error'];
             } else {
                 this.index = data;
+                this.index.forEach(x => {
+                    x.show_icon = false
+                });
                 data.forEach(element => {
                     element.Reports = element.Reports.filter(report => report.type == 'PDF_SIMPLE');
                     element.Reports.sort(sort_by_creation);
@@ -76,20 +80,10 @@ export class StudyListComponent implements OnInit {
                 console.log('fetch_action_error', data['error'])
             } else {
                 console.log('fetch_success_data', data)
-
                 let fetchArr = []
                 let filter_arr = []
                 if (data && data.length > 0) {
-                    const keys = ['name', 'study'],
-                        filtered = data.filter(
-                            (s => o =>
-                                (k => !s.has(k) && s.add(k))
-                                    (keys.map(k => o[k]).join('|'))
-                            )
-                                (new Set)
-                        );
-
-                        data.map(x => {
+                    data.map(x => {
                         fetchArr.push({
                             'time': moment(x.creation_datetime).format("DD/MM/YY hh:mm a"),
                             'name': x.name,
@@ -104,7 +98,7 @@ export class StudyListComponent implements OnInit {
                     })
                     filter_arr.map((y, i) => {
                         this.index.forEach(x => {
-                            if (y[i].study == x.id) {
+                            if (y[0].study == x.id) {
                                 x.report_action = y
                             }
                         });
@@ -129,11 +123,11 @@ export class StudyListComponent implements OnInit {
         let report_Arr = []
         report_Arr = this.report_action[index]
         report_Arr.forEach(element => {
-            this.callSaveAPI(element.name, element.time, id)
+            this.callSaveAPI(element.name, element.time, id, index)
         });
     }
 
-    callSaveAPI(name, time, study_id) {
+    callSaveAPI(name, time, study_id, index) {
         let req_data = {
             "name": name,
             "creation_datetime": time,
@@ -148,6 +142,19 @@ export class StudyListComponent implements OnInit {
             if ('error' in data) {
                 this.action_error = data['error'];
             } else {
+                console.log('callSaveAPI', data)
+                let obj = data
+                if (obj && Object.keys(obj).length != 0 && Object.getPrototypeOf(obj) === Object.prototype) {
+                    this.index.forEach((x, i) => {
+                        if (index == i) {
+                            x.show_icon = true
+                        }
+                        else {
+                            x.show_icon = false
+                        }
+
+                    });
+                }
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${this.index_url}.`;
@@ -155,6 +162,12 @@ export class StudyListComponent implements OnInit {
         });
     }
     actionValues(value, index) {
+        this.index.forEach((x, i) => {
+            if (i == index) {
+                x.show_icon = false
+            }
+
+        })
         this.new_index = index
         if (this.new_index === this.old_index) {
             const obj = {
