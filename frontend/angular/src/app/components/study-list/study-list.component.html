@@ -42,6 +42,8 @@
                     </mat-menu>
 
                 </div>
+
+                <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Add Patient</button>
                 <table id="reports_table" class="table table-striped table-bordered"
                     *ngIf="index_complete && !index_error">
                     <thead>
@@ -124,3 +126,50 @@
         </div>
     </div> <!-- /row -->
 </form>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title"></h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <div>
+                    <input id="name" class="form-control" placeholder="Name" (change)="alphabetValidate(name,'name')"
+                        name="name" [(ngModel)]="name"><br>
+                    <div class="error_class" *ngIf="name_error == true">Please enter a valid name</div>
+                    <input id="mrn" class="form-control" placeholder="MRN" name="mrn"
+                        (change)="alphabetValidate(mrn,'mrn')" [(ngModel)]="mrn"><br>
+                    <div class="error_class" *ngIf="mrn_error == true">Please enter a valid MRN</div>
+                    <input id="email" type="email" (change)="emailValidate(email)" class="form-control"
+                        placeholder="Email" name="email" [(ngModel)]="email"><br>
+                    <div class="error_class" *ngIf="email_error == true">Please enter a valid email address</div>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="DOB" name="dp" readonly [(ngModel)]="date_picker"
+                            ngbDatepicker #d="ngbDatepicker">
+
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
+                                type="button"></button>
+                        </div>
+                    </div><br>
+
+
+                    <input id="telephone" class="form-control" placeholder="Telephone" name="telephone"
+                        (change)="numberValidate(telephone)" [(ngModel)]="telephone"><br>
+                        <div class="error_class" *ngIf="number_error == true">Please enter a valid Telephone Number</div>
+                    <input id="diagnosis" class="form-control" placeholder="Diagnosis" name="diagnosis"
+                        (change)="alphabetValidate(diagnosis,'diagnosis')" [(ngModel)]="diagnosis"><br>
+                    <div class="error_class" *ngIf="diagnosis_error == true">Please enter a valid Diagnosis</div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="createPatient()">Create Patient</button>
+    </div>
+</ng-template>

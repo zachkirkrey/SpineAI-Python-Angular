@@ -181,7 +181,11 @@ table#reports_table {
   }
 
 }
-
+.error_class{
+    margin-top: -15px;
+    color: red;
+    font-size: 10px;
+}
 table#reports_table th:last-child,
 table#reports_table td:last-child {
   max-width: 120px;

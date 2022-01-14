@@ -10,6 +10,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatIconModule} from '@angular/material/icon';
+import {NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { NgPipesModule } from 'ngx-pipes';
 
@@ -64,6 +65,7 @@ const appRoutes: Routes = [
     MatIconModule,
     MatMenuModule,
     MatNativeDateModule,
+    NgbModule,
     NgPipesModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' })

@@ -2,6 +2,7 @@ import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ExportService } from 'src/app/services/export/export.service';
 import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-study-list',
@@ -10,7 +11,7 @@ import * as moment from 'moment';
 })
 export class StudyListComponent implements OnInit {
 
-    constructor(private exportService: ExportService) { }
+    constructor(private exportService: ExportService, private modalService: NgbModal) { }
     readonly api_url = environment.api_url;
     readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports`;
     readonly action_save_url = `${environment.api_url}/action`;
@@ -29,6 +30,23 @@ export class StudyListComponent implements OnInit {
     action_index = []
     dep = []
     new_index: any;
+    closeResult = '';
+    name: any;
+    mrn: any;
+    email: any;
+    date_picker: any;
+    telephone: any;
+    diagnosis: any;
+    email_error: boolean = false
+    email_validate: boolean = false
+    mrn_error: boolean = false
+    mrn_validate: boolean = false
+    diagnosis_error: boolean = false
+    diagnosis_validate: boolean = false
+    name_error: boolean = false
+    name_validate: boolean = false
+    number_validate: boolean = false
+    number_error: boolean = false
     save_action: boolean = false
     actionList = ['Scheduled for Clinic', 'Surgery', 'Additional Testing', 'Injections', 'Physical Therapy', 'RTC/DC', 'Referral']
     @ViewChildren('report_rows') report_rows: QueryList<any>;
@@ -71,6 +89,120 @@ export class StudyListComponent implements OnInit {
         this.fetchAction()
     }
 
+    emailValidate(value) {
+        let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
+        this.email_validate = regex.test(value)
+        if (this.email_validate == false) {
+            this.email_error = true
+        } else {
+            this.email_error = false
+        }
+    }
+    alphabetValidate(value, name) {
+        console.log('alphabet', value, name)
+        let regex = new RegExp("^[a-zA-Z0-9]*$");
+        if (name == 'name') {
+            console.log('name', this.name_validate)
+            this.name_validate = regex.test(value)
+        } else if (name == 'mrn') {
+            this.mrn_validate = regex.test(value)
+        } else if (name == 'diagnosis') {
+            this.diagnosis_validate = regex.test(value)
+            console.log('name', this.diagnosis_validate)
+        }
+        if (this.name_validate == false && name == 'name') {
+            this.name_error = true
+        } else if (this.name_validate == true && name == 'name') {
+            this.name_error = false
+        }
+        if (this.mrn_validate == false && name == 'mrn') {
+            this.mrn_error = true
+        } else if (this.mrn_validate == true && name == 'mrn') {
+            this.mrn_error = false
+        }
+        if (this.diagnosis_validate == false && name == 'diagnosis') {
+            this.diagnosis_error = true
+        } else if (this.diagnosis_validate == true && name == 'diagnosis') {
+            this.diagnosis_error = false
+        }
+    }
+    numberValidate(value) {
+        let regex = new RegExp('^[0-9]+$');
+        this.number_validate = regex.test(value)
+        if (this.number_validate == false) {
+            this.number_error = true
+        } else {
+            this.number_error = false
+        }
+    }
+    createPatient() {
+        if (this.email_validate == false) {
+            this.email_error = true
+        } else if (this.email_validate == true) {
+            this.email_error = false
+        }
+        if (this.name_validate == false) {
+            this.name_error = true
+        } else if (this.name_validate == true) {
+            this.name_error = false
+        }
+        if (this.mrn_validate == false) {
+            this.mrn_error = true
+        } else if (this.mrn_validate == true) {
+            this.mrn_error = false
+        }
+        if (this.diagnosis_validate == false) {
+            this.diagnosis_error = true
+        } else if (this.diagnosis_validate == true) {
+            this.diagnosis_error = false
+
+        }
+        if (this.number_validate == false) {
+            this.number_error = true
+        } else if (this.number_validate == true) {
+            this.number_error = false
+        }
+        else if (this.diagnosis_validate == true && this.mrn_validate == true && this.name_validate == true && this.email_validate == true && this.number_validate == true) {
+            this.modalService.dismissAll()
+            this.name = ''
+            this.email = ''
+            this.mrn = ''
+            this.diagnosis = ''
+            this.date_picker = ''
+            this.telephone = ''
+        }
+    }
+    closeModal() {
+        this.modalService.dismissAll()
+        this.name = ''
+        this.email = ''
+        this.mrn = ''
+        this.diagnosis = ''
+        this.date_picker = ''
+        this.telephone = ''
+        this.name_error = false
+        this.email_error = false
+        this.mrn_error = false
+        this.diagnosis_error = false
+        this.number_error = false
+    }
+    open(content) {
+        this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+            this.closeResult = `Closed with: ${result}`;
+        }, (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        });
+    }
+
+    getDismissReason(reason: any): string {
+        if (reason === ModalDismissReasons.ESC) {
+            return 'by pressing ESC';
+        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        } else {
+            return `with: ${reason}`;
+        }
+    }
     fetchAction() {
         $.ajax({
             url: this.action_fetch_url,
@@ -96,16 +228,17 @@ export class StudyListComponent implements OnInit {
                         }
                         filter_arr.push(this.filterArr(fetchArr, obj))
                     })
+                    console.log('filter_arr', filter_arr)
                     filter_arr.map((y, i) => {
                         this.index.forEach(x => {
-                            if (y[0].study == x.id) {
+                            if ((y[0] != undefined && y[0].study) == x.id) {
                                 x.report_action = y
                             }
                         });
                     })
                 }
 
-                console.log('filter_Arr', filter_arr, this.index)
+                console.log('Index_Arr', this.index)
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${this.action_fetch_url}.`;
