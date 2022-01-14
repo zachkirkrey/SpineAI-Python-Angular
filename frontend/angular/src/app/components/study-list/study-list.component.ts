@@ -128,9 +128,10 @@ export class StudyListComponent implements OnInit {
     }
 
     callSaveAPI(name, time, study_id, index) {
+        let formatted_time = moment(time, 'DD/MM/YY hh:mm a').format("YYYY-MM-DD HH:mm:ss");
         let req_data = {
             "name": name,
-            "creation_datetime": time,
+            "creation_datetime": formatted_time,
             "study": parseInt(study_id)
         }
         $.ajax({
