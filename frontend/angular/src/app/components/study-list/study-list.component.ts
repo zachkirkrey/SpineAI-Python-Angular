@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
     selector: 'app-study-list',
@@ -12,7 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class StudyListComponent implements OnInit {
 
-    constructor(private exportService: ExportService, private modalService: NgbModal) { }
+    constructor(private exportService: ExportService, private modalService: NgbModal, private router: Router) { }
     readonly api_url = environment.api_url;
     readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports`;
     readonly action_save_url = `${environment.api_url}/action`;
@@ -59,7 +60,9 @@ export class StudyListComponent implements OnInit {
         this.tableData()
         this.fetchAction()
     }
-
+    searchPacsNavigate() {
+        this.router.navigate(['fetch']);
+    }
     tableData() {
         function sort_by_creation(x, y) {
             return -1;
