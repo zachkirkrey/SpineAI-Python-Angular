@@ -140,10 +140,8 @@
                 <div>
                     <input id="name" class="form-control" placeholder="Name" (change)="alphabetValidate(name,'name')"
                         name="name" [(ngModel)]="name"><br>
-                    <div class="error_class" *ngIf="name_error == true">Please enter a valid name</div>
                     <input id="mrn" class="form-control" placeholder="MRN" name="mrn"
                         (change)="alphabetValidate(mrn,'mrn')" [(ngModel)]="mrn"><br>
-                    <div class="error_class" *ngIf="mrn_error == true">Please enter a valid MRN</div>
                     <input id="email" type="email" (change)="emailValidate(email)" class="form-control"
                         placeholder="Email" name="email" [(ngModel)]="email"><br>
                     <div class="error_class" *ngIf="email_error == true">Please enter a valid email address</div>
@@ -156,16 +154,12 @@
                                 type="button"></button>
                         </div>
                     </div><br>
-
-
                     <input id="telephone" class="form-control" placeholder="Telephone" name="telephone"
                         (change)="numberValidate(telephone)" [(ngModel)]="telephone"><br>
                         <div class="error_class" *ngIf="number_error == true">Please enter a valid Telephone Number</div>
                     <input id="diagnosis" class="form-control" placeholder="Diagnosis" name="diagnosis"
                         (change)="alphabetValidate(diagnosis,'diagnosis')" [(ngModel)]="diagnosis"><br>
-                    <div class="error_class" *ngIf="diagnosis_error == true">Please enter a valid Diagnosis</div>
-
-                </div>
+                 </div>
             </div>
         </form>
     </div>

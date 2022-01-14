@@ -3,6 +3,7 @@ import { ExportService } from 'src/app/services/export/export.service';
 import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
     selector: 'app-study-list',
@@ -16,6 +17,7 @@ export class StudyListComponent implements OnInit {
     readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports`;
     readonly action_save_url = `${environment.api_url}/action`;
     readonly action_fetch_url = `${environment.api_url}/action`;
+    readonly patient_save_url = `${environment.api_url}/studies`;
 
     old_index = 0
     index = [];
@@ -34,7 +36,7 @@ export class StudyListComponent implements OnInit {
     name: any;
     mrn: any;
     email: any;
-    date_picker: any;
+    date_picker: any = '';
     telephone: any;
     diagnosis: any;
     email_error: boolean = false
@@ -48,12 +50,17 @@ export class StudyListComponent implements OnInit {
     number_validate: boolean = false
     number_error: boolean = false
     save_action: boolean = false
+    dob_error: boolean = false
     actionList = ['Scheduled for Clinic', 'Surgery', 'Additional Testing', 'Injections', 'Physical Therapy', 'RTC/DC', 'Referral']
     @ViewChildren('report_rows') report_rows: QueryList<any>;
 
     ngOnInit() {
-
         this.section = 'Hide patient name';
+        this.tableData()
+        this.fetchAction()
+    }
+
+    tableData() {
         function sort_by_creation(x, y) {
             return -1;
             if (x.creation_datetime > y.creation_datetime) {
@@ -63,6 +70,7 @@ export class StudyListComponent implements OnInit {
             }
             return 0;
         }
+
         // TODO(billy): Create a dev config for this url so this can work during
         // development.
         $.ajax({
@@ -86,7 +94,6 @@ export class StudyListComponent implements OnInit {
         }.bind(this)).always(() => {
             this.index_complete = true;
         });
-        this.fetchAction()
     }
 
     emailValidate(value) {
@@ -162,15 +169,61 @@ export class StudyListComponent implements OnInit {
         } else if (this.number_validate == true) {
             this.number_error = false
         }
-        else if (this.diagnosis_validate == true && this.mrn_validate == true && this.name_validate == true && this.email_validate == true && this.number_validate == true) {
-            this.modalService.dismissAll()
-            this.name = ''
-            this.email = ''
-            this.mrn = ''
-            this.diagnosis = ''
-            this.date_picker = ''
-            this.telephone = ''
+
+        if (this.date_picker == '') {
+            this.dob_error = true
         }
+        else if (this.email_validate == true && this.number_validate == true) {
+            this.savePatient()
+
+        }
+    }
+    savePatient() {
+        let formatted_time = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
+        let req_data = {
+            "uuid": uuidv4(),
+            "creation_datetime": formatted_time,
+            "name": this.name,
+            "file_dir_path": '',
+            "file_dir_checksum": '',
+            "image_file_type": '',
+            "accession_number": '',
+            "patient_age": '',
+            "patient_name": this.name,
+            "patient_size": '',
+            "patient_sex": '',
+            "study_instance_uid": '',
+            "mrn": this.mrn,
+            "email": this.email,
+            "date_of_birth": this.date_picker,
+            "phone_number": this.telephone,
+            "diagnosis": this.diagnosis
+        }
+        $.ajax({
+            url: this.patient_save_url,
+            dataType: 'json',
+            type: "POST",
+            data: req_data,
+        }).done(function (data) {
+            if ('error' in data) {
+                this.action_error = data['error'];
+            } else {
+                console.log('savePatient', data)
+                this.tableData()
+                this.fetchAction()
+                this.modalService.dismissAll()
+                this.name = ''
+                this.email = ''
+                this.mrn = ''
+                this.diagnosis = ''
+                this.date_picker = ''
+                this.telephone = ''
+
+            }
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            this.action_error = `Data Not ${this.index_url}.`;
+        }.bind(this)).always(() => {
+        });
     }
     closeModal() {
         this.modalService.dismissAll()
@@ -180,11 +233,9 @@ export class StudyListComponent implements OnInit {
         this.diagnosis = ''
         this.date_picker = ''
         this.telephone = ''
-        this.name_error = false
         this.email_error = false
-        this.mrn_error = false
-        this.diagnosis_error = false
         this.number_error = false
+        this.dob_error = false
     }
     open(content) {
         this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
