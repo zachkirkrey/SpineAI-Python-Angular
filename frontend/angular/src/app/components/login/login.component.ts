@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
     selector: 'app-login',
@@ -10,7 +12,9 @@ export class LoginComponent implements OnInit {
 
     login: any
     password: any
+    action_error: string;
     email_error: boolean = false
+    readonly login_url = `${environment.api_url}/user`;
     constructor(private route: Router) { }
 
     ngOnInit(): void {
@@ -27,8 +31,29 @@ export class LoginComponent implements OnInit {
     }
     signIn() {
         console.log('SignIn', this.login, this.password)
-        this.route.navigate(['/studies'])
+        let req_data = {
+            "uuid": uuidv4(),
+            "username": this.login,
+            "password": this.password,
+        }
+        $.ajax({
+            url: this.login_url,
+            dataType: 'json',
+            type: "POST",
+            data: req_data,
+        }).done(function (data) {
+            if ('error' in data) {
+                this.action_error = data['error'];
+            } else {
+                console.log('savelogin', data)
+
+                this.route.navigate(['/studies'])
+
+            }
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            this.action_error = `Data Not ${this.login_url}.`;
+        }.bind(this)).always(() => {
+        });
 
     }
-
 }
