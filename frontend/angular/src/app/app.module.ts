@@ -27,19 +27,22 @@ import { StudyListComponent } from './components/study-list/study-list.component
 import * as $ from 'jquery';
 import { FetchFormComponent } from './components/fetch-form/fetch-form.component';
 import { IngestionListComponent } from './components/fetch-form/ingestion-list/ingestion-list.component';
+import { LoginComponent } from './components/login/login.component';
 
 const appRoutes: Routes = [
   { path: 'debug', component: DebugInfoComponent },
   { path: 'login', component: LoginFormComponent },
+  { path:'login_pass',component:LoginComponent},
   { path: 'study_legacy/:study_id', component: LegacyReportComponent },
   { path: 'study/:study_id', loadChildren: () => import('./components/spine-report/spine-report.module').then(res => res.SpineReportModule) },
   { path: 'studies', component: StudyListComponent },
   { path: 'intake', component: IntakeFormComponent },
   { path: 'fetch', component: FetchFormComponent },
   { path: '**',
-    redirectTo: '/studies',
+    redirectTo: '/login_pass',
     pathMatch: 'full'
   },
+
 ]
 
 @NgModule({
@@ -53,6 +56,7 @@ const appRoutes: Routes = [
     LoginFormComponent,
     SafePipe,
     StudyListComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
