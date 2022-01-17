@@ -188,8 +188,8 @@ module.exports = function (sequelize) {
             model: Action
         }, ]
     });
-    Study.addScope('includeUsers', {
-        include: [{
+    User.addScope('includeUsers', {
+     include: [{
             model: User
         }, ]
     });
