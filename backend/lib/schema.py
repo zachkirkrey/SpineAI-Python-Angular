@@ -423,3 +423,9 @@ class Action(db.Entity):
     creation_datetime = Required(datetime, default=datetime.now)
     study = Required(Study)
 
+
+class User(db.Entity):
+    id = PrimaryKey(int, auto=True)
+    uuid = Required(str, index=True, default=get_uuid)
+    username = Required(str)
+    password = Required(str)
