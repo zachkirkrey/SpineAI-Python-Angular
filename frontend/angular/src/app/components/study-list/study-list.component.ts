@@ -392,6 +392,7 @@ export class StudyListComponent implements OnInit {
     }
 
     toggleDisplay(event) {
+        alert()
         if (event.checked == true) {
             this.isShown = false;
             this.section = 'Show patient name';
@@ -448,12 +449,13 @@ export class StudyListComponent implements OnInit {
         };
 
         function load_recommendation(token) {
+
             $('.recommendation_cell').each(function (i, elem) {
                 let id = $(elem).data('study-id');
                 $.ajax({
                     url: environment.api_url + `/reports?Studies.id=${id}&type=PDF_SIMPLE`,
                     headers: {
-                        "Authorization": 'Bearer ' + token
+                        "Authorization": 'Bearer ' + localStorage.getItem('token')
                     },
                     dataType: 'json',
                 })

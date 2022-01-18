@@ -26,7 +26,7 @@ server.post('/user', function (req, res, next) {
         .then(data => {
             console.log('response', data.dataValues)
             let token = jwt.sign(data.dataValues, config_jwt.jwt.secret, {
-                expiresIn: '60m' // token expires in 15 minutes
+                expiresIn: '60m' // token expires in 60 minutes
             });
             console.log('token', token)
             // retrieve issue and expiration times
