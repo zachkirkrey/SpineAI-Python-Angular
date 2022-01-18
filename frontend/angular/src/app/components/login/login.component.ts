@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
                 this.action_error = data['error'];
             } else {
                 console.log('savelogin', data)
-
+                localStorage.setItem('token', data.token)
                 this.route.navigate(['/studies'])
 
             }

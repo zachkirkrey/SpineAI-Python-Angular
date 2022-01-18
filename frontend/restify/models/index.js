@@ -117,7 +117,6 @@ module.exports = function (sequelize) {
     let Segmentation = require('./segmentation')(sequelize);
     let Study = require('./study')(sequelize);
     let Action = require('./action')(sequelize);
-    let User = require('./user')(sequelize);
 
     defineOneToMany(Study, Classification);
     defineOneToMany(Study, Segmentation);
@@ -188,11 +187,6 @@ module.exports = function (sequelize) {
             model: Action
         }, ]
     });
-    User.addScope('includeUsers', {
-     include: [{
-            model: User
-        }, ]
-    });
 
     CanalSegmentation.addScope('defaultScope', {
         include: [{
@@ -243,7 +237,6 @@ module.exports = function (sequelize) {
         Report: Report,
         Segmentation: Segmentation,
         Study: Study,
-        Action: Action,
-        User:User
+        Action: Action
     }
 }

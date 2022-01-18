@@ -13,7 +13,6 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class StudyListComponent implements OnInit {
 
-    constructor(private exportService: ExportService, private modalService: NgbModal, private router: Router) { }
     readonly api_url = environment.api_url;
     readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports`;
     readonly action_save_url = `${environment.api_url}/action`;
@@ -52,9 +51,12 @@ export class StudyListComponent implements OnInit {
     number_error: boolean = false
     save_action: boolean = false
     dob_error: boolean = false
+    token: any;
     actionList = ['Scheduled for Clinic', 'Surgery', 'Additional Testing', 'Injections', 'Physical Therapy', 'RTC/DC', 'Referral']
     @ViewChildren('report_rows') report_rows: QueryList<any>;
-
+    constructor(private exportService: ExportService, private modalService: NgbModal, private router: Router) {
+        this.token = localStorage.getItem('token')
+    }
     ngOnInit() {
         this.section = 'Hide patient name';
         this.tableData()
@@ -78,6 +80,9 @@ export class StudyListComponent implements OnInit {
         // development.
         $.ajax({
             url: this.index_url,
+            headers: {
+                "Authorization": 'Bearer ' + this.token
+            },
             dataType: 'json',
         }).done(function (data) {
             if ('error' in data) {
@@ -206,6 +211,9 @@ export class StudyListComponent implements OnInit {
             url: this.patient_save_url,
             dataType: 'json',
             type: "POST",
+            headers: {
+                "Authorization": 'Bearer ' + this.token
+            },
             data: req_data,
         }).done(function (data) {
             if ('error' in data) {
@@ -260,6 +268,9 @@ export class StudyListComponent implements OnInit {
     fetchAction() {
         $.ajax({
             url: this.action_fetch_url,
+            headers: {
+                "Authorization": 'Bearer ' + this.token
+            },
             type: "GET",
         }).done(function (data) {
             if ('error' in data) {
@@ -325,6 +336,9 @@ export class StudyListComponent implements OnInit {
             url: this.action_save_url,
             dataType: 'json',
             type: "POST",
+            headers: {
+                "Authorization": 'Bearer ' + this.token
+            },
             data: req_data,
         }).done(function (data) {
             if ('error' in data) {
@@ -433,12 +447,15 @@ export class StudyListComponent implements OnInit {
 
         };
 
-        function load_recommendation() {
+        function load_recommendation(token) {
             $('.recommendation_cell').each(function (i, elem) {
                 let id = $(elem).data('study-id');
                 $.ajax({
                     url: environment.api_url + `/reports?Studies.id=${id}&type=PDF_SIMPLE`,
-                    dataType: 'json'
+                    headers: {
+                        "Authorization": 'Bearer ' + token
+                    },
+                    dataType: 'json',
                 })
                     .done(function (data) {
                         if (!data || !data.length) {
@@ -471,7 +488,7 @@ export class StudyListComponent implements OnInit {
                 destroy: false
             });
             $('#reports_table').on('draw.dt', load_recommendation);
-            load_recommendation();
+            load_recommendation(this.token);
         });
     }
 

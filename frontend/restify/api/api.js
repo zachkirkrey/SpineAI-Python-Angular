@@ -59,11 +59,7 @@ module.exports = function (finale, sequelize) {
         endpoints: ['/action', '/action/:id'],
         associations: false
     })
-    let userResource = finale.resource({
-        model: sequelize.models.User,
-        endpoints: ['/user', '/user/:id'],
-        associations: false
-    })
+
 
     // Log access to the following resources.
     if (config.get('api.apilog.enabled')) {
@@ -78,7 +74,6 @@ module.exports = function (finale, sequelize) {
             segmentationResource,
             studyResource,
             actionResource,
-            userResource
         ].forEach(resource => resource.use(apiLogMiddleware));
     }
 

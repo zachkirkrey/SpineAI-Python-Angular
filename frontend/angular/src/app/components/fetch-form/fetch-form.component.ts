@@ -85,7 +85,8 @@ export class FetchFormComponent implements OnInit {
 
     // Consider encapsulating in Service if duplication reqiured.
     let url = `${environment.backend_api_url}/api/v1/dicom/find_patient_id/${patientID}/${studyDateStr}`;
-    this.http.get<FindStudiesResponse>(url)
+    const headers = {  "Authorization": 'Bearer ' + localStorage.getItem('token')}
+    this.http.get<FindStudiesResponse>(url,{"headers":headers})
       .subscribe((resp: FindStudiesResponse) => {
         this.foundStudies = resp.studies;
         this.formDone = true;
