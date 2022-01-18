@@ -392,8 +392,7 @@ export class StudyListComponent implements OnInit {
     }
 
     toggleDisplay(event) {
-        alert()
-        if (event.checked == true) {
+      if (event.checked == true) {
             this.isShown = false;
             this.section = 'Show patient name';
         } else if (event.checked == false) {

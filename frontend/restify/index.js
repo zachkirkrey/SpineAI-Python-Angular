@@ -12,33 +12,65 @@ server.use(rjwt(config_jwt.jwt).unless({
 }));
 
 server.post('/user', function (req, res, next) {
-    let {
-        username,
-        password
-    } = req.body;
-    User
-        .findOne({
+    User.findOne({
             where: {
                 username: req.body.username,
                 password: req.body.password,
             }
         })
         .then(data => {
-            console.log('response', data.dataValues)
-            let token = jwt.sign(data.dataValues, config_jwt.jwt.secret, {
-                expiresIn: '60m' // token expires in 60 minutes
-            });
-            console.log('token', token)
-            // retrieve issue and expiration times
-            let {
-                iat,
-                exp
-            } = jwt.decode(token);
-            res.send({
-                iat,
-                exp,
-                token
-            });
+            let login_data = data
+            if (login_data != null) {
+                let token = jwt.sign(data.dataValues, config_jwt.jwt.secret, {
+                    expiresIn: '60m' // token expires in 60 minutes
+                });
+                // retrieve issue and expiration times
+                let {
+                    iat,
+                    exp
+                } = jwt.decode(token);
+                res.send({
+                    iat,
+                    exp,
+                    token
+                });
+            } else if (login_data == null) {
+                const user = new User({
+                    username: req.body.username,
+                    password: req.body.password,
+                    uuid: req.body.uuid
+                })
+                user.save()
+                User.findOne({
+                        where: {
+                            username: req.body.username,
+                            password: req.body.password,
+                        }
+                    })
+                    .then(data => {
+                        console.log('response', data)
+                        let login_data = data
+                        if (login_data != null) {
+                            let token = jwt.sign(data.dataValues, config_jwt.jwt.secret, {
+                                expiresIn: '60m' // token expires in 60 minutes
+                            });
+                            console.log('token', token)
+                            // retrieve issue and expiration times
+                            let {
+                                iat,
+                                exp
+                            } = jwt.decode(token);
+                            res.send({
+                                iat,
+                                exp,
+                                token
+                            });
+                        }
+
+                    })
+
+            }
+
         })
 });
 server.listen(config.get('restify.port'), function () {

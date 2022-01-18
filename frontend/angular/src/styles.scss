@@ -247,6 +247,7 @@ div#reports_table_paginate {
 
   .table-responsive .export-wrap>section {
     width: 300px;
+    z-index: 9;
   }
 
   .table-responsive .export-wrap button {
@@ -291,7 +292,7 @@ div#reports_table_paginate {
 .add-patient-con {
    display: flex;
    flex-wrap: wrap;
-   grid-gap: 10px;
+   grid-gap: 8px;
 }
 .modal-footer.add-patient-footer {
     justify-content: flex-start;

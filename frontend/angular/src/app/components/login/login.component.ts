@@ -15,9 +15,12 @@ export class LoginComponent implements OnInit {
     action_error: string;
     email_error: boolean = false
     readonly login_url = `${environment.api_url}/user`;
-    constructor(private route: Router) { }
+    constructor(private route: Router) {
+        localStorage.removeItem("token")
+    }
 
     ngOnInit(): void {
+        localStorage.removeItem("token")
     }
 
     emailValidate(value) {
