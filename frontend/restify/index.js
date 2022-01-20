@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize(config.get('sequelize.init'));
 let User = require('./models/user')(sequelize);
+let Study = require('./models/study')(sequelize);
 
 server.use(rjwt(config_jwt.jwt).unless({
     path: ['/user']
@@ -69,6 +70,28 @@ server.post('/user', function (req, res, next) {
 
                     })
 
+            }
+
+        })
+});
+
+
+server.post('/search/pacs', function (req, res, next) {
+    Study.findOne({
+            where: {
+                uuid: req.body.uuid
+            }
+        })
+        .then(data => {
+            let searchPacs = data
+            if (searchPacs != null) {
+                res.send(
+                    data.dataValues
+                );
+            } else if (searchPacs == null) {
+                res.send({
+                    'message': 'No saved data found!!'
+                })
             }
 
         })

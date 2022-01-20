@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren ,Input} from '@angular/core';
 
 import { ApiService } from 'src/app/services/api/api.service';
 
@@ -8,7 +8,7 @@ import { ApiService } from 'src/app/services/api/api.service';
   styleUrls: ['./ingestion-list.component.scss']
 })
 export class IngestionListComponent implements OnInit {
-
+@Input() uuidId:any
   constructor(
     private api: ApiService) { }
 
@@ -18,7 +18,7 @@ export class IngestionListComponent implements OnInit {
   tableReady: boolean;
 
   ngOnInit(): void {
-    this.api.getFetchIngestions()
+    this.api.getFetchIngestions(this.uuidId)
       .subscribe(ingestions => this.loadIngestions(ingestions));
   }
 

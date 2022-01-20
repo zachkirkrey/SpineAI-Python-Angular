@@ -135,19 +135,20 @@ export class ApiService {
         return images;
     }
 
-    getFetchIngestions() {
+    getFetchIngestions(uuid) {
         const headers = { "Authorization": 'Bearer ' + this.token }
-        return this.http.get<any>(`${this.apiUrl}/ingestions?type=DICOM_FETCH`, { 'headers': headers });
+         this.http.get<any>(`${this.apiUrl}/ingestions?type=DICOM_FETCH`, { 'headers': headers });
+        return this.http.get<any>(`${this.apiUrl}/ingestions?uuid=${uuid}`, { 'headers': headers });
     }
 
-    addFetchIngestion(accessionNumber) {
-        var date = new Date();
+    addFetchIngestion(data) {
+         var date = new Date();
         let ingestion: Ingestion = {
-            uuid: uuidv4(),
+            uuid: data.uuid,
             creation_datetime: date.toISOString(),
             type: 'DICOM_FETCH',
             state: 'NEW',
-            accession_number: accessionNumber,
+            accession_number: data.accessionNumber,
             error_str: '',
             name: ''
         };

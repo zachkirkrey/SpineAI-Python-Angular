@@ -37,6 +37,7 @@ const appRoutes: Routes = [
   { path: 'study/:study_id', loadChildren: () => import('./components/spine-report/spine-report.module').then(res => res.SpineReportModule) },
   { path: 'studies', component: StudyListComponent },
   { path: 'intake', component: IntakeFormComponent },
+  { path: 'fetch/:fetch_id', component: FetchFormComponent },
   { path: 'fetch', component: FetchFormComponent },
   { path: '**',
     redirectTo: '/login_pass',

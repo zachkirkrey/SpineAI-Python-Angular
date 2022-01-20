@@ -62,8 +62,8 @@ export class StudyListComponent implements OnInit {
         this.tableData()
         this.fetchAction()
     }
-    searchPacsNavigate() {
-        this.router.navigate(['fetch']);
+    searchPacsNavigate(uuid) {
+        this.router.navigate(['/fetch/'+ uuid]);
     }
     tableData() {
         function sort_by_creation(x, y) {
