@@ -11,6 +11,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatIconModule} from '@angular/material/icon';
 import {NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatFormFieldModule} from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
+
 
 import { NgPipesModule } from 'ngx-pipes';
 
@@ -22,6 +25,8 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { IntakeFormComponent } from './components/intake-form/intake-form.component';
 import { LegacyReportComponent, LegacyReportData, SafePipe } from './components/legacy-report/legacy-report.component';
 import { StudyListComponent } from './components/study-list/study-list.component';
+
+
 
 
 import * as $ from 'jquery';
@@ -60,8 +65,8 @@ const appRoutes: Routes = [
     LoginComponent,
   ],
   imports: [
+      BrowserAnimationsModule,
     BrowserModule,
-    BrowserAnimationsModule,
     FormsModule,
     MatButtonModule,
     HttpClientModule,
@@ -73,6 +78,9 @@ const appRoutes: Routes = [
     NgbModule,
     NgPipesModule,
     ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+
     RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' })
   ],
   providers: [LegacyReportData],

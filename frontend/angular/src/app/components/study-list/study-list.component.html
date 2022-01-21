@@ -163,15 +163,13 @@
                             placeholder="Email" name="email" [(ngModel)]="email">
                         <span class="error_class" *ngIf="email_error == true">Please enter a valid email address</span>
                     </div>
-                    <div class="input-group form-group-sec">
-                        <input class="form-control" placeholder="DOB" name="dp" readonly [(ngModel)]="date_picker"
-                            ngbDatepicker #d="ngbDatepicker">
-
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
-                                type="button"></button>
-                        </div>
-
+                    <div>
+                        <mat-form-field class="mr-sm-24" fxFlex>
+                            <input matInput [matDatepicker]="picker" placeholder="DOB" autocomplete="off" name="date"
+                                [(ngModel)]="date_picker">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker [startAt]="date_picker" #picker></mat-datepicker>
+                        </mat-form-field>
                     </div>
                     <div class="form-group-sec">
                         <input id="telephone" class="form-control" placeholder="Telephone" name="telephone"

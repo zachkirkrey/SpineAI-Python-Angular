@@ -6,10 +6,24 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import { Router, NavigationEnd } from '@angular/router';
 
+
+export const MY_DATE_FORMATS = {
+    parse: {
+        dateInput: 'DD/MM/YYYY',
+    },
+    display: {
+        dateInput: 'DD/MM/YYYY',
+        monthYearLabel: 'MMMM YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM YYYY'
+    },
+};
+
 @Component({
     selector: 'app-study-list',
     templateUrl: './study-list.component.html',
-    styleUrls: ['./study-list.component.scss']
+    styleUrls: ['./study-list.component.scss'],
+
 })
 export class StudyListComponent implements OnInit {
 
@@ -36,7 +50,7 @@ export class StudyListComponent implements OnInit {
     name: any;
     mrn: any;
     email: any;
-    date_picker: any = '';
+    date_picker: any;
     telephone: any;
     diagnosis: any;
     email_error: boolean = false
@@ -63,7 +77,7 @@ export class StudyListComponent implements OnInit {
         this.fetchAction()
     }
     searchPacsNavigate(uuid) {
-        this.router.navigate(['/fetch/'+ uuid]);
+        this.router.navigate(['/fetch/' + uuid]);
     }
     tableData() {
         function sort_by_creation(x, y) {
@@ -151,40 +165,41 @@ export class StudyListComponent implements OnInit {
         }
     }
     createPatient() {
-        if (this.email_validate == false) {
-            this.email_error = true
-        } else if (this.email_validate == true) {
-            this.email_error = false
-        }
-        if (this.name_validate == false) {
-            this.name_error = true
-        } else if (this.name_validate == true) {
-            this.name_error = false
-        }
-        if (this.mrn_validate == false) {
-            this.mrn_error = true
-        } else if (this.mrn_validate == true) {
-            this.mrn_error = false
-        }
-        if (this.diagnosis_validate == false) {
-            this.diagnosis_error = true
-        } else if (this.diagnosis_validate == true) {
-            this.diagnosis_error = false
+        console.log('date_picker', this.date_picker)
+        //if (this.email_validate == false) {
+        //    this.email_error = true
+        //} else if (this.email_validate == true) {
+        //    this.email_error = false
+        //}
+        //if (this.name_validate == false) {
+        //    this.name_error = true
+        //} else if (this.name_validate == true) {
+        //    this.name_error = false
+        //}
+        //if (this.mrn_validate == false) {
+        //    this.mrn_error = true
+        //} else if (this.mrn_validate == true) {
+        //    this.mrn_error = false
+        //}
+        //if (this.diagnosis_validate == false) {
+        //    this.diagnosis_error = true
+        //} else if (this.diagnosis_validate == true) {
+        //    this.diagnosis_error = false
 
-        }
-        if (this.number_validate == false) {
-            this.number_error = true
-        } else if (this.number_validate == true) {
-            this.number_error = false
-        }
+        //}
+        //if (this.number_validate == false) {
+        //    this.number_error = true
+        //} else if (this.number_validate == true) {
+        //    this.number_error = false
+        //}
 
-        if (this.date_picker == '') {
-            this.dob_error = true
-        }
-        else if (this.email_validate == true && this.number_validate == true) {
-            this.savePatient()
+        //if (this.date_picker == '') {
+        //    this.dob_error = true
+        //}
+        //else if (this.email_validate == true && this.number_validate == true) {
+        //    this.savePatient()
 
-        }
+        //}
     }
     savePatient() {
         let formatted_time = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
@@ -249,6 +264,8 @@ export class StudyListComponent implements OnInit {
         this.dob_error = false
     }
     open(content) {
+        //this.date_picker = moment(new Date()).format('MM-DD-YYYY')
+        this.date_picker = new Date()
         this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
             this.closeResult = `Closed with: ${result}`;
         }, (reason) => {
@@ -392,7 +409,7 @@ export class StudyListComponent implements OnInit {
     }
 
     toggleDisplay(event) {
-      if (event.checked == true) {
+        if (event.checked == true) {
             this.isShown = false;
             this.section = 'Show patient name';
         } else if (event.checked == false) {
