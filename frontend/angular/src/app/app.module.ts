@@ -25,7 +25,7 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { IntakeFormComponent } from './components/intake-form/intake-form.component';
 import { LegacyReportComponent, LegacyReportData, SafePipe } from './components/legacy-report/legacy-report.component';
 import { StudyListComponent } from './components/study-list/study-list.component';
-
+//import { MomentDateModule } from '@angular/material-moment-adapter';
 
 
 
@@ -80,7 +80,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-
+    //MomentDateModule,
     RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' })
   ],
   providers: [LegacyReportData],

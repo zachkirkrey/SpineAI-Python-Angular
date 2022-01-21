@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import { Router, NavigationEnd } from '@angular/router';
-
+//import { MAT_DATE_FORMATS } from '@angular/material/core';
 
 export const MY_DATE_FORMATS = {
     parse: {
@@ -23,7 +23,9 @@ export const MY_DATE_FORMATS = {
     selector: 'app-study-list',
     templateUrl: './study-list.component.html',
     styleUrls: ['./study-list.component.scss'],
-
+    //providers: [
+    //    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+    //]
 })
 export class StudyListComponent implements OnInit {
 

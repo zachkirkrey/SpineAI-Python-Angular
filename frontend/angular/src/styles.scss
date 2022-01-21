@@ -357,6 +357,68 @@ div#reports_table_wrapper .search-pacs:hover {
     color: #0e4285;
 }
 
+.form-group-sec.date-input {
+    border: 1px solid #ced4da;
+    width: 49%;
+    height: 40px;
+    color: #495057;
+    border-radius: 0.25rem;
+    position: relative;
+}
+//.form-group-sec.date-input .date-inputmr-sm-24 {
+//    margin-top: -18px !important;
+//    padding: 0px 10px !important;
+//}
+//.form-group-sec.date-input .mat-form-field.mat-form-field.mr-sm-24.ng-tns-c83-1.mat-primary.ng-star-inserted.mat-form-field-type-mat-input.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-hide-placeholder.ng-untouched.ng-pristine.ng-valid.mat-form-field-should-float,
+//.mat-form-field.mat-form-field.mr-sm-24.ng-tns-c83-1.mat-primary.ng-star-inserted.mat-form-field-type-mat-input.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-hide-placeholder.ng-pristine.ng-valid.mat-form-field-should-float.ng-touched {
+//    margin-top: -18px !important;
+//     padding: 0px 10px !important;
+//     display: block;
+//}
+.form-group-sec.date-input .mat-form-field.mat-form-field.mr-sm-24.ng-tns-c83-1.mat-primary.ng-star-inserted.mat-form-field-type-mat-input.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-hide-placeholder.ng-untouched.ng-pristine.ng-valid.mat-form-field-should-float,
+.mat-form-field {
+    margin-top: -18px !important;
+     padding: 0px 10px !important;
+     display: block !important;
+}
+//.mat-form-field-appearance-legacy .mat-form-field-wrapper {
+
+//}
+.form-group-sec.date-input .mat-form-field-flex.ng-tns-c83-1 {
+    height: 20px;
+}
+.modal-open .export-btn.add-patient {
+    z-index: 0 !important;
+}
+.form-group-sec.date-input .mat-form-field-appearance-legacy .mat-form-field-underline {
+    background-color: transparent !important;
+}
+.modal {
+    z-index: -0 !important;
+}
+//.modal-open .ngb-modal-backdrop.modal-backdrop.fade.show {
+//    z-index: 0 !important;
+//}
+.modal-backdrop.show {
+    z-index: 0 !important;
+}
+
+
+
+@media (max-width: 767px) {
+    .form-group-sec.date-input {
+        width: 100%;
+    }
+    .mat-datepicker-content .mat-calendar {
+        width: 100%;
+    }
+}
+
+//.form-group-sec.date-input .mat-form-field-infix{
+//    top: -20px;
+//    padding: 0px 10px;
+//}
+
 //Login form css start
 
 .login-form {
