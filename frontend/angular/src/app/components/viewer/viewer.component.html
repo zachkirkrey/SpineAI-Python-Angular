@@ -1,0 +1,27 @@
+<div>
+    <h3> Patient Information</h3><br>
+    Name : {{viewer_obj.patient_name}} <br><br>
+    MRN :{{viewer_obj.mrn}} <br><br>
+    <button type="button" (click)="prevItem()">Prev Patient</button>
+    <button type="button" (click)="nextItem()">Next Patient</button>
+</div><br><br>
+<div>
+    <h3>Recommendation</h3><br>
+    No surgery consult
+    <div class="bar"
+        [style.background]='"linear-gradient(to right, var(--primary-color) " + this.threshold_percentage + "%, var(--secondary-color) " + this.threshold_percentage + "%)"'>
+    </div>
+    <div class="risk-tooltip" [style.left]="position">
+    </div>
+
+</div><br><br>
+<div>
+    <h3> Action</h3><br>
+    <ul>
+        <li *ngFor="let report of viewer_obj.report_action">
+            {{report.time}} {{report.name}}
+        </li>
+
+
+    </ul>
+</div>
