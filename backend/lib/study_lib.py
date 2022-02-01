@@ -37,7 +37,14 @@ def CreateStudy(input_dir, name=None):
     study = schema.Study(
             name=study_name,
             file_dir_path=input_dir,
-            file_dir_checksum=checksumdir.dirhash(input_dir, 'md5'))
+            file_dir_checksum=checksumdir.dirhash(input_dir, 'md5'),
+            mrn='12345',
+            email='admin@test.com',
+            date_of_birth='2022-10-10',
+            phone_number='98989898',
+            diagnosis='Test',
+            created_by=True
+    )
 
     try:
         patient_series = series_lib.ImageSeriesFromDICOMFiles(study)
