@@ -98,6 +98,10 @@ module.exports = function (finale, sequelize) {
             res.setHeader('Content-Type', 'text/csv');
             res.setHeader('Content-disposition', `filename=${report.Studies[0].name}.csv`);
             res.end(csv.sendCsv([report]));
+        }else if (as == 'htmlsimple'){
+            res.setHeader('Content-Type', 'application/json');
+            report_html = (report.report_bytes).toString();
+            res.json({"result":report_html});
         } else {
             throw new Error(`Invalid "as" value: "${req.query.as}"`);
         }
