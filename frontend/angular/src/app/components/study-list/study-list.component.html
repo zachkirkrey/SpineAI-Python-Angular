@@ -81,8 +81,10 @@
                                     <ng-template [ngIf]="metadata.Reports[0].state == 'PROCESSED'"
                                         [ngIfElse]="reportNotProcessed">
                                         <a href="/study/{{ metadata.uuid }}">Report</a>&nbsp;&nbsp;&#124;&nbsp;
-                                        <a
-                                            href="{{ api_url }}/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid={{ metadata.uuid }}">Viewer</a>
+                                        <!--<a
+                                            href="{{ api_url }}/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid={{ metadata.uuid }}">Viewer</a>-->
+                                            <a (click)="showViewer(metadata.uuid,metadata)"
+                                           >Viewer</a>
                                     </ng-template>
                                     <ng-template #reportNotProcessed>
                                         <span *ngIf="metadata.Reports[0].state; let state">

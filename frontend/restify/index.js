@@ -9,7 +9,7 @@ let User = require('./models/user')(sequelize);
 let Study = require('./models/study')(sequelize);
 
 server.use(rjwt(config_jwt.jwt).unless({
-    path: ['/user']
+    path: ['/user','/reports']
 }));
 
 server.post('/user', function (req, res, next) {
@@ -23,7 +23,7 @@ server.post('/user', function (req, res, next) {
             let login_data = data
             if (login_data != null) {
                 let token = jwt.sign(data.dataValues, config_jwt.jwt.secret, {
-                    expiresIn: '60m' // token expires in 60 minutes
+                    expiresIn: '7d' // token expires in 60 minutes
                 });
                 // retrieve issue and expiration times
                 let {

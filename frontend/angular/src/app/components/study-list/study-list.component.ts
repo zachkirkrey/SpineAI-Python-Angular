@@ -312,6 +312,15 @@ export class StudyListComponent implements OnInit {
         }.bind(this)).always(() => {
         });
     }
+
+    showViewer(id, data) {
+        let obj = {}
+        obj = `${this.api_url}/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${id}`
+        console.log('obj', obj)
+        localStorage.setItem("patient_data", JSON.stringify(data))
+        localStorage.setItem("index_data", JSON.stringify(this.index))
+        this.router.navigate(['/viewer'])
+    }
     filterArr(arr, criteria) {
         return arr.filter(function (obj) {
             return Object.keys(criteria).every(function (c) {
@@ -325,6 +334,7 @@ export class StudyListComponent implements OnInit {
         report_Arr.forEach(element => {
             this.callSaveAPI(element.name, element.time, id, index)
         });
+
     }
 
     callSaveAPI(name, time, study_id, index) {
@@ -364,6 +374,8 @@ export class StudyListComponent implements OnInit {
             this.action_error = `Data Not ${this.index_url}.`;
         }.bind(this)).always(() => {
         });
+        this.tableData()
+        this.fetchAction()
     }
     actionValues(value, index) {
         this.index.forEach((x, i) => {
