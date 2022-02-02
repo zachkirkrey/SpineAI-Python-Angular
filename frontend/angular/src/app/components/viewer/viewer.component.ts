@@ -11,6 +11,9 @@ import { ThrowStmt } from '@angular/compiler';
 })
 export class ViewerComponent implements OnInit {
     readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports`;
+    //readonly segmentation_url = `${environment.api_url}/reports?as=json`;
+    //readonly segmentation_url = `${environment.api_url}/reports?as=HTMLSIMPLE`;
+
     token: any;
     score: number = 2;
     threshold: number = 6;
@@ -19,8 +22,9 @@ export class ViewerComponent implements OnInit {
     threshold_percentage = 0;
     index: any;
     viewer_obj: any;
-    index_data: any
-    data_index = 0
+    index_data: any;
+    data_index = 0;
+    segmentation_html: any;
 
 
     constructor(private router: Router, private route: ActivatedRoute) {
@@ -76,8 +80,38 @@ export class ViewerComponent implements OnInit {
         // TODO(billy): Support arithmetic errors.
         this.score_percentage = Math.round(this.score / this.score_max * 100);
         this.threshold_percentage = Math.round(this.threshold / this.score_max * 100);
+        this.segmentationCall()
     }
 
+    segmentationCall() {
+      let segmentation_url = `${environment.api_url}/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${this.viewer_obj.uuid}`
+        $.ajax({
+            url: segmentation_url,
+            headers: {
+                "Authorization": 'Bearer ' + this.token,
+                'Content-Type': 'text/html'
+            },
+            dataType: 'json',
+        }).done(function (data) {
+            if ('error' in data) { } else {
+                let TYPED_ARRAY = new Uint8Array(data.result.data);
+                //const STRING_CHAR = String.fromCharCode.apply(null, TYPED_ARRAY);
+                const STRING_CHAR = TYPED_ARRAY.reduce((data, byte)=> {
+
+                    return data + String.fromCharCode(byte);
+                    }, '')
+                    console.log('STRING_CHAR',STRING_CHAR)
+                    //let base64String = btoa(STRING_CHAR);
+                    this.segmentation_html = STRING_CHAR
+
+                this.segmentation_html = this.segmentation_html;
+                //console.log('segmentation_html', this.segmentation_html)
+            }
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            this.index_error = `Could not fetch search segmentation from ${this.segmentation_url}.`;
+        }.bind(this)).always(() => {
+        });
+    }
     get position() {
         return `calc(${this.score_percentage}% - 16px)`;
     }
