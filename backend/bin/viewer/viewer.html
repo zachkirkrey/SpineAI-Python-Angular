@@ -2,196 +2,214 @@
 <html>
 
 <head>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-<style>
-  .clearfix:after {
-    content: ".";
-    visibility: hidden;
-    display: block;
-    height: 0;
-    clear: both;
-  }
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <style>
+        .clearfix:after {
+            content: ".";
+            visibility: hidden;
+            display: block;
+            height: 0;
+            clear: both;
+        }
 
-  div.slide_images {
-    float:left;
-    position: relative;
-    height: 256px;
-    width: 256px;
-  }
-  div.slide_images > img:nth-child(2) {
-    position: absolute;
-    top: 0;
-    left: 0;
-  	height: 256px;
-  	width: 256px;
-  }
-  div.slide_images > img:nth-child(1) {
-    float: left;
-  	height: 256px;
-  	width: 256px;
-  }
-  div.images > div.slides {
-    float: left;
-  }
+        div.slide_images {
+            float: left;
+            position: relative;
+            height: 256px;
+            width: 256px;
+        }
 
-  canvas.img_annotation {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-  }
-  div.raw_segmentation_series {
-    display: none;
-  }
-  div.raw_segmentation_series.slide_images {
-    margin-left: 5px;
-  }
-  .raw_segmentation_series_label {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 0.9em;
-    color: red;
-    font-weight: bold;
-  }
+        div.slide_images>img:nth-child(2) {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 256px;
+            width: 256px;
+        }
 
-  div.labels {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 0.9em;
-    font-weight: bold;
-    text-align: right;
-  }
-  .canal_area_label {
-    color: red;
-  }
-  .canal_height_label {
-    color: yellow;
-  }
-  .canal_width_label {
-    color: #99D9EA;
-  }
-  div.labels > p {
-    margin: 0;
-  }
-  div.canal_height_indicator {
-    position: absolute;
-    width: 1px;
-    background: yellow;
-  }
-  div.canal_width_indicator {
-    position: absolute;
-    height: 1px;
-    background: #99D9EA;
-  }
+        div.slide_images>img:nth-child(1) {
+            float: left;
+            height: 256px;
+            width: 256px;
+        }
 
+        div.images>div.slides {
+            float: left;
+        }
 
-  div.orientation_labels {
-    position: absolute;
-    top: 0; bottom: 0;
-    height: 100%;
-    width: 100%;
-  }
+        canvas.img_annotation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
 
-  div.orientation_labels div {
-    position: absolute;
-    color: white;
-    text-align: center;
-    margin: 2px;
-  }
+        div.raw_segmentation_series {
+            display: none;
+        }
 
-  div.orientation_labels .left {
-    height: 100%;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-  }
+        div.raw_segmentation_series.slide_images {
+            margin-left: 5px;
+        }
 
-  div.orientation_labels .right {
-    height: 100%;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-  }
+        .raw_segmentation_series_label {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 0.9em;
+            color: red;
+            font-weight: bold;
+        }
 
-  div.orientation_labels .up {
-    height: 1em; width: 100%;
-    top: 0;
-  }
+        div.labels {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-align: right;
+        }
 
-  div.orientation_labels .down {
-    height: 1em; width: 100%;
-    bottom: 0;
-  }
+        .canal_area_label {
+            color: red;
+        }
 
-  div.slides > div.slide_info {
-    display: none;
-    float: left;
-    margin-left: 10px;
-    width: 400px;
-  }
+        .canal_height_label {
+            color: yellow;
+        }
 
-  div.slider {
-    width: 256px;
-  }
+        .canal_width_label {
+            color: #99D9EA;
+        }
 
-  div.show_annotation_controls {
-    margin-bottom: 3px;
-  }
-  div.show_annotation_controls > input {
-    margin-left: 0;
-  }
+        div.labels>p {
+            margin: 0;
+        }
 
-  div.img_controls {
-    width: 256px;
-    margin-bottom: 5px;
-  }
+        div.canal_height_indicator {
+            position: absolute;
+            width: 1px;
+            background: yellow;
+        }
 
-  div.img_controls button {
-    font-family: monospace;
-    height: 20px;
-    width: 20px;
-    margin: 0;
-    padding: 0;
-    font-weight: bold;
-    font-size: 12px;
-  }
-
-  div.img_controls .svg-icon{
-    height: 16px;
-    width: 16px;
-    position: relative;
-    top: 4px;
-    margin-right: 3px;
-  }
+        div.canal_width_indicator {
+            position: absolute;
+            height: 1px;
+            background: #99D9EA;
+        }
 
 
-  .svg-icon {
-    width: 1em;
-    height: 1em;
-  }
+        div.orientation_labels {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            height: 100%;
+            width: 100%;
+        }
 
-  .svg-icon path,
-  .svg-icon polygon,
-  .svg-icon rect {
-    fill: #4691f6;
-  }
+        div.orientation_labels div {
+            position: absolute;
+            color: white;
+            text-align: center;
+            margin: 2px;
+        }
 
-  .svg-icon circle {
-    stroke: #4691f6;
-    stroke-width: 1;
-  }
-</style>
+        div.orientation_labels .left {
+            height: 100%;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        div.orientation_labels .right {
+            height: 100%;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        div.orientation_labels .up {
+            height: 1em;
+            width: 100%;
+            top: 0;
+        }
+
+        div.orientation_labels .down {
+            height: 1em;
+            width: 100%;
+            bottom: 0;
+        }
+
+        div.slides>div.slide_info {
+            display: none;
+            float: left;
+            margin-left: 10px;
+            width: 400px;
+        }
+
+        div.slider {
+            width: 256px;
+        }
+
+        div.show_annotation_controls {
+            margin-bottom: 3px;
+        }
+
+        div.show_annotation_controls>input {
+            margin-left: 0;
+        }
+
+        div.img_controls {
+            width: 256px;
+            margin-bottom: 5px;
+        }
+
+        div.img_controls button {
+            font-family: monospace;
+            height: 20px;
+            width: 20px;
+            margin: 0;
+            padding: 0;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        div.img_controls .svg-icon {
+            height: 16px;
+            width: 16px;
+            position: relative;
+            top: 4px;
+            margin-right: 3px;
+        }
+
+
+        .svg-icon {
+            width: 1em;
+            height: 1em;
+        }
+
+        .svg-icon path,
+        .svg-icon polygon,
+        .svg-icon rect {
+            fill: #4691f6;
+        }
+
+        .svg-icon circle {
+            stroke: #4691f6;
+            stroke-width: 1;
+        }
+    </style>
 </head>
 
 <body>
-  <!--<h1>SpineAI Debug Viewer</h1>-->
-  <!--<div>
+
+
+    <!--<h1>SpineAI Debug Viewer</h1>-->
+    <!--<div>
     <p>Debug viewer for the SpineAI ML system.</p>
     <ul>
       <li>
@@ -209,633 +227,703 @@
     </ul>
   </div>-->
 
-  <div>
-    <h3> Patient Information</h3><br>
 
-      Name :Testing <br><br>
-    MRN :12345<br><br>
-    <button type="button" onclick="prevItem()">Prev Patient</button>
-    <button type="button" onclick="nextItem()">Next Patient</button>
-  </div><br><br>
-  <div>
-    <h3>Recommendation</h3><br>
-    No surgery consult
-    <div class="bar"
-        [style.background]='"linear-gradient(to right, var(--primary-color) " + threshold_percentage + "%, var(--secondary-color) " + threshold_percentage + "%)"'
+    <div>
+        <h3> Patient Information</h3><br>
+        Name : Test <br><br>
+        MRN : 123<br><br>
 
+        <button type="button" onclick="prevItem()">Prev Patient</button>
+        <button type="button" onclick="nextItem()">Next Patient</button>
+    </div><br><br>
 
-        >
+    <div>
+        <h3>Recommendation</h3><br>
+        No surgery consult
+        <div class="bar"
+            [style.background]='"linear-gradient(to right, var(--primary-color) " + threshold_percentage + "%, var(--secondary-color) " + threshold_percentage + "%)"'>
+        </div>
+        <div class="risk-tooltip" [style.left]="position">
+        </div>
+
+    </div><br><br>
+    <div>
+        <h3> Action</h3><br>
+        <ul>
+            <li>2021-09-01 Surgery</li>
+
+        </ul>
+    </div><br>
+
+    <h2>Canal Segmentation</h2>
+    <div class="show_annotation_controls">
+        <input type="checkbox" id="show_canal_seg"
+            onchange="$('.canal_measurement_label').toggle(); $('.canal_canvas').toggle();" checked />
+        <label for="show_canal_seg">Show annotations</label>
     </div>
-    <div class="risk-tooltip" [style.left]="position">
-    </div>
+    <div id="canal_images" class="images clearfix">
+        <div class="img_controls">
+            <svg class="svg-icon" viewBox="0 0 20 20">
+                <path fill="none"
+                    d="M10,0.625c-5.178,0-9.375,4.197-9.375,9.375S4.822,19.375,10,19.375s9.375-4.197,9.375-9.375S15.178,0.625,10,0.625 M10,18.522V1.478c4.707,0,8.522,3.815,8.522,8.522S14.707,18.522,10,18.522">
+                </path>
+            </svg>
+            <button class="contrast_up" data-target=".canal_slides > .slide_images > img:nth-child(1)">+</button>
+            <button class="contrast_down" data-target=".canal_slides > .slide_images > img:nth-child(1)">-</button>
+            <button class="contrast_reset" data-target=".canal_slides > .slide_images > img:nth-child(1)">↺</button>
+            <span style="width: 15px; display: inline-block;"></span>
+            <svg class="svg-icon" viewBox="0 0 20 20">
+                <path fill="none"
+                    d="M5.114,5.726c0.169,0.168,0.442,0.168,0.611,0c0.168-0.169,0.168-0.442,0-0.61L3.893,3.282c-0.168-0.168-0.442-0.168-0.61,0c-0.169,0.169-0.169,0.442,0,0.611L5.114,5.726z M3.955,10c0-0.239-0.193-0.432-0.432-0.432H0.932C0.693,9.568,0.5,9.761,0.5,10s0.193,0.432,0.432,0.432h2.591C3.761,10.432,3.955,10.239,3.955,10 M10,3.955c0.238,0,0.432-0.193,0.432-0.432v-2.59C10.432,0.693,10.238,0.5,10,0.5S9.568,0.693,9.568,0.932v2.59C9.568,3.762,9.762,3.955,10,3.955 M14.886,5.726l1.832-1.833c0.169-0.168,0.169-0.442,0-0.611c-0.169-0.168-0.442-0.168-0.61,0l-1.833,1.833c-0.169,0.168-0.169,0.441,0,0.61C14.443,5.894,14.717,5.894,14.886,5.726 M5.114,14.274l-1.832,1.833c-0.169,0.168-0.169,0.441,0,0.61c0.168,0.169,0.442,0.169,0.61,0l1.833-1.832c0.168-0.169,0.168-0.442,0-0.611C5.557,14.106,5.283,14.106,5.114,14.274 M19.068,9.568h-2.591c-0.238,0-0.433,0.193-0.433,0.432s0.194,0.432,0.433,0.432h2.591c0.238,0,0.432-0.193,0.432-0.432S19.307,9.568,19.068,9.568 M14.886,14.274c-0.169-0.168-0.442-0.168-0.611,0c-0.169,0.169-0.169,0.442,0,0.611l1.833,1.832c0.168,0.169,0.441,0.169,0.61,0s0.169-0.442,0-0.61L14.886,14.274z M10,4.818c-2.861,0-5.182,2.32-5.182,5.182c0,2.862,2.321,5.182,5.182,5.182s5.182-2.319,5.182-5.182C15.182,7.139,12.861,4.818,10,4.818M10,14.318c-2.385,0-4.318-1.934-4.318-4.318c0-2.385,1.933-4.318,4.318-4.318c2.386,0,4.318,1.933,4.318,4.318C14.318,12.385,12.386,14.318,10,14.318 M10,16.045c-0.238,0-0.432,0.193-0.432,0.433v2.591c0,0.238,0.194,0.432,0.432,0.432s0.432-0.193,0.432-0.432v-2.591C10.432,16.238,10.238,16.045,10,16.045">
+                </path>
+            </svg>
+            <button class="brightness_up" data-target=".canal_slides > .slide_images > img:nth-child(1)">+</button>
+            <button class="brightness_down" data-target=".canal_slides > .slide_images > img:nth-child(1)">-</button>
+            <button class="brightness_reset" data-target=".canal_slides > .slide_images > img:nth-child(1)">↺</button>
+        </div>
+        {% for i in range(canal_segmentation.all_canal_areas | length) %}
+        <div class="canal_slides slides" style='position: relative; display: none;'>
+            <div class="slide_images">
+                <img src="canal_segmentation/preprocessed_patient_series/image-{{ '%03d' % i }}.png">
+                <img class="canal_seg canal_measurement_label"
+                    src="canal_segmentation/postprocessed_segmentation_series/image-{{ '%03d' % i }}.png">
 
-  </div><br><br>
-  <div>
-    <h3> Action</h3><br>
-    <ul>
+                <div style='color: white; position: absolute; top: 3px; left: 3px;'>{{ i + 1 }}/{{
+                    canal_segmentation.all_canal_areas | length }}</div>
 
-
-  </ul>
-  </div><br>
-
-  <h2>Canal Segmentation</h2>
-  <div class="show_annotation_controls">
-    <input type="checkbox" id="show_canal_seg" onchange="$('.canal_measurement_label').toggle(); $('.canal_canvas').toggle();" checked/>
-    <label for="show_canal_seg">Show annotations</label>
-  </div>
-  <div id="canal_images" class="images clearfix">
-  <div class="img_controls">
-    <svg class="svg-icon" viewBox="0 0 20 20">
-      <path fill="none" d="M10,0.625c-5.178,0-9.375,4.197-9.375,9.375S4.822,19.375,10,19.375s9.375-4.197,9.375-9.375S15.178,0.625,10,0.625 M10,18.522V1.478c4.707,0,8.522,3.815,8.522,8.522S14.707,18.522,10,18.522"></path>
-    </svg>
-    <button class="contrast_up" data-target=".canal_slides > .slide_images > img:nth-child(1)">+</button>
-    <button class="contrast_down" data-target=".canal_slides > .slide_images > img:nth-child(1)">-</button>
-    <button class="contrast_reset" data-target=".canal_slides > .slide_images > img:nth-child(1)">↺</button>
-    <span style="width: 15px; display: inline-block;"></span>
-    <svg class="svg-icon" viewBox="0 0 20 20">
-      <path fill="none" d="M5.114,5.726c0.169,0.168,0.442,0.168,0.611,0c0.168-0.169,0.168-0.442,0-0.61L3.893,3.282c-0.168-0.168-0.442-0.168-0.61,0c-0.169,0.169-0.169,0.442,0,0.611L5.114,5.726z M3.955,10c0-0.239-0.193-0.432-0.432-0.432H0.932C0.693,9.568,0.5,9.761,0.5,10s0.193,0.432,0.432,0.432h2.591C3.761,10.432,3.955,10.239,3.955,10 M10,3.955c0.238,0,0.432-0.193,0.432-0.432v-2.59C10.432,0.693,10.238,0.5,10,0.5S9.568,0.693,9.568,0.932v2.59C9.568,3.762,9.762,3.955,10,3.955 M14.886,5.726l1.832-1.833c0.169-0.168,0.169-0.442,0-0.611c-0.169-0.168-0.442-0.168-0.61,0l-1.833,1.833c-0.169,0.168-0.169,0.441,0,0.61C14.443,5.894,14.717,5.894,14.886,5.726 M5.114,14.274l-1.832,1.833c-0.169,0.168-0.169,0.441,0,0.61c0.168,0.169,0.442,0.169,0.61,0l1.833-1.832c0.168-0.169,0.168-0.442,0-0.611C5.557,14.106,5.283,14.106,5.114,14.274 M19.068,9.568h-2.591c-0.238,0-0.433,0.193-0.433,0.432s0.194,0.432,0.433,0.432h2.591c0.238,0,0.432-0.193,0.432-0.432S19.307,9.568,19.068,9.568 M14.886,14.274c-0.169-0.168-0.442-0.168-0.611,0c-0.169,0.169-0.169,0.442,0,0.611l1.833,1.832c0.168,0.169,0.441,0.169,0.61,0s0.169-0.442,0-0.61L14.886,14.274z M10,4.818c-2.861,0-5.182,2.32-5.182,5.182c0,2.862,2.321,5.182,5.182,5.182s5.182-2.319,5.182-5.182C15.182,7.139,12.861,4.818,10,4.818M10,14.318c-2.385,0-4.318-1.934-4.318-4.318c0-2.385,1.933-4.318,4.318-4.318c2.386,0,4.318,1.933,4.318,4.318C14.318,12.385,12.386,14.318,10,14.318 M10,16.045c-0.238,0-0.432,0.193-0.432,0.433v2.591c0,0.238,0.194,0.432,0.432,0.432s0.432-0.193,0.432-0.432v-2.591C10.432,16.238,10.238,16.045,10,16.045"></path>
-    </svg>
-    <button class="brightness_up" data-target=".canal_slides > .slide_images > img:nth-child(1)">+</button>
-    <button class="brightness_down" data-target=".canal_slides > .slide_images > img:nth-child(1)">-</button>
-    <button class="brightness_reset" data-target=".canal_slides > .slide_images > img:nth-child(1)">↺</button>
-  </div>
-  {% for i in range(canal_segmentation.all_canal_areas | length) %}
-    <div class="canal_slides slides" style='position: relative; display: none;'>
-      <div class="slide_images">
-        <img src="canal_segmentation/preprocessed_patient_series/image-{{ '%03d' % i }}.png">
-        <img class="canal_seg canal_measurement_label" src="canal_segmentation/postprocessed_segmentation_series/image-{{ '%03d' % i }}.png">
-
-        <div style='color: white; position: absolute; top: 3px; left: 3px;'>{{ i + 1 }}/{{ canal_segmentation.all_canal_areas | length }}</div>
-
-        {% if measurements.geisinger %}
-          {% if measurements.geisinger.canal_heights[i].px_height > 0 %}
-            {% set canal_height = measurements.geisinger.canal_heights[i] %}
-            <div class="canal_height_indicator canal_measurement_label"
-                 style="top: {{ canal_height.origin[0] }}px;
+                {% if measurements.geisinger %}
+                {% if measurements.geisinger.canal_heights[i].px_height > 0 %}
+                {% set canal_height = measurements.geisinger.canal_heights[i] %}
+                <div class="canal_height_indicator canal_measurement_label" style="top: {{ canal_height.origin[0] }}px;
                         left: {{ canal_height.origin[1] }}px;
                         height: {{ canal_height.px_height }}px;"></div>
-          {% endif %}
-          {% if measurements.geisinger.canal_widths[i].px_width > 0 %}
-            {% set canal_width = measurements.geisinger.canal_widths[i] %}
-            <div class="canal_width_indicator canal_measurement_label"
-                 style="top: {{ canal_width.origin[0] }}px;
+                {% endif %}
+                {% if measurements.geisinger.canal_widths[i].px_width > 0 %}
+                {% set canal_width = measurements.geisinger.canal_widths[i] %}
+                <div class="canal_width_indicator canal_measurement_label" style="top: {{ canal_width.origin[0] }}px;
                         left: {{ canal_width.origin[1] }}px;
                         width: {{ canal_width.px_width }}px;"></div>
-          {% endif %}
-        {% endif %}
+                {% endif %}
+                {% endif %}
 
-        <div class="labels canal_measurement_label">
-          <p class="canal_area_label">{{ '%.02f' | format(canal_segmentation.all_canal_areas[i]) }} mm&#178;</p>
-          {% if measurements.geisinger %}
-            {% if measurements.geisinger.canal_heights[i].px_height > 0 %}
-              {% set canal_height = measurements.geisinger.canal_heights[i] %}
-              <p class="canal_height_label">{{ '%.02f' | format(canal_height.display_height) }} {{ canal_height.unit }}</p>
-            {% endif %}
-            {% if measurements.geisinger.canal_widths[i].px_width > 0 %}
-              {% set canal_width = measurements.geisinger.canal_widths[i] %}
-              <p class="canal_width_label">{{ '%.02f' | format(canal_width.display_width) }} {{ canal_width.unit }}</p>
-            {% endif %}
-          {% endif %}
+                <div class="labels canal_measurement_label">
+                    <p class="canal_area_label">{{ '%.02f' | format(canal_segmentation.all_canal_areas[i]) }} mm&#178;
+                    </p>
+                    {% if measurements.geisinger %}
+                    {% if measurements.geisinger.canal_heights[i].px_height > 0 %}
+                    {% set canal_height = measurements.geisinger.canal_heights[i] %}
+                    <p class="canal_height_label">{{ '%.02f' | format(canal_height.display_height) }} {{
+                        canal_height.unit }}</p>
+                    {% endif %}
+                    {% if measurements.geisinger.canal_widths[i].px_width > 0 %}
+                    {% set canal_width = measurements.geisinger.canal_widths[i] %}
+                    <p class="canal_width_label">{{ '%.02f' | format(canal_width.display_width) }} {{ canal_width.unit
+                        }}</p>
+                    {% endif %}
+                    {% endif %}
+                </div>
+                {% if canal_segmentation.orientation %}
+                <div class="orientation_labels canal_measurement_label">
+                    <div class="left">{{ canal_segmentation.orientation[0] }}</div>
+                    <div class="right">{{ canal_segmentation.orientation[1] }}</div>
+                    <div class="up">{{ canal_segmentation.orientation[2] }}</div>
+                    <div class="down">{{ canal_segmentation.orientation[3] }}</div>
+                </div>
+                {% endif %}
+                <canvas id="canal_canvas_{{ i }}" class="canal_canvas img_annotation" height="256" width="256"></canvas>
+            </div>
+            <div class="raw_segmentation_series slide_images">
+                <img src="canal_segmentation/preprocessed_patient_series/image-{{ '%03d' % i }}.png">
+                <img class="canal_seg canal_measurement_label"
+                    src="canal_segmentation/raw_segmentation_series/image-{{ '%03d' % i }}.png">
+                <div class="raw_segmentation_series_label canal_measurement_label">Raw Model Output</div>
+                <canvas id="canal_raw_canvas_{{ i }}" class="canal_canvas img_annotation" height="256"
+                    width="256"></canvas>
+            </div>
+
+            <div class="slide_info">
+                <p>Debug Info:</p>
+                <p>Canal Area: {{ '%.02f' | format(canal_segmentation.all_canal_areas[i]) }}</p>
+                <p>Canal Height: {{ measurements.geisinger.canal_heights[i] }}</p>
+            </div>
         </div>
-        {% if canal_segmentation.orientation %}
-          <div class="orientation_labels canal_measurement_label">
-            <div class="left">{{ canal_segmentation.orientation[0] }}</div>
-            <div class="right">{{ canal_segmentation.orientation[1] }}</div>
-            <div class="up">{{ canal_segmentation.orientation[2] }}</div>
-            <div class="down">{{ canal_segmentation.orientation[3] }}</div>
-          </div>
-        {% endif %}
-        <canvas id="canal_canvas_{{ i }}" class="canal_canvas img_annotation" height="256" width="256"></canvas>
-      </div>
-      <div class="raw_segmentation_series slide_images">
-        <img src="canal_segmentation/preprocessed_patient_series/image-{{ '%03d' % i }}.png">
-        <img class="canal_seg canal_measurement_label" src="canal_segmentation/raw_segmentation_series/image-{{ '%03d' % i }}.png">
-        <div class="raw_segmentation_series_label canal_measurement_label">Raw Model Output</div>
-        <canvas id="canal_raw_canvas_{{ i }}" class="canal_canvas img_annotation" height="256" width="256"></canvas>
-      </div>
-
-      <div class="slide_info">
-        <p>Debug Info:</p>
-        <p>Canal Area: {{ '%.02f' | format(canal_segmentation.all_canal_areas[i]) }}</p>
-        <p>Canal Height: {{ measurements.geisinger.canal_heights[i] }}</p>
-      </div>
+        {% endfor %}
     </div>
-  {% endfor %}
-  </div>
-  <div id="canal_slider" class="slider"></div>
+    <div id="canal_slider" class="slider"></div>
 
-  <h2>Disk Segmentation</h2>
-  <div class="show_annotation_controls">
-    <input type="checkbox" id="show_disk_seg" onchange="$('.disk_measurement_label').toggle(); $('.disk_canvas').toggle();" checked/>
-    <label for="show_disk_seg">Show annotations</label>
-  </div>
-  <div class="img_controls">
-    <svg class="svg-icon" viewBox="0 0 20 20">
-      <path fill="none" d="M10,0.625c-5.178,0-9.375,4.197-9.375,9.375S4.822,19.375,10,19.375s9.375-4.197,9.375-9.375S15.178,0.625,10,0.625 M10,18.522V1.478c4.707,0,8.522,3.815,8.522,8.522S14.707,18.522,10,18.522"></path>
-    </svg>
-    <button class="contrast_up" data-target=".disk_slides > .slide_images > img:nth-child(1)">+</button>
-    <button class="contrast_down" data-target=".disk_slides > .slide_images > img:nth-child(1)">-</button>
-    <button class="contrast_reset" data-target=".disk_slides > .slide_images > img:nth-child(1)">↺</button>
-    <span style="width: 15px; display: inline-block;"></span>
-    <svg class="svg-icon" viewBox="0 0 20 20">
-      <path fill="none" d="M5.114,5.726c0.169,0.168,0.442,0.168,0.611,0c0.168-0.169,0.168-0.442,0-0.61L3.893,3.282c-0.168-0.168-0.442-0.168-0.61,0c-0.169,0.169-0.169,0.442,0,0.611L5.114,5.726z M3.955,10c0-0.239-0.193-0.432-0.432-0.432H0.932C0.693,9.568,0.5,9.761,0.5,10s0.193,0.432,0.432,0.432h2.591C3.761,10.432,3.955,10.239,3.955,10 M10,3.955c0.238,0,0.432-0.193,0.432-0.432v-2.59C10.432,0.693,10.238,0.5,10,0.5S9.568,0.693,9.568,0.932v2.59C9.568,3.762,9.762,3.955,10,3.955 M14.886,5.726l1.832-1.833c0.169-0.168,0.169-0.442,0-0.611c-0.169-0.168-0.442-0.168-0.61,0l-1.833,1.833c-0.169,0.168-0.169,0.441,0,0.61C14.443,5.894,14.717,5.894,14.886,5.726 M5.114,14.274l-1.832,1.833c-0.169,0.168-0.169,0.441,0,0.61c0.168,0.169,0.442,0.169,0.61,0l1.833-1.832c0.168-0.169,0.168-0.442,0-0.611C5.557,14.106,5.283,14.106,5.114,14.274 M19.068,9.568h-2.591c-0.238,0-0.433,0.193-0.433,0.432s0.194,0.432,0.433,0.432h2.591c0.238,0,0.432-0.193,0.432-0.432S19.307,9.568,19.068,9.568 M14.886,14.274c-0.169-0.168-0.442-0.168-0.611,0c-0.169,0.169-0.169,0.442,0,0.611l1.833,1.832c0.168,0.169,0.441,0.169,0.61,0s0.169-0.442,0-0.61L14.886,14.274z M10,4.818c-2.861,0-5.182,2.32-5.182,5.182c0,2.862,2.321,5.182,5.182,5.182s5.182-2.319,5.182-5.182C15.182,7.139,12.861,4.818,10,4.818M10,14.318c-2.385,0-4.318-1.934-4.318-4.318c0-2.385,1.933-4.318,4.318-4.318c2.386,0,4.318,1.933,4.318,4.318C14.318,12.385,12.386,14.318,10,14.318 M10,16.045c-0.238,0-0.432,0.193-0.432,0.433v2.591c0,0.238,0.194,0.432,0.432,0.432s0.432-0.193,0.432-0.432v-2.591C10.432,16.238,10.238,16.045,10,16.045"></path>
-    </svg>
-    <button class="brightness_up" data-target=".disk_slides > .slide_images > img:nth-child(1)">+</button>
-    <button class="brightness_down" data-target=".disk_slides > .slide_images > img:nth-child(1)">-</button>
-    <button class="brightness_reset" data-target=".disk_slides > .slide_images > img:nth-child(1)">↺</button>
-  </div>
-  <div id="disk_images" class="images clearfix">
-  {% for i in range(disk_segmentation.num_slices) %}
-    <div class="disk_slides slides" style='position: relative; display: none; float: left;'>
-      <div class="slide_images">
-        <img src="disk_segmentation/preprocessed_patient_series/image-{{ '%03d' % i }}.png">
-        <img class="disk_seg disk_measurement_label" src="disk_segmentation/postprocessed_segmentation_series/image-{{ '%03d' % i }}.png">
-        <div style='color: white; position: absolute; top: 3px; left: 3px;'>{{ i + 1 }}/{{ disk_segmentation.num_slices }}</div>
-        <canvas id="disk_canvas_{{ i }}" class="disk_canvas img_annotation" height="256" width="256"></canvas>
-        {% if disk_segmentation.orientation %}
-          <div class="orientation_labels disk_measurement_label">
-            <div class="left">{{ disk_segmentation.orientation[0] }}</div>
-            <div class="right">{{ disk_segmentation.orientation[1] }}</div>
-            <div class="up">{{ disk_segmentation.orientation[2] }}</div>
-            <div class="down">{{ disk_segmentation.orientation[3] }}</div>
-          </div>
-        {% endif %}
-      </div>
-      <div class="raw_segmentation_series slide_images">
-        <img src="disk_segmentation/preprocessed_patient_series/image-{{ '%03d' % i }}.png">
-        <img class="disk_seg disk_measurement_label" src="disk_segmentation/raw_segmentation_series/image-{{ '%03d' % i }}.png">
-        <div class="raw_segmentation_series_label disk_measurement_label">Raw Model Output</div>
-        <canvas id="disk_raw_canvas_{{ i }}" class="disk_canvas img_annotation" height="256" width="256"></canvas>
-      </div>
+    <h2>Disk Segmentation</h2>
+    <div class="show_annotation_controls">
+        <input type="checkbox" id="show_disk_seg"
+            onchange="$('.disk_measurement_label').toggle(); $('.disk_canvas').toggle();" checked />
+        <label for="show_disk_seg">Show annotations</label>
     </div>
+    <div class="img_controls">
+        <svg class="svg-icon" viewBox="0 0 20 20">
+            <path fill="none"
+                d="M10,0.625c-5.178,0-9.375,4.197-9.375,9.375S4.822,19.375,10,19.375s9.375-4.197,9.375-9.375S15.178,0.625,10,0.625 M10,18.522V1.478c4.707,0,8.522,3.815,8.522,8.522S14.707,18.522,10,18.522">
+            </path>
+        </svg>
+        <button class="contrast_up" data-target=".disk_slides > .slide_images > img:nth-child(1)">+</button>
+        <button class="contrast_down" data-target=".disk_slides > .slide_images > img:nth-child(1)">-</button>
+        <button class="contrast_reset" data-target=".disk_slides > .slide_images > img:nth-child(1)">↺</button>
+        <span style="width: 15px; display: inline-block;"></span>
+        <svg class="svg-icon" viewBox="0 0 20 20">
+            <path fill="none"
+                d="M5.114,5.726c0.169,0.168,0.442,0.168,0.611,0c0.168-0.169,0.168-0.442,0-0.61L3.893,3.282c-0.168-0.168-0.442-0.168-0.61,0c-0.169,0.169-0.169,0.442,0,0.611L5.114,5.726z M3.955,10c0-0.239-0.193-0.432-0.432-0.432H0.932C0.693,9.568,0.5,9.761,0.5,10s0.193,0.432,0.432,0.432h2.591C3.761,10.432,3.955,10.239,3.955,10 M10,3.955c0.238,0,0.432-0.193,0.432-0.432v-2.59C10.432,0.693,10.238,0.5,10,0.5S9.568,0.693,9.568,0.932v2.59C9.568,3.762,9.762,3.955,10,3.955 M14.886,5.726l1.832-1.833c0.169-0.168,0.169-0.442,0-0.611c-0.169-0.168-0.442-0.168-0.61,0l-1.833,1.833c-0.169,0.168-0.169,0.441,0,0.61C14.443,5.894,14.717,5.894,14.886,5.726 M5.114,14.274l-1.832,1.833c-0.169,0.168-0.169,0.441,0,0.61c0.168,0.169,0.442,0.169,0.61,0l1.833-1.832c0.168-0.169,0.168-0.442,0-0.611C5.557,14.106,5.283,14.106,5.114,14.274 M19.068,9.568h-2.591c-0.238,0-0.433,0.193-0.433,0.432s0.194,0.432,0.433,0.432h2.591c0.238,0,0.432-0.193,0.432-0.432S19.307,9.568,19.068,9.568 M14.886,14.274c-0.169-0.168-0.442-0.168-0.611,0c-0.169,0.169-0.169,0.442,0,0.611l1.833,1.832c0.168,0.169,0.441,0.169,0.61,0s0.169-0.442,0-0.61L14.886,14.274z M10,4.818c-2.861,0-5.182,2.32-5.182,5.182c0,2.862,2.321,5.182,5.182,5.182s5.182-2.319,5.182-5.182C15.182,7.139,12.861,4.818,10,4.818M10,14.318c-2.385,0-4.318-1.934-4.318-4.318c0-2.385,1.933-4.318,4.318-4.318c2.386,0,4.318,1.933,4.318,4.318C14.318,12.385,12.386,14.318,10,14.318 M10,16.045c-0.238,0-0.432,0.193-0.432,0.433v2.591c0,0.238,0.194,0.432,0.432,0.432s0.432-0.193,0.432-0.432v-2.591C10.432,16.238,10.238,16.045,10,16.045">
+            </path>
+        </svg>
+        <button class="brightness_up" data-target=".disk_slides > .slide_images > img:nth-child(1)">+</button>
+        <button class="brightness_down" data-target=".disk_slides > .slide_images > img:nth-child(1)">-</button>
+        <button class="brightness_reset" data-target=".disk_slides > .slide_images > img:nth-child(1)">↺</button>
+    </div>
+    <div id="disk_images" class="images clearfix">
+        {% for i in range(disk_segmentation.num_slices) %}
+        <div class="disk_slides slides" style='position: relative; display: none; float: left;'>
+            <div class="slide_images">
+                <img src="disk_segmentation/preprocessed_patient_series/image-{{ '%03d' % i }}.png">
+                <img class="disk_seg disk_measurement_label"
+                    src="disk_segmentation/postprocessed_segmentation_series/image-{{ '%03d' % i }}.png">
+                <div style='color: white; position: absolute; top: 3px; left: 3px;'>{{ i + 1 }}/{{
+                    disk_segmentation.num_slices }}</div>
+                <canvas id="disk_canvas_{{ i }}" class="disk_canvas img_annotation" height="256" width="256"></canvas>
+                {% if disk_segmentation.orientation %}
+                <div class="orientation_labels disk_measurement_label">
+                    <div class="left">{{ disk_segmentation.orientation[0] }}</div>
+                    <div class="right">{{ disk_segmentation.orientation[1] }}</div>
+                    <div class="up">{{ disk_segmentation.orientation[2] }}</div>
+                    <div class="down">{{ disk_segmentation.orientation[3] }}</div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="raw_segmentation_series slide_images">
+                <img src="disk_segmentation/preprocessed_patient_series/image-{{ '%03d' % i }}.png">
+                <img class="disk_seg disk_measurement_label"
+                    src="disk_segmentation/raw_segmentation_series/image-{{ '%03d' % i }}.png">
+                <div class="raw_segmentation_series_label disk_measurement_label">Raw Model Output</div>
+                <canvas id="disk_raw_canvas_{{ i }}" class="disk_canvas img_annotation" height="256"
+                    width="256"></canvas>
+            </div>
+        </div>
 
-  {% endfor %}
-  </div>
-  <div id="disk_slider" class="slider"></div>
+        {% endfor %}
+    </div>
+    <div id="disk_slider" class="slider"></div>
 
-  <h2>Foramen Segmentation</h2>
-  <div class="show_annotation_controls">
-    <input type="checkbox" id="show_foramen_seg" onchange="$('.foramen_measurement_label').toggle(); $('.foramen_canvas').toggle();" checked/>
-    <label for="show_foramen_seg">Show annotations</label>
-  </div>
-  <div class="img_controls">
-    <svg class="svg-icon" viewBox="0 0 20 20">
-      <path fill="none" d="M10,0.625c-5.178,0-9.375,4.197-9.375,9.375S4.822,19.375,10,19.375s9.375-4.197,9.375-9.375S15.178,0.625,10,0.625 M10,18.522V1.478c4.707,0,8.522,3.815,8.522,8.522S14.707,18.522,10,18.522"></path>
-    </svg>
-    <button class="contrast_up" data-target=".foramen_slides > .slide_images > img:nth-child(1)">+</button>
-    <button class="contrast_down" data-target=".foramen_slides > .slide_images > img:nth-child(1)">-</button>
-    <button class="contrast_reset" data-target=".foramen_slides > .slide_images > img:nth-child(1)">↺</button>
-    <span style="width: 15px; display: inline-block;"></span>
-    <svg class="svg-icon" viewBox="0 0 20 20">
-      <path fill="none" d="M5.114,5.726c0.169,0.168,0.442,0.168,0.611,0c0.168-0.169,0.168-0.442,0-0.61L3.893,3.282c-0.168-0.168-0.442-0.168-0.61,0c-0.169,0.169-0.169,0.442,0,0.611L5.114,5.726z M3.955,10c0-0.239-0.193-0.432-0.432-0.432H0.932C0.693,9.568,0.5,9.761,0.5,10s0.193,0.432,0.432,0.432h2.591C3.761,10.432,3.955,10.239,3.955,10 M10,3.955c0.238,0,0.432-0.193,0.432-0.432v-2.59C10.432,0.693,10.238,0.5,10,0.5S9.568,0.693,9.568,0.932v2.59C9.568,3.762,9.762,3.955,10,3.955 M14.886,5.726l1.832-1.833c0.169-0.168,0.169-0.442,0-0.611c-0.169-0.168-0.442-0.168-0.61,0l-1.833,1.833c-0.169,0.168-0.169,0.441,0,0.61C14.443,5.894,14.717,5.894,14.886,5.726 M5.114,14.274l-1.832,1.833c-0.169,0.168-0.169,0.441,0,0.61c0.168,0.169,0.442,0.169,0.61,0l1.833-1.832c0.168-0.169,0.168-0.442,0-0.611C5.557,14.106,5.283,14.106,5.114,14.274 M19.068,9.568h-2.591c-0.238,0-0.433,0.193-0.433,0.432s0.194,0.432,0.433,0.432h2.591c0.238,0,0.432-0.193,0.432-0.432S19.307,9.568,19.068,9.568 M14.886,14.274c-0.169-0.168-0.442-0.168-0.611,0c-0.169,0.169-0.169,0.442,0,0.611l1.833,1.832c0.168,0.169,0.441,0.169,0.61,0s0.169-0.442,0-0.61L14.886,14.274z M10,4.818c-2.861,0-5.182,2.32-5.182,5.182c0,2.862,2.321,5.182,5.182,5.182s5.182-2.319,5.182-5.182C15.182,7.139,12.861,4.818,10,4.818M10,14.318c-2.385,0-4.318-1.934-4.318-4.318c0-2.385,1.933-4.318,4.318-4.318c2.386,0,4.318,1.933,4.318,4.318C14.318,12.385,12.386,14.318,10,14.318 M10,16.045c-0.238,0-0.432,0.193-0.432,0.433v2.591c0,0.238,0.194,0.432,0.432,0.432s0.432-0.193,0.432-0.432v-2.591C10.432,16.238,10.238,16.045,10,16.045"></path>
-    </svg>
-    <button class="brightness_up" data-target=".foramen_slides > .slide_images > img:nth-child(1)">+</button>
-    <button class="brightness_down" data-target=".foramen_slides > .slide_images > img:nth-child(1)">-</button>
-    <button class="brightness_reset" data-target=".foramen_slides > .slide_images > img:nth-child(1)">↺</button>
-  </div>
-
-  <div id="foramen_images" class="images clearfix">
-  {% for i in range(foramen_segmentation.num_slices) %}
-    <div class="foramen_slides slides" style='position: relative; display: none; float: left;'>
-      <div class="slide_images">
-        <img src="foramen_segmentation/preprocessed_patient_series/image-{{ '%03d' % i }}.png">
-        <img class="foramen_seg foramen_measurement_label" src="foramen_segmentation/postprocessed_segmentation_series/image-{{ '%03d' % i }}.png">
-        <div style='color: white; position: absolute; top: 3px; left: 3px;'>{{ i + 1 }}/{{ foramen_segmentation.num_slices }}</div>
-        <canvas id="foramen_canvas_{{ i }}" class="foramen_canvas img_annotation" height="256" width="256"></canvas>
-        {% if disk_segmentation.orientation %}
-          <div class="orientation_labels foramen_measurement_label">
-            <div class="left">{{ disk_segmentation.orientation[0] }}</div>
-            <div class="right">{{ disk_segmentation.orientation[1] }}</div>
-            <div class="up">{{ disk_segmentation.orientation[2] }}</div>
-            <div class="down">{{ disk_segmentation.orientation[3] }}</div>
-          </div>
-        {% endif %}
-      </div>
-      <div class="raw_segmentation_series slide_images">
-        <img src="foramen_segmentation/preprocessed_patient_series/image-{{ '%03d' % i }}.png">
-        <img class="foramen_seg foramen_measurement_label" src="foramen_segmentation/raw_segmentation_series/image-{{ '%03d' % i }}.png">
-        <div class="raw_segmentation_series_label foramen_measurement_label">Raw Model Output</div>
-        <canvas id="foramen_raw_canvas_{{ i }}" class="foramen_canvas img_annotation" height="256" width="256"></canvas>
-      </div>
-
+    <h2>Foramen Segmentation</h2>
+    <div class="show_annotation_controls">
+        <input type="checkbox" id="show_foramen_seg"
+            onchange="$('.foramen_measurement_label').toggle(); $('.foramen_canvas').toggle();" checked />
+        <label for="show_foramen_seg">Show annotations</label>
+    </div>
+    <div class="img_controls">
+        <svg class="svg-icon" viewBox="0 0 20 20">
+            <path fill="none"
+                d="M10,0.625c-5.178,0-9.375,4.197-9.375,9.375S4.822,19.375,10,19.375s9.375-4.197,9.375-9.375S15.178,0.625,10,0.625 M10,18.522V1.478c4.707,0,8.522,3.815,8.522,8.522S14.707,18.522,10,18.522">
+            </path>
+        </svg>
+        <button class="contrast_up" data-target=".foramen_slides > .slide_images > img:nth-child(1)">+</button>
+        <button class="contrast_down" data-target=".foramen_slides > .slide_images > img:nth-child(1)">-</button>
+        <button class="contrast_reset" data-target=".foramen_slides > .slide_images > img:nth-child(1)">↺</button>
+        <span style="width: 15px; display: inline-block;"></span>
+        <svg class="svg-icon" viewBox="0 0 20 20">
+            <path fill="none"
+                d="M5.114,5.726c0.169,0.168,0.442,0.168,0.611,0c0.168-0.169,0.168-0.442,0-0.61L3.893,3.282c-0.168-0.168-0.442-0.168-0.61,0c-0.169,0.169-0.169,0.442,0,0.611L5.114,5.726z M3.955,10c0-0.239-0.193-0.432-0.432-0.432H0.932C0.693,9.568,0.5,9.761,0.5,10s0.193,0.432,0.432,0.432h2.591C3.761,10.432,3.955,10.239,3.955,10 M10,3.955c0.238,0,0.432-0.193,0.432-0.432v-2.59C10.432,0.693,10.238,0.5,10,0.5S9.568,0.693,9.568,0.932v2.59C9.568,3.762,9.762,3.955,10,3.955 M14.886,5.726l1.832-1.833c0.169-0.168,0.169-0.442,0-0.611c-0.169-0.168-0.442-0.168-0.61,0l-1.833,1.833c-0.169,0.168-0.169,0.441,0,0.61C14.443,5.894,14.717,5.894,14.886,5.726 M5.114,14.274l-1.832,1.833c-0.169,0.168-0.169,0.441,0,0.61c0.168,0.169,0.442,0.169,0.61,0l1.833-1.832c0.168-0.169,0.168-0.442,0-0.611C5.557,14.106,5.283,14.106,5.114,14.274 M19.068,9.568h-2.591c-0.238,0-0.433,0.193-0.433,0.432s0.194,0.432,0.433,0.432h2.591c0.238,0,0.432-0.193,0.432-0.432S19.307,9.568,19.068,9.568 M14.886,14.274c-0.169-0.168-0.442-0.168-0.611,0c-0.169,0.169-0.169,0.442,0,0.611l1.833,1.832c0.168,0.169,0.441,0.169,0.61,0s0.169-0.442,0-0.61L14.886,14.274z M10,4.818c-2.861,0-5.182,2.32-5.182,5.182c0,2.862,2.321,5.182,5.182,5.182s5.182-2.319,5.182-5.182C15.182,7.139,12.861,4.818,10,4.818M10,14.318c-2.385,0-4.318-1.934-4.318-4.318c0-2.385,1.933-4.318,4.318-4.318c2.386,0,4.318,1.933,4.318,4.318C14.318,12.385,12.386,14.318,10,14.318 M10,16.045c-0.238,0-0.432,0.193-0.432,0.433v2.591c0,0.238,0.194,0.432,0.432,0.432s0.432-0.193,0.432-0.432v-2.591C10.432,16.238,10.238,16.045,10,16.045">
+            </path>
+        </svg>
+        <button class="brightness_up" data-target=".foramen_slides > .slide_images > img:nth-child(1)">+</button>
+        <button class="brightness_down" data-target=".foramen_slides > .slide_images > img:nth-child(1)">-</button>
+        <button class="brightness_reset" data-target=".foramen_slides > .slide_images > img:nth-child(1)">↺</button>
     </div>
 
-  {% endfor %}
-  </div>
-  <div id="foramen_slider" class="slider"></div>
+    <div id="foramen_images" class="images clearfix">
+        {% for i in range(foramen_segmentation.num_slices) %}
+        <div class="foramen_slides slides" style='position: relative; display: none; float: left;'>
+            <div class="slide_images">
+                <img src="foramen_segmentation/preprocessed_patient_series/image-{{ '%03d' % i }}.png">
+                <img class="foramen_seg foramen_measurement_label"
+                    src="foramen_segmentation/postprocessed_segmentation_series/image-{{ '%03d' % i }}.png">
+                <div style='color: white; position: absolute; top: 3px; left: 3px;'>{{ i + 1 }}/{{
+                    foramen_segmentation.num_slices }}</div>
+                <canvas id="foramen_canvas_{{ i }}" class="foramen_canvas img_annotation" height="256"
+                    width="256"></canvas>
+                {% if disk_segmentation.orientation %}
+                <div class="orientation_labels foramen_measurement_label">
+                    <div class="left">{{ disk_segmentation.orientation[0] }}</div>
+                    <div class="right">{{ disk_segmentation.orientation[1] }}</div>
+                    <div class="up">{{ disk_segmentation.orientation[2] }}</div>
+                    <div class="down">{{ disk_segmentation.orientation[3] }}</div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="raw_segmentation_series slide_images">
+                <img src="foramen_segmentation/preprocessed_patient_series/image-{{ '%03d' % i }}.png">
+                <img class="foramen_seg foramen_measurement_label"
+                    src="foramen_segmentation/raw_segmentation_series/image-{{ '%03d' % i }}.png">
+                <div class="raw_segmentation_series_label foramen_measurement_label">Raw Model Output</div>
+                <canvas id="foramen_raw_canvas_{{ i }}" class="foramen_canvas img_annotation" height="256"
+                    width="256"></canvas>
+            </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script>
-(function ($) {
+        </div>
 
-  // Detect touch support
-  $.support.touch = 'ontouchend' in document;
+        {% endfor %}
+    </div>
+    <div id="foramen_slider" class="slider"></div>
 
-  // Ignore browsers without touch support
-  if (!$.support.touch) {
-    return;
-  }
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-  var mouseProto = $.ui.mouse.prototype,
-      _mouseInit = mouseProto._mouseInit,
-      _mouseDestroy = mouseProto._mouseDestroy,
-      touchHandled;
+    <script>
+        (function ($) {
+            $(document).ready(function () {
+                let sPageURL = window.location.search.substring(1);
+                let sURLVariables = sPageURL.split('&')
+                console.log('sURLVariables', sURLVariables)
+                let index_url = `http://localhost:8080/studies?scope=includeActions`;
+                console.log('index_url', index_url)
+                $.ajax({
+                    url: index_url,
+                    dataType: 'json',
+                }).done(function (data) {
+                    console.log('studies', data)
+                    let obj = data
+                    if (data.length > 0) {
+                        var viewer_obj = obj[0]
+                        console.log('viewer_obj', viewer_obj)
+                        // $("#patient").innerHTML = 'Name '+viewer_obj.name + '<br />'+'MRN '+viewer_obj.mrn;
+                    }
 
-  /**
-   * Simulate a mouse event based on a corresponding touch event
-   * @param {Object} event A touch event
-   * @param {String} simulatedType The corresponding mouse event
-   */
-  function simulateMouseEvent (event, simulatedType) {
+                }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+                    this.index_error = `Could not fetch search index from ${index_url}.`;
+                }.bind(this)).always(() => {
+                });
 
-    // Ignore multi-touch events
-    if (event.originalEvent.touches.length > 1) {
-      return;
-    }
+                let id = sURLVariables[3].replace("Studies.uuid=", "")
+                console.log('id', id)
 
-    event.preventDefault();
+                let patient_url = `http://localhost:8080/study/${id}?scope=includeActions`;
+                console.log('patient_url', patient_url)
+                $.ajax({
+                    url: patient_url,
+                    dataType: 'json',
+                }).done(function (data) {
+                    console.log('patient_url', data)
 
-    var touch = event.originalEvent.changedTouches[0],
-        simulatedEvent = document.createEvent('MouseEvents');
 
-    // Initialize the simulated mouse event using the touch event's coordinates
-    simulatedEvent.initMouseEvent(
-      simulatedType,    // type
-      true,             // bubbles
-      true,             // cancelable
-      window,           // view
-      1,                // detail
-      touch.screenX,    // screenX
-      touch.screenY,    // screenY
-      touch.clientX,    // clientX
-      touch.clientY,    // clientY
-      false,            // ctrlKey
-      false,            // altKey
-      false,            // shiftKey
-      false,            // metaKey
-      0,                // button
-      null              // relatedTarget
-    );
+                }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+                    this.index_error = `Could not fetch search index from ${patient_url}.`;
+                }.bind(this)).always(() => {
+                });
+                var score = 2;
+                var threshold = 6;
+                var score_max = 10;
+                var score_percentage = 0;
+                var threshold_percentage = 0;
+                var data_index = 0;
 
-    // Dispatch the simulated event to the target element
-    event.target.dispatchEvent(simulatedEvent);
-  }
+                if (score > score_max) {
+                    score = score_max;
+                }
 
-  /**
-   * Handle the jQuery UI widget's touchstart events
-   * @param {Object} event The widget element's touchstart event
-   */
-  mouseProto._touchStart = function (event) {
+                // TODO(billy): Support arithmetic errors.
+                score_percentage = Math.round(score / score_max * 100);
+                threshold_percentage = Math.round(threshold / score_max * 100);
+                var position = `calc(${score_percentage}% - 16px)`
 
-    var self = this;
+            });
+        })(jQuery)
 
-    // Ignore the event if another widget is already being handled
-    if (touchHandled || !self._mouseCapture(event.originalEvent.changedTouches[0])) {
-      return;
-    }
-
-    // Set the flag to prevent other widgets from inheriting the touch event
-    touchHandled = true;
-
-    // Track movement to determine if interaction was a click
-    self._touchMoved = false;
-
-    // Simulate the mouseover event
-    simulateMouseEvent(event, 'mouseover');
-
-    // Simulate the mousemove event
-    simulateMouseEvent(event, 'mousemove');
-
-    // Simulate the mousedown event
-    simulateMouseEvent(event, 'mousedown');
-  };
-
-  /**
-   * Handle the jQuery UI widget's touchmove events
-   * @param {Object} event The document's touchmove event
-   */
-  mouseProto._touchMove = function (event) {
-
-    // Ignore event if not handled
-    if (!touchHandled) {
-      return;
-    }
-
-    // Interaction was not a click
-    this._touchMoved = true;
-
-    // Simulate the mousemove event
-    simulateMouseEvent(event, 'mousemove');
-  };
-
-  /**
-   * Handle the jQuery UI widget's touchend events
-   * @param {Object} event The document's touchend event
-   */
-  mouseProto._touchEnd = function (event) {
-
-    // Ignore event if not handled
-    if (!touchHandled) {
-      return;
-    }
-
-    // Simulate the mouseup event
-    simulateMouseEvent(event, 'mouseup');
-
-    // Simulate the mouseout event
-    simulateMouseEvent(event, 'mouseout');
-
-    // If the touch interaction did not move, it should trigger a click
-    if (!this._touchMoved) {
-
-      // Simulate the click event
-      simulateMouseEvent(event, 'click');
-    }
-
-    // Unset the flag to allow other widgets to inherit the touch event
-    touchHandled = false;
-  };
-
-  /**
-   * A duck punch of the $.ui.mouse _mouseInit method to support touch events.
-   * This method extends the widget with bound touch event handlers that
-   * translate touch events to mouse events and pass them to the widget's
-   * original mouse event handling methods.
-   */
-  mouseProto._mouseInit = function () {
-
-    var self = this;
-
-    // Delegate the touch handlers to the widget's element
-    self.element.bind({
-      touchstart: $.proxy(self, '_touchStart'),
-      touchmove: $.proxy(self, '_touchMove'),
-      touchend: $.proxy(self, '_touchEnd')
-    });
-
-    // Call the original $.ui.mouse init method
-    _mouseInit.call(self);
-  };
-
-  /**
-   * Remove the touch event handlers
-   */
-  mouseProto._mouseDestroy = function () {
-
-    var self = this;
-
-    // Delegate the touch handlers to the widget's element
-    self.element.unbind({
-      touchstart: $.proxy(self, '_touchStart'),
-      touchmove: $.proxy(self, '_touchMove'),
-      touchend: $.proxy(self, '_touchEnd')
-    });
-
-    // Call the original $.ui.mouse destroy method
-    _mouseDestroy.call(self);
-  };
-
-})(jQuery);
-</script>
-<script>
-$(function() {
-
-function show_image(classname, i) {
-  window[classname] = i;
-  $(`.${classname}`).hide();
-  $(`.${classname}`).eq(i).show();
-}
-
-/* cutlines contains coordinate information about where to draw sagittal cutlines.
-
-cutlines[sagittal_slice][axial_slice] is a 2-length array containing two
-nested 2-length arrays, each containing x and y coordinates defining a
-cutline.
-*/
-window.cutlines = false;
-{% if measurements.cutlines %}
-  window.cutlines = JSON.parse({{ measurements.cutlines|to_json|to_json }});
-{% endif %}
-
-function draw_cutlines() {
-  if (!window.cutlines) {
-    if (window.logged_cutline_error == false) {
-      console.warn('No cutline data available to draw.');
-      window.logged_cutline_error = true;
-    }
-    return;
-  }
-
-  function _draw_cutlines(canvas, type, local_slice, remote_slice) {
-    let cutlines = window.cutlines[type];
-    let cutline = cutlines[local_slice][remote_slice];
-
-    let ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, 256, 256);
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = 'rgba(255,255,255,0.5)';
-    ctx.beginPath();
-    try {
-      ctx.moveTo(cutline[0][1], cutline[0][0]);
-      ctx.lineTo(cutline[1][1], cutline[1][0]);
-    } catch (error) {
-      console.error(error);
-      console.error(
-        `Could not draw cutline with given index [${sag_slice}][${ax_slice}].`);
-    }
-    ctx.stroke();
-  }
-
-  let $ax_canvases = $('canvas.canal_canvas.img_annotation');
-  $ax_canvases.each((i, canvas) => {
-    _draw_cutlines.call(
-      this, canvas, 'axial', window['canal_slides'], window['disk_slides']);
-  });
-
-  let $disk_canvases = $('canvas.disk_canvas.img_annotation');
-  $disk_canvases.each((i, canvas) => {
-    _draw_cutlines.call(
-      this, canvas, 'sagittal', window['disk_slides'], window['canal_slides']);
-  });
-
-  let $foramen_canvases = $('canvas.foramen_canvas.img_annotation');
-  $foramen_canvases.each((i, canvas) => {
-    _draw_cutlines.call(
-      this, canvas, 'sagittal', window['foramen_slides'], window['canal_slides']);
-  });
-}
-
-let num_canal_images = {{canal_segmentation.all_canal_areas | length }};
-show_image('canal_slides', 0);
-$('#canal_slider').slider({
-  min: 0,
-  max: num_canal_images - 1,
-  slide: function(e, ui) {
-    show_image('canal_slides', ui.value);
-    draw_cutlines();
-  },
-});
-
-function slide_sagittal_images(num) {
-  show_image('disk_slides', num);
-  show_image('foramen_slides', num);
-  $('#disk_slider').slider('value', num);
-  $('#foramen_slider').slider('value', num);
-  draw_cutlines();
-}
-
-let num_disk_images = {{ disk_segmentation.num_slices }};
-show_image('disk_slides', 0);
-$('#disk_slider').slider({
-  min: 0,
-  max: num_disk_images - 1,
-  slide: function(e, ui) {
-    slide_sagittal_images(ui.value);
-  },
-});
-
-let num_foramen_images = {{ foramen_segmentation.num_slices }};
-show_image('foramen_slides', 0);
-$('#foramen_slider').slider({
-  min: 0,
-  max: num_foramen_images - 1,
-  slide: function(e, ui) {
-    slide_sagittal_images(ui.value);
-  },
-});
-
-draw_cutlines();
-
-var map = {68: false, 69: false};
-$(document).keydown(function(e) {
-    if (e.keyCode in map) {
-        map[e.keyCode] = true;
-        if (map[68] && map[69]) {
-            $('.raw_segmentation_series').toggle();
-            map[68] = false;
-            map[69] = false;
+        function prevItem() {
+            console.log('prev', viewer_obj)
+            var index = JSON.parse(index_data)
+            if (data_index === 0) {
+                data_index = index.length;
+            }
+            data_index = data_index - 1;
+            var viewer_obj = index[data_index]
+            return viewer_obj;
         }
-    }
-});
+        function nextItem() {
+            console.log('nextItem', viewer_obj)
+            var index = JSON.parse(index_data)
+            data_index = data_index + 1;
+            data_index = data_index % index.length;
+            var viewer_obj = index[data_index]
+            return viewer_obj;
+        }
+        function userAPI() {
+            console.log('hii')
+            let index_url = `http://localhost:8080/studies?scope=includeActions`;
+            console.log('index_url', index_url)
+            $.ajax({
+                url: index_url,
+                dataType: 'json',
+            }).done(function (data) {
+                console.log('studies', data)
 
-function set_filters(button, target) {
-  let contrast = $(button).parent().data('contrast');
-  let brightness = $(button).parent().data('brightness');
-  if (!contrast) { contrast = 1; }
-  if (!brightness) { brightness = 1; }
-  $(target).css('filter', `contrast(${contrast}) brightness(${brightness})`);
-}
+            }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+                this.index_error = `Could not fetch search index from ${index_url}.`;
+            }.bind(this)).always(() => {
+            });
+        }
+    </script>
+    <script>
+        (function ($) {
 
-$('.contrast_up').click(function(e) {
-  let target = $(this).data('target');
-  if (!$(this).parent().data('contrast')) {
-    $(this).parent().data('contrast', 1);
-  }
-  let new_contrast = $(this).parent().data('contrast') + 0.1;
-  $(this).parent().data('contrast', new_contrast);
-  set_filters(this, target);
-});
-$('.contrast_down').click(function(e) {
-  let target = $(this).data('target');
-  if (!$(this).parent().data('contrast')) {
-    $(this).parent().data('contrast', 1);
-  }
-  let new_contrast = $(this).parent().data('contrast') - 0.1;
-  $(this).parent().data('contrast', new_contrast);
-  set_filters(this, target);
-});
-$('.contrast_reset').click(function(e) {
-  let target = $(this).data('target');
-  let new_contrast = 1;
-  $(this).parent().data('contrast', new_contrast);
-  set_filters(this, target);
-});
-$('.brightness_up').click(function(e) {
-  let target = $(this).data('target');
-  if (!$(this).parent().data('brightness')) {
-    $(this).parent().data('brightness', 1);
-  }
-  let new_brightness = $(this).parent().data('brightness') + 0.1;
-  $(this).parent().data('brightness', new_brightness);
-  set_filters(this, target);
-});
-$('.brightness_down').click(function(e) {
-  let target = $(this).data('target');
-  if (!$(this).parent().data('brightness')) {
-    $(this).parent().data('brightness', 1);
-  }
-  let new_brightness = $(this).parent().data('brightness') - 0.1;
-  $(this).parent().data('brightness', new_brightness);
-  set_filters(this, target);
-});
-$('.brightness_reset').click(function(e) {
-  let target = $(this).data('target');
-  let new_brightness = 1;
-  $(this).parent().data('brightness', new_brightness);
-  set_filters(this, target);
-});
+            // Detect touch support
+            $.support.touch = 'ontouchend' in document;
 
+            // Ignore browsers without touch support
+            if (!$.support.touch) {
+                return;
+            }
 
+            var mouseProto = $.ui.mouse.prototype,
+                _mouseInit = mouseProto._mouseInit,
+                _mouseDestroy = mouseProto._mouseDestroy,
+                touchHandled;
 
+            /**
+             * Simulate a mouse event based on a corresponding touch event
+             * @param {Object} event A touch event
+             * @param {String} simulatedType The corresponding mouse event
+             */
+            function simulateMouseEvent(event, simulatedType) {
 
-});
-</script>
+                // Ignore multi-touch events
+                if (event.originalEvent.touches.length > 1) {
+                    return;
+                }
 
-<script>
+                event.preventDefault();
 
+                var touch = event.originalEvent.changedTouches[0],
+                    simulatedEvent = document.createEvent('MouseEvents');
 
-    (function($) {
-        var score = 2;
-    var threshold = 6;
-    var score_max= 10;
-    var score_percentage = 0;
-    var threshold_percentage = 0;
-    var data_index = 0;
+                // Initialize the simulated mouse event using the touch event's coordinates
+                simulatedEvent.initMouseEvent(
+                    simulatedType,    // type
+                    true,             // bubbles
+                    true,             // cancelable
+                    window,           // view
+                    1,                // detail
+                    touch.screenX,    // screenX
+                    touch.screenY,    // screenY
+                    touch.clientX,    // clientX
+                    touch.clientY,    // clientY
+                    false,            // ctrlKey
+                    false,            // altKey
+                    false,            // shiftKey
+                    false,            // metaKey
+                    0,                // button
+                    null              // relatedTarget
+                );
 
-    $(document).ready(function() {
-      var token = localStorage.getItem('token')
-       var index_data = localStorage.getItem('index_data')
-       console.log('start',token,index_data)
+                // Dispatch the simulated event to the target element
+                event.target.dispatchEvent(simulatedEvent);
+            }
 
-       let obj= any
-        obj = localStorage.getItem("patient_data")
-        console.log('obj',obj)
-        if(obj != undefined){
-            var viewer_obj = JSON.parse(obj)
-        console.log('viewer_obj', viewer_obj)
+            /**
+             * Handle the jQuery UI widget's touchstart events
+             * @param {Object} event The widget element's touchstart event
+             */
+            mouseProto._touchStart = function (event) {
+
+                var self = this;
+
+                // Ignore the event if another widget is already being handled
+                if (touchHandled || !self._mouseCapture(event.originalEvent.changedTouches[0])) {
+                    return;
+                }
+
+                // Set the flag to prevent other widgets from inheriting the touch event
+                touchHandled = true;
+
+                // Track movement to determine if interaction was a click
+                self._touchMoved = false;
+
+                // Simulate the mouseover event
+                simulateMouseEvent(event, 'mouseover');
+
+                // Simulate the mousemove event
+                simulateMouseEvent(event, 'mousemove');
+
+                // Simulate the mousedown event
+                simulateMouseEvent(event, 'mousedown');
+            };
+
+            /**
+             * Handle the jQuery UI widget's touchmove events
+             * @param {Object} event The document's touchmove event
+             */
+            mouseProto._touchMove = function (event) {
+
+                // Ignore event if not handled
+                if (!touchHandled) {
+                    return;
+                }
+
+                // Interaction was not a click
+                this._touchMoved = true;
+
+                // Simulate the mousemove event
+                simulateMouseEvent(event, 'mousemove');
+            };
+
+            /**
+             * Handle the jQuery UI widget's touchend events
+             * @param {Object} event The document's touchend event
+             */
+            mouseProto._touchEnd = function (event) {
+
+                // Ignore event if not handled
+                if (!touchHandled) {
+                    return;
+                }
+
+                // Simulate the mouseup event
+                simulateMouseEvent(event, 'mouseup');
+
+                // Simulate the mouseout event
+                simulateMouseEvent(event, 'mouseout');
+
+                // If the touch interaction did not move, it should trigger a click
+                if (!this._touchMoved) {
+
+                    // Simulate the click event
+                    simulateMouseEvent(event, 'click');
+                }
+
+                // Unset the flag to allow other widgets to inherit the touch event
+                touchHandled = false;
+            };
+
+            /**
+             * A duck punch of the $.ui.mouse _mouseInit method to support touch events.
+             * This method extends the widget with bound touch event handlers that
+             * translate touch events to mouse events and pass them to the widget's
+             * original mouse event handling methods.
+             */
+            mouseProto._mouseInit = function () {
+
+                var self = this;
+
+                // Delegate the touch handlers to the widget's element
+                self.element.bind({
+                    touchstart: $.proxy(self, '_touchStart'),
+                    touchmove: $.proxy(self, '_touchMove'),
+                    touchend: $.proxy(self, '_touchEnd')
+                });
+
+                // Call the original $.ui.mouse init method
+                _mouseInit.call(self);
+            };
+
+            /**
+             * Remove the touch event handlers
+             */
+            mouseProto._mouseDestroy = function () {
+
+                var self = this;
+
+                // Delegate the touch handlers to the widget's element
+                self.element.unbind({
+                    touchstart: $.proxy(self, '_touchStart'),
+                    touchmove: $.proxy(self, '_touchMove'),
+                    touchend: $.proxy(self, '_touchEnd')
+                });
+
+                // Call the original $.ui.mouse destroy method
+                _mouseDestroy.call(self);
+            };
+
+        })(jQuery);
+    </script>
+    <script>
+        $(function () {
+
+            function show_image(classname, i) {
+                window[classname] = i;
+                $(`.${classname}`).hide();
+                $(`.${classname}`).eq(i).show();
+            }
+
+            /* cutlines contains coordinate information about where to draw sagittal cutlines.
+
+            cutlines[sagittal_slice][axial_slice] is a 2-length array containing two
+            nested 2-length arrays, each containing x and y coordinates defining a
+            cutline.
+            */
+            window.cutlines = false;
+            {% if measurements.cutlines %}
+            window.cutlines = JSON.parse({{ measurements.cutlines | to_json | to_json }});
+        {% endif %}
+
+        function draw_cutlines() {
+            if (!window.cutlines) {
+                if (window.logged_cutline_error == false) {
+                    console.warn('No cutline data available to draw.');
+                    window.logged_cutline_error = true;
+                }
+                return;
+            }
+
+            function _draw_cutlines(canvas, type, local_slice, remote_slice) {
+                let cutlines = window.cutlines[type];
+                let cutline = cutlines[local_slice][remote_slice];
+
+                let ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, 256, 256);
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+                ctx.beginPath();
+                try {
+                    ctx.moveTo(cutline[0][1], cutline[0][0]);
+                    ctx.lineTo(cutline[1][1], cutline[1][0]);
+                } catch (error) {
+                    console.error(error);
+                    console.error(
+                        `Could not draw cutline with given index [${sag_slice}][${ax_slice}].`);
+                }
+                ctx.stroke();
+            }
+
+            let $ax_canvases = $('canvas.canal_canvas.img_annotation');
+            $ax_canvases.each((i, canvas) => {
+                _draw_cutlines.call(
+                    this, canvas, 'axial', window['canal_slides'], window['disk_slides']);
+            });
+
+            let $disk_canvases = $('canvas.disk_canvas.img_annotation');
+            $disk_canvases.each((i, canvas) => {
+                _draw_cutlines.call(
+                    this, canvas, 'sagittal', window['disk_slides'], window['canal_slides']);
+            });
+
+            let $foramen_canvases = $('canvas.foramen_canvas.img_annotation');
+            $foramen_canvases.each((i, canvas) => {
+                _draw_cutlines.call(
+                    this, canvas, 'sagittal', window['foramen_slides'], window['canal_slides']);
+            });
         }
 
+        let num_canal_images = {{ canal_segmentation.all_canal_areas | length }};
+        show_image('canal_slides', 0);
+        $('#canal_slider').slider({
+            min: 0,
+            max: num_canal_images - 1,
+            slide: function (e, ui) {
+                show_image('canal_slides', ui.value);
+                draw_cutlines();
+            },
+        });
 
-        if (score > score_max) {
-            score = score_max;
+        function slide_sagittal_images(num) {
+            show_image('disk_slides', num);
+            show_image('foramen_slides', num);
+            $('#disk_slider').slider('value', num);
+            $('#foramen_slider').slider('value', num);
+            draw_cutlines();
         }
 
-        // TODO(billy): Support arithmetic errors.
-       score_percentage = Math.round(score /score_max * 100);
-       threshold_percentage = Math.round(threshold / score_max * 100);
-       var position= `calc(${this.score_percentage}% - 16px)`
+        let num_disk_images = {{ disk_segmentation.num_slices }};
+        show_image('disk_slides', 0);
+        $('#disk_slider').slider({
+            min: 0,
+            max: num_disk_images - 1,
+            slide: function (e, ui) {
+                slide_sagittal_images(ui.value);
+            },
+        });
 
-    });
-})(jQuery);​
+        let num_foramen_images = {{ foramen_segmentation.num_slices }};
+        show_image('foramen_slides', 0);
+        $('#foramen_slider').slider({
+            min: 0,
+            max: num_foramen_images - 1,
+            slide: function (e, ui) {
+                slide_sagittal_images(ui.value);
+            },
+        });
 
-    function prevItem(){
-        var index = JSON.parse(index_data)
-        if (data_index === 0) {
-            data_index = index.length;
+        draw_cutlines();
+
+        var map = { 68: false, 69: false };
+        $(document).keydown(function (e) {
+            if (e.keyCode in map) {
+                map[e.keyCode] = true;
+                if (map[68] && map[69]) {
+                    $('.raw_segmentation_series').toggle();
+                    map[68] = false;
+                    map[69] = false;
+                }
+            }
+        });
+
+        function set_filters(button, target) {
+            let contrast = $(button).parent().data('contrast');
+            let brightness = $(button).parent().data('brightness');
+            if (!contrast) { contrast = 1; }
+            if (!brightness) { brightness = 1; }
+            $(target).css('filter', `contrast(${contrast}) brightness(${brightness})`);
         }
-       data_index = data_index - 1;
-       var viewer_obj =index[data_index]
-        return viewer_obj;
-    }
-    function nextItem(){
-       var index = JSON.parse(index_data)
-       data_index = data_index + 1;
-       data_index =data_index % index.length;
-       var viewer_obj = index[data_index]
-        return viewer_obj;
-    }
-</script>
+
+        $('.contrast_up').click(function (e) {
+            let target = $(this).data('target');
+            if (!$(this).parent().data('contrast')) {
+                $(this).parent().data('contrast', 1);
+            }
+            let new_contrast = $(this).parent().data('contrast') + 0.1;
+            $(this).parent().data('contrast', new_contrast);
+            set_filters(this, target);
+        });
+        $('.contrast_down').click(function (e) {
+            let target = $(this).data('target');
+            if (!$(this).parent().data('contrast')) {
+                $(this).parent().data('contrast', 1);
+            }
+            let new_contrast = $(this).parent().data('contrast') - 0.1;
+            $(this).parent().data('contrast', new_contrast);
+            set_filters(this, target);
+        });
+        $('.contrast_reset').click(function (e) {
+            let target = $(this).data('target');
+            let new_contrast = 1;
+            $(this).parent().data('contrast', new_contrast);
+            set_filters(this, target);
+        });
+        $('.brightness_up').click(function (e) {
+            let target = $(this).data('target');
+            if (!$(this).parent().data('brightness')) {
+                $(this).parent().data('brightness', 1);
+            }
+            let new_brightness = $(this).parent().data('brightness') + 0.1;
+            $(this).parent().data('brightness', new_brightness);
+            set_filters(this, target);
+        });
+        $('.brightness_down').click(function (e) {
+            let target = $(this).data('target');
+            if (!$(this).parent().data('brightness')) {
+                $(this).parent().data('brightness', 1);
+            }
+            let new_brightness = $(this).parent().data('brightness') - 0.1;
+            $(this).parent().data('brightness', new_brightness);
+            set_filters(this, target);
+        });
+        $('.brightness_reset').click(function (e) {
+            let target = $(this).data('target');
+            let new_brightness = 1;
+            $(this).parent().data('brightness', new_brightness);
+            set_filters(this, target);
+        });
+
+
+
+
+});
+    </script>
+
+
 </body>
 
 </html>

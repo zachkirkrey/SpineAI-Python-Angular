@@ -318,9 +318,12 @@ export class StudyListComponent implements OnInit {
         //obj = `${this.api_url}/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${id}`
         window.location.href=`${this.api_url}/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${id}`
         //console.log('obj', obj)
-        localStorage.setItem("patient_data", JSON.stringify(data))
-        localStorage.setItem("index_data", JSON.stringify(this.index))
-        //this.router.navigate(['/viewer'])
+        //let viewer_data={
+        //    id:id
+        //}
+        //localStorage.setItem("patient_data", JSON.stringify(data))
+        //localStorage.setItem("index_data", JSON.stringify(this.index))
+        //this.router.navigate(['/viewer',viewer_data])
     }
     filterArr(arr, criteria) {
         return arr.filter(function (obj) {

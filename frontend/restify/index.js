@@ -8,9 +8,9 @@ const sequelize = new Sequelize(config.get('sequelize.init'));
 let User = require('./models/user')(sequelize);
 let Study = require('./models/study')(sequelize);
 
-server.use(rjwt(config_jwt.jwt).unless({
-    path: ['/user','/reports']
-}));
+//server.use(rjwt(config_jwt.jwt).unless({
+//    path: ['/user','/reports']
+//}));
 
 server.post('/user', function (req, res, next) {
     User.findOne({

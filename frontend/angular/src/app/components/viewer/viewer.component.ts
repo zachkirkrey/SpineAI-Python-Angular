@@ -10,9 +10,10 @@ import { ThrowStmt } from '@angular/compiler';
     styleUrls: ['./viewer.component.sass']
 })
 export class ViewerComponent implements OnInit {
-    readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports`;
+    //readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports`;
     //readonly segmentation_url = `${environment.api_url}/reports?as=json`;
     //readonly segmentation_url = `${environment.api_url}/reports?as=HTMLSIMPLE`;
+    //readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports`;
 
     token: any;
     score: number = 2;
@@ -25,11 +26,14 @@ export class ViewerComponent implements OnInit {
     index_data: any;
     data_index = 0;
     segmentation_html: any;
+    id:any
 
 
     constructor(private router: Router, private route: ActivatedRoute) {
         this.token = localStorage.getItem('token')
         this.index_data = localStorage.getItem('index_data')
+        this.id= this.route.snapshot.params.id
+        console.log('data',this.id)
     }
 
     ngOnInit(): void {
@@ -46,11 +50,14 @@ export class ViewerComponent implements OnInit {
             }
             return 0;
         }
+        //let index_url = `${environment.api_url}/studies?scope=includeActions`;
+        let index_url = `${environment.api_url}/studies?scope=includeActions`;
+        //`${environment.api_url}/study/${this.id}?scope=includeActions`
 
         // TODO(billy): Create a dev config for this url so this can work during
         // development.
         $.ajax({
-            url: this.index_url,
+            url: index_url,
             headers: {
                 "Authorization": 'Bearer ' + this.token
             },
@@ -59,14 +66,15 @@ export class ViewerComponent implements OnInit {
             if ('error' in data) {
                 this.index_error = data['error'];
             } else {
-                this.index = data;
-                this.index.forEach(x => {
-                    x.show_icon = false
-                });
-                data.forEach(element => {
-                    element.Reports = element.Reports.filter(report => report.type == 'PDF_SIMPLE');
-                    element.Reports.sort(sort_by_creation);
-                });
+                console.log('studies',data)
+                //this.index = data;
+                //this.index.forEach(x => {
+                //    x.show_icon = false
+                //});
+                //data.forEach(element => {
+                //    element.Reports = element.Reports.filter(report => report.type == 'PDF_SIMPLE');
+                //    element.Reports.sort(sort_by_creation);
+                //});
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.index_error = `Could not fetch search index from ${this.index_url}.`;
