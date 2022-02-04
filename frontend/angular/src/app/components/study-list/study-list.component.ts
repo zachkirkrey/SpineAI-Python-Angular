@@ -314,16 +314,7 @@ export class StudyListComponent implements OnInit {
     }
 
     showViewer(id, data) {
-        //let obj = {}
-        //obj = `${this.api_url}/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${id}`
-        window.location.href=`${this.api_url}/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${id}`
-        //console.log('obj', obj)
-        //let viewer_data={
-        //    id:id
-        //}
-        //localStorage.setItem("patient_data", JSON.stringify(data))
-        //localStorage.setItem("index_data", JSON.stringify(this.index))
-        //this.router.navigate(['/viewer',viewer_data])
+        window.location.href=`${this.api_url}/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${id}&${this.token}`
     }
     filterArr(arr, criteria) {
         return arr.filter(function (obj) {
