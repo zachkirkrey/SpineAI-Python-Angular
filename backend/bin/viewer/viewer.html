@@ -286,7 +286,6 @@
 
         .hd_sec span {
             display: block;
-            margin: 15px 0;
             font-size: 16px;
         }
 
@@ -385,6 +384,14 @@
 
         .img_controls svg.svg-icon path {}
 
+        .p_dtl {
+    display: flex;
+    margin: 10px 0;
+}
+.p_dtl b {
+    margin-right: 10px;
+}
+
         @media screen and (max-width:767px) {
             .inn_seg {
                 width: 100% !important;
@@ -436,8 +443,8 @@
     <header>
         <div class="hd_sec">
             <h3> Patient Information</h3>
-            <span><b>Name:</b>Test</span>
-            <span><b>MRN:</b>123</span>
+            <div class="p_dtl"><b>Name:</b><span id="name"></span></div>
+            <div class="p_dtl"><b>MRN:</b><span id="mrn"></span></div>
 
 
 
@@ -454,8 +461,8 @@
 
         <div class="hd_sec">
             <h3> Action</h3>
-            <ul class="r_tl">
-                <li>2021-09-01 Surgery</li>
+            <ul id="actionList" class="r_tl">
+
 
             </ul>
         </div>
@@ -705,8 +712,9 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.13.0/moment.min.js"></script>
 
-    <script>
+    <script type="text/javascript">
         (function ($) {
             $(document).ready(function () {
                 var score = 2;
@@ -718,11 +726,8 @@
                 var viewer_obj = {}
                 let sPageURL = window.location.search.substring(1);
                 let sURLVariables = sPageURL.split('&')
-                console.log('sURLVariables', sURLVariables)
                 let token = sURLVariables[4]
-                console.log('token', token)
                 let index_url = `http://localhost:8080/studies?scope=includeActions`;
-                console.log('index_url', index_url)
                 $.ajax({
                     url: index_url,
                     headers: {
@@ -732,9 +737,7 @@
                 }).done(function (data) {
                     let obj = data
                     if (data.length > 0) {
-                        console.log('studiess', data)
                         window.localStorage.setItem('viewer_obj', JSON.stringify(obj[0]))
-                        // $("#patient").innerHTML = 'Name '+viewer_obj.name + '<br />'+'MRN '+viewer_obj.mrn;
                     }
 
                 }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
@@ -743,8 +746,6 @@
                 });
 
                 let id = sURLVariables[3].replace("Studies.uuid=", "")
-                console.log('id', id)
-
                 let patient_url = `http://localhost:8080/study/${id}?scope=includeActions`;
                 $.ajax({
                     url: patient_url,
@@ -754,7 +755,10 @@
                     dataType: 'json',
                 }).done(function (data) {
                     viewer_obj = data
-                    console.log('patient_data', viewer_obj)
+                   document.getElementById("name").innerText = viewer_obj.patient_name
+                    document.getElementById("mrn").innerText = viewer_obj.mrn
+                    displayArrayObjects(viewer_obj.Actions)
+
 
                 }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
                     this.index_error = `Could not fetch search index from ${patient_url}.`;
@@ -774,10 +778,10 @@
             });
         })(jQuery)
 
+
         function prevItem() {
             var data_index = 0;
             let obj = window.localStorage.getItem('viewer_obj')
-            console.log('prev', JSON.parse(obj))
             var index = []
             index.push(JSON.parse(obj))
             if (data_index === 0) {
@@ -785,21 +789,45 @@
             }
             data_index = data_index - 1;
             let viewer_obj = index[data_index]
+            document.getElementById("name").innerText = viewer_obj.patient_name
+            document.getElementById("mrn").innerText = viewer_obj.mrn
+            displayArrayObjects(viewer_obj.Actions)
             console.log('prevItem', viewer_obj)
-            //return viewer_obj;
         }
         function nextItem() {
             var data_index = 0;
             let obj = window.localStorage.getItem('viewer_obj')
-            console.log('next', JSON.parse(obj))
             var index = []
             index.push(JSON.parse(obj))
             data_index = data_index + 1;
             data_index = data_index % index.length;
             let viewer_obj = index[data_index]
+            document.getElementById("name").innerText = viewer_obj.patient_name
+            document.getElementById("mrn").innerText = viewer_obj.mrn
+            displayArrayObjects(viewer_obj.Actions)
             console.log('nextItem', viewer_obj)
-            //return viewer_obj;
         }
+
+        function displayArrayObjects(arrayObjects) {
+            var len = arrayObjects.length, text = "";
+
+            for (var i = 0; i < len; i++) {
+                var myObject = arrayObjects[i];
+                text += "<li>";
+                for (var x in myObject) {
+                    if (x == 'creation_datetime') {
+              text += (moment(myObject[x]).format("DD/MM/YY hh:mm a") + " ");
+                    } else if (x == 'name') {
+                        text += (myObject[x] + " ");
+                    } else { }
+
+                }
+                text += "</li>";
+            }
+
+            document.getElementById("actionList").innerHTML = text;
+        }
+
     </script>
     <script>
         (function ($) {
