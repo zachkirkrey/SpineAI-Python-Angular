@@ -91,6 +91,7 @@ export class StudyListComponent implements OnInit {
                 this.index = data;
                 this.index.forEach(x => {
                     x.show_icon = false
+                    x.creation_datetime = moment(x.creation_datetime).format('YYYY-MM-DD')
                 });
                 data.forEach(element => {
                     element.Reports = element.Reports.filter(report => report.type == 'PDF_SIMPLE');
@@ -314,7 +315,7 @@ export class StudyListComponent implements OnInit {
     }
 
     showViewer(id, data) {
-        window.location.href=`${this.api_url}/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${id}&${this.token}`
+        window.location.href = `${this.api_url}/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${id}&${this.token}`
     }
     filterArr(arr, criteria) {
         return arr.filter(function (obj) {
@@ -364,6 +365,9 @@ export class StudyListComponent implements OnInit {
 
                     });
                 }
+
+                this.fetchAction()
+                this.action=[]
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${this.index_url}.`;

@@ -385,12 +385,13 @@
         .img_controls svg.svg-icon path {}
 
         .p_dtl {
-    display: flex;
-    margin: 10px 0;
-}
-.p_dtl b {
-    margin-right: 10px;
-}
+            display: flex;
+            margin: 10px 0;
+        }
+
+        .p_dtl b {
+            margin-right: 10px;
+        }
 
         @media screen and (max-width:767px) {
             .inn_seg {
@@ -442,7 +443,7 @@
 
     <header>
         <div class="hd_sec">
-            <h3> Patient Information</h3>
+            <h3> Patient Information <b id="count"></b></h3>
             <div class="p_dtl"><b>Name:</b><span id="name"></span></div>
             <div class="p_dtl"><b>MRN:</b><span id="mrn"></span></div>
 
@@ -454,7 +455,7 @@
             <h3>Recommendation</h3>
             <span><b>No surgery consult</b></span>
             <div class="prog_bar">
-                <div class="prog_val" style="width: 33%;"></div>
+                <div class="prog_val" id="surgery_id"></div>
             </div>
         </div>
 
@@ -723,6 +724,7 @@
                 var score_percentage = 0;
                 var threshold_percentage = 0;
 
+
                 var viewer_obj = {}
                 let sPageURL = window.location.search.substring(1);
                 let sURLVariables = sPageURL.split('&')
@@ -736,8 +738,11 @@
                     dataType: 'json',
                 }).done(function (data) {
                     let obj = data
+                    console.log('obj', obj)
                     if (data.length > 0) {
-                        window.localStorage.setItem('viewer_obj', JSON.stringify(obj[0]))
+                        let patientCount = data.length
+                        window.localStorage.setItem('patientCount', patientCount)
+                        window.localStorage.setItem('viewer_obj', JSON.stringify(obj))
                     }
 
                 }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
@@ -755,8 +760,11 @@
                     dataType: 'json',
                 }).done(function (data) {
                     viewer_obj = data
-                   document.getElementById("name").innerText = viewer_obj.patient_name
+                    document.getElementById("name").innerText = viewer_obj.patient_name
                     document.getElementById("mrn").innerText = viewer_obj.mrn
+                    let count = window.localStorage.getItem('patientCount')
+                    document.getElementById("count").innerText = '(1/' + parseInt(count) + ')'
+                    document.getElementById("surgery_id").style.width = "33%";
                     displayArrayObjects(viewer_obj.Actions)
 
 
@@ -781,42 +789,68 @@
 
         function prevItem() {
             var data_index = 0;
-            let obj = window.localStorage.getItem('viewer_obj')
+            let obj = JSON.parse(window.localStorage.getItem('viewer_obj'))
             var index = []
-            index.push(JSON.parse(obj))
-            if (data_index === 0) {
+            index = obj
+            console.log('index', index)
+            if (window.localStorage.getItem('data_index') && (window.localStorage.getItem('data_index') != null || window.localStorage.getItem('data_index') != 'null')) {
+                data_index = window.localStorage.getItem('data_index')
+                console.log('localStorage', data_index)
+            }
+            if (data_index == null || data_index == 'null') {
+                data_index = 0
+            }
+            if (parseInt(data_index) === 0) {
                 data_index = index.length;
             }
-            data_index = data_index - 1;
+            data_index = parseInt(data_index) - 1;
+            console.log(data_index, 'data_index')
             let viewer_obj = index[data_index]
             document.getElementById("name").innerText = viewer_obj.patient_name
             document.getElementById("mrn").innerText = viewer_obj.mrn
+            let count = window.localStorage.getItem('patientCount')
+            document.getElementById("count").innerText = '(' + (parseInt(data_index) + 1) + '/' + parseInt(count) + ')'
+            document.getElementById("surgery_id").style.width = "33%";
             displayArrayObjects(viewer_obj.Actions)
             console.log('prevItem', viewer_obj)
+            window.localStorage.setItem('data_index', data_index)
         }
         function nextItem() {
             var data_index = 0;
-            let obj = window.localStorage.getItem('viewer_obj')
+            let obj = JSON.parse(window.localStorage.getItem('viewer_obj'))
             var index = []
-            index.push(JSON.parse(obj))
-            data_index = data_index + 1;
+            index = obj
+            console.log('index', index)
+            if (window.localStorage.getItem('data_index') && (window.localStorage.getItem('data_index') != null || window.localStorage.getItem('data_index') != 'null')) {
+                data_index = window.localStorage.getItem('data_index')
+                console.log('localStorage', data_index)
+            }
+            if (data_index == null || data_index == 'null') {
+                data_index = 0
+            }
+            data_index = parseInt(data_index) + 1;
             data_index = data_index % index.length;
+            console.log(data_index, 'data_index')
             let viewer_obj = index[data_index]
             document.getElementById("name").innerText = viewer_obj.patient_name
             document.getElementById("mrn").innerText = viewer_obj.mrn
+            let count = window.localStorage.getItem('patientCount')
+            document.getElementById("count").innerText = '(' + (parseInt(data_index) + 1) + '/' + parseInt(count) + ')'
+            document.getElementById("surgery_id").style.width = "33%";
             displayArrayObjects(viewer_obj.Actions)
             console.log('nextItem', viewer_obj)
+            window.localStorage.setItem('data_index', data_index)
         }
 
         function displayArrayObjects(arrayObjects) {
-            var len = arrayObjects.length, text = "";
+            let len = arrayObjects.length, text = "";
 
             for (var i = 0; i < len; i++) {
                 var myObject = arrayObjects[i];
                 text += "<li>";
                 for (var x in myObject) {
                     if (x == 'creation_datetime') {
-              text += (moment(myObject[x]).format("DD/MM/YY hh:mm a") + " ");
+                        text += (moment(myObject[x]).format("DD/MM/YY hh:mm a") + " ");
                     } else if (x == 'name') {
                         text += (myObject[x] + " ");
                     } else { }
