@@ -454,12 +454,12 @@
         <div class="hd_sec">
             <h3>Recommendation</h3>
             <span><b>
-                {% if measurements.canal_narrowing.surgery_recommended %}
-                Surgery recommended
-                {% else %}
-                No surgery consult
-                {% endif %}
-            </b></span>
+                    {% if measurements.canal_narrowing.surgery_recommended %}
+                    Surgery recommended
+                    {% else %}
+                    No surgery consult
+                    {% endif %}
+                </b></span>
             <div class="prog_bar">
                 <div class="prog_val" id="surgery_id"></div>
             </div>
@@ -725,73 +725,66 @@
         (function ($) {
             $(document).ready(function () {
                 var score = 2;
-                var threshold = {{ measurements.canal_narrowing.narrow_slices_threshold }};
-                var score_max = 10;
-                var score_percentage = 0;
-                var threshold_percentage = Math.round(threshold/score_max * 100);
-                document.getElementById("surgery_id").style.width = threshold_percentage+"%";
+                var threshold = {{ measurements.canal_narrowing.narrow_slices_threshold }
+            };
+            var score_max = 10;
+            var score_percentage = 0;
+            var threshold_percentage = Math.round(threshold / score_max * 100);
+            document.getElementById("surgery_id").style.width = threshold_percentage + "%";
 
 
-                var viewer_obj = {}
-                let sPageURL = window.location.search.substring(1);
-                let sURLVariables = sPageURL.split('&')
-                let token = sURLVariables[4]
-                let index_url = `http://localhost:8080/studies?scope=includeActions`;
-                $.ajax({
-                    url: index_url,
-                    headers: {
-                        "Authorization": 'Bearer ' + token
-                    },
-                    dataType: 'json',
-                }).done(function (data) {
-                    let obj = data
-                    console.log('obj', obj)
-                    if (data.length > 0) {
-                        let patientCount = data.length
-                        window.localStorage.setItem('patientCount', patientCount)
-                        window.localStorage.setItem('viewer_obj', JSON.stringify(obj))
-                    }
-
-                }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
-                    this.index_error = `Could not fetch search index from ${index_url}.`;
-                }.bind(this)).always(() => {
-                });
-
-                let id = sURLVariables[3].replace("Studies.uuid=", "")
-                let patient_url = `http://localhost:8080/study/${id}?scope=includeActions`;
-                $.ajax({
-                    url: patient_url,
-                    headers: {
-                        "Authorization": 'Bearer ' + token
-                    },
-                    dataType: 'json',
-                }).done(function (data) {
-                    viewer_obj = data
-                    document.getElementById("name").innerText = viewer_obj.patient_name
-                    document.getElementById("mrn").innerText = viewer_obj.mrn
-                    let count = window.localStorage.getItem('patientCount')
-                    document.getElementById("count").innerText = '(1/' + parseInt(count) + ')'
-                    // document.getElementById("surgery_id").style.width = "33%";
-                    displayArrayObjects(viewer_obj.Actions)
-
-
-                }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
-                    this.index_error = `Could not fetch search index from ${patient_url}.`;
-                }.bind(this)).always(() => {
-                });
-
-
-                if (score > score_max) {
-                    score = score_max;
+            var viewer_obj = {}
+            let sPageURL = window.location.search.substring(1);
+            let sURLVariables = sPageURL.split('&')
+            let token = sURLVariables[4]
+            window.localStorage.setItem('token', token)
+            let index_url = `http://localhost:8080/studies?scope=includeActions`;
+            $.ajax({
+                url: index_url,
+                headers: {
+                    "Authorization": 'Bearer ' + token
+                },
+                dataType: 'json',
+            }).done(function (data) {
+                let obj = data
+                console.log('obj', obj)
+                if (data.length > 0) {
+                    let patientCount = data.length
+                    window.localStorage.setItem('patientCount', patientCount)
+                    window.localStorage.setItem('viewer_obj', JSON.stringify(obj))
                 }
 
-                // TODO(billy): Support arithmetic errors.
-                score_percentage = Math.round(score / score_max * 100);
-                threshold_percentage = Math.round(threshold / score_max * 100);
-                var position = `calc(${score_percentage}% - 16px)`
-
+            }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+                this.index_error = `Could not fetch search index from ${index_url}.`;
+            }.bind(this)).always(() => {
             });
-        })(jQuery)
+
+            let id = sURLVariables[3].replace("Studies.uuid=", "")
+            let patient_url = `http://localhost:8080/study/${id}?scope=includeActions`;
+            $.ajax({
+                url: patient_url,
+                headers: {
+                    "Authorization": 'Bearer ' + token
+                },
+                dataType: 'json',
+            }).done(function (data) {
+                viewer_obj = data
+                let obj = JSON.parse(window.localStorage.getItem('viewer_obj'))
+                let obj_index = obj.findIndex(x => x.uuid == viewer_obj.uuid)
+                document.getElementById("name").innerText = viewer_obj.patient_name
+                document.getElementById("mrn").innerText = viewer_obj.mrn
+                let count = window.localStorage.getItem('patientCount')
+                document.getElementById("count").innerText = '(' + (obj_index + 1) + '/' + parseInt(count) + ')'
+                displayArrayObjects(viewer_obj.Actions)
+
+
+            }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+                this.index_error = `Could not fetch search index from ${patient_url}.`;
+            }.bind(this)).always(() => {
+            });
+
+        });
+        }) (jQuery)
 
 
         function prevItem() {
@@ -813,14 +806,9 @@
             data_index = parseInt(data_index) - 1;
             console.log(data_index, 'data_index')
             let viewer_obj = index[data_index]
-            document.getElementById("name").innerText = viewer_obj.patient_name
-            document.getElementById("mrn").innerText = viewer_obj.mrn
-            let count = window.localStorage.getItem('patientCount')
-            document.getElementById("count").innerText = '(' + (parseInt(data_index) + 1) + '/' + parseInt(count) + ')'
-            // document.getElementById("surgery_id").style.width = "33%";
-            displayArrayObjects(viewer_obj.Actions)
-            console.log('prevItem', viewer_obj)
             window.localStorage.setItem('data_index', data_index)
+            let token = window.localStorage.getItem('token')
+            window.location.href = `http://localhost:8080/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${viewer_obj.uuid}&${token}`
         }
         function nextItem() {
             var data_index = 0;
@@ -839,16 +827,10 @@
             data_index = data_index % index.length;
             console.log(data_index, 'data_index')
             let viewer_obj = index[data_index]
-            document.getElementById("name").innerText = viewer_obj.patient_name
-            document.getElementById("mrn").innerText = viewer_obj.mrn
-            let count = window.localStorage.getItem('patientCount')
-            document.getElementById("count").innerText = '(' + (parseInt(data_index) + 1) + '/' + parseInt(count) + ')'
-            // document.getElementById("surgery_id").style.width = "33%";
-            displayArrayObjects(viewer_obj.Actions)
-            console.log('nextItem', viewer_obj)
             window.localStorage.setItem('data_index', data_index)
+            let token = window.localStorage.getItem('token')
+            window.location.href = `http://localhost:8080/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${viewer_obj.uuid}&${token}`
         }
-
         function displayArrayObjects(arrayObjects) {
             let len = arrayObjects.length, text = "";
 
