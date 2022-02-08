@@ -725,8 +725,7 @@
         (function ($) {
             $(document).ready(function () {
                 var score = 2;
-                var threshold = {{ measurements.canal_narrowing.narrow_slices_threshold }
-            };
+                var threshold = {{ measurements.canal_narrowing.narrow_slices_threshold }};
             var score_max = 10;
             var score_percentage = 0;
             var threshold_percentage = Math.round(threshold / score_max * 100);
