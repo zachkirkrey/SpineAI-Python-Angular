@@ -453,7 +453,13 @@
 
         <div class="hd_sec">
             <h3>Recommendation</h3>
-            <span><b>No surgery consult</b></span>
+            <span><b>
+                {% if measurements.canal_narrowing.surgery_recommended %}
+                Surgery recommended
+                {% else %}
+                No surgery consult
+                {% endif %}
+            </b></span>
             <div class="prog_bar">
                 <div class="prog_val" id="surgery_id"></div>
             </div>
@@ -719,10 +725,11 @@
         (function ($) {
             $(document).ready(function () {
                 var score = 2;
-                var threshold = 6;
+                var threshold = {{ measurements.canal_narrowing.narrow_slices_threshold }};
                 var score_max = 10;
                 var score_percentage = 0;
-                var threshold_percentage = 0;
+                var threshold_percentage = Math.round(threshold/score_max * 100);
+                document.getElementById("surgery_id").style.width = threshold_percentage+"%";
 
 
                 var viewer_obj = {}
@@ -764,7 +771,7 @@
                     document.getElementById("mrn").innerText = viewer_obj.mrn
                     let count = window.localStorage.getItem('patientCount')
                     document.getElementById("count").innerText = '(1/' + parseInt(count) + ')'
-                    document.getElementById("surgery_id").style.width = "33%";
+                    // document.getElementById("surgery_id").style.width = "33%";
                     displayArrayObjects(viewer_obj.Actions)
 
 
@@ -810,7 +817,7 @@
             document.getElementById("mrn").innerText = viewer_obj.mrn
             let count = window.localStorage.getItem('patientCount')
             document.getElementById("count").innerText = '(' + (parseInt(data_index) + 1) + '/' + parseInt(count) + ')'
-            document.getElementById("surgery_id").style.width = "33%";
+            // document.getElementById("surgery_id").style.width = "33%";
             displayArrayObjects(viewer_obj.Actions)
             console.log('prevItem', viewer_obj)
             window.localStorage.setItem('data_index', data_index)
@@ -836,7 +843,7 @@
             document.getElementById("mrn").innerText = viewer_obj.mrn
             let count = window.localStorage.getItem('patientCount')
             document.getElementById("count").innerText = '(' + (parseInt(data_index) + 1) + '/' + parseInt(count) + ')'
-            document.getElementById("surgery_id").style.width = "33%";
+            // document.getElementById("surgery_id").style.width = "33%";
             displayArrayObjects(viewer_obj.Actions)
             console.log('nextItem', viewer_obj)
             window.localStorage.setItem('data_index', data_index)
