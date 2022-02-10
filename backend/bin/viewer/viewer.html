@@ -489,7 +489,7 @@
 
         <div class="hd_sec">
             <h3> Action</h3>
-            <select name="action" id="actionViewer">
+            <select name="action" id="actionViewer" onchange="action_change()">
                 <option value="Scheduled for Clinic">Scheduled for Clinic</option>
                 <option value="Surgery">Surgery</option>
                 <option value="Additional Testing">Additional Testing</option>
@@ -878,6 +878,35 @@
             }
 
             document.getElementById("actionList").innerHTML = text;
+        }
+        function action_change(){
+            let obj = JSON.parse(window.localStorage.getItem('viewer_obj'));
+            let token = window.localStorage.getItem('token');
+            var name = $('#actionViewer').val();
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear()+"-"+(currentdate.getMonth()+1)+"-"+currentdate.getDate()+" "+currentdate.getHours()+":"+currentdate.getMinutes()+":"+currentdate.getSeconds();
+            var data_index = window.localStorage.getItem('data_index')
+            var study_id = obj[data_index].id;
+            let req_data = {
+                "name": name,
+                "creation_datetime": datetime,
+                "study": parseInt(study_id)
+            }
+            let action_url = 'http://localhost:8080/action'
+            $.ajax({
+                url: action_url,
+                dataType: 'json',
+                type: "POST",
+                headers: {
+                    "Authorization": 'Bearer ' + token
+                },
+                data: req_data,
+            }).done(function (data) {
+                console.log(data);
+            }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+                this.index_error = `Could not fetch search index from ${action_url}.`;
+            }.bind(this)).always(() => {
+            });           
         }
 
     </script>

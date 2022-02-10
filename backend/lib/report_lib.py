@@ -218,7 +218,6 @@ class PDFReportWriter(object):
         """
         self.report_vars['report_id'] = uuid.uuid4()
         self.report_vars['study'] = study
-        self.report_vars['actions'] = schema.Action.select(lambda s: s.study == study.id)
 
         for s in segmentations:
             self.segmentations_by_type[s.type] = s
