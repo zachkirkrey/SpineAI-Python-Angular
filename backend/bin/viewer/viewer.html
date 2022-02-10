@@ -414,6 +414,27 @@
                 margin-bottom: 10px
             }
         }
+        /**Added for action dropdown**/
+        select#actionViewer {
+            padding: 5px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            margin-right: 0 !important;
+            background: #fff;
+            background-repeat: no-repeat;
+            background-position: calc(100% - 5px);
+            background-size: 10px;
+            width: calc(33% - 20px);
+            margin: 5px 15px 5px 5px;
+        }
+        ul.r_tl {
+            width: 60%;
+            float: right;
+        }
+        .r_tl li {
+            width: 100%;
+        }
 
         /**changes End form here**/
     </style>
@@ -468,6 +489,15 @@
 
         <div class="hd_sec">
             <h3> Action</h3>
+            <select name="action" id="actionViewer">
+                <option value="Scheduled for Clinic">Scheduled for Clinic</option>
+                <option value="Surgery">Surgery</option>
+                <option value="Additional Testing">Additional Testing</option>
+                <option value="Injections">Injections</option>
+                <option value="Physical Therapy">Physical Therapy</option>
+                <option value="RTC/DC">RTC/DC</option>
+                <option value="Referral">Referral</option>
+            </select>
             <ul id="actionList" class="r_tl">
 
 
