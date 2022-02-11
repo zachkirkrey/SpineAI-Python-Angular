@@ -393,7 +393,53 @@
             margin-right: 10px;
         }
 
+
+
+        /**Added for action dropdown**/
+
+     .selfld {
+    padding: 10px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    margin-right: 13px !important;
+    background: #fff;
+    background-repeat: no-repeat;
+    background-position: calc(100% - 5px);
+    background-size: 10px;
+    width: 70%;
+    font-size: 18px;
+    margin: 5px 15px 5px 5px;
+}
+
+.sel_o {
+    display: flex;
+}
+
+.selbtn{
+        background-color: #3c78f4 !important;
+        width: 25%;
+        text-align: center;
+        border-radius: 10px;
+        font-size: 18px;
+        height: 47px;
+        margin: 5px 0;
+        line-height: 47px;
+        }
+        .selbtn:hover{ cursor: pointer;}
+
+        ul.r_tl {
+            width: 100%;
+            float: right;
+        }
+
+        .r_tl li {
+            width: 100%;
+        }
+
+        /**changes End form here**/
+
         @media screen and (max-width:767px) {
+            .selbtn{ width: 50%;}
             .inn_seg {
                 width: 100% !important;
                 margin-bottom: 20px;
@@ -414,29 +460,6 @@
                 margin-bottom: 10px
             }
         }
-        /**Added for action dropdown**/
-        select#actionViewer {
-            padding: 5px;
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-            margin-bottom: 5px;
-            margin-right: 0 !important;
-            background: #fff;
-            background-repeat: no-repeat;
-            background-position: calc(100% - 5px);
-            background-size: 10px;
-            width: calc(33% - 20px);
-            margin: 5px 15px 5px 5px;
-        }
-        ul.r_tl {
-            width: 60%;
-            float: right;
-        }
-        .r_tl li {
-            width: 100%;
-        }
-
-        /**changes End form here**/
     </style>
 </head>
 
@@ -487,21 +510,24 @@
         </div>
 
 
-        <div class="hd_sec">
+        <div class="hd_sec list">
             <h3> Action</h3>
-            <select name="action" id="actionViewer" onchange="action_change()">
-                <option value="Scheduled for Clinic">Scheduled for Clinic</option>
-                <option value="Surgery">Surgery</option>
-                <option value="Additional Testing">Additional Testing</option>
-                <option value="Injections">Injections</option>
-                <option value="Physical Therapy">Physical Therapy</option>
-                <option value="RTC/DC">RTC/DC</option>
-                <option value="Referral">Referral</option>
-            </select>
+            <div class="sel_o">
+                <select class="selfld" name="action" id="actionViewer" onchange="action_change()">
+                    <option value="Scheduled for Clinic">Scheduled for Clinic</option>
+                    <option value="Surgery">Surgery</option>
+                    <option value="Additional Testing">Additional Testing</option>
+                    <option value="Injections">Injections</option>
+                    <option value="Physical Therapy">Physical Therapy</option>
+                    <option value="RTC/DC">RTC/DC</option>
+                    <option value="Referral">Referral</option>
+                </select>
+                <div id="show" class="selbtn" onclick="showHidefn('show')"> Show History</div>
+                <div id="hide" class="selbtn" onclick="showHidefn('hide')"> Hide History</div>
+            </div>
             <ul id="actionList" class="r_tl">
-
-
             </ul>
+
         </div>
 
         <div class="btn_o">
@@ -754,12 +780,15 @@
     <script type="text/javascript">
         (function ($) {
             $(document).ready(function () {
-                var score = 2;
-                var threshold = {{ measurements.canal_narrowing.narrow_slices_threshold }};
+            document.getElementById('show').style.display = 'none';
+            document.getElementById('hide').style.display = 'block';
+            var score = 2;
+            var threshold = {{ measurements.canal_narrowing.narrow_slices_threshold }};
             var score_max = 10;
             var score_percentage = 0;
             var threshold_percentage = Math.round(threshold / score_max * 100);
             document.getElementById("surgery_id").style.width = threshold_percentage + "%";
+            document.getElementById('actionList').style.display = 'block';
 
 
             var viewer_obj = {}
@@ -798,6 +827,8 @@
                 dataType: 'json',
             }).done(function (data) {
                 viewer_obj = data
+                window.localStorage.setItem('obj', JSON.stringify(viewer_obj))
+                window.localStorage.setItem('id', viewer_obj.id)
                 let obj = JSON.parse(window.localStorage.getItem('viewer_obj'))
                 let obj_index = obj.findIndex(x => x.uuid == viewer_obj.uuid)
                 document.getElementById("name").innerText = viewer_obj.patient_name
@@ -815,7 +846,37 @@
         });
         }) (jQuery)
 
-
+        function actionCall(id) {
+            var viewer_obj = {}
+            let token = window.localStorage.getItem('token')
+            let patient_url = `http://localhost:8080/study/${id}?scope=includeActions`;
+            $.ajax({
+                url: patient_url,
+                headers: {
+                    "Authorization": 'Bearer ' + token
+                },
+                dataType: 'json',
+            }).done(function (data) {
+                viewer_obj = data
+                window.localStorage.setItem('obj', JSON.stringify(viewer_obj))
+            }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+                this.index_error = `Could not fetch search index from ${patient_url}.`;
+            }.bind(this)).always(() => {
+            });
+            return
+        }
+        function showHidefn(value) {
+            if (value == 'hide') {
+                document.getElementById('actionList').style.display = 'none';
+                document.getElementById('hide').style.display = 'none';
+                document.getElementById('show').style.display = 'block';
+            }
+            if (value == 'show') {
+                document.getElementById('actionList').style.display = 'block';
+                document.getElementById('hide').style.display = 'block';
+                document.getElementById('show').style.display = 'none';
+            }
+        }
         function prevItem() {
             var data_index = 0;
             let obj = JSON.parse(window.localStorage.getItem('viewer_obj'))
@@ -879,18 +940,17 @@
 
             document.getElementById("actionList").innerHTML = text;
         }
-        function action_change(){
-            let obj = JSON.parse(window.localStorage.getItem('viewer_obj'));
+        function action_change() {
+            var action_obj = JSON.parse(window.localStorage.getItem('obj'))
             let token = window.localStorage.getItem('token');
             var name = $('#actionViewer').val();
             var currentdate = new Date();
-            var datetime = currentdate.getFullYear()+"-"+(currentdate.getMonth()+1)+"-"+currentdate.getDate()+" "+currentdate.getHours()+":"+currentdate.getMinutes()+":"+currentdate.getSeconds();
-            var data_index = window.localStorage.getItem('data_index')
-            var study_id = obj[data_index].id;
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth() + 1) + "-" + currentdate.getDate() + " " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+            let id = action_obj.id
             let req_data = {
                 "name": name,
                 "creation_datetime": datetime,
-                "study": parseInt(study_id)
+                "study": parseInt(id)
             }
             let action_url = 'http://localhost:8080/action'
             $.ajax({
@@ -902,11 +962,22 @@
                 },
                 data: req_data,
             }).done(function (data) {
+                //actionCall(action_obj.uuid)
+                //action_obj = JSON.parse(window.localStorage.getItem('obj'))
+                //let action_arr = action_obj.Actions
+                //action_arr.push(data)
                 console.log(data);
+                //displayArrayObjects(action_arr)
+                let name = data.name;
+                let creation_datetime = data.creation_datetime;
+                let new_element = name+" "+(moment(creation_datetime).format("DD/MM/YY hh:mm a"));
+                var li = document.createElement("li");
+                li.appendChild(document.createTextNode(new_element));
+                document.getElementById("actionList").appendChild(li);
             }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
                 this.index_error = `Could not fetch search index from ${action_url}.`;
             }.bind(this)).always(() => {
-            });           
+            });
         }
 
     </script>
