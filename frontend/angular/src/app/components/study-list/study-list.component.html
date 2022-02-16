@@ -81,8 +81,8 @@
                                     <ng-template [ngIf]="metadata.Reports[0].state == 'PROCESSED'"
                                         [ngIfElse]="reportNotProcessed">
                                         <a href="/study/{{ metadata.uuid }}">Report</a>&nbsp;&nbsp;&#124;&nbsp;
-                                         <a href="javascript:void(0)" (click)="showViewer(metadata.uuid,metadata)"
-                                           >Viewer</a>
+                                        <a href="javascript:void(0)"
+                                            (click)="showViewer(metadata.uuid,metadata)">Viewer</a>
                                     </ng-template>
                                     <ng-template #reportNotProcessed>
                                         <span *ngIf="metadata.Reports[0].state; let state">
@@ -125,6 +125,8 @@
                                 <ul *ngIf="action[i] || metadata.report_action">
                                     <li *ngFor="let report of metadata.report_action">
                                         {{report.time}} {{report.name}}
+                                        <img class="action_img" width="13px" src="assets/img/cross.png" alt=""
+                                            (click)="deleteAction(report.id,deleteModal)" />
                                     </li>
                                     <li *ngFor="let report of report_action[i]">
                                     </li>
@@ -163,12 +165,12 @@
                         <span class="error_class" *ngIf="email_error == true">Please enter a valid email address</span>
                     </div>
                     <div class="form-group-sec date-input">
-                            <mat-form-field class="mr-sm-24" fxFlex>
-                                <input matInput [matDatepicker]="picker" class="form-control" placeholder="" autocomplete="off" name="date"
-                                    [(ngModel)]="date_picker">
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker [startAt]="date_picker" #picker></mat-datepicker>
-                            </mat-form-field>
+                        <mat-form-field class="mr-sm-24" fxFlex>
+                            <input matInput [matDatepicker]="picker" class="form-control" placeholder=""
+                                autocomplete="off" name="date" [(ngModel)]="date_picker">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker [startAt]="date_picker" #picker></mat-datepicker>
+                        </mat-form-field>
 
                     </div>
                     <div class="form-group-sec">
@@ -187,5 +189,15 @@
     </div>
     <div class="modal-footer add-patient-footer">
         <button type="button" class="btn btn-outline-dark" (click)="createPatient()">Create Patient</button>
+    </div>
+</ng-template>
+
+<ng-template #deleteModal let-modal>
+    <div class="modal-body custxt add-patient-form">
+        Are you sure?
+    </div>
+    <div class="modal-footer cus_btn add-patient-footer">
+        <button type="button" class="btn y_btn btn-outline-dark" (click)="delModal()">Yes</button>
+        <button type="button" class="btn n_btn btn-outline-dark" (click)="closeDelModal()">No</button>
     </div>
 </ng-template>

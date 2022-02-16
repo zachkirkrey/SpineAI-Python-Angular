@@ -52,6 +52,7 @@ export class StudyListComponent implements OnInit {
     save_action: boolean = false
     dob_error: boolean = false
     token: any;
+    del_action_id: any
     actionList = ['Scheduled for Clinic', 'Surgery', 'Additional Testing', 'Injections', 'Physical Therapy', 'RTC/DC', 'Referral']
     @ViewChildren('report_rows') report_rows: QueryList<any>;
     constructor(private exportService: ExportService, private modalService: NgbModal, private router: Router) {
@@ -115,16 +116,13 @@ export class StudyListComponent implements OnInit {
         }
     }
     alphabetValidate(value, name) {
-        console.log('alphabet', value, name)
         let regex = new RegExp("^[a-zA-Z0-9]*$");
         if (name == 'name') {
-            console.log('name', this.name_validate)
             this.name_validate = regex.test(value)
         } else if (name == 'mrn') {
             this.mrn_validate = regex.test(value)
         } else if (name == 'diagnosis') {
             this.diagnosis_validate = regex.test(value)
-            console.log('name', this.diagnosis_validate)
         }
         if (this.name_validate == false && name == 'name') {
             this.name_error = true
@@ -152,7 +150,6 @@ export class StudyListComponent implements OnInit {
         }
     }
     createPatient() {
-        console.log('date_picker', this.date_picker)
         if (this.email_validate == false) {
             this.email_error = true
         } else if (this.email_validate == true) {
@@ -221,7 +218,6 @@ export class StudyListComponent implements OnInit {
             if ('error' in data) {
                 this.action_error = data['error'];
             } else {
-                console.log('savePatient', data)
                 this.tableData()
                 this.fetchAction()
                 this.modalService.dismissAll()
@@ -237,6 +233,28 @@ export class StudyListComponent implements OnInit {
             this.action_error = `Data Not ${this.index_url}.`;
         }.bind(this)).always(() => {
         });
+    }
+    delModal() {
+        let delete_url = `${environment.api_url}/action/${this.del_action_id}`
+        $.ajax({
+            url: delete_url,
+            type: "Delete",
+            headers: {
+                "Authorization": 'Bearer ' + this.token
+            },
+
+        }).done(function (data) {
+            if ('error' in data) { }
+            else {
+                this.fetchAction()
+                this.action = []
+            }
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            this.action_error = `Data Not ${delete_url}.`;
+        }.bind(this)).always(() => {
+        });
+        this.tableData()
+        this.modalService.dismissAll()
     }
     closeModal() {
         this.modalService.dismissAll()
@@ -258,7 +276,6 @@ export class StudyListComponent implements OnInit {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         });
     }
-
     getDismissReason(reason: any): string {
         if (reason === ModalDismissReasons.ESC) {
             return 'by pressing ESC';
@@ -277,9 +294,7 @@ export class StudyListComponent implements OnInit {
             type: "GET",
         }).done(function (data) {
             if ('error' in data) {
-                console.log('fetch_action_error', data['error'])
             } else {
-                console.log('fetch_success_data', data)
                 let fetchArr = []
                 let filter_arr = []
                 if (data && data.length > 0) {
@@ -287,7 +302,8 @@ export class StudyListComponent implements OnInit {
                         fetchArr.push({
                             'time': moment(x.creation_datetime).format("DD/MM/YY hh:mm a"),
                             'name': x.name,
-                            'study': x.study
+                            'study': x.study,
+                            'id': x.id
                         })
                     })
                     this.index.map(x => {
@@ -296,7 +312,6 @@ export class StudyListComponent implements OnInit {
                         }
                         filter_arr.push(this.filterArr(fetchArr, obj))
                     })
-                    console.log('filter_arr', filter_arr)
                     filter_arr.map((y, i) => {
                         this.index.forEach(x => {
                             if ((y[0] != undefined && y[0].study) == x.id) {
@@ -305,8 +320,6 @@ export class StudyListComponent implements OnInit {
                         });
                     })
                 }
-
-                console.log('Index_Arr', this.index)
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${this.action_fetch_url}.`;
@@ -332,7 +345,18 @@ export class StudyListComponent implements OnInit {
         });
 
     }
+    deleteAction(id, content) {
+        this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+            this.closeResult = `Closed with: ${result}`;
+        }, (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        });
+        this.del_action_id = id
 
+    }
+    closeDelModal() {
+        this.modalService.dismissAll()
+    }
     callSaveAPI(name, time, study_id, index) {
         let formatted_time = moment(time, 'DD/MM/YY hh:mm a').format("YYYY-MM-DD HH:mm:ss");
         let req_data = {
@@ -367,14 +391,13 @@ export class StudyListComponent implements OnInit {
                 }
 
                 this.fetchAction()
-                this.action=[]
+                this.action = []
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${this.index_url}.`;
         }.bind(this)).always(() => {
         });
         this.tableData()
-        this.fetchAction()
     }
     actionValues(value, index) {
         this.index.forEach((x, i) => {
