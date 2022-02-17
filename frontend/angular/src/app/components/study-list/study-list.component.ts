@@ -53,6 +53,7 @@ export class StudyListComponent implements OnInit {
     dob_error: boolean = false
     token: any;
     del_action_id: any
+    showList: boolean = false
     actionList = ['Scheduled for Clinic', 'Surgery', 'Additional Testing', 'Injections', 'Physical Therapy', 'RTC/DC', 'Referral']
     @ViewChildren('report_rows') report_rows: QueryList<any>;
     constructor(private exportService: ExportService, private modalService: NgbModal, private router: Router) {
@@ -91,8 +92,9 @@ export class StudyListComponent implements OnInit {
             } else {
                 this.index = data;
                 this.index.forEach(x => {
-                    x.show_icon = false
+                    x.show_icon = true
                     x.creation_datetime = moment(x.creation_datetime).format('YYYY-MM-DD')
+                    x.showList = true
                 });
                 data.forEach(element => {
                     element.Reports = element.Reports.filter(report => report.type == 'PDF_SIMPLE');
@@ -300,7 +302,7 @@ export class StudyListComponent implements OnInit {
                 if (data && data.length > 0) {
                     data.map(x => {
                         fetchArr.push({
-                            'time': moment(x.creation_datetime).format("DD/MM/YY hh:mm a"),
+                            'time': moment(x.creation_datetime).format("MM/DD/YY hh:mm a"),
                             'name': x.name,
                             'study': x.study,
                             'id': x.id
@@ -384,7 +386,7 @@ export class StudyListComponent implements OnInit {
                             x.show_icon = true
                         }
                         else {
-                            x.show_icon = false
+                            x.show_icon = true
                         }
 
                     });
@@ -399,17 +401,23 @@ export class StudyListComponent implements OnInit {
         });
         this.tableData()
     }
+    showHide(id, showIndex, showList) {
+        this.index.forEach((x, i) => {
+            if (showIndex == i) {
+                x.showList = !x.showList
+            }
+         });
+    }
     actionValues(value, index) {
         this.index.forEach((x, i) => {
             if (i == index) {
                 x.show_icon = false
             }
-
         })
         this.new_index = index
         if (this.new_index === this.old_index) {
             const obj = {
-                'time': moment(new Date()).format("DD/MM/YY hh:mm a"),
+                'time': moment(new Date()).format("MM/DD/YY hh:mm a"),
                 'name': value
             }
             this.dep.push(obj);
@@ -418,7 +426,7 @@ export class StudyListComponent implements OnInit {
         } else {
             this.dep = []
             const obj = {
-                'time': moment(new Date()).format("DD/MM/YY hh:mm a"),
+                'time': moment(new Date()).format("MM/DD/YY hh:mm a"),
                 'name': value
             }
             this.dep.push(obj);

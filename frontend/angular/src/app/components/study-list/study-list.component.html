@@ -114,15 +114,15 @@
                                         {{item}}
                                     </option>
                                 </select>
+                                <img class="show-img" *ngIf="metadata.show_icon == true && metadata.report_action"
+                                    width="20px" src="assets/img/clipboard.png" alt=""
+                                    (click)="showHide(metadata.id,i,metadata.showList)" />
                                 <span *ngIf="action[i]" class="save-icon" (click)="saveAction(metadata.id,i)">
-                                    <img *ngIf="metadata.show_icon == false" width="15px" src="assets/img/save_icon.png"
-                                        alt="" />
-
-                                    <img *ngIf="metadata.show_icon == true" width="20px" src="assets/img/clipboard.png"
-                                        alt="" />
+                                    <img *ngIf="metadata.show_icon == false " width="15px"
+                                        src="assets/img/save_icon.png" alt="" />
                                 </span>
+                                <ul *ngIf="(action[i] || metadata.report_action) && metadata.showList">
 
-                                <ul *ngIf="action[i] || metadata.report_action">
                                     <li *ngFor="let report of metadata.report_action">
                                         {{report.time}} {{report.name}}
                                         <img class="action_img" width="13px" src="assets/img/cross.png" alt=""
