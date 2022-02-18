@@ -67,6 +67,9 @@ export class StudyListComponent implements OnInit {
     searchPacsNavigate(uuid) {
         this.router.navigate(['/fetch/' + uuid]);
     }
+    importMRINavigate(uuid) {
+        this.router.navigate(['/intake/' + uuid])
+    }
     tableData() {
         function sort_by_creation(x, y) {
             return -1;
@@ -406,7 +409,7 @@ export class StudyListComponent implements OnInit {
             if (showIndex == i) {
                 x.showList = !x.showList
             }
-         });
+        });
     }
     actionValues(value, index) {
         this.index.forEach((x, i) => {
