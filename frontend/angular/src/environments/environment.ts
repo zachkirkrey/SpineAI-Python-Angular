@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   api_url: 'http://localhost:8080',
   backend_api_url: 'http://localhost:8008',
+  express_api_url: 'http://localhost:8083',
   oauth_url: 'http://localhost',
   oauth_test: false,
   dicom_api_enabled: true
