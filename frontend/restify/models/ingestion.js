@@ -25,7 +25,7 @@ module.exports = function(sequelize) {
     },
     type: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true   // change true from false
     },
     started_datetime: {
       type: DataTypes.DATE
@@ -39,7 +39,7 @@ module.exports = function(sequelize) {
     },
     accession_number: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true   // change true from false
     },
     file_archive_bytes: {
       type: DataTypes.BLOB

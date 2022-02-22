@@ -64,6 +64,7 @@ class Uploader {
     // TODO(billy): Return errors to frontend on invalid inputs instead of
     // silently using default.
     form.on('field', (name, value) => {
+      console.log('value',value)
       if (name == 'projectName') {
         metadata.name = value;
       } else if (name == 'age' && !isNaN(Number(value))) {
