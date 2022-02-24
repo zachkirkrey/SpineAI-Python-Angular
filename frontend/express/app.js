@@ -124,8 +124,7 @@ if (config.get('webserver.https.enabled')) {
         }, 30000);
     });
 } else {
-    //const port = normalizePort(process.env.EXPRESS_PORT || '80');
-    const port = normalizePort('8083');
+    const port = normalizePort(process.env.EXPRESS_PORT || '80');
     server.listen(port, () => {
         debug('Listening on port %o', port);
         console.log(`Server started on port ${port}!`);
