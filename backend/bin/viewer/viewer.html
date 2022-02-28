@@ -929,7 +929,7 @@
                 text += "<li>";
                 for (var x in myObject) {
                     if (x == 'creation_datetime') {
-                        text += (moment(myObject[x]).format("DD/MM/YY hh:mm a") + " ");
+                        text += (moment(myObject[x]).format("MM/DD/YY hh:mm a") + " ");
                     } else if (x == 'name') {
                         text += (myObject[x] + " ");
                     } else { }
@@ -970,7 +970,7 @@
                 //displayArrayObjects(action_arr)
                 let name = data.name;
                 let creation_datetime = data.creation_datetime;
-                let new_element = name+" "+(moment(creation_datetime).format("DD/MM/YY hh:mm a"));
+                let new_element = name+" "+(moment(creation_datetime).format("MM/DD/YY hh:mm a"));
                 var li = document.createElement("li");
                 li.appendChild(document.createTextNode(new_element));
                 document.getElementById("actionList").appendChild(li);

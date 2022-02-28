@@ -54,6 +54,7 @@ export class StudyListComponent implements OnInit {
     token: any;
     del_action_id: any
     showList: boolean = false
+    action_arr=[]
     actionList = ['Scheduled for Clinic', 'Surgery', 'Additional Testing', 'Injections', 'Physical Therapy', 'RTC/DC', 'Referral']
     @ViewChildren('report_rows') report_rows: QueryList<any>;
     constructor(private exportService: ExportService, private modalService: NgbModal, private router: Router) {
@@ -109,6 +110,7 @@ export class StudyListComponent implements OnInit {
         }.bind(this)).always(() => {
             this.index_complete = true;
         });
+        this.action_arr=[]
     }
 
     emailValidate(value) {
@@ -330,11 +332,14 @@ export class StudyListComponent implements OnInit {
             this.action_error = `Data Not ${this.action_fetch_url}.`;
         }.bind(this)).always(() => {
         });
+        this.action_arr=[]
     }
 
     showViewer(id, data) {
-        window.location.href = `${this.api_url}/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${id}&${this.token}`
-    }
+        window.open(
+            `${this.api_url}/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${id}&${this.token}`, "_blank")
+      }
+
     filterArr(arr, criteria) {
         return arr.filter(function (obj) {
             return Object.keys(criteria).every(function (c) {
@@ -344,7 +349,7 @@ export class StudyListComponent implements OnInit {
     }
     saveAction(id, index) {
         let report_Arr = []
-        report_Arr = this.report_action[index]
+        report_Arr = this.action_arr
         report_Arr.forEach(element => {
             this.callSaveAPI(element.name, element.time, id, index)
         });
@@ -363,7 +368,7 @@ export class StudyListComponent implements OnInit {
         this.modalService.dismissAll()
     }
     callSaveAPI(name, time, study_id, index) {
-        let formatted_time = moment(time, 'DD/MM/YY hh:mm a').format("YYYY-MM-DD HH:mm:ss");
+        let formatted_time = moment(time).format("YYYY-MM-DD HH:mm:ss");
         let req_data = {
             "name": name,
             "creation_datetime": formatted_time,
@@ -381,7 +386,6 @@ export class StudyListComponent implements OnInit {
             if ('error' in data) {
                 this.action_error = data['error'];
             } else {
-                console.log('callSaveAPI', data)
                 let obj = data
                 if (obj && Object.keys(obj).length != 0 && Object.getPrototypeOf(obj) === Object.prototype) {
                     this.index.forEach((x, i) => {
@@ -397,12 +401,14 @@ export class StudyListComponent implements OnInit {
 
                 this.fetchAction()
                 this.action = []
+
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${this.index_url}.`;
         }.bind(this)).always(() => {
         });
         this.tableData()
+        this.action_arr = []
     }
     showHide(id, showIndex, showList) {
         this.index.forEach((x, i) => {
@@ -412,6 +418,12 @@ export class StudyListComponent implements OnInit {
         });
     }
     actionValues(value, index) {
+
+        const object = {
+            'time': moment(new Date()).format("MM/DD/YY hh:mm a"),
+            'name': value
+        }
+        this.action_arr.push(object)
         this.index.forEach((x, i) => {
             if (i == index) {
                 x.show_icon = false

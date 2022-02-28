@@ -11,6 +11,7 @@ import { Observable, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
+//const api_url = environment.express_api_url;
 const api_url = environment.api_url;
 const url = api_url+'/upload';
 
