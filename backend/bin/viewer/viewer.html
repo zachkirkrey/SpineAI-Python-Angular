@@ -522,7 +522,7 @@
                     <option value="RTC/DC">RTC/DC</option>
                     <option value="Referral">Referral</option>
                 </select>
-                <div id="show" class="selbtn" onclick="showHidefn('show')"> Show History</div>
+                <div id="show" class="selbtn" onclick="showHidefn('show')" style="display: none;"> Show History</div>
                 <div id="hide" class="selbtn" onclick="showHidefn('hide')"> Hide History</div>
             </div>
             <ul id="actionList" class="r_tl">
@@ -789,14 +789,14 @@
             var threshold_percentage = Math.round(threshold / score_max * 100);
             document.getElementById("surgery_id").style.width = threshold_percentage + "%";
             document.getElementById('actionList').style.display = 'block';
-
+            reportsCall()
 
             var viewer_obj = {}
             let sPageURL = window.location.search.substring(1);
             let sURLVariables = sPageURL.split('&')
             let token = sURLVariables[4]
             window.localStorage.setItem('token', token)
-            let index_url = `http://localhost:8080/studies?scope=includeActions`;
+            let index_url = `https://demo.spineai.com/api/studies?scope=includeActions`;
             $.ajax({
                 url: index_url,
                 headers: {
@@ -805,11 +805,24 @@
                 dataType: 'json',
             }).done(function (data) {
                 let obj = data
-                console.log('obj', obj)
+
+                let arr =[]
                 if (data.length > 0) {
-                    let patientCount = data.length
+                   let report_obj = JSON.parse(window.localStorage.getItem('report_obj'))
+                   console.log('before_obj', obj,' ',report_obj)
+                   report_obj.map(x =>{
+                     obj.map(y =>{
+                      if(x.uuid == y.uuid){
+                        if(x.Reports && x.Reports!= undefined && x.Reports.length>0){
+                            arr.push(y)
+                        }
+                      }
+                    })
+                   })
+                   console.log('obj',arr)
+                    let patientCount = arr.length
                     window.localStorage.setItem('patientCount', patientCount)
-                    window.localStorage.setItem('viewer_obj', JSON.stringify(obj))
+                    window.localStorage.setItem('viewer_obj', JSON.stringify(arr))
                 }
 
             }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
@@ -818,7 +831,7 @@
             });
 
             let id = sURLVariables[3].replace("Studies.uuid=", "")
-            let patient_url = `http://localhost:8080/study/${id}?scope=includeActions`;
+            let patient_url = `https://demo.spineai.com/api/study/${id}?scope=includeActions`;
             $.ajax({
                 url: patient_url,
                 headers: {
@@ -849,7 +862,7 @@
         function actionCall(id) {
             var viewer_obj = {}
             let token = window.localStorage.getItem('token')
-            let patient_url = `http://localhost:8080/study/${id}?scope=includeActions`;
+            let patient_url = `https://demo.spineai.com/api/study/${id}?scope=includeActions`;
             $.ajax({
                 url: patient_url,
                 headers: {
@@ -859,6 +872,26 @@
             }).done(function (data) {
                 viewer_obj = data
                 window.localStorage.setItem('obj', JSON.stringify(viewer_obj))
+            }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+                this.index_error = `Could not fetch search index from ${patient_url}.`;
+            }.bind(this)).always(() => {
+            });
+            return
+        }
+        function reportsCall() {
+            var report_obj = {}
+            let token = window.localStorage.getItem('token')
+            let patient_url = `https://demo.spineai.com/api/studies?count=1000&scope=includeReports`;
+            $.ajax({
+                url: patient_url,
+                headers: {
+                    "Authorization": 'Bearer ' + token
+                },
+                dataType: 'json',
+            }).done(function (data) {
+                report_obj = data
+                console.log('reportCall',report_obj)
+                window.localStorage.setItem('report_obj', JSON.stringify(report_obj))
             }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
                 this.index_error = `Could not fetch search index from ${patient_url}.`;
             }.bind(this)).always(() => {
@@ -898,7 +931,7 @@
             let viewer_obj = index[data_index]
             window.localStorage.setItem('data_index', data_index)
             let token = window.localStorage.getItem('token')
-            window.location.href = `http://localhost:8080/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${viewer_obj.uuid}&${token}`
+            window.location.href = `https://demo.spineai.com/api/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${viewer_obj.uuid}&${token}`
         }
         function nextItem() {
             var data_index = 0;
@@ -919,7 +952,7 @@
             let viewer_obj = index[data_index]
             window.localStorage.setItem('data_index', data_index)
             let token = window.localStorage.getItem('token')
-            window.location.href = `http://localhost:8080/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${viewer_obj.uuid}&${token}`
+            window.location.href = `https://demo.spineai.com/api/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${viewer_obj.uuid}&${token}`
         }
         function displayArrayObjects(arrayObjects) {
             let len = arrayObjects.length, text = "";
@@ -952,7 +985,7 @@
                 "creation_datetime": datetime,
                 "study": parseInt(id)
             }
-            let action_url = 'http://localhost:8080/action'
+            let action_url = 'https://demo.spineai.com/api/action'
             $.ajax({
                 url: action_url,
                 dataType: 'json',

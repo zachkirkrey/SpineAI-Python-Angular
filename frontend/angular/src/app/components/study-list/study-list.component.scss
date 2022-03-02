@@ -74,7 +74,7 @@
      margin-right:200px;
     }
   }
- 
+
 }
 .export-wrap mat-checkbox#mat-checkbox-1 {
   color: #333;
@@ -88,4 +88,19 @@ div#reports_table_wrapper>.row:nth-child(1) div {
   width: auto;
   max-width: initial;
   flex: initial;
+}
+
+.form-group-sec {
+    margin-top: 20px;
+    width: 48% !important;
+}
+
+
+@media screen and (max-width:770px){
+
+    .form-group-sec {
+        margin-top: 10px;
+        width: 100% !important;
+    }
+
 }
