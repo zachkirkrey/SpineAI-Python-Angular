@@ -776,6 +776,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/2.13.0/moment.min.js"></script>
+    <script type="text/javascript" src="./environment.js"></script>
 
     <script type="text/javascript">
         (function ($) {
@@ -789,6 +790,7 @@
             var threshold_percentage = Math.round(threshold / score_max * 100);
             document.getElementById("surgery_id").style.width = threshold_percentage + "%";
             document.getElementById('actionList').style.display = 'block';
+            console.log('API_URL',environment.api_url)
             reportsCall()
 
             var viewer_obj = {}
@@ -796,7 +798,7 @@
             let sURLVariables = sPageURL.split('&')
             let token = sURLVariables[4]
             window.localStorage.setItem('token', token)
-            let index_url = `https://demo.spineai.com/api/studies?scope=includeActions`;
+            let index_url = `${environment.api_url}/studies?scope=includeActions`;
             $.ajax({
                 url: index_url,
                 headers: {
@@ -809,8 +811,7 @@
                 let arr =[]
                 if (data.length > 0) {
                    let report_obj = JSON.parse(window.localStorage.getItem('report_obj'))
-                   console.log('before_obj', obj,' ',report_obj)
-                   report_obj.map(x =>{
+                    report_obj.map(x =>{
                      obj.map(y =>{
                       if(x.uuid == y.uuid){
                         if(x.Reports && x.Reports!= undefined && x.Reports.length>0){
@@ -819,7 +820,7 @@
                       }
                     })
                    })
-                   console.log('obj',arr)
+                   console.log('arr',arr)
                     let patientCount = arr.length
                     window.localStorage.setItem('patientCount', patientCount)
                     window.localStorage.setItem('viewer_obj', JSON.stringify(arr))
@@ -831,7 +832,7 @@
             });
 
             let id = sURLVariables[3].replace("Studies.uuid=", "")
-            let patient_url = `https://demo.spineai.com/api/study/${id}?scope=includeActions`;
+            let patient_url = `${environment.api_url}/study/${id}?scope=includeActions`;
             $.ajax({
                 url: patient_url,
                 headers: {
@@ -862,7 +863,7 @@
         function actionCall(id) {
             var viewer_obj = {}
             let token = window.localStorage.getItem('token')
-            let patient_url = `https://demo.spineai.com/api/study/${id}?scope=includeActions`;
+            let patient_url = `${environment.api_url}/study/${id}?scope=includeActions`;
             $.ajax({
                 url: patient_url,
                 headers: {
@@ -881,7 +882,7 @@
         function reportsCall() {
             var report_obj = {}
             let token = window.localStorage.getItem('token')
-            let patient_url = `https://demo.spineai.com/api/studies?count=1000&scope=includeReports`;
+            let patient_url = `${environment.api_url}/studies?count=1000&scope=includeReports`;
             $.ajax({
                 url: patient_url,
                 headers: {
@@ -890,7 +891,6 @@
                 dataType: 'json',
             }).done(function (data) {
                 report_obj = data
-                console.log('reportCall',report_obj)
                 window.localStorage.setItem('report_obj', JSON.stringify(report_obj))
             }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
                 this.index_error = `Could not fetch search index from ${patient_url}.`;
@@ -915,7 +915,6 @@
             let obj = JSON.parse(window.localStorage.getItem('viewer_obj'))
             var index = []
             index = obj
-            console.log('index', index)
             if (window.localStorage.getItem('data_index') && (window.localStorage.getItem('data_index') != null || window.localStorage.getItem('data_index') != 'null')) {
                 data_index = window.localStorage.getItem('data_index')
                 console.log('localStorage', data_index)
@@ -931,7 +930,7 @@
             let viewer_obj = index[data_index]
             window.localStorage.setItem('data_index', data_index)
             let token = window.localStorage.getItem('token')
-            window.location.href = `https://demo.spineai.com/api/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${viewer_obj.uuid}&${token}`
+            window.location.href = `${environment.api_url}/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${viewer_obj.uuid}&${token}`
         }
         function nextItem() {
             var data_index = 0;
@@ -952,7 +951,7 @@
             let viewer_obj = index[data_index]
             window.localStorage.setItem('data_index', data_index)
             let token = window.localStorage.getItem('token')
-            window.location.href = `https://demo.spineai.com/api/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${viewer_obj.uuid}&${token}`
+            window.location.href = `${environment.api_url}/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${viewer_obj.uuid}&${token}`
         }
         function displayArrayObjects(arrayObjects) {
             let len = arrayObjects.length, text = "";
@@ -985,7 +984,7 @@
                 "creation_datetime": datetime,
                 "study": parseInt(id)
             }
-            let action_url = 'https://demo.spineai.com/api/action'
+            let action_url = `${environment.api_url}/action`
             $.ajax({
                 url: action_url,
                 dataType: 'json',
