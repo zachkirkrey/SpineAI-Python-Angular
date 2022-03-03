@@ -63,7 +63,6 @@ export class StudyListComponent implements OnInit {
     ngOnInit() {
         this.section = 'Hide patient name';
         this.tableData()
-        this.fetchAction()
     }
     searchPacsNavigate(uuid) {
         this.router.navigate(['/fetch/' + uuid]);
@@ -98,12 +97,13 @@ export class StudyListComponent implements OnInit {
                 this.index.forEach(x => {
                     x.show_icon = true
                     x.creation_datetime = moment(x.creation_datetime).format('YYYY-MM-DD')
-                    x.showList = true
+                    x.showList = false
                 });
                 data.forEach(element => {
                     element.Reports = element.Reports.filter(report => report.type == 'PDF_SIMPLE');
                     element.Reports.sort(sort_by_creation);
                 });
+                this.fetchAction()
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.index_error = `Could not fetch search index from ${this.index_url}.`;
@@ -314,11 +314,14 @@ export class StudyListComponent implements OnInit {
                         })
                     })
                     this.index.map(x => {
-                        let obj = {
+                        console.log('**')
+                        let object = {
                             'study': x.id
                         }
-                        filter_arr.push(this.filterArr(fetchArr, obj))
+                        filter_arr.push(this.filterArr(fetchArr, object))
                     })
+
+                    console.log('filter_arr',filter_arr)
                     filter_arr.map((y, i) => {
                         this.index.forEach(x => {
                             if ((y[0] != undefined && y[0].study) == x.id) {

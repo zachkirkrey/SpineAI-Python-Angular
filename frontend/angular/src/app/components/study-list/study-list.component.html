@@ -138,9 +138,9 @@
                                 <ul *ngIf="(action[i] || metadata.report_action) && metadata.showList">
 
                                     <li *ngFor="let report of metadata.report_action">
-                                        {{report.time}} {{report.name}}
                                         <img class="action_img" width="13px" src="assets/img/cross.png" alt=""
                                             (click)="deleteAction(report.id,deleteModal)" />
+                                        {{report.time}} {{report.name}}
                                     </li>
                                     <li *ngFor="let report of report_action[i]">
                                     </li>
