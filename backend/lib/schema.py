@@ -137,7 +137,7 @@ class Study(db.Entity, StudyMixin):
     phone_number = Required(int)
     diagnosis = Required(str)
     created_by = Optional(bool, default=False)
-
+    appointment_date = Optional(datetime)
     classifications = Set('Classification')
     segmentations = Set('Segmentation')
     canal_segmentations = Set('CanalSegmentation')

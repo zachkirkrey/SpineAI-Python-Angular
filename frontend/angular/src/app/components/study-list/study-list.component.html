@@ -52,27 +52,50 @@
 
                 </div>
 
+                <!--Column Checkbox DropDown-->
+                  <div id="list1" class="dropdown-check-list" tabindex="100">
+                    <span class="anchor" (click)="colDropdown(colShow)">Columns</span>
+                    <ul class="items" *ngIf="colShow == true">
+                        <div id='control_sh' (click)="showHideTable()">
+                      <li><input type="checkbox" class="hide_show" />MRN # </li>
+                      <li><input type="checkbox" class="hide_show" />APPT DATE</li>
+                      <li><input type="checkbox" class="hide_show"/>CREATED DATE </li>
+                      <li><input type="checkbox" class="hide_show" />PATIENT NAME </li>
+                      <li><input type="checkbox" class="hide_show" />IMPORT ID </li>
+                      <li><input type="checkbox" class="hide_show" />REPORT </li>
+                      <li><input type="checkbox" class="hide_show" />RECOMMENDATION</li>
+                      <li><input type="checkbox" class="hide_show" />ACTION</li>
+                      </div>
+                    </ul>
+                  </div>
+                <!--Column DropDown-->
                 <table id="reports_table" class="table table-striped table-bordered"
                     *ngIf="index_complete && !index_error">
                     <thead>
                         <tr *ngIf="isShown == true">
-                            <th>Created</th>
-                            <th>Patient Name</th>
-                            <th>Import Id</th>
-                            <th>Report</th>
-                            <th>Recommendation</th>
-                            <th class="action-report">Action</th>
+                            <th>MRN #</th>
+                            <th>APPT DATE</th>
+                            <th>CREATED DATE</th>
+                            <th>PATIENT NAME</th>
+                            <th>IMPORT ID</th>
+                            <th>REPORT</th>
+                            <th>RECOMMENDATION</th>
+                            <th class="action-report">ACTION</th>
                         </tr>
                         <tr *ngIf="isShown == false">
-                            <th>Created</th>
-                            <th>Import Id</th>
-                            <th>Report</th>
-                            <th>Recommendation</th>
-                            <th class="action-report">Action</th>
+                            <th>MRN #</th>
+                            <th>APPT DATE</th>
+                            <th>CREATED DATE</th>
+                            <th>IMPORT ID</th>
+                            <th>REPORT</th>
+                            <th>RECOMMENDATION</th>
+                            <th class="action-report">ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr #report_rows *ngFor="let metadata of index; let i = index" [attr.data-index]="i">
+                            <td>{{metadata.mrn}}</td>
+                            <td>{{metadata.appointment_date == 'Invalid date'? '':metadata.appointment_date}}</td>
                             <td>{{ metadata.creation_datetime }}</td>
                             <td *ngIf="isShown == true">{{ metadata.patient_name }}</td>
                             <td>{{ metadata.name }}</td>
@@ -97,11 +120,7 @@
                                 </ng-template>
                                 <ng-template #noReport>
                                     <!--new patient addition-->
-                                    <div class="mri">
-                                        Add MRI from:
-                                    </div>
-
-                                    <div>
+                                   <div>
                                     <a class="search-pacs" (click)="searchPacsNavigate(metadata.uuid)">
                                         <!--<svg
                                             xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -196,6 +215,16 @@
                     <div class="form-group-sec">
                         <input id="diagnosis" class="form-control" placeholder="Diagnosis" name="diagnosis"
                             (change)="alphabetValidate(diagnosis,'diagnosis')" [(ngModel)]="diagnosis">
+                    </div>
+
+                    <div class="form-group-sec date-input">
+                        <mat-form-field class="mr-sm-24" fxFlex>
+                            <input matInput [matDatepicker]="appt_picker" class="form-control" placeholder="Appointment Date"
+                                autocomplete="off" name="appt_picker" [(ngModel)]="appt_date">
+                            <mat-datepicker-toggle matSuffix [for]="appt_picker"></mat-datepicker-toggle>
+                            <mat-datepicker [startAt]="appt_date" #appt_picker></mat-datepicker>
+                        </mat-form-field>
+
                     </div>
                 </div>
             </div>

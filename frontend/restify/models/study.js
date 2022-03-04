@@ -77,6 +77,9 @@ module.exports = function(sequelize) {
     },
     created_by: {
       type: DataTypes.BOOLEAN
+    },
+    appointment_date:{
+        type: DataTypes.DATE,
     }
   });
 };

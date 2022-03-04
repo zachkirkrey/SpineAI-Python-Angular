@@ -6,6 +6,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import { Router, NavigationEnd } from '@angular/router';
 
+
 @Component({
     selector: 'app-study-list',
     templateUrl: './study-list.component.html',
@@ -25,7 +26,6 @@ export class StudyListComponent implements OnInit {
     index_error: string;
     action_error: string;
     section: string = '';
-    isShown: boolean = true;
     visibility: Boolean = true;
     action = []
     report_action = []
@@ -37,6 +37,7 @@ export class StudyListComponent implements OnInit {
     mrn: any;
     email: any;
     date_picker: any;
+    appt_date: any;
     telephone: any;
     diagnosis: any;
     email_error: boolean = false
@@ -54,7 +55,10 @@ export class StudyListComponent implements OnInit {
     token: any;
     del_action_id: any
     showList: boolean = false
-    action_arr=[]
+    action_arr = []
+    columnValue: any
+    isShown: boolean = true
+    colShow: boolean = false
     actionList = ['Scheduled for Clinic', 'Surgery', 'Additional Testing', 'Injections', 'Physical Therapy', 'RTC/DC', 'Referral']
     @ViewChildren('report_rows') report_rows: QueryList<any>;
     constructor(private exportService: ExportService, private modalService: NgbModal, private router: Router) {
@@ -63,6 +67,28 @@ export class StudyListComponent implements OnInit {
     ngOnInit() {
         this.section = 'Hide patient name';
         this.tableData()
+    }
+    showHideTable(){
+        var table = $('#reports_table').DataTable();
+        $(".hide_show").on("change", function () {
+            var hide = $(this).is(":checked");
+            var all_ch = $(".hide_show:checked").length == $(".hide_show").length;
+            var ti = $(this).index(".hide_show");
+            $('#reports_table tr').each(function () {
+                if (hide) {
+                    $('td:eq(' + ti + ')', this).hide(100);
+                    $('th:eq(' + ti + ')', this).hide(100);
+                } else {
+                    $('td:eq(' + ti + ')', this).show(100);
+                    $('th:eq(' + ti + ')', this).show(100);
+                }
+            });
+
+        });
+    }
+    colDropdown(value) {
+        console.log('colShow', value)
+        this.colShow = !value
     }
     searchPacsNavigate(uuid) {
         this.router.navigate(['/fetch/' + uuid]);
@@ -98,6 +124,9 @@ export class StudyListComponent implements OnInit {
                     x.show_icon = true
                     x.creation_datetime = moment(x.creation_datetime).format('YYYY-MM-DD')
                     x.showList = false
+                    if(x.appointment_date != null){
+                    x.appointment_date = moment(x.appointment_date).format('YYYY-MM-DD')
+                    }
                 });
                 data.forEach(element => {
                     element.Reports = element.Reports.filter(report => report.type == 'PDF_SIMPLE');
@@ -110,7 +139,11 @@ export class StudyListComponent implements OnInit {
         }.bind(this)).always(() => {
             this.index_complete = true;
         });
-        this.action_arr=[]
+        this.action_arr = []
+    }
+
+    changeColumn(value) {
+        console.log('value', value)
     }
 
     emailValidate(value) {
@@ -211,7 +244,8 @@ export class StudyListComponent implements OnInit {
             "email": this.email,
             "date_of_birth": this.date_picker,
             "phone_number": this.telephone,
-            "diagnosis": this.diagnosis
+            "diagnosis": this.diagnosis,
+            "appointment_date": this.appt_date
         }
         $.ajax({
             url: this.patient_save_url,
@@ -234,6 +268,7 @@ export class StudyListComponent implements OnInit {
                 this.diagnosis = ''
                 this.date_picker = ''
                 this.telephone = ''
+                this.appt_date = ''
 
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
@@ -271,6 +306,7 @@ export class StudyListComponent implements OnInit {
         this.diagnosis = ''
         this.date_picker = ''
         this.telephone = ''
+        this.appt_date = ''
         this.email_error = false
         this.number_error = false
         this.dob_error = false
@@ -321,7 +357,7 @@ export class StudyListComponent implements OnInit {
                         filter_arr.push(this.filterArr(fetchArr, object))
                     })
 
-                    console.log('filter_arr',filter_arr)
+                    console.log('filter_arr', filter_arr)
                     filter_arr.map((y, i) => {
                         this.index.forEach(x => {
                             if ((y[0] != undefined && y[0].study) == x.id) {
@@ -335,13 +371,13 @@ export class StudyListComponent implements OnInit {
             this.action_error = `Data Not ${this.action_fetch_url}.`;
         }.bind(this)).always(() => {
         });
-        this.action_arr=[]
+        this.action_arr = []
     }
 
     showViewer(id, data) {
         window.open(
             `${this.api_url}/reports?as=HTML&type=HTML_VIEWER&sort=-creation_datetime&Studies.uuid=${id}&${this.token}`, "_blank")
-      }
+    }
 
     filterArr(arr, criteria) {
         return arr.filter(function (obj) {
@@ -421,8 +457,7 @@ export class StudyListComponent implements OnInit {
         });
     }
     actionValues(value, index) {
-
-        const object = {
+      const object = {
             'time': moment(new Date()).format("MM/DD/YY hh:mm a"),
             'name': value
         }

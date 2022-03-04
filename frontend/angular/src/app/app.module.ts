@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
+import { MatSelectModule } from '@angular/material/select'
 
 
 import { NgPipesModule } from 'ngx-pipes';
@@ -87,6 +88,7 @@ const appRoutes: Routes = [
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
+        MatSelectModule,
         RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' })
     ],
     providers: [LegacyReportData],
