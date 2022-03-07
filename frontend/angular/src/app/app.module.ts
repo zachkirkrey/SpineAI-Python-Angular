@@ -27,15 +27,12 @@ import { IntakeFormComponent } from './components/intake-form/intake-form.compon
 import { LegacyReportComponent, LegacyReportData, SafePipe } from './components/legacy-report/legacy-report.component';
 import { StudyListComponent } from './components/study-list/study-list.component';
 
-
-
-
-
 import * as $ from 'jquery';
 import { FetchFormComponent } from './components/fetch-form/fetch-form.component';
 import { IngestionListComponent } from './components/fetch-form/ingestion-list/ingestion-list.component';
 import { LoginComponent } from './components/login/login.component';
 import { ViewerComponent } from './components/viewer/viewer.component';
+import { PatientComponentComponent } from './components/patient-component/patient-component.component';
 
 const appRoutes: Routes = [
     { path: 'debug', component: DebugInfoComponent, data: { header: true } },
@@ -49,6 +46,7 @@ const appRoutes: Routes = [
     { path: 'fetch/:fetch_id', component: FetchFormComponent, data: { header: true } },
     { path: 'fetch', component: FetchFormComponent, data: { header: true } },
     { path: 'viewer', component: ViewerComponent,data: { header: false }  },
+    { path: 'patient/:id', component: PatientComponentComponent,data: { header: true }  },
     {
         path: '**',
         redirectTo: '/login_pass',
@@ -70,6 +68,7 @@ const appRoutes: Routes = [
         StudyListComponent,
         LoginComponent,
         ViewerComponent,
+        PatientComponentComponent,
 
     ],
     imports: [
