@@ -1,0 +1,126 @@
+<form>
+    <div class="form-group">
+        <div class="add-patient-con">
+            <div class="form-group-sec">
+                <label>Patient Name:</label>
+                <input id="name" class="form-control" placeholder="" (change)="alphabetValidate(name,'name')"
+                    name="name" [(ngModel)]="name" [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="form-group-sec">
+                <label>MRN:</label>
+                <input id="mrn" class="form-control" placeholder="" name="mrn" (change)="alphabetValidate(mrn,'mrn')"
+                    [(ngModel)]="mrn" [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="form-group-sec">
+                <label>Email:</label>
+                <input id="email" type="email" (change)="emailValidate(email)" class="form-control" placeholder=""
+                    name="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
+                <span class="error_class" *ngIf="email_error == true">Please enter a valid email address</span>
+            </div>
+            <div class="form-group-sec date-input">
+                <label>DOB:</label>
+                <mat-form-field class="mr-sm-24" fxFlex>
+                    <input matInput [matDatepicker]="picker" class="form-control" placeholder="" autocomplete="off"
+                        name="date" [(ngModel)]="date_picker" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker [startAt]="date_picker" #picker></mat-datepicker>
+                </mat-form-field>
+
+            </div>
+            <div class="form-group-sec">
+                <label>Phone:</label>
+                <input id="telephone" class="form-control" placeholder="" name="telephone"
+                    (change)="numberValidate(telephone)" [(ngModel)]="telephone" [ngModelOptions]="{standalone: true}">
+                <span class="error_class" *ngIf="number_error == true">Please enter a valid Telephone
+                    Number</span>
+            </div>
+            <div class="form-group-sec">
+                <label>Diagnosis:</label>
+                <input id="diagnosis" class="form-control" placeholder="" name="diagnosis"
+                    (change)="alphabetValidate(diagnosis,'diagnosis')" [(ngModel)]="diagnosis"
+                    [ngModelOptions]="{standalone: true}">
+            </div>
+
+            <div class="form-group-sec date-input">
+                <label>Appointment Date:</label>
+                <mat-form-field class="mr-sm-24" fxFlex>
+                    <input matInput [matDatepicker]="appt_picker" class="form-control" placeholder="" autocomplete="off"
+                        name="appt_picker" [(ngModel)]="appt_date" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="appt_picker"></mat-datepicker-toggle>
+                    <mat-datepicker [startAt]="appt_date" #appt_picker></mat-datepicker>
+                </mat-form-field>
+
+            </div>
+            <div class="form-group-sec">
+                <label>Recommendation:</label>
+                <div class="recommendation_cell" [attr.data-study-id]="recommendation"></div>
+            </div>
+            <div class="form-group-sec">
+                <label>Report:</label>
+                <ng-template [ngIf]="report!= undefined && report.length" [ngIfElse]="noReport">
+                    <ng-template [ngIf]="report[0].state == 'PROCESSED'" [ngIfElse]="reportNotProcessed">
+                        <a href="/study/{{ metadata.uuid }}">Report</a>&nbsp;&nbsp;&#124;&nbsp;
+                        <a href="javascript:void(0)" (click)="showViewer(metadata.uuid,metadata)">Viewer</a>
+                    </ng-template>
+                    <ng-template #reportNotProcessed>
+                        <span *ngIf="report[0].state; let state">
+                            <ng-template [ngIf]="state == 'NEW'" [ngIfElse]="reportStateElse">
+                                UNPROCESSED
+                            </ng-template>
+                            <ng-template #reportStateElse>
+                                {{ state }}
+                            </ng-template>
+                        </span>
+                    </ng-template>
+                </ng-template>
+                <ng-template #noReport>
+                    <!--new patient addition-->
+                    <div>
+                        <a class="search-pacs" (click)="searchPacsNavigate(metadata.uuid)">
+                            PACS
+                        </a>
+                        |
+                        <a class="search-pacs" (click)="importMRINavigate(metadata.uuid)">
+                            Import
+                        </a>
+                    </div>
+                    <!--new patient addition-->
+                </ng-template>
+
+            </div>
+            <div class="form-group-sec">
+                <label>Actions:</label>
+                <select [(ngModel)]="action[i]" name="action" (change)="actionValues(action[i])">
+                    <option *ngFor="let item of actionList" value={{item}}>
+                        {{item}}
+                    </option>
+                </select>
+                <img class="show-img" *ngIf="show_icon == true && report_actions.length >0" width="20px"
+                    src="assets/img/clipboard.png" alt="" (click)="showHide()" />
+                <span *ngIf="action[i]" class="save-icon" (click)="saveAction(metadata.id)">
+                    <img *ngIf="show_icon == false " width="15px" src="assets/img/save_icon.png" alt="" />
+                </span>
+
+                <ul *ngIf="(action[i] || report_actions) && showList">
+
+                    <li *ngFor="let report of report_actions">
+                        <img class="action_img" width="13px" src="assets/img/cross.png" alt=""
+                            (click)="deleteAction(report.id,deleteModal)" />
+                        {{report.time}} {{report.name}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <button type="button" (click)="updatePatient()">Save Patient</button>
+</form>
+
+<ng-template #deleteModal let-modal>
+    <div class="modal-body custxt add-patient-form">
+        Are you sure?
+    </div>
+    <div class="modal-footer cus_btn add-patient-footer">
+        <button type="button" class="btn y_btn btn-outline-dark" (click)="delModal()">Yes</button>
+        <button type="button" class="btn n_btn btn-outline-dark" (click)="closeDelModal()">No</button>
+    </div>
+</ng-template>

@@ -59,6 +59,14 @@ export class StudyListComponent implements OnInit {
     columnValue: any
     isShown: boolean = true
     colShow: boolean = false
+    createdCheckbox: boolean = true
+    importCheckBox: boolean = true
+    mrnCheckBox: boolean = false
+    aptCheckBox: boolean = false
+    nameCheckBox: boolean = false
+    reportCheckBox: boolean = false
+    recommnCheckBox: boolean = false
+    actionCheckBox: boolean = false
     actionList = ['Scheduled for Clinic', 'Surgery', 'Additional Testing', 'Injections', 'Physical Therapy', 'RTC/DC', 'Referral']
     @ViewChildren('report_rows') report_rows: QueryList<any>;
     constructor(private exportService: ExportService, private modalService: NgbModal, private router: Router) {
@@ -66,26 +74,33 @@ export class StudyListComponent implements OnInit {
     }
     ngOnInit() {
         this.section = 'Hide patient name';
-        this.tableData()
+        this.tableData();
     }
-    showHideTable(){
-        var table = $('#reports_table').DataTable();
-        $(".hide_show").on("change", function () {
-            var hide = $(this).is(":checked");
-            var all_ch = $(".hide_show:checked").length == $(".hide_show").length;
-            var ti = $(this).index(".hide_show");
-            $('#reports_table tr').each(function () {
-                if (hide) {
-                    $('td:eq(' + ti + ')', this).hide(100);
-                    $('th:eq(' + ti + ')', this).hide(100);
-                } else {
-                    $('td:eq(' + ti + ')', this).show(100);
-                    $('th:eq(' + ti + ')', this).show(100);
-                }
-            });
+    hide_show_table(col_name, value) {
+        let check = $('#' + col_name).is(":checked");
+        console.log('col_name', col_name, ' ', check)
+        var checkbox_val = (document.getElementById(col_name) as HTMLTextAreaElement).value;
+        console.log('checkbox_val', checkbox_val)
+        if (value == true) {
+            var all_col = document.getElementsByClassName(col_name);
+            console.log('all_col', all_col)
+            for (var i = 0; i < all_col.length; i++) {
+                (all_col[i] as HTMLElement).style.display = "table-cell";
+            }
+            document.getElementById(col_name + "_head").style.display = "table-cell";
+            (document.getElementById(col_name) as HTMLTextAreaElement).value = "hide";
+        }
+        else {
+            var all_col = document.getElementsByClassName(col_name);
+            console.log('all_col', all_col)
+            for (var i = 0; i < all_col.length; i++) {
+                (all_col[i] as HTMLElement).style.display = "none";
+            }
+            document.getElementById(col_name + "_head").style.display = "none";
+            (document.getElementById(col_name) as HTMLTextAreaElement).value = "show";
+        }
+    }
 
-        });
-    }
     colDropdown(value) {
         console.log('colShow', value)
         this.colShow = !value
@@ -124,8 +139,8 @@ export class StudyListComponent implements OnInit {
                     x.show_icon = true
                     x.creation_datetime = moment(x.creation_datetime).format('YYYY-MM-DD')
                     x.showList = false
-                    if(x.appointment_date != null){
-                    x.appointment_date = moment(x.appointment_date).format('YYYY-MM-DD')
+                    if (x.appointment_date != null) {
+                        x.appointment_date = moment(x.appointment_date).format('YYYY-MM-DD')
                     }
                 });
                 data.forEach(element => {
@@ -457,7 +472,7 @@ export class StudyListComponent implements OnInit {
         });
     }
     actionValues(value, index) {
-      const object = {
+        const object = {
             'time': moment(new Date()).format("MM/DD/YY hh:mm a"),
             'name': value
         }
@@ -598,6 +613,9 @@ export class StudyListComponent implements OnInit {
         link.setAttribute('download', 'spineai_export.csv');
         document.body.appendChild(link);
         link.click();
+    }
+    navigateToPatient(uuid){
+        this.router.navigate(['/patient/' + uuid])
     }
 
 }
