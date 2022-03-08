@@ -1,0 +1,28 @@
+.fld_o{
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+select.act_sel_o {
+    height: 35px;
+    border: #ccc solid 1px;
+    background-color: #fff;
+    width: 90%;
+    margin-right: 5px;
+    border-radius: 4px;
+}
+
+@media screen and (max-width:767px){
+    .fld_o{
+        width: 100%;
+        gap: 10px;
+    }
+}
+@media screen and (max-width:530px){
+    .fld_o{
+        margin: 0 !important;
+        display: block;
+    }
+}

@@ -75,11 +75,11 @@ body {
   }
 }
 
-div#reports_table_wrapper .col-sm-12.col-md-4:first-child {
+/*div#reports_table_wrapper .col-sm-12.col-md-4:first-child {
   order: 1;
   padding: 0;
 }
-
+*/
 .export-btn.mat-button {
   background-color: #376fb6;
   color: #fff;
@@ -107,6 +107,7 @@ div#reports_table_wrapper .col-sm-12.col-md-4:first-child {
 
 div#reports_table_wrapper>.row:nth-child(1) {
   display: flex;
+  justify-content: space-between !important;
 }
 
 div#reports_table_wrapper>.row:nth-child(1) div {
@@ -358,9 +359,9 @@ div#reports_table_wrapper .search-pacs:hover {
 }
 
 .form-group-sec.date-input {
-    border: 1px solid #ced4da;
+    /*border: 1px solid #ced4da;
     width: 49%;
-    height: 40px;
+    height: 40px;*/
     color: #495057;
     border-radius: 0.25rem;
     position: relative;
@@ -473,6 +474,10 @@ div#reports_table_wrapper .search-pacs:hover {
 .mri{
     font-size: 14px;
 }
+
+#reports_table tbody tr{ background-color: #7bb5ff2e !important;}
+#reports_table tbody tr.odd{ background-color: #d9e7f7 !important;}
+#reports_table tbody tr:hover{ background-color: #dcedff !important;}
 @media (max-width: 767px) {
     .add-patient-form input, .add-patient-form .input-group, .form-group-sec input, .form-group-sec,
     .add-patient-form .input-group.form-group-sec {
@@ -493,4 +498,46 @@ div#reports_table_wrapper .search-pacs:hover {
     .cus_btn button {
         width: 100%;
     }
+}
+
+
+.mat-form-field-wrapper, .mat-form-field{
+    padding: 0 !important;
+}
+.mat-form-field-flex {
+    border: #ddd solid 1px;
+    height: 40px  !important;
+    margin-top: 18px;
+    position: relative;
+    border-radius: 0.25rem;
+}
+
+
+.mat-form-field-infix {
+    width: 200px !important;
+    height: auto !important;
+    padding: 0 10px !important;
+    margin: 0 !important;
+    min-width: inherit !important;
+    max-width: inherit !important;
+    border: none !important;
+}
+button.svbtn {
+    border: #376fb6 solid 1px;
+    background-color: transparent;
+    padding: 10px;
+    color: #376fb6;
+    border-radius: 6px;
+}
+
+.modal-open .modal{
+    z-index: 99 !important;
+}
+.fld_o label {
+    font-weight: 500;
+    color: #313131;
+}
+
+.backtopatient {
+    bottom: 0 !important;
 }

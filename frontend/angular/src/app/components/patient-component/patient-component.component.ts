@@ -7,7 +7,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'app-patient-component',
     templateUrl: './patient-component.component.html',
-    styleUrls: ['./patient-component.component.sass']
+    styleUrls: ['./patient-component.component.scss']
 })
 export class PatientComponentComponent implements OnInit {
 

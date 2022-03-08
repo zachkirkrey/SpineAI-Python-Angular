@@ -1,16 +1,34 @@
 <form>
+
     <div class="form-group">
+
+
+        <div class="addpatbtno">
+            <button class="mat-focus-indicator export-btn backtopatient add-patient mat-button mat-button-base"
+          >
+             <span>	&lt; </span>
+            All Patients
+        </button>
+        </div>
+
+
+
         <div class="add-patient-con">
-            <div class="form-group-sec">
-                <label>Patient Name:</label>
-                <input id="name" class="form-control" placeholder="" (change)="alphabetValidate(name,'name')"
-                    name="name" [(ngModel)]="name" [ngModelOptions]="{standalone: true}">
+
+
+            <div class="fld_o">
+                <div class="form-group-sec">
+                    <label>Patient Name:</label>
+                    <input id="name" class="form-control" placeholder="" (change)="alphabetValidate(name,'name')"
+                        name="name" [(ngModel)]="name" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="form-group-sec">
+                    <label>MRN:</label>
+                    <input id="mrn" class="form-control" placeholder="" name="mrn" (change)="alphabetValidate(mrn,'mrn')"
+                        [(ngModel)]="mrn" [ngModelOptions]="{standalone: true}">
+                </div>
             </div>
-            <div class="form-group-sec">
-                <label>MRN:</label>
-                <input id="mrn" class="form-control" placeholder="" name="mrn" (change)="alphabetValidate(mrn,'mrn')"
-                    [(ngModel)]="mrn" [ngModelOptions]="{standalone: true}">
-            </div>
+            <div class="fld_o">
             <div class="form-group-sec">
                 <label>Email:</label>
                 <input id="email" type="email" (change)="emailValidate(email)" class="form-control" placeholder=""
@@ -25,8 +43,10 @@
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker [startAt]="date_picker" #picker></mat-datepicker>
                 </mat-form-field>
-
             </div>
+            </div>
+
+            <div class="fld_o">
             <div class="form-group-sec">
                 <label>Phone:</label>
                 <input id="telephone" class="form-control" placeholder="" name="telephone"
@@ -40,6 +60,9 @@
                     (change)="alphabetValidate(diagnosis,'diagnosis')" [(ngModel)]="diagnosis"
                     [ngModelOptions]="{standalone: true}">
             </div>
+            </div>
+
+            <div class="fld_o">
 
             <div class="form-group-sec date-input">
                 <label>Appointment Date:</label>
@@ -51,10 +74,19 @@
                 </mat-form-field>
 
             </div>
-            <div class="form-group-sec">
-                <label>Recommendation:</label>
-                <div class="recommendation_cell" [attr.data-study-id]="recommendation"></div>
+
             </div>
+
+
+
+            <div class="fld_o">
+
+
+                <div class="form-group-sec">
+                    <label>Recommendation:</label>
+                    <div class="recommendation_cell" [attr.data-study-id]="recommendation"></div>
+                </div>
+
             <div class="form-group-sec">
                 <label>Report:</label>
                 <ng-template [ngIf]="report!= undefined && report.length" [ngIfElse]="noReport">
@@ -88,9 +120,21 @@
                 </ng-template>
 
             </div>
+
+            </div>
+
+            <div class="fld_o">
+
             <div class="form-group-sec">
-                <label>Actions:</label>
-                <select [(ngModel)]="action[i]" name="action" (change)="actionValues(action[i])">
+                <label class="fwlbl">Actions:</label>
+                <ul *ngIf="(action[i] || report_actions) && showList">
+                        <li *ngFor="let report of report_actions">
+                        <img class="action_img" width="13px" src="assets/img/cross.png" alt=""
+                            (click)="deleteAction(report.id,deleteModal)" />
+                        {{report.time}} {{report.name}}
+                    </li>
+                </ul>
+                <select class="act_sel_o" [(ngModel)]="action[i]" name="action" (change)="actionValues(action[i])">
                     <option *ngFor="let item of actionList" value={{item}}>
                         {{item}}
                     </option>
@@ -101,18 +145,14 @@
                     <img *ngIf="show_icon == false " width="15px" src="assets/img/save_icon.png" alt="" />
                 </span>
 
-                <ul *ngIf="(action[i] || report_actions) && showList">
 
-                    <li *ngFor="let report of report_actions">
-                        <img class="action_img" width="13px" src="assets/img/cross.png" alt=""
-                            (click)="deleteAction(report.id,deleteModal)" />
-                        {{report.time}} {{report.name}}
-                    </li>
-                </ul>
             </div>
+            </div>
+
+
         </div>
     </div>
-    <button type="button" (click)="updatePatient()">Save Patient</button>
+    <button type="button" class="svbtn" (click)="updatePatient()">Save Patient</button>
 </form>
 
 <ng-template #deleteModal let-modal>
