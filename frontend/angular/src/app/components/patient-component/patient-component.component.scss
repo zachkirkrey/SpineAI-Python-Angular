@@ -9,15 +9,26 @@ select.act_sel_o {
     height: 35px;
     border: #ccc solid 1px;
     background-color: #fff;
-    width: 90%;
+    width: 85%;
     margin-right: 5px;
     border-radius: 4px;
 }
-
+@media screen and (max-width:1200px){
+    .fld_o{
+        width: 100%;
+        gap: 10px;
+    }
+    .form-group-sec {
+        width: 50%;
+    }
+}
 @media screen and (max-width:767px){
     .fld_o{
         width: 100%;
         gap: 10px;
+    }
+    .form-group-sec {
+        width: 100%;
     }
 }
 @media screen and (max-width:530px){

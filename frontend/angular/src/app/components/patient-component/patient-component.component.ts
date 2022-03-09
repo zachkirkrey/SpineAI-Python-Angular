@@ -44,7 +44,7 @@ export class PatientComponentComponent implements OnInit {
     action_error: string;
     section: string = '';
     visibility: Boolean = true;
-    action = []
+    action:any
     report_action = []
     action_index = []
     dep = []
@@ -267,7 +267,7 @@ export class PatientComponentComponent implements OnInit {
                     this.show_icon = true
                 }
 
-                this.action = []
+                this.action = ''
 
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
@@ -309,7 +309,7 @@ export class PatientComponentComponent implements OnInit {
         }).done(function (data) {
             if ('error' in data) { }
             else {
-                this.action = []
+                this.action = ''
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${delete_url}.`;

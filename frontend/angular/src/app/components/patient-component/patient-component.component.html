@@ -127,21 +127,21 @@
 
             <div class="form-group-sec">
                 <label class="fwlbl">Actions:</label>
-                <ul *ngIf="(action[i] || report_actions) && showList">
+                <ul *ngIf="report_actions && showList">
                         <li *ngFor="let report of report_actions">
                         <img class="action_img" width="13px" src="assets/img/cross.png" alt=""
                             (click)="deleteAction(report.id,deleteModal)" />
                         {{report.time}} {{report.name}}
                     </li>
                 </ul>
-                <select class="act_sel_o" [(ngModel)]="action[i]" name="action" (change)="actionValues(action[i])">
+                <select class="act_sel_o" [(ngModel)]="action" name="action" (change)="actionValues(action)">
                     <option *ngFor="let item of actionList" value={{item}}>
                         {{item}}
                     </option>
                 </select>
                 <img class="show-img" *ngIf="show_icon == true && report_actions.length >0" width="20px"
                     src="assets/img/clipboard.png" alt="" (click)="showHide()" />
-                <span *ngIf="action[i]" class="save-icon" (click)="saveAction(metadata.id)">
+                <span *ngIf="action" class="save-icon" (click)="saveAction(metadata.id)">
                     <img *ngIf="show_icon == false " width="15px" src="assets/img/save_icon.png" alt="" />
                 </span>
 
