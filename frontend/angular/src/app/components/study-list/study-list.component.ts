@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import { Router, NavigationEnd } from '@angular/router';
+import { CookieService } from 'ngx-cookie';
 
 
 @Component({
@@ -59,45 +60,155 @@ export class StudyListComponent implements OnInit {
     columnValue: any
     isShown: boolean = true
     colShow: boolean = false
-    createdCheckbox: boolean = true
-    importCheckBox: boolean = true
-    mrnCheckBox: boolean = false
-    aptCheckBox: boolean = false
-    nameCheckBox: boolean = false
-    reportCheckBox: boolean = false
-    recommnCheckBox: boolean = false
-    actionCheckBox: boolean = false
+    createdCheckbox: any
+    importCheckBox: any
+    mrnCheckbox: any
+    aptCheckBox: any
+    nameCheckBox: any
+    reportCheckBox: any
+    recommnCheckBox: any
+    actionCheckBox: any
     actionList = ['Scheduled for Clinic', 'Surgery', 'Additional Testing', 'Injections', 'Physical Therapy', 'RTC/DC', 'Referral']
+    columnList = [{
+        id: 'mrn_col',
+        name: 'mrnCheckbox',
+        show: true,
+        colName: 'MRN # '
+    }, {
+        id: 'apt_col',
+        name: 'aptCheckbox',
+        show: true,
+        colName: 'APPT DATE'
+    }, {
+        id: 'created_col',
+        name: 'createdCheckbox',
+        show: false,
+        colName: 'CREATED DATE'
+    }, {
+        id: 'name_col',
+        name: 'nameCheckbox',
+        show: true,
+        colName: 'PATIENT NAME'
+    }, {
+        id: 'import_col',
+        name: 'importCheckBox',
+        show: false,
+        colName: 'IMPORT ID'
+    }, {
+        id: 'report_col',
+        name: 'reportCheckbox',
+        show: true,
+        colName: 'REPORT'
+    }, {
+        id: 'recommn_col',
+        name: 'recommnCheckbox',
+        show: true,
+        colName: 'RECOMMENDATION'
+    }, {
+        id: 'action_col',
+        name: 'actionCheckbox',
+        show: true,
+        colName: 'ACTION'
+    }]
     @ViewChildren('report_rows') report_rows: QueryList<any>;
-    constructor(private exportService: ExportService, private modalService: NgbModal, private router: Router) {
+    constructor(private exportService: ExportService, private modalService: NgbModal, private router: Router, private cookie: CookieService) {
         this.token = localStorage.getItem('token')
     }
     ngOnInit() {
+        this.token = localStorage.getItem('token')
         this.section = 'Hide patient name';
         this.tableData();
+        this.createdCheckbox = false
+        this.importCheckBox = false
+        this.mrnCheckbox = true
+        this.aptCheckBox = true
+        this.nameCheckBox = true
+        this.reportCheckBox = true
+        this.recommnCheckBox = true
+        this.actionCheckBox = true
+        let columnArr = this.cookie.get('columnList')
+        let createdCheckbox = this.cookie.get('created_col')
+        let importCheckBox = this.cookie.get('import_col')
+        let mrnCheckbox = this.cookie.get('mrn_col')
+        let aptCheckBox = this.cookie.get('apt_col')
+        let nameCheckBox = this.cookie.get('name_col')
+        let reportCheckBox = this.cookie.get('report_col')
+        let recommnCheckBox = this.cookie.get('recommn_col')
+        let actionCheckBox = this.cookie.get('action_col')
+        if (columnArr != undefined) {
+          this.columnList = JSON.parse(columnArr)
+          console.log('columnArr', this.columnList)
+        } if (createdCheckbox != undefined) {
+            this.createdCheckbox = createdCheckbox
+        } if (importCheckBox != undefined) {
+            this.importCheckBox = importCheckBox
+        } if (mrnCheckbox != undefined) {
+            this.mrnCheckbox = mrnCheckbox
+        } if (aptCheckBox != undefined) {
+            this.aptCheckBox = aptCheckBox
+        } if (nameCheckBox != undefined) {
+            this.nameCheckBox = nameCheckBox
+        } if (reportCheckBox != undefined) {
+            this.reportCheckBox = reportCheckBox
+        } if (recommnCheckBox != undefined) {
+            this.recommnCheckBox = recommnCheckBox
+        } if (actionCheckBox != undefined) {
+            this.actionCheckBox = actionCheckBox
+        }
+
     }
-    hide_show_table(col_name, value) {
-        let check = $('#' + col_name).is(":checked");
-        console.log('col_name', col_name, ' ', check)
-        var checkbox_val = (document.getElementById(col_name) as HTMLTextAreaElement).value;
-        console.log('checkbox_val', checkbox_val)
-        if (value == true) {
+    hide_show_table(col_name, value, index) {
+        console.log('value', value)
+        this.columnList.forEach((x, i) => {
+            if (index == i) {
+                x.show = !value
+            }
+        })
+        this.cookie.put('columnList', JSON.stringify(this.columnList))
+        if (value == false) {
             var all_col = document.getElementsByClassName(col_name);
-            console.log('all_col', all_col)
             for (var i = 0; i < all_col.length; i++) {
                 (all_col[i] as HTMLElement).style.display = "table-cell";
             }
             document.getElementById(col_name + "_head").style.display = "table-cell";
-            (document.getElementById(col_name) as HTMLTextAreaElement).value = "hide";
         }
         else {
             var all_col = document.getElementsByClassName(col_name);
-            console.log('all_col', all_col)
             for (var i = 0; i < all_col.length; i++) {
                 (all_col[i] as HTMLElement).style.display = "none";
             }
             document.getElementById(col_name + "_head").style.display = "none";
-            (document.getElementById(col_name) as HTMLTextAreaElement).value = "show";
+        }
+        if (col_name == 'mrn_col') {
+            this.mrnCheckbox = !value
+            this.cookie.put('mrn_col', this.mrnCheckbox)
+        }
+        if (col_name == 'apt_col') {
+            this.aptCheckBox = !value
+            this.cookie.put('apt_col', this.aptCheckBox)
+        } if (col_name == 'created_col') {
+            this.createdCheckbox = !value
+            this.cookie.put('created_col', this.createdCheckbox)
+        }
+        if (col_name == 'name_col') {
+            this.nameCheckBox = !value
+            this.cookie.put('apt_col', this.aptCheckBox)
+        }
+        if (col_name == 'import_col') {
+            this.importCheckBox = !value
+            this.cookie.put('import_col', this.importCheckBox)
+        }
+        if (col_name == 'report_col') {
+            this.reportCheckBox = !value
+            this.cookie.put('report_col', this.reportCheckBox)
+        }
+        if (col_name == 'recommn_col') {
+            this.recommnCheckBox = !value
+            this.cookie.put('recommn_col', this.recommnCheckBox)
+        }
+        if (col_name == 'action_col') {
+            this.actionCheckBox = !value
+            this.cookie.put('action_col', this.actionCheckBox)
         }
     }
 
@@ -614,7 +725,7 @@ export class StudyListComponent implements OnInit {
         document.body.appendChild(link);
         link.click();
     }
-    navigateToPatient(uuid){
+    navigateToPatient(uuid) {
         this.router.navigate(['/patient/' + uuid])
     }
 

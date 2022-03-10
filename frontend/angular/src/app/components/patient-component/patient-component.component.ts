@@ -44,7 +44,7 @@ export class PatientComponentComponent implements OnInit {
     action_error: string;
     section: string = '';
     visibility: Boolean = true;
-    action:any
+    action: any
     report_action = []
     action_index = []
     dep = []
@@ -70,7 +70,9 @@ export class PatientComponentComponent implements OnInit {
         this.token = localStorage.getItem('token')
         this.getPatientInfo()
     }
-
+    navigate() {
+        this.router.navigate(['studies']);
+    }
     getPatientInfo() {
         let patient_url = `${environment.api_url}/study/${this.patient_id}?scope=includeActions`;
         function sort_by_creation(x, y) {

@@ -33,6 +33,8 @@ import { IngestionListComponent } from './components/fetch-form/ingestion-list/i
 import { LoginComponent } from './components/login/login.component';
 import { ViewerComponent } from './components/viewer/viewer.component';
 import { PatientComponentComponent } from './components/patient-component/patient-component.component';
+import { CookieModule } from 'ngx-cookie';
+
 
 const appRoutes: Routes = [
     { path: 'debug', component: DebugInfoComponent, data: { header: true } },
@@ -88,6 +90,7 @@ const appRoutes: Routes = [
         MatFormFieldModule,
         MatInputModule,
         MatSelectModule,
+        CookieModule.forRoot(),
         RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' })
     ],
     providers: [LegacyReportData],
