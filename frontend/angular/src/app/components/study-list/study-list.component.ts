@@ -38,7 +38,7 @@ export class StudyListComponent implements OnInit {
     mrn: any;
     email: any;
     date_picker: any;
-    appt_date: any;
+    appt_date = "Appointment Date";
     telephone: any;
     diagnosis: any;
     email_error: boolean = false

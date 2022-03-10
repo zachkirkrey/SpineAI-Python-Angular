@@ -17,7 +17,46 @@
   }
 
 }
+.date-input{
+    ::ng-deep{
+        input {
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            height: 37px;
+            &[ng-reflect-model] {
+                background: #fff;
+                z-index: 9;
+                position: relative;
+                & ~ .mat-form-field-label-wrapper {
+                    .mat-form-field-label {
+                        display: none;
+                    }
+                }
+            }
+            &:focus {
+                border-bottom: 1px solid #ddd;
+                & ~ .mat-form-field-label-wrapper {
+                    .mat-form-field-label {
+                        display: none;
+                    }
+                }
+            }
+        }
+        .mat-form-field-label-wrapper {
+            .mat-form-field-label {
+                top: 25px;
+                left: 10px;
+                color: #747d84;
+                transform: none !important;
+            }
+        }
 
+
+         .mat-form-field-underline {
+            display: none;
+        }
+    }
+}
 .spinner-wrapper {
   min-height: 80px;
 }

@@ -231,11 +231,11 @@
                         <input id="diagnosis" class="form-control" placeholder="Diagnosis" name="diagnosis"
                             (change)="alphabetValidate(diagnosis,'diagnosis')" [(ngModel)]="diagnosis">
                     </div>
-
+<!--{{appt_date}}-->
                     <div class="form-group-sec date-input">
                         <mat-form-field class="mr-sm-24" fxFlex>
                             <input matInput [matDatepicker]="appt_picker" class="form-control"
-                                placeholder="Appointment Date" autocomplete="off" name="appt_picker"
+                                placeholder="Appointment Date" autocomplete="off" name="appt_picker" value="appt_date"
                                 [(ngModel)]="appt_date">
                             <mat-datepicker-toggle matSuffix [for]="appt_picker"></mat-datepicker-toggle>
                             <mat-datepicker [startAt]="appt_date" #appt_picker></mat-datepicker>
