@@ -1,12 +1,11 @@
 <div class="topbar">
+    <h1>Spine AI Report
+        <ng-container *ngIf="studyName">
+            - {{ studyName }}
+        </ng-container><a href="javascript:void(0)" (click)="showViewer()">>> Viewer</a>
+    </h1>
 
-  <h1>Spine AI Report
-    <ng-container *ngIf="studyName">
-      - {{ studyName }}
-    </ng-container>
-  </h1>
-
-  <!--
+    <!--
     <div class="buttons">
 
     <button #download class="button" (click)="openMenu($event)">
@@ -32,60 +31,84 @@
 
 <section class="card" *ngIf="reportDone">
 
-  <div class="tabs flex">
-    <button class="flex-1" (click)="tab = 1" [ngClass]="{'active': tab === 1}">
-      <i class="fa fa-file"></i>
-      &nbsp;
-      Summary
-    </button>
-    <button class="flex-1" (click)="tab = 2" [ngClass]="{'active': tab === 2}">
-      <i class="fa fa-search-plus"></i>
-      &nbsp;
-      Details
-    </button>
-  </div>
+    <div class="tabs flex">
+        <button class="flex-1" (click)="tab = 1" [ngClass]="{'active': tab === 1}">
+            <i class="fa fa-file"></i>
+            &nbsp;
+            Summary
+        </button>
+        <button class="flex-1" (click)="tab = 2" [ngClass]="{'active': tab === 2}">
+            <i class="fa fa-search-plus"></i>
+            &nbsp;
+            Details
+        </button>
+    </div>
 
-  <ng-container [ngSwitch]="tab">
+    <ng-container [ngSwitch]="tab">
 
-    <app-summary-tab
-      [report]="report"
-      [images]="images"
-      [sagittalImages]="sagittalImages"
-      @fadeInAndOut *ngSwitchCase="1">
-    </app-summary-tab>
+        <app-summary-tab [report]="report" [images]="images" [sagittalImages]="sagittalImages" @fadeInAndOut
+            *ngSwitchCase="1">
+        </app-summary-tab>
 
-    <app-detail-tab
-      [report]="report"
-      [axialImages]="images"
-      [sagittalImages]="sagittalImages"
-      @fadeInAndOut *ngSwitchCase="2">
-    </app-detail-tab>
+        <app-detail-tab [report]="report" [axialImages]="images" [sagittalImages]="sagittalImages" @fadeInAndOut
+            *ngSwitchCase="2">
+        </app-detail-tab>
 
-  </ng-container>
+    </ng-container>
 
 
 
 </section>
 
 <aside class="flex-column">
-  <div class="card recommendation" *ngIf="reportDone" [ngClass]="{'surgery': report.measurements.canal_narrowing.surgery_recommended == true}">
-    <h3>Recommendation</h3>
-    <p>Surgery consult<br />
-    <span><span *ngIf="report.measurements.canal_narrowing.surgery_recommended == false">not </span>recommended.</span>
-    </p>
-  </div>
+    <div class="card recommendation" *ngIf="reportDone"
+        [ngClass]="{'surgery': report.measurements.canal_narrowing.surgery_recommended == true}">
+        <h3>Recommendation</h3>
+        <p>Surgery consult<br />
+            <span><span *ngIf="report.measurements.canal_narrowing.surgery_recommended == false">not
+                </span>recommended.</span>
+        </p>
+    </div>
 
-  <div class="card risk-score" *ngIf="reportDone">
+    <div class="card risk-score" *ngIf="reportDone">
 
-    <h3>Spine ai risk score <i class="fa fa-info-circle"></i></h3>
+        <h3>Spine ai risk score <i class="fa fa-info-circle"></i></h3>
 
-    <app-spine-risk-score-bar
-      [score]="report.measurements.canal_narrowing.num_narrow_slices"
-      [threshold]="report.measurements.canal_narrowing.narrow_slices_threshold"></app-spine-risk-score-bar>
+        <app-spine-risk-score-bar [score]="report.measurements.canal_narrowing.num_narrow_slices"
+            [threshold]="report.measurements.canal_narrowing.narrow_slices_threshold"></app-spine-risk-score-bar>
 
-  </div>
+    </div>
+    <div class="hide-show w-100" *ngIf="fetchArr.length >0">
+        <mat-checkbox [(ngModel)]="checked" (change)="toggleDisplay()">{{hideCheckboxMsg}}</mat-checkbox>
+        <div *ngIf="showCheckbox == true">
+            <ul class="patient_detaile-list w-100">
+                <li class="patient_detaile-item d-flex">
+                    <span>Name:</span>
+                    <span>{{fetchArr[0].patient_name}}</span>
+                </li>
+                <li class="patient_detaile-item d-flex">
+                    <span>MRN:</span>
+                    <span>{{fetchArr[0].mrn}}</span>
+                </li>
+                <li class="patient_detaile-item d-flex">
+                    <span>DOB:</span>
+                    <span>{{fetchArr[0].date_of_birth== 'Invalid date'?'N/A':fetchArr[0].date_of_birth}}</span>
+                </li>
+                <li class="patient_detaile-item d-flex">
+                    <span>Diagnosis:</span>
+                    <span>{{fetchArr[0].diagnosis}}</span>
+                </li>
+                <li class="patient_detaile-item d-flex">
+                    <span>Appt Date:</span>
+                    <span>{{fetchArr[0].appointment_date == 'Invalid date'?'N/A':fetchArr[0].appointment_date}}</span>
+                </li>
+            </ul>
 
-  <!--
+        </div>
+
+    </div>
+
+    <!--
   <div class="card">
 
     <h3>risk factor <i class="fa fa-info-circle"></i></h3>
@@ -98,5 +121,4 @@
 
 
 <app-share-dialog *ngIf="share" @fadeInAndOut (onClose)="onDialogClose($event)">
-
 </app-share-dialog>

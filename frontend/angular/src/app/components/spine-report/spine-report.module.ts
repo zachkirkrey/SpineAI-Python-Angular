@@ -14,28 +14,30 @@ import { ShareDialogComponent } from './components/share-dialog/share-dialog.com
 import { DownloadMenuComponent } from './components/download-menu/download-menu.component';
 import { DetailTabComponent } from './components/detail-tab/detail-tab.component';
 import { DetailBarsComponent } from './components/detail-bars/detail-bars.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 
 @NgModule({
-  declarations: [
-    SpineReportComponent,
-    RiskFaktorDropdownComponent,
-    SpineRiskScoreBarComponent,
-    SummaryTabComponent,
-    ImageViewerComponent,
-    ShareDialogComponent,
-    DownloadMenuComponent,
-    DetailTabComponent,
-    DetailBarsComponent,
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    NgPipesModule,
-    RouterModule.forChild([
-      {path: '', component: SpineReportComponent}
-    ])
-  ],
+    declarations: [
+        SpineReportComponent,
+        RiskFaktorDropdownComponent,
+        SpineRiskScoreBarComponent,
+        SummaryTabComponent,
+        ImageViewerComponent,
+        ShareDialogComponent,
+        DownloadMenuComponent,
+        DetailTabComponent,
+        DetailBarsComponent,
+    ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatCheckboxModule,
+        NgPipesModule,
+        RouterModule.forChild([
+            { path: '', component: SpineReportComponent }
+        ])
+    ],
 })
 export class SpineReportModule { }
