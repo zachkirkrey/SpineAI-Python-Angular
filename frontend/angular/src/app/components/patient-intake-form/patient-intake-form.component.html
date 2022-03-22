@@ -7,5 +7,143 @@
                 All Patients
             </button> Last Updated:3/14/2022
         </div>
+        <div class="add-patient-con">
+            <div class="fld_o">
+                <div class="form-group-sec">
+                    <label>Patient Name:</label>
+                    {{name}}
+                </div>
+                <div class="form-group-sec">
+                    <label>MRN:</label>
+                    {{mrn}}
+                </div>
+            </div>
+            <div class="fld_o">
+                <div class="form-group-sec">
+                    <label>Referral Reason:</label>
+                    <ul>
+                        <li *ngFor="let item of referral_reason; let i = index">
+                            <mat-checkbox color="primary" [checked]="item.show"
+                                (change)="onItemChange($event,item.id,item.show)">
+                                {{item.name}}
+                            </mat-checkbox>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fld_o">
+                <div class="form-group-sec date-input">
+                    <label>Pain Location:</label>
+                    <ul>
+                        <li *ngFor="let item of pain_arr; let i= index">
+                            <div *ngIf="item.name == 'Lower Back'">{{item.name}}
+                                <select [(ngModel)]="lower_back" name="lower_back"
+                                    (change)="onSelectChange(lower_back,'lower_back')">
+                                    <option *ngFor="let item of number_arr" value={{item}}>
+                                        {{item}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div *ngIf="item.name == 'Left Leg'">{{item.name}}
+                                <select [(ngModel)]="left_leg" name="left_leg"
+                                    (change)="onSelectChange(left_leg,'left_leg')">
+                                    <option *ngFor="let item of number_arr" value={{item}}>
+                                        {{item}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div *ngIf="item.name == 'Right Leg'">{{item.name}}
+                                <select [(ngModel)]="right_leg" name="right_leg"
+                                    (change)="onSelectChange(right_leg,'right_leg')">
+                                    <option *ngFor="let item of number_arr" value={{item}}>
+                                        {{item}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div *ngIf="item.name == '% Lower Back'">{{item.name}}
+                                <input type="number" class="form-control" placeholder="" name="back_lower"
+                                    [(ngModel)]="back_lower" [ngModelOptions]="{standalone: true}">%
+                            </div>
+                            <div *ngIf="item.name == '% Leg'">{{item.name}}
+                                <input type="number" class="form-control" placeholder="" name="leg" [(ngModel)]="leg"
+                                    [ngModelOptions]="{standalone: true}">%
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fld_o">
+                <div class="form-group-sec date-input">
+                    <label>Symptoms:</label>
+                    <ul>
+                        <li *ngFor="let item of symptoms_arr; let i = index">
+                            <mat-checkbox color="primary" [checked]="item.show"
+                                (change)="onItemChange($event,item.id,item.show)">
+                                {{item.name}}
+                            </mat-checkbox>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fld_o">
+                <div class="form-group-sec date-input">
+                    <label>Previous Spine Surgery:</label>
+                    <select [(ngModel)]="spineSurgery" name="spineSurgery"
+                        (change)="onSelectChange(spineSurgery,'prevSpine')">
+                        <option *ngFor="let item of prev_spine" value={{item.name}}>
+                            {{item.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="fld_o">
+                <div class="form-group-sec date-input">
+                    <label>Other Treatments:</label>
+                    <ul>
+                        <li *ngFor="let item of otherTreat_arr; let i = index">
+                            <mat-checkbox color="primary" [checked]="item.show"
+                                (change)="onItemChange($event,item.id,item.show)">
+                                {{item.name}}
+                            </mat-checkbox>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fld_o">
+                <div class="form-group-sec date-input">
+                    <label>History:</label>
+                    <ul>
+                        <li *ngFor="let item of history_arr; let i = index">
+                            <mat-checkbox color="primary" [checked]="item.show"
+                                (change)="onItemChange($event,item.id,item.show)">
+                                {{item.name}}
+                            </mat-checkbox>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fld_o">
+                <div class="form-group-sec date-input">
+                    <label>Current Smoker:</label>
+                    <select [(ngModel)]="smoker" name="smoker" (change)="onSelectChange(smoker,'smoker')">
+                        <option *ngFor="let item of smoker_arr" value={{item.name}}>
+                            {{item.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="fld_o">
+                <div class="form-group-sec date-input">
+                    <label>MRI Status:</label>
+                    <select [(ngModel)]="mri_status" name="mri_status"
+                        (change)="onSelectChange(mri_status,'mri_status')">
+                        <option *ngFor="let item of mri_arr" value={{item.name}}>
+                            {{item.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
     </div>
+    <button type="button" class="svbtn" (click)="savePatient()">Save</button>
 </form>
