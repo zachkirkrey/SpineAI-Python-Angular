@@ -136,8 +136,8 @@ export class StudyListComponent implements OnInit {
         let recommnCheckBox = this.cookie.get('recommn_col')
         let actionCheckBox = this.cookie.get('action_col')
         if (columnArr != undefined) {
-          this.columnList = JSON.parse(columnArr)
-          console.log('columnArr', this.columnList)
+            this.columnList = JSON.parse(columnArr)
+            console.log('columnArr', this.columnList)
         } if (createdCheckbox != undefined) {
             this.createdCheckbox = createdCheckbox
         } if (importCheckBox != undefined) {
@@ -728,5 +728,9 @@ export class StudyListComponent implements OnInit {
     navigateToPatient(uuid) {
         this.router.navigate(['/patient/' + uuid])
     }
-
+    redirect(value) {
+        if (value == 'intake') {
+            this.router.navigate(['/detais/form'])
+        }
+    }
 }

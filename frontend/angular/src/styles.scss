@@ -182,18 +182,22 @@ table#reports_table {
   }
 
 }
-.error_class{
-    margin-top: -15px;
-    color: red;
-    font-size: 10px;
+
+.error_class {
+  margin-top: -15px;
+  color: red;
+  font-size: 10px;
 }
-button.calendar, button.calendar:active {
-    width: 2.75rem;
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEUSURBVEiJ7ZQxToVAEIY/YCHGxN6XGOIpnpaEsBSeQC9ArZbm9TZ6ADyBNzAhQGGl8Riv4BLAWAgmkpBYkH1b8FWT2WK/zJ8ZJ4qiI6XUI3ANnGKWBnht2/ZBDRK3hgVGNsCd7/ui+JkEIrKtqurLpEWaphd933+IyI3LEIdpCYCiKD6HcuOa/nwOa0ScJEnk0BJg0UTUWJRl6RxCYEzEmomsIlPU3IPW+grIAbquy+q6fluy/28RIBeRMwDXdXMgXLj/B2uimRXpui4D9sBeRLKl+1N+L+t6RwbWrZliTTTr1oxYtzVWiTQAcRxvTX+eJMnlUDaO1vpZRO5NS0x48sIwfPc87xg4B04MCzQi8hIEwe4bl1DnFMCN2zsAAAAASUVORK5CYII=') !important;
-    background-repeat: no-repeat;
-    background-size: 23px;
-    background-position: center;
-  }
+
+button.calendar,
+button.calendar:active {
+  width: 2.75rem;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEUSURBVEiJ7ZQxToVAEIY/YCHGxN6XGOIpnpaEsBSeQC9ArZbm9TZ6ADyBNzAhQGGl8Riv4BLAWAgmkpBYkH1b8FWT2WK/zJ8ZJ4qiI6XUI3ANnGKWBnht2/ZBDRK3hgVGNsCd7/ui+JkEIrKtqurLpEWaphd933+IyI3LEIdpCYCiKD6HcuOa/nwOa0ScJEnk0BJg0UTUWJRl6RxCYEzEmomsIlPU3IPW+grIAbquy+q6fluy/28RIBeRMwDXdXMgXLj/B2uimRXpui4D9sBeRLKl+1N+L+t6RwbWrZliTTTr1oxYtzVWiTQAcRxvTX+eJMnlUDaO1vpZRO5NS0x48sIwfPc87xg4B04MCzQi8hIEwe4bl1DnFMCN2zsAAAAASUVORK5CYII=') !important;
+  background-repeat: no-repeat;
+  background-size: 23px;
+  background-position: center;
+}
+
 table#reports_table th:last-child,
 table#reports_table td:last-child {
   max-width: 120px;
@@ -287,163 +291,191 @@ div#reports_table_paginate {
 }
 
 
-.add-patient-form input, .add-patient-form .input-group {
-    width: 46%;
+.add-patient-form input,
+.add-patient-form .input-group {
+  width: 46%;
 }
+
 .add-patient-con {
-   display: flex;
-   flex-wrap: wrap;
-   grid-gap: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  grid-gap: 8px;
 }
+
 .modal-footer.add-patient-footer {
-    justify-content: flex-start;
+  justify-content: flex-start;
 }
+
 .modal-footer.add-patient-footer button.btn.btn-outline-dark {
-    color: #376fb6;
-    border: 1px solid #376fb6;
+  color: #376fb6;
+  border: 1px solid #376fb6;
 }
+
 .modal-footer.add-patient-footer button.btn.btn-outline-dark:hover {
-    background: #376fb6;
-    color: #fff;
-    border: 1px solid #376fb6;
+  background: #376fb6;
+  color: #fff;
+  border: 1px solid #376fb6;
 }
+
 .modal-header.add-patient-header {
-    border: none;
+  border: none;
 }
+
 .modal-footer.add-patient-footer {
-    justify-content: flex-start;
-    border: none;
+  justify-content: flex-start;
+  border: none;
 }
+
 .modal-body.add-patient-form {
-    padding-bottom: 0;
+  padding-bottom: 0;
 }
+
 .modal-footer.add-patient-footer {
-    padding-top: 0;
-    margin-bottom: 16px;
+  padding-top: 0;
+  margin-bottom: 16px;
 }
+
 .error_class {
-    margin-top: -10px !important;
+  margin-top: -10px !important;
 }
+
 .form-group-sec input {
-    width: 100%;
+  width: 100%;
 }
+
 .add-patient-form .input-group.form-group-sec {
-    width: 48.9%;
+  width: 48.9%;
 }
+
 .add-patient-form .input-group-append {
-    height: 40px;
+  height: 40px;
 }
+
 div#reports_table_wrapper div#reports_table_filter {
-    padding-left: 120px;
+  padding-left: 120px;
 }
+
 .export-btn.add-patient {
-    position: relative;
-    margin: 0;
-    bottom: -34px;
-    padding: 0 12px 0 5px;
-    z-index: 999;
+  position: relative;
+  margin: 0;
+  bottom: -34px;
+  padding: 0 12px 0 5px;
+  z-index: 999;
 }
+
 .export-btn.mat-button.add-patient:before {
-    display: none;
+  display: none;
 }
 
 div#reports_table_wrapper .search-pacs {
-    cursor: pointer;
-    color: #007bff;
+  cursor: pointer;
+  color: #007bff;
+  font-size: 14px;
 }
 
 div#reports_table_wrapper .search-pacs:hover {
-    color: #0e4285;
+  color: #0e4285;
 }
 
 .form-group-sec.date-input {
-    /*border: 1px solid #ced4da;
+  /*border: 1px solid #ced4da;
     width: 49%;
     height: 40px;*/
-    color: #495057;
-    border-radius: 0.25rem;
-    position: relative;
+  color: #495057;
+  border-radius: 0.25rem;
+  position: relative;
 }
 
 .form-group-sec.date-input .mat-form-field.mat-form-field.mr-sm-24.ng-tns-c83-1.mat-primary.ng-star-inserted.mat-form-field-type-mat-input.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-hide-placeholder.ng-untouched.ng-pristine.ng-valid.mat-form-field-should-float,
 .mat-form-field {
-    margin-top: -18px !important;
-     padding: 0px 10px !important;
-     display: block !important;
+  margin-top: -18px !important;
+  padding: 0px 10px !important;
+  display: block !important;
 }
 
 .form-group-sec.date-input .mat-form-field-flex.ng-tns-c83-1 {
-    height: 20px;
+  height: 20px;
 }
+
 .modal-open .export-btn.add-patient {
-    z-index: 0 !important;
+  z-index: 0 !important;
 }
+
 .form-group-sec.date-input .mat-form-field-appearance-legacy .mat-form-field-underline {
-    background-color: transparent !important;
+  background-color: transparent !important;
 }
+
 .modal {
-    z-index: -0 !important;
+  z-index: -0 !important;
 }
 
 .modal-backdrop.show {
-    z-index: 0 !important;
+  z-index: 0 !important;
 }
 
 
 
 @media (max-width: 767px) {
-    .form-group-sec.date-input {
-        width: 100%;
-    }
-    .mat-datepicker-content .mat-calendar {
-        width: 100%;
-    }
+  .form-group-sec.date-input {
+    width: 100%;
+  }
+
+  .mat-datepicker-content .mat-calendar {
+    width: 100%;
+  }
 }
 
 //Login form css start
 
 .login-form {
-    border: none;
-    max-width: 450px;
-    margin: 40px auto;
-    border-radius: 10px;
-    width: 100%;
+  border: none;
+  max-width: 450px;
+  margin: 40px auto;
+  border-radius: 10px;
+  width: 100%;
 }
- .login-form h2 {
-    font-size: 24px;
-    text-align: center;
-    color: #000;
+
+.login-form h2 {
+  font-size: 24px;
+  text-align: center;
+  color: #000;
 }
- .login-form label {
-    font-size: 14px;
-    color: #000;
+
+.login-form label {
+  font-size: 14px;
+  color: #000;
 }
- .login-form input {
-    height: 40px;
-    border-radius: 4px !important;
-    font-size: 14px;
-    margin-bottom: 20px;
+
+.login-form input {
+  height: 40px;
+  border-radius: 4px !important;
+  font-size: 14px;
+  margin-bottom: 20px;
 }
- .login-form input,
- .login-form input:focus {
-    background-color: transparent !important;
+
+.login-form input,
+.login-form input:focus {
+  background-color: transparent !important;
 }
- .login-form button {
-    background: #376fb6;
-    border: none;
-    width: 100%;
-    display: block;
-    height: 40px;
-    border-radius: 4px;
-    font-size: 16px;
-    color: #fff;
+
+.login-form button {
+  background: #376fb6;
+  border: none;
+  width: 100%;
+  display: block;
+  height: 40px;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #fff;
 }
+
 .login-form button:hover {
-    opacity: 0.9;
+  opacity: 0.9;
 }
- .login-form span.error_class {
-    display: block;
-    margin-top: -18px !important;
+
+.login-form span.error_class {
+  display: block;
+  margin-top: -18px !important;
 }
 
 //Login form css ends
@@ -451,91 +483,118 @@ div#reports_table_wrapper .search-pacs:hover {
 
 
 .custxt {
-    text-align: center;
-    padding: 40px 0 !important;
-    display: block;
-    font-size: 24px;
+  text-align: center;
+  padding: 40px 0 !important;
+  display: block;
+  font-size: 24px;
 }
+
 .cus_btn {
-    padding: 0 30px;
+  padding: 0 30px;
 }
+
 .cus_btn button {
-    width: 48%;
+  width: 48%;
 }
+
 .action_img {
-    cursor: pointer;
-    margin: 7px;
-}
-.show-img{
-    cursor: pointer;
-}
-.mri{
-    font-size: 14px;
+  cursor: pointer;
+  margin: 7px;
 }
 
-#reports_table tbody tr{ background-color: #7bb5ff2e !important;}
-#reports_table tbody tr.odd{ background-color: #d9e7f7 !important;}
-#reports_table tbody tr:hover{ background-color: #dcedff !important;}
+.show-img {
+  cursor: pointer;
+}
+
+.mri {
+  font-size: 14px;
+}
+
+#reports_table tbody tr {
+  background-color: #7bb5ff2e !important;
+}
+
+#reports_table tbody tr.odd {
+  background-color: #d9e7f7 !important;
+}
+
+#reports_table tbody tr:hover {
+  background-color: #dcedff !important;
+}
+
 @media (max-width: 767px) {
-    .add-patient-form input, .add-patient-form .input-group, .form-group-sec input, .form-group-sec,
-    .add-patient-form .input-group.form-group-sec {
-        width: 100%;
-    }
-    .add-patient-con {
-        grid-gap: 1px;
-    }
-    .error_class {
-        margin-top: 0px !important;
-    }
-    .form-group-sec {
-        margin-top: 20px;
-    }
-    .cus_btn {
-        padding: 0 10px;
-    }
-    .cus_btn button {
-        width: 100%;
-    }
+
+  .add-patient-form input,
+  .add-patient-form .input-group,
+  .form-group-sec input,
+  .form-group-sec,
+  .add-patient-form .input-group.form-group-sec {
+    width: 100%;
+  }
+
+  .add-patient-con {
+    grid-gap: 1px;
+  }
+
+  .error_class {
+    margin-top: 0px !important;
+  }
+
+  .form-group-sec {
+    margin-top: 20px;
+  }
+
+  .cus_btn {
+    padding: 0 10px;
+  }
+
+  .cus_btn button {
+    width: 100%;
+  }
 }
 
 
-.mat-form-field-wrapper, .mat-form-field{
-    padding: 0 !important;
+.mat-form-field-wrapper,
+.mat-form-field {
+  padding: 0 !important;
 }
+
 .mat-form-field-flex {
-    border: #ddd solid 1px;
-    height: 40px  !important;
-    margin-top: 18px;
-    position: relative;
-    border-radius: 0.25rem;
+  border: #ddd solid 1px;
+  height: 40px !important;
+  margin-top: 18px;
+  position: relative;
+  border-radius: 0.25rem;
 }
 
 
 .mat-form-field-infix {
-    width: 200px !important;
-    height: auto !important;
-    padding: 0 10px !important;
-    margin: 0 !important;
-    min-width: inherit !important;
-    max-width: inherit !important;
-    border: none !important;
-}
-button.svbtn {
-    border: #376fb6 solid 1px;
-    background-color: transparent;
-    padding: 10px;
-    color: #376fb6;
-    border-radius: 6px;
+  width: 200px !important;
+  height: auto !important;
+  padding: 0 10px !important;
+  margin: 0 !important;
+  min-width: inherit !important;
+  max-width: inherit !important;
+  border: none !important;
 }
 
-.modal-open .modal{
-    z-index: 99 !important;
+button.svbtn {
+  border: #376fb6 solid 1px;
+  background-color: transparent;
+  padding: 10px;
+  color: #376fb6;
+  border-radius: 6px;
 }
+
+.modal-open .modal {
+  z-index: 99 !important;
+}
+
 .fld_o label {
-    font-weight: 500;
-    color: #313131;
+  font-weight: 500;
+  color: #313131;
 }
 
 .backtopatient {
-    bottom: 0 !important;
+  bottom: 0 !important;
 }

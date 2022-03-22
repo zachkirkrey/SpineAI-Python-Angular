@@ -81,6 +81,12 @@ span {
   padding: 5vmin;
 }
 
+.viewer_link {
+  font-size: 14px;
+  text-decoration: underline;
+  color: #376fb6;
+}
+
 .button {
   min-width: 90px;
   height: 40px;
@@ -140,6 +146,10 @@ a[menuButton] {
   h1 {
     font-size: 32px;
     min-width: 300px;
+
+    @media (max-width: 767px) {
+      font-size: 18px;
+    }
   }
 
   .buttons {

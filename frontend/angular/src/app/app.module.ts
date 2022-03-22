@@ -34,6 +34,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ViewerComponent } from './components/viewer/viewer.component';
 import { PatientComponentComponent } from './components/patient-component/patient-component.component';
 import { CookieModule } from 'ngx-cookie';
+import { PatientIntakeFormComponent } from './components/patient-intake-form/patient-intake-form.component';
 
 
 const appRoutes: Routes = [
@@ -49,6 +50,7 @@ const appRoutes: Routes = [
     { path: 'fetch', component: FetchFormComponent, data: { header: true } },
     { path: 'viewer', component: ViewerComponent,data: { header: false }  },
     { path: 'patient/:id', component: PatientComponentComponent,data: { header: true }  },
+    { path: 'detais/form', component: PatientIntakeFormComponent,data: { header: true }  },
     {
         path: '**',
         redirectTo: '/login_pass',
@@ -71,6 +73,7 @@ const appRoutes: Routes = [
         LoginComponent,
         ViewerComponent,
         PatientComponentComponent,
+        PatientIntakeFormComponent,
 
     ],
     imports: [

@@ -1,91 +1,110 @@
 :host {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
-    padding: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  padding: 24px;
 
-    & > div:first-child {
-        grid-column: 1/-1;
-        align-items: center;
-        input {
-            margin-right: 8px;
-            width: 14px;
-            height: 14px;
-            cursor: pointer;
-        }
+  @media (max-width: 757px) {
+    grid-template-columns: 1fr;
+  }
+
+  &>div:first-child {
+    grid-column: 1/-1;
+    align-items: center;
+
+    input {
+      margin-right: 8px;
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+    }
+  }
+
+  .canal,
+  .mid-sagittal,
+  .findings {
+    &>p {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+  }
+
+  .canal {
+    grid-column: 1/-1;
+
+    &>div {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+
+      @media (max-width: 575px) {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .canal,
-    .mid-sagittal,
-    .findings {
-        & > p {
-            font-size: 24px;
-            margin-bottom: 16px;
+    .image {
+      position: relative;
+      padding-bottom: 100%;
+
+      div {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background-image: url(/assets/angular_v2/x-ray.png);
+        background-position: center;
+        background-size: cover;
+      }
+    }
+  }
+
+  .findings {
+    table {
+      width: 100%;
+      text-align: left;
+      font-size: 14px;
+
+      th {
+        text-transform: uppercase;
+        padding-bottom: 8px;
+      }
+
+      td {
+        padding: 8px 0;
+        border-top: 1px solid var(--border-color);
+
+        &:first-of-type {
+          font-weight: bold;
         }
+
+        .badge {
+          border-radius: 3px;
+          color: var(--light-color);
+          padding: 2px 4px;
+          font-size: 10px;
+          line-height: 10px;
+          text-transform: uppercase;
+          font-weight: bold;
+          margin-left: 8px;
+
+          &.severe {
+            background: var(--secondary-color);
+          }
+
+          &.moderate {
+            background: var(--yellow-color);
+          }
+        }
+      }
     }
 
-    .canal {
-        grid-column: 1/-1;
-        & > div {
-            display: grid;
-            gap: 16px;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        }
-
-        .image {
-            position: relative;
-            padding-bottom: 100%;
-            div {
-                position: absolute;
-                height: 100%;
-                width: 100%;
-                top: 0;
-                left: 0;
-                background-image: url(/assets/angular_v2/x-ray.png);
-                background-position: center;
-                background-size: cover;
-            }
-        }
+    .moderate {
+      color: var(--yellow-color);
     }
 
-    .findings {
-        table {
-            width: 100%;
-            text-align: left;
-            font-size: 14px;
-            th {
-                text-transform: uppercase;
-                padding-bottom: 8px;
-            }
-            td {
-                padding: 8px 0;
-                border-top: 1px solid var(--border-color);
-                &:first-of-type {
-                    font-weight: bold;
-                }
-                .badge {
-                    border-radius: 3px;
-                    color: var(--light-color);
-                    padding: 2px 4px;
-                    font-size: 10px;
-                    line-height: 10px;
-                    text-transform: uppercase;
-                    font-weight: bold;
-                    margin-left: 8px;
-                    &.severe {
-                        background: var(--secondary-color);
-                    }
-                    &.moderate {
-                        background: var(--yellow-color);
-                    }
-                }
-            }
-        }
-        .moderate {
-            color: var(--yellow-color);
-        }
-        .severe {
-            color: var(--secondary-color);
-        }
+    .severe {
+      color: var(--secondary-color);
     }
+  }
 }
