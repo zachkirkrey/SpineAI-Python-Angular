@@ -147,6 +147,13 @@ class Study(db.Entity, StudyMixin):
     reports = Set('Report')
     action = Set('Action')
 
+    # fields for intake form
+    referral_reason  = Set('ReferralReason')
+    symptoms = Set('Symptoms')
+    other_treatments = Set('OtherTreatments')
+    history = Set('History')
+    other_questions = Set('OtherQuestions')
+
     @property
     def patient_series(self):
         return self.image_series.select(
@@ -429,3 +436,45 @@ class User(db.Entity):
     uuid = Required(str, index=True, default=get_uuid)
     username = Required(str)
     password = Required(str)
+
+
+class ReferralReason(db.Entity):
+    id = PrimaryKey(int, auto=True)
+    uuid = Required(str, index=True, default=get_uuid)
+    reason = Required(str)
+    studies = Set(Study)
+
+
+class Symptoms(db.Entity):
+    id = PrimaryKey(int, auto=True)
+    uuid = Required(str, index=True, default=get_uuid)
+    symptom = Required(str)
+    studies = Set(Study)
+
+
+class OtherTreatments(db.Entity):
+    id = PrimaryKey(int, auto=True)
+    uuid = Required(str, index=True, default=get_uuid)
+    treatment = Required(str)
+    studies = Set(Study)
+
+
+class History(db.Entity):
+    id = PrimaryKey(int, auto=True)
+    uuid = Required(str, index=True, default=get_uuid)
+    history = Required(str)
+    studies = Set(Study)
+
+
+class OtherQuestions(db.Entity):
+    id = PrimaryKey(int, auto=True)
+    uuid = Required(str, index=True, default=get_uuid)
+    lower_back = Required(int)
+    left_leg = Required(int)
+    right_leg = Required(int)
+    percent_lower_back = Required(int)
+    percent_leg = Required(int)
+    previous_spine_surgery = Optional(bool, default=False)
+    current_smoker = Optional(bool, default=False)
+    mri_status = Required(str)
+    study = Required(Study)
