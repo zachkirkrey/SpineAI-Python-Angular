@@ -58,7 +58,33 @@ module.exports = function (finale, sequelize) {
         model: sequelize.models.Action,
         endpoints: ['/action', '/action/:id'],
         associations: false
-    })
+    });
+    let referralResource = finale.resource({
+        model: sequelize.models.ReferralReason,
+        endpoints: ['/referralreasons', '/referralreason/:uuid'],
+        associations: false
+    });
+    let symptomsResource = finale.resource({
+        model: sequelize.models.Symptoms,
+        endpoints: ['/symptoms', '/symptom/:uuid'],
+        associations: false
+    });
+    let treatmentsResource = finale.resource({
+        model: sequelize.models.OtherTreatments,
+        endpoints: ['/treatments', '/treatment/:uuid'],
+        associations: false
+    });
+    let historyResource = finale.resource({
+        model: sequelize.models.History,
+        endpoints: ['/history', '/history/:uuid'],
+        associations: false
+    });
+    let questionsResource = finale.resource({
+        model: sequelize.models.OtherQuestions,
+        endpoints: ['/questions', '/question/:uuid'],
+        associations: false
+    });
+    
 
 
     // Log access to the following resources.
@@ -74,6 +100,11 @@ module.exports = function (finale, sequelize) {
             segmentationResource,
             studyResource,
             actionResource,
+            referralResource,
+            symptomsResource,
+            treatmentsResource,
+            historyResource,
+            questionsResource
         ].forEach(resource => resource.use(apiLogMiddleware));
     }
 

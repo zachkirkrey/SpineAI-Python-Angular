@@ -117,6 +117,11 @@ module.exports = function (sequelize) {
     let Segmentation = require('./segmentation')(sequelize);
     let Study = require('./study')(sequelize);
     let Action = require('./action')(sequelize);
+    let ReferralReason = require('./referral-reason')(sequelize);
+    let Symptoms = require('./symptoms')(sequelize);
+    let OtherTreatments = require('./other-treatments')(sequelize);
+    let History = require('./history')(sequelize);
+    let OtherQuestions = require('./questions')(sequelize);
 
     defineOneToMany(Study, Classification);
     defineOneToMany(Study, Segmentation);
@@ -127,6 +132,7 @@ module.exports = function (sequelize) {
     defineOneToMany(ImageSeries, Classification, 'input_series');
     defineOneToMany(ImageSeries, Image, 'image_series');
     defineOneToMany(Study, Action);
+    defineOneToMany(Study, OtherQuestions);
 
     defineOneToOne(
         Segmentation,
