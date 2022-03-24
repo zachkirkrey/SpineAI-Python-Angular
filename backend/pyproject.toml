@@ -23,7 +23,7 @@ beautifulsoup4 = "^4.9.1"
 lxml = "^4.5.1"
 requests = "^2.23.0"
 termcolor = "^1.1.0"
-torch = {path = "deps/torch-1.7.1+cu110-cp36-cp36m-linux_x86_64.whl"}
+#torch = {path = "deps/torch-1.7.1+cu110-cp36-cp36m-linux_x86_64.whl"}
 # Unfortunately, since torchvision depends on torch "1.7.1" but we are installing
 # torch "1.7.1+cu110", poetry considers this invalid, so we have to manually
 # manage this dependency ourselves.
@@ -42,6 +42,7 @@ jsonschema = "^3.2.0"
 levelfinder = {path = "deps/levelfinder-0.0.1-py3-none-any.whl"}
 config2 = {path = "deps/config2-0.3.2-py3-none-any.whl"}
 pynetdicom = "^1.5.7"
+yoyo-migrations = "~6.1.0"
 
 [tool.poetry.dev-dependencies]
 nose = "^1.3.7"

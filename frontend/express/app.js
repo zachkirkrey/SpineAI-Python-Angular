@@ -13,6 +13,7 @@ const restifyClients = require('restify-clients');
 const session = require('express-session');
 const sessionFileStore = require('session-file-store')(session);
 const yaml = require('node-yaml');
+const morgan = require('morgan');
 
 const api = require('./services/api');
 const upload = require('./services/upload');
@@ -24,6 +25,9 @@ const search = require('./services/search');
 console.log('NODE_ENV: ' + config.util.getEnv('NODE_ENV'));
 
 const server = express();
+
+// Global logging middleware
+server.use(morgan(process.env.NODE_ENV==='docker-local' ? 'dev' : 'combined'));
 
 // Set X-Frame-Options: SAMEORIGIN and X-Content-Type-Options: nosniff.
 // NOTE(billy): Installed as part of UCLA vulnerability scan.
@@ -75,6 +79,11 @@ server.use('/api', api);
 server.use('/backend', expressProxy(config.get('backendService.url')));
 
 server.use('/oauth2', OAuth2.getRouter());
+
+// Error endpoint
+server.get('/test/error', (req, res, next) => {
+    next(new Error('Testing an error stack'))
+})
 
 // Angular endpoint.
 server.use(express.json());

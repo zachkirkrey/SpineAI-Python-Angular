@@ -109,17 +109,20 @@ class Uploader {
       archive.directory(absUploadPath, false);
 
       buffer.on('finish', () => {
-        this.client.post('/ingestions', {
+        const val = {
           uuid: uploadID,
           creation_datetime: new Date().toISOString(),
           state: 'NEW',
           error_str: '',
           name: metadata.name,
+          type: 'FILE_BYTES',
+          accession_number: '',
           file_archive_bytes: buffer.getContentsAsString('base64')
-        }, function(err, postReq, postRes, obj) {
+        };
+        this.client.post('/ingestions', val, function(err, postReq, postRes, obj) {
           if (err) {
-            console.log('Error during post to /ingestions:');
-            console.log('%d -> %j', postRes.statusCode, postRes.headers);
+            console.error('Error during post to /ingestions:', err);
+            // console.log('%d -> %j', postRes.statusCode, postRes.headers);
             console.log('%j', obj);
             res.json(obj);
           } else {

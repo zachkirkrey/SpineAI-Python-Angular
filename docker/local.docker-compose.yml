@@ -23,6 +23,7 @@ services:
     networks:
       - api
     volumes:
+      - ./local:/local
       - type: volume
         source: "database"
         target: "/database"

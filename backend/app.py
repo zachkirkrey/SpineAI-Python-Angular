@@ -18,6 +18,8 @@ from lib import database_lib
 from runtime import backend_api
 from runtime import database_listener
 from runtime import study_reader
+from yoyo import read_migrations
+from yoyo import get_backend
 
 
 class Tee(object):
@@ -35,6 +37,16 @@ class Tee(object):
     def flush(self):
         self.file.flush()
 
+# This uses yoyo-migrations to perform database additions to entities missing new columns
+# (new entities and relations are automatically handled by pony)
+# See https://ollycope.com/software/yoyo/6.1.0/ for documentation about writing and working with migrations
+def migrate(location):
+    logging.info('Migrating database at: "sqlite:///%s"', location)
+    backend = get_backend('sqlite:///' + location)
+    logging.info('Migration path "%s"', os.path.abspath('lib/migrations'))
+    migrations = read_migrations('lib/migrations')
+    with backend.lock():
+        backend.apply_migrations(backend.to_apply(migrations))
 
 def main():
     # Get command line configuration
@@ -98,6 +110,7 @@ def main():
     logging.info('Initializing and connecting to %s', dbconfig.location)
     db = None
     if dbconfig.engine == 'sqlite3':
+        migrate(dbconfig.location)
         db = database_lib.SpineAIDatabase(
                 db_location=dbconfig.location,
                 db_debug=dbconfig.debug)

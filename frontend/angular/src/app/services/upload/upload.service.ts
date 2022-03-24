@@ -12,7 +12,7 @@ import { catchError } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 const api_url = environment.api_url;
-const url = api_url+'/upload';
+const url = '/upload';
 
 export enum UploadStatus {
   UNKNOWN,

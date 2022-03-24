@@ -29,6 +29,7 @@
     "js-yaml": "^3.13.1",
     "jsonwebtoken": "^8.5.1",
     "memory-cache": "^0.2.0",
+    "morgan": "^1.10.0",
     "node-yaml": "^4.0.1",
     "normalize-port": "^1.0.0",
     "restify-clients": "^2.6.9",

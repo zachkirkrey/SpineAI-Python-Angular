@@ -37,6 +37,9 @@ services:
       - type: volume
         source: "database"
         target: "/database"
+      - type: volume
+        source: "certbot-etc"
+        target: "/etc/letsencrypt"
     restart: unless-stopped
   spineai-frontend:
     image: spineai/spineai-frontend:latest

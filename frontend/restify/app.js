@@ -13,6 +13,7 @@ const restify = require('restify');
 const restifyCors = require('restify-cors-middleware');
 const yaml = require('node-yaml');
 const yargs = require('yargs');
+const morgan = require('morgan');
 
 // Initialize Sequelize ORM.
 console.log('Loading database %o', config.get('sequelize.init.storage'))
@@ -28,6 +29,8 @@ const cors = restifyCors({
   exposeHeaders: ['Authorization', 'API-Token-Expiry', 'Content-Range']
 });
 
+// Global logging middleware
+server.use(morgan(process.env.NODE_ENV==='docker-local' ? 'dev' : 'combined'));
 server.pre(cors.preflight);
 server.use(cors.actual);
 

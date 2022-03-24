@@ -5,7 +5,7 @@ webserver:
     certFile: "/etc/letsencrypt/live/spineai.com/fullchain.pem"
     keyFile: "/etc/letsencrypt/live/spineai.com/privkey.pem"
   password:
-    enabled: true
+    enabled: false
     # NOTE(billy): We accept storing passwords in plaintext in git for dev.
     # For prod, we should use a real secret storage for any secrets.
     password: "$pine@idevelopmenttestuser!"
