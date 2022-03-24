@@ -728,9 +728,9 @@ export class StudyListComponent implements OnInit {
     navigateToPatient(uuid) {
         this.router.navigate(['/patient/' + uuid])
     }
-    redirect(value) {
+    redirect(value, uuid,id) {
         if (value == 'intake') {
-            this.router.navigate(['/detais/form'])
+            this.router.navigate(['/detais/form/' + uuid+'/'+id])
         }
     }
 }

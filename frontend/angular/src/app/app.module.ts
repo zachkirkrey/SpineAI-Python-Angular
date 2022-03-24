@@ -48,9 +48,9 @@ const appRoutes: Routes = [
     { path: 'intake/:intake_id', component: IntakeFormComponent, data: { header: true } },
     { path: 'fetch/:fetch_id', component: FetchFormComponent, data: { header: true } },
     { path: 'fetch', component: FetchFormComponent, data: { header: true } },
-    { path: 'viewer', component: ViewerComponent,data: { header: false }  },
-    { path: 'patient/:id', component: PatientComponentComponent,data: { header: true }  },
-    { path: 'detais/form', component: PatientIntakeFormComponent,data: { header: true }  },
+    { path: 'viewer', component: ViewerComponent, data: { header: false } },
+    { path: 'patient/:id', component: PatientComponentComponent, data: { header: true } },
+    { path: 'detais/form/:uuid/:id', component: PatientIntakeFormComponent, data: { header: true } },
     {
         path: '**',
         redirectTo: '/login_pass',

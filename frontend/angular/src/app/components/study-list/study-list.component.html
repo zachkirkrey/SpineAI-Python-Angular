@@ -78,27 +78,38 @@
                     *ngIf="index_complete && !index_error">
                     <thead>
                         <tr *ngIf="isShown == true">
-                            <th id="mrn_col_head"  [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'">MRN #</th>
-                            <th id="apt_col_head"   [style.display]="aptCheckBox == false ? 'none' : 'table-cell'">APPT DATE</th>
+                            <th id="mrn_col_head" [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'">MRN #
+                            </th>
+                            <th id="apt_col_head" [style.display]="aptCheckBox == false ? 'none' : 'table-cell'">APPT
+                                DATE</th>
                             <th id="created_col_head"
                                 [style.display]="createdCheckbox == false ? 'none' : 'table-cell'">CREATED DATE</th>
-                            <th id="name_col_head"   [style.display]="nameCheckBox == false ? 'none' : 'table-cell'">PATIENT NAME</th>
+                            <th id="name_col_head" [style.display]="nameCheckBox == false ? 'none' : 'table-cell'">
+                                PATIENT NAME</th>
                             <th id="import_col_head" [style.display]="importCheckBox == false ? 'none' : 'table-cell'">
                                 IMPORT ID</th>
-                            <th id="report_col_head" [style.display]="reportCheckBox == false ? 'none' : 'table-cell'">REPORT</th>
-                            <th id="recommn_col_head" [style.display]="recommnCheckBox == false ? 'none' : 'table-cell'">RECOMMENDATION</th>
-                            <th id="action_col_head" class="action-report" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">ACTION</th>
+                            <th id="report_col_head" [style.display]="reportCheckBox == false ? 'none' : 'table-cell'">
+                                REPORT</th>
+                            <th id="recommn_col_head"
+                                [style.display]="recommnCheckBox == false ? 'none' : 'table-cell'">RECOMMENDATION</th>
+                            <th id="action_col_head" class="action-report"
+                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">ACTION</th>
                         </tr>
                         <tr *ngIf="isShown == false">
-                            <th id="mrn_col_head"  [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'">MRN #</th>
-                            <th id="apt_col_head"   [style.display]="aptCheckBox == false ? 'none' : 'table-cell'">APPT DATE</th>
+                            <th id="mrn_col_head" [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'">MRN #
+                            </th>
+                            <th id="apt_col_head" [style.display]="aptCheckBox == false ? 'none' : 'table-cell'">APPT
+                                DATE</th>
                             <th id="created_col_head"
                                 [style.display]="createdCheckbox == false ? 'none' : 'table-cell'">CREATED DATE</th>
                             <th id="import_col_head" [style.display]="importCheckBox == false ? 'none' : 'table-cell'">
                                 IMPORT ID</th>
-                            <th id="report_col_head" [style.display]="reportCheckBox == false ? 'none' : 'table-cell'">REPORT</th>
-                            <th id="recommn_col_head" [style.display]="recommnCheckBox == false ? 'none' : 'table-cell'">RECOMMENDATION</th>
-                            <th id="action_col_head" class="action-report" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">ACTION</th>
+                            <th id="report_col_head" [style.display]="reportCheckBox == false ? 'none' : 'table-cell'">
+                                REPORT</th>
+                            <th id="recommn_col_head"
+                                [style.display]="recommnCheckBox == false ? 'none' : 'table-cell'">RECOMMENDATION</th>
+                            <th id="action_col_head" class="action-report"
+                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -136,7 +147,7 @@
                                 <ng-template #noReport>
                                     <!--new patient addition-->
                                     <div>
-                                       <a class="search-pacs" (click)="redirect('intake')">
+                                        <a class="search-pacs" (click)="redirect('intake',metadata.uuid,metadata.id)">
                                             Intake
                                         </a>
                                         |
@@ -235,7 +246,7 @@
                         <input id="diagnosis" class="form-control" placeholder="Diagnosis" name="diagnosis"
                             (change)="alphabetValidate(diagnosis,'diagnosis')" [(ngModel)]="diagnosis">
                     </div>
-<!--{{appt_date}}-->
+                    <!--{{appt_date}}-->
                     <div class="form-group-sec date-input">
                         <mat-form-field class="mr-sm-24" fxFlex>
                             <input matInput [matDatepicker]="appt_picker" class="form-control"

@@ -11,11 +11,11 @@
             <div class="fld_o">
                 <div class="form-group-sec">
                     <label>Patient Name:</label>
-                    {{name}}
+                    {{intake_form.patient_name}}
                 </div>
                 <div class="form-group-sec">
                     <label>MRN:</label>
-                    {{mrn}}
+                    {{intake_form.mrn}}
                 </div>
             </div>
             <div class="fld_o">
@@ -24,8 +24,8 @@
                     <ul>
                         <li *ngFor="let item of referral_reason; let i = index">
                             <mat-checkbox color="primary" [checked]="item.show"
-                                (change)="onItemChange($event,item.id,item.show)">
-                                {{item.name}}
+                                (change)="onItemChange($event,item.uuid,item.show)">
+                                {{item.reason}}
                             </mat-checkbox>
                         </li>
                     </ul>
@@ -78,8 +78,8 @@
                     <ul>
                         <li *ngFor="let item of symptoms_arr; let i = index">
                             <mat-checkbox color="primary" [checked]="item.show"
-                                (change)="onItemChange($event,item.id,item.show)">
-                                {{item.name}}
+                                (change)="onItemChange($event,item.uuid,item.show)">
+                                {{item.symptom}}
                             </mat-checkbox>
                         </li>
                     </ul>
@@ -90,7 +90,7 @@
                     <label>Previous Spine Surgery:</label>
                     <select [(ngModel)]="spineSurgery" name="spineSurgery"
                         (change)="onSelectChange(spineSurgery,'prevSpine')">
-                        <option *ngFor="let item of prev_spine" value={{item.name}}>
+                        <option *ngFor="let item of prev_spine" value={{item.value}}>
                             {{item.name}}
                         </option>
                     </select>
@@ -102,8 +102,8 @@
                     <ul>
                         <li *ngFor="let item of otherTreat_arr; let i = index">
                             <mat-checkbox color="primary" [checked]="item.show"
-                                (change)="onItemChange($event,item.id,item.show)">
-                                {{item.name}}
+                                (change)="onItemChange($event,item.uuid,item.show)">
+                                {{item.treatment}}
                             </mat-checkbox>
                         </li>
                     </ul>
@@ -115,8 +115,8 @@
                     <ul>
                         <li *ngFor="let item of history_arr; let i = index">
                             <mat-checkbox color="primary" [checked]="item.show"
-                                (change)="onItemChange($event,item.id,item.show)">
-                                {{item.name}}
+                                (change)="onItemChange($event,item.uuid,item.show)">
+                                {{item.history}}
                             </mat-checkbox>
                         </li>
                     </ul>
@@ -126,7 +126,7 @@
                 <div class="form-group-sec date-input">
                     <label>Current Smoker:</label>
                     <select [(ngModel)]="smoker" name="smoker" (change)="onSelectChange(smoker,'smoker')">
-                        <option *ngFor="let item of smoker_arr" value={{item.name}}>
+                        <option *ngFor="let item of smoker_arr" value={{item.value}}>
                             {{item.name}}
                         </option>
                     </select>

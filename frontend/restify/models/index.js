@@ -193,7 +193,11 @@ module.exports = function (sequelize) {
             model: Action
         }, ]
     });
-
+    Study.addScope('includeQuestions', {
+        include: [{
+            model: OtherQuestions
+        }, ]
+    });
     CanalSegmentation.addScope('defaultScope', {
         include: [{
             model: Segmentation,
