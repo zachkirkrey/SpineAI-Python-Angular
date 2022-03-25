@@ -38,7 +38,8 @@ export class StudyListComponent implements OnInit {
     mrn: any;
     email: any;
     date_picker: any;
-    appt_date = "Appointment Date";
+    date_placeholder: string = "Appointment Date"
+    appt_date: any
     telephone: any;
     diagnosis: any;
     email_error: boolean = false
@@ -156,6 +157,15 @@ export class StudyListComponent implements OnInit {
             this.actionCheckBox = actionCheckBox
         }
 
+    }
+    checkPlaceHolder() {
+        if (this.date_placeholder) {
+            this.date_placeholder = null
+            return;
+        } else {
+            this.date_placeholder = 'Appointment Date'
+            return
+        }
     }
     hide_show_table(col_name, value, index) {
         console.log('value', value)
@@ -728,9 +738,9 @@ export class StudyListComponent implements OnInit {
     navigateToPatient(uuid) {
         this.router.navigate(['/patient/' + uuid])
     }
-    redirect(value, uuid,id) {
+    redirect(value, uuid, id) {
         if (value == 'intake') {
-            this.router.navigate(['/detais/form/' + uuid+'/'+id])
+            this.router.navigate(['/detais/form/' + uuid + '/' + id])
         }
     }
 }

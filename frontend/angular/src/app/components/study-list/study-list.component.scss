@@ -12,54 +12,41 @@
     font-size: 0.8em;
     margin-bottom: 0.5em;
   }
+
   .custom-button:hover {
     text-decoration: none;
   }
 
 }
-.date-input{
-    ::ng-deep{
-        input {
-            border-top: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;
-            height: 37px;
-            &[ng-reflect-model] {
-                background: #fff;
-                z-index: 9;
-                position: relative;
-                & ~ .mat-form-field-label-wrapper {
-                    .mat-form-field-label {
-                        display: none;
-                    }
-                }
-            }
-            &:focus {
-                border-bottom: 1px solid #ddd;
-                & ~ .mat-form-field-label-wrapper {
-                    .mat-form-field-label {
-                        display: none;
-                    }
-                }
-            }
-        }
-        .mat-form-field-label-wrapper {
-            .mat-form-field-label {
-                top: 25px;
-                left: 10px;
-                color: #747d84;
-                transform: none !important;
-            }
-        }
 
-
-         .mat-form-field-underline {
-            display: none;
-        }
+.date-input {
+  ::ng-deep {
+    input {
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      height: 37px;
     }
+
+    .mat-form-field-label-wrapper {
+      .mat-form-field-label {
+        top: 25px;
+        left: 10px;
+        color: #747d84;
+        transform: none !important;
+      }
+    }
+
+
+    .mat-form-field-underline {
+      display: none;
+    }
+  }
 }
+
 .spinner-wrapper {
   min-height: 80px;
 }
+
 .box-spinner {
   display: inline-block;
   position: fixed;
@@ -68,6 +55,7 @@
   height: 80px;
   margin: auto;
 }
+
 .box-spinner div {
   display: inline-block;
   position: absolute;
@@ -76,24 +64,30 @@
   background: $blue;
   animation: box-spinner 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
 }
+
 .box-spinner div:nth-child(1) {
   left: 8px;
   animation-delay: -0.24s;
 }
+
 .box-spinner div:nth-child(2) {
   left: 32px;
   animation-delay: -0.12s;
 }
+
 .box-spinner div:nth-child(3) {
   left: 56px;
   animation-delay: 0;
 }
+
 @keyframes box-spinner {
   0% {
     top: 8px;
     height: 64px;
   }
-  50%, 100% {
+
+  50%,
+  100% {
     top: 24px;
     height: 32px;
   }
@@ -103,18 +97,21 @@
 // 4-1-2022
 .table-responsive {
   position: relative;
+
   .export-wrap {
     position: absolute;
     right: 0;
     display: flex;
     display: -ms-flexbox;
     align-items: center;
-    .toggle_button{
-     margin-right:200px;
+
+    .toggle_button {
+      margin-right: 200px;
     }
   }
 
 }
+
 .export-wrap mat-checkbox#mat-checkbox-1 {
   color: #333;
 }
@@ -130,47 +127,49 @@ div#reports_table_wrapper>.row:nth-child(1) div {
 }
 
 .form-group-sec {
-    margin-top: 20px;
-    width: 48% !important;
+  margin-top: 20px;
+  width: 48% !important;
 }
+
 .table-col {
-    width: 211px;
+  width: 211px;
 }
 
-@media screen and (max-width:770px){
+@media screen and (max-width:770px) {
 
-    .form-group-sec {
-        margin-top: 10px;
-        width: 100% !important;
-    }
+  .form-group-sec {
+    margin-top: 10px;
+    width: 100% !important;
+  }
 
 }
 
 //column checkbox css
 .dropdown-check-list {
-    display: inline-block;
-  }
+  display: inline-block;
+}
 
-  .dropdown-check-list .anchor {
-    position: relative;
-    cursor: pointer;
-    display: inline-block;
-    padding: 5px 40px 5px 10px;
-    border: 1px solid #ccc;
-  }
-  .dropdown-check-list .anchor:after {
-    position: absolute;
-    content: "";
-    border-left: 2px solid #fff;
-    border-top: 2px solid #fff;
-    padding: 3px;
-    right: 14px;
-    transform: rotate(-135deg);
-    top: -4px;
-    margin: auto;
-    bottom: 0;
-    width: 5px;
-    height: 5px;
+.dropdown-check-list .anchor {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 40px 5px 10px;
+  border: 1px solid #ccc;
+}
+
+.dropdown-check-list .anchor:after {
+  position: absolute;
+  content: "";
+  border-left: 2px solid #fff;
+  border-top: 2px solid #fff;
+  padding: 3px;
+  right: 14px;
+  transform: rotate(-135deg);
+  top: -4px;
+  margin: auto;
+  bottom: 0;
+  width: 5px;
+  height: 5px;
 }
 
 // column checkbox css ends
@@ -180,91 +179,100 @@ div#reports_table_wrapper>.row:nth-child(1) div {
 }*/
 
 .cols_th {
-    position: relative;
-    z-index: 1;
-    background: #376fb6;
-    padding: 4px 0;
-    border-radius: 5px;
-    margin-left: 5px;
+  position: relative;
+  z-index: 1;
+  background: #376fb6;
+  padding: 4px 0;
+  border-radius: 5px;
+  margin-left: 5px;
 }
 
 
 
-.dropdown-check-list  .anchor    {
-    border: none !important;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 500;
+.dropdown-check-list .anchor {
+  border: none !important;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .cols_th input[type="checkbox"] {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
-.cols_th ul.items.ng-star-inserted{
-    background: #f7f0f0;
-    position: absolute;
-    left: 0;
-    width: 225px;
-    padding: 10px;
-    margin-top: 2px;
-    z-index: 1;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    box-shadow: #ccc 0px 3px 10px;
+.cols_th ul.items.ng-star-inserted {
+  background: #f7f0f0;
+  position: absolute;
+  left: 0;
+  width: 225px;
+  padding: 10px;
+  margin-top: 2px;
+  z-index: 1;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  box-shadow: #ccc 0px 3px 10px;
 }
 
-.topbtno{
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 15px;
-    border-bottom: #ddd solid 1px !important;
-    padding-bottom: 11px;
+.topbtno {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+  border-bottom: #ddd solid 1px !important;
+  padding-bottom: 11px;
 }
 
 #mat-checkbox-1 {
-    padding: 7px 10px 0 0 !important;
+  padding: 7px 10px 0 0 !important;
 }
 
 
-.export-btn.add-patient{
-    bottom: 0 !important;
+.export-btn.add-patient {
+  bottom: 0 !important;
 }
+
 .export-wrap {
-    width: 50%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    position: relative;
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
 }
 
 .addpatbtno {
-    width: 50%;
-}
-td.mrn_col.sorting_1:hover, td.name_col.ng-star-inserted:hover{
-    background-color: #f2f0f063;
-    cursor: pointer;
+  width: 50%;
 }
 
-@media screen and (max-width:767px){
-    .addpatbtno , .export-wrap {
-        width: 100%;
-    }
+td.mrn_col.sorting_1:hover,
+td.name_col.ng-star-inserted:hover {
+  background-color: #f2f0f063;
+  cursor: pointer;
 }
-@media screen and (max-width:477px){
-    .export-wrap  {
-        flex-wrap: wrap;
-    }
-    section.example-section, .export-btn.mat-button ,  .cols_th {
-        width: 100%;
-        text-align: center;
-        margin: 4px 0;
-    }
 
-    .cols_th ul.items.ng-star-inserted{
-        width: 100%;
-        text-align: left;
-    }
+@media screen and (max-width:767px) {
+
+  .addpatbtno,
+  .export-wrap {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width:477px) {
+  .export-wrap {
+    flex-wrap: wrap;
+  }
+
+  section.example-section,
+  .export-btn.mat-button,
+  .cols_th {
+    width: 100%;
+    text-align: center;
+    margin: 4px 0;
+  }
+
+  .cols_th ul.items.ng-star-inserted {
+    width: 100%;
+    text-align: left;
+  }
 
 
 }
