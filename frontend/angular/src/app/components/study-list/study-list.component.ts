@@ -448,7 +448,8 @@ export class StudyListComponent implements OnInit {
         this.dob_error = false
     }
     open(content) {
-        this.date_picker = new Date()
+        //this.date_picker = new Date()
+        this.date_picker = new Date('1/1/1970')
         this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
             this.closeResult = `Closed with: ${result}`;
         }, (reason) => {
