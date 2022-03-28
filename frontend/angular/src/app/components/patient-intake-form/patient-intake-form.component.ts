@@ -7,8 +7,6 @@ import { environment } from 'src/environments/environment';
     styleUrls: ['./patient-intake-form.component.scss']
 })
 export class PatientIntakeFormComponent implements OnInit {
-    name = 'Elia'
-    mrn = '32325'
     spineSurgery: any
     smoker: any
     mri_status: any
@@ -34,6 +32,8 @@ export class PatientIntakeFormComponent implements OnInit {
     study_uuid: any
     intake_form = []
     otherQues = []
+    patient_name:any
+    mrn:any
     referral_reason = [{ 'id': 1, 'name': 'Herniated or bulging disc', 'show': false }, { 'id': 2, 'name': 'Arthritis or degenerative changes', 'show': false }, { 'id': 3, 'name': 'Spondylolisthesis', 'show': false }, { 'id': 4, 'name': 'Fracture', 'show': false }]
     symptoms_arr = [{ 'id': 1, 'name': 'Bowel or bladder dysfunction', 'show': false }, { 'id': 2, 'name': 'Saddle anesthesia', 'show': false }, { 'id': 3, 'name': 'Rapidly progressing weakness', 'show': false }]
     prev_spine = [{ 'id': 1, 'name': 'Yes', 'value': true }, { 'id': 2, 'name': 'No', 'value': false }]
@@ -158,7 +158,10 @@ export class PatientIntakeFormComponent implements OnInit {
             dataType: 'json',
         }).done(function (data) {
             this.intake_form = data
+            this.patient_name= this.intake_form.patient_name
+            this.mrn = this.intake_form.mrn
             if (this.intake_form.OtherQuestions.length > 0) {
+
                 this.otherQues = this.intake_form.OtherQuestions
                 this.lower_back = this.intake_form.OtherQuestions.length > 0 && this.intake_form.OtherQuestions[0].lower_back
                 this.left_leg = this.intake_form.OtherQuestions.length > 0 && this.intake_form.OtherQuestions[0].left_leg
