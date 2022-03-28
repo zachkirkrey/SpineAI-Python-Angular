@@ -7,6 +7,17 @@ const Sequelize = require('sequelize');
 const sequelize = new Sequelize(config.get('sequelize.init'));
 let User = require('./models/user')(sequelize);
 let Study = require('./models/study')(sequelize);
+let History = require('./models/history')(sequelize);
+const History_Study = sequelize.define('History_Study')
+
+Study.belongsToMany(History, { through: History_Study })
+History.belongsToMany(Study, { through: History_Study })
+
+const userCity = await UserCity.create({
+    userId: user.userId,
+    cityId: city.cityId,
+  })
+
 
 //server.use(rjwt(config_jwt.jwt).unless({
 //    path: ['/user','/reports']
