@@ -32,8 +32,8 @@ export class PatientIntakeFormComponent implements OnInit {
     study_uuid: any
     intake_form = []
     otherQues = []
-    patient_name:any
-    mrn:any
+    patient_name: any
+    mrn: any
     referral_reason = [{ 'id': 1, 'name': 'Herniated or bulging disc', 'show': false }, { 'id': 2, 'name': 'Arthritis or degenerative changes', 'show': false }, { 'id': 3, 'name': 'Spondylolisthesis', 'show': false }, { 'id': 4, 'name': 'Fracture', 'show': false }]
     symptoms_arr = [{ 'id': 1, 'name': 'Bowel or bladder dysfunction', 'show': false }, { 'id': 2, 'name': 'Saddle anesthesia', 'show': false }, { 'id': 3, 'name': 'Rapidly progressing weakness', 'show': false }]
     prev_spine = [{ 'id': 1, 'name': 'Yes', 'value': true }, { 'id': 2, 'name': 'No', 'value': false }]
@@ -58,15 +58,42 @@ export class PatientIntakeFormComponent implements OnInit {
     navigate() {
         this.router.navigate(['studies']);
     }
-    onItemChange(event, id, show) {
-        //this.referral_reason.forEach(y => {
-        //    if (y.id == id) {
-        //        y.show = !show
-        //    }
-        //})
+    onItemChange(event, id, show, name) {
+        if (name == 'history') {
+            this.history_arr.forEach(y => {
+                if (y.id == id) {
+                    y.show = !show
+                }
+            })
+            //this.saveHistory()
+        }
+
     }
     onSelectChange(value, name) {
         console.log('Value', value, name)
+    }
+    saveHistory() {
+        let history_save_url = `${environment.api_url}/history?Studies.id=${this.study_id}&History.id=1`;
+        let req_data = {
+            'uuid': 'c772f2b6-9546-4176-a2b1-a370980666dd',
+            'history': 'Cardiovascular Disease'
+        }
+        $.ajax({
+            url: history_save_url,
+            dataType: 'json',
+            type: "POST",
+            headers: {
+                "Authorization": 'Bearer ' + this.token
+            },
+            data: req_data,
+
+        }).done(function (data) {
+            console.log('history_save', data)
+
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            this.action_error = `Data Not ${this.index_url}.`;
+        }.bind(this)).always(() => {
+        });
     }
     getReferralReason() {
         let referral_url = `${environment.api_url}/referralreasons`;
@@ -158,7 +185,7 @@ export class PatientIntakeFormComponent implements OnInit {
             dataType: 'json',
         }).done(function (data) {
             this.intake_form = data
-            this.patient_name= this.intake_form.patient_name
+            this.patient_name = this.intake_form.patient_name
             this.mrn = this.intake_form.mrn
             if (this.intake_form.OtherQuestions.length > 0) {
 

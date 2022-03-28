@@ -167,6 +167,10 @@ module.exports = function (sequelize) {
 
     defineManyToMany(sequelize, Report, Study);
     defineManyToMany(sequelize, Classification, Report);
+    defineManyToMany(sequelize, History, Study);
+    defineManyToMany(sequelize, ReferralReason, Study);
+    defineManyToMany(sequelize, Study,Symptoms);
+    defineManyToMany(sequelize, OtherTreatments, Study);
 
     Study.addScope('defaultScope', {});
     Study.addScope('deep', {
@@ -191,6 +195,26 @@ module.exports = function (sequelize) {
     Study.addScope('includeActions', {
         include: [{
             model: Action
+        }, ]
+    });
+    Study.addScope('includeHistory', {
+        include: [{
+            model: History
+        }, ]
+    });
+    Study.addScope('includeReferralReason', {
+        include: [{
+            model: ReferralReason
+        }, ]
+    });
+    Study.addScope('includeSymptoms', {
+        include: [{
+            model: Symptoms
+        }, ]
+    });
+    Study.addScope('includeOtherTreatments', {
+        include: [{
+            model: OtherTreatments
         }, ]
     });
     Study.addScope('includeQuestions', {
@@ -247,6 +271,10 @@ module.exports = function (sequelize) {
         Report: Report,
         Segmentation: Segmentation,
         Study: Study,
-        Action: Action
+        Action: Action,
+        History:History,
+        ReferralReason:ReferralReason,
+        Symptoms:Symptoms,
+        OtherTreatments:OtherTreatments
     }
 }
