@@ -26,15 +26,21 @@ from lib import segmentation_lib
 from lib import util_lib
 
 
-def CreateStudy(input_dir, name=None):
+def CreateStudy(input_dir, name=None, study_id=None):
     from lib import schema
 
     input_dir = os.path.abspath(input_dir)
     study_name=os.path.basename(input_dir)
     if name:
         study_name = name
-
-    study = schema.Study(
+    if study_id:
+        study = schema.Study[study_id]
+        study.name=study_name
+        study.file_dir_path=input_dir
+        study.file_dir_checksum=checksumdir.dirhash(input_dir, 'md5')
+    
+    else:
+        study = schema.Study(
             name=study_name,
             file_dir_path=input_dir,
             file_dir_checksum=checksumdir.dirhash(input_dir, 'md5'),
@@ -44,8 +50,7 @@ def CreateStudy(input_dir, name=None):
             phone_number='98989898',
             diagnosis='Test',
             created_by=True
-    )
-
+        )
     try:
         patient_series = series_lib.ImageSeriesFromDICOMFiles(study)
     except RuntimeError:

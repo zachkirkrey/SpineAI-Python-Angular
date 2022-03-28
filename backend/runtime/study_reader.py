@@ -45,7 +45,7 @@ class StudyReader(object):
             study = self.ingest_study(study_input_dir)
 
     @orm.db_session
-    def ingest_study(self, input_dir, name=None):
+    def ingest_study(self, input_dir, name=None, study_id=None):
         """Create a Study object from the files in the given directory.
 
         Args:
@@ -57,7 +57,7 @@ class StudyReader(object):
         """
         logging.info('Ingesting study from "{}"'.format(input_dir))
         try:
-            study = self.read_study(input_dir, name)
+            study = self.read_study(input_dir, name, study_id)
         except ValueError as e:
             logging.error(e)
             logging.error('Skipping Study ingestion.')
@@ -95,7 +95,7 @@ class StudyReader(object):
 
         return study
 
-    def read_study(self, input_dir, name=None):
+    def read_study(self, input_dir, name=None, study_id=None):
         """Create a Study object from the given directory.
 
         Args:
@@ -120,4 +120,4 @@ class StudyReader(object):
                     util_lib.unzip_to_dir(zip_path, zip_output_dir)
 
         logging.info('Creating Study from %s' % (input_dir))
-        return study_lib.CreateStudy(input_dir, name)
+        return study_lib.CreateStudy(input_dir, name, study_id)

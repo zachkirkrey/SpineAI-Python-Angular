@@ -178,7 +178,8 @@ class IngestionListener(AbstractListener):
                         zipf.extractall(tempdir)
                         self.study_reader.ingest_study(
                                 tempdir,
-                                name=ingestion.name)
+                                name=ingestion.name,
+                                study_id=2)
         else:
             raise ValueError(
                     f'Ingestion {ingestion.uuid}: Unknown ingestion type {ingestion.type}')
