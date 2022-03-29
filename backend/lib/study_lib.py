@@ -105,7 +105,8 @@ class StudyMixin(object):
                 self.study_instance_uid = str(metadata[0x0020000D].value)
             # (0010, 0010) Patient's Name
             if 0x00100010 in metadata:
-                self.patient_name = str(metadata[0x00100010].value)
+                if not self.patient_name:
+                    self.patient_name = str(metadata[0x00100010].value)
             # (0010, 1010) Patient's Age
             if 0x00101010 in metadata:
                 self.patient_age = str(metadata[0x00101010].value)

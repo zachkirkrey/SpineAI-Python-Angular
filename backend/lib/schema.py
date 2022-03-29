@@ -94,6 +94,9 @@ class Ingestion(db.Entity, EventMixin):
     # type == "FILE_BYTES"
     file_archive_bytes = Optional(bytes)
 
+    # added to create relation with study
+    study = Optional('Study')
+
 
 class PatientSex(Enum):
     UNKNOWN = 'UNKNOWN'
@@ -146,6 +149,7 @@ class Study(db.Entity, StudyMixin):
 
     reports = Set('Report')
     action = Set('Action')
+    ingestion = Set(Ingestion)
 
     # fields for intake form
     referral_reason  = Set('ReferralReason')

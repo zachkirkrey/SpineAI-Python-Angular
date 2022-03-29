@@ -179,7 +179,7 @@ class IngestionListener(AbstractListener):
                         self.study_reader.ingest_study(
                                 tempdir,
                                 name=ingestion.name,
-                                study_id=2)
+                                study_id=ingestion.study_id)
         else:
             raise ValueError(
                     f'Ingestion {ingestion.uuid}: Unknown ingestion type {ingestion.type}')

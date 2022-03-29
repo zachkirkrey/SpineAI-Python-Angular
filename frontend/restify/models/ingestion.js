@@ -43,7 +43,15 @@ module.exports = function(sequelize) {
     },
     file_archive_bytes: {
       type: DataTypes.BLOB
-    }
+    },
+    study: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+          model: sequelize.models.Study,
+          key: 'id'
+      }
+  }
   }, {
     defaultScope: {
       attributes: {

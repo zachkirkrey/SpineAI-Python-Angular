@@ -133,6 +133,7 @@ module.exports = function (sequelize) {
     defineOneToMany(ImageSeries, Image, 'image_series');
     defineOneToMany(Study, Action);
     defineOneToMany(Study, OtherQuestions);
+    defineOneToMany(Study, Ingestion);
 
     defineOneToOne(
         Segmentation,
