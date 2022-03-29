@@ -5,18 +5,12 @@ const rjwt = require('restify-jwt-community');
 const jwt = require('jsonwebtoken');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize(config.get('sequelize.init'));
+const {
+    DataTypes
+} = require('sequelize');
 let User = require('./models/user')(sequelize);
-let Study = require('./models/study')(sequelize);
-let History = require('./models/history')(sequelize);
-const History_Study = sequelize.define('History_Study')
 
-Study.belongsToMany(History, { through: History_Study })
-History.belongsToMany(Study, { through: History_Study })
 
-//const userCity = await UserCity.create({
-//    userId: user.userId,
-//    cityId: city.cityId,
-//  })
 
 
 //server.use(rjwt(config_jwt.jwt).unless({
@@ -109,26 +103,97 @@ server.post('/search/pacs', function (req, res, next) {
 });
 
 server.post('/save/history', function (req, res, next) {
-    let history= req.body.history
-    let study= req.body.study
-    History_Study.create({
-        history: history,
-        study: study,
-      })
-        .then(data => {
-            console.log('history_save',data)
-            //let searchPacs = data
-            //if (searchPacs != null) {
-            //    res.send(
-            //        data.dataValues
-            //    );
-            //} else if (searchPacs == null) {
-            //    res.send({
-            //        'message': 'No saved data found!!'
-            //    })
-            //}
+    //History Save
+    let Study = require('./models/study')(sequelize);
+    let History = require('./models/history')(sequelize);
+    tableAName = History.getTableName();
+    tableBName = Study.getTableName();
 
-        })
+    let joinTable = sequelize.define(tableAName + '_' + tableBName, {
+        [tableAName]: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        [tableBName]: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        }
+    });
+
+    History.belongsToMany(Study, {
+        through: joinTable,
+        foreignKey: tableAName.toLowerCase()
+    });
+    Study.belongsToMany(History, {
+        through: joinTable,
+        foreignKey: tableBName.toLowerCase()
+    });
+    //History Save
+    let history = parseInt(req.body.history)
+    let study = parseInt(req.body.study)
+    console.log('req.body', history, study)
+    joinTable.destroy({
+        where: {},
+        truncate: true
+    }).then(data => {
+        joinTable.create({
+                History: history,
+                Study: study,
+            })
+            .then(data => {
+                console.log('history_save', data)
+                res.send({
+                    'message': 'Data saved successfully'
+                })
+            })
+    })
+
+});
+server.post('/save/ReferralReason', function (req, res, next) {
+    //Referral Reason Save
+    let Referral = require('./models/referral-reason')(sequelize);
+    let Study = require('./models/study')(sequelize);
+    tableReferral = Referral.getTableName();
+    studyTable = Study.getTableName();
+    let refStudyTable = sequelize.define(tableReferral + '_' + studyTable, {
+        [tableReferral]: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        [studyTable]: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        }
+    });
+
+    Referral.belongsToMany(Study, {
+        through: refStudyTable,
+        foreignKey: tableReferral.toLowerCase()
+    });
+    Study.belongsToMany(Referral, {
+        through: refStudyTable,
+        foreignKey: studyTable.toLowerCase()
+    });
+    //Referral Reason Save
+    let ref = parseInt(req.body.referralreason)
+    let study = parseInt(req.body.study)
+    console.log('req.body', ref, study)
+    refStudyTable.destroy({
+        where: {},
+        truncate: true
+    }).then(data => {
+        refStudyTable.create({
+                ReferralReason: ref,
+                Study: study
+            })
+            .then(data => {
+                console.log('refStudyTable', data)
+                res.send({
+                    'message': 'Data saved successfully'
+                })
+            })
+    })
+
 });
 server.listen(config.get('restify.port'), function () {
     const host = server.address().address;

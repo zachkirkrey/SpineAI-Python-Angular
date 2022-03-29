@@ -48,36 +48,53 @@ export class PatientIntakeFormComponent implements OnInit {
         this.study_uuid = this.route.snapshot.params.uuid
     }
     ngOnInit(): void {
-        this.fetchQuestions()
-        this.token = localStorage.getItem('token')
         this.getReferralReason()
         this.getSymptoms()
         this.getTreatments()
         this.getHistory()
+        this.fetchQuestions()
+        this.token = localStorage.getItem('token')
+
+
     }
     navigate() {
         this.router.navigate(['studies']);
     }
     onItemChange(event, id, show, name) {
-        if (name == 'history') {
-            this.history_arr.forEach(y => {
-                if (y.id == id) {
-                    y.show = !show
+     if (name == 'history') {
+            this.history_arr.map(x => {
+                if (x.id == id) {
+                    x.show = !show
                 }
             })
-            //this.saveHistory()
+            this.history_arr.map(x => {
+                if (x.show == true) {
+                    this.saveHistory(x.id)
+                }
+            })
         }
-
+       else if(name == 'refReason'){
+        console.log("refReason", id, show)
+            this.referral_reason.map(x => {
+                if (x.id == id) {
+                    x.show = !show
+                }
+            })
+            this.referral_reason.map(x => {
+                if (x.show == true) {
+                    this.saveRefReason(x.id)
+                }
+            })
+        }
     }
     onSelectChange(value, name) {
         console.log('Value', value, name)
     }
-    saveHistory() {
-        //let history_save_url = `${environment.api_url}/history?Studies.id=${this.study_id}&History.id=1`;
+    saveHistory(id) {
         let history_save_url = `${environment.api_url}/save/history`;
         let req_data = {
-            'history_id': '1',
-            'study_id': this.study_id
+            'history': id,
+            'study': parseInt(this.study_id)
         }
         $.ajax({
             url: history_save_url,
@@ -92,7 +109,30 @@ export class PatientIntakeFormComponent implements OnInit {
             console.log('history_save', data)
 
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
-            this.action_error = `Data Not ${this.index_url}.`;
+            this.action_error = `Data Not ${history_save_url}.`;
+        }.bind(this)).always(() => {
+        });
+    }
+    saveRefReason(id) {
+        let ref_save_url = `${environment.api_url}/save/ReferralReason`;
+        let req_data = {
+            'referralreason': id,
+            'study': parseInt(this.study_id)
+        }
+        $.ajax({
+            url: ref_save_url,
+            dataType: 'json',
+            type: "POST",
+            headers: {
+                "Authorization": 'Bearer ' + this.token
+            },
+            data: req_data,
+
+        }).done(function (data) {
+            console.log('ref_save_url', data)
+
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            this.action_error = `Data Not ${ref_save_url}.`;
         }.bind(this)).always(() => {
         });
     }
@@ -110,11 +150,12 @@ export class PatientIntakeFormComponent implements OnInit {
                 y.show = false
 
             })
-
+            this.fetchRef()
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.index_error = `Could not fetch search index from ${referral_url}.`;
         }.bind(this)).always(() => {
         });
+
     }
     getSymptoms() {
         let symptoms_url = `${environment.api_url}/symptoms`;
@@ -170,11 +211,12 @@ export class PatientIntakeFormComponent implements OnInit {
                 y.show = false
 
             })
-
+            this.fetchHistory()
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.index_error = `Could not fetch search index from ${history_url}.`;
         }.bind(this)).always(() => {
         });
+
     }
     fetchQuestions() {
         let question_url = `${environment.api_url}/study/${this.study_uuid}?scope=includeQuestions`;
@@ -208,6 +250,56 @@ export class PatientIntakeFormComponent implements OnInit {
         }.bind(this)).always(() => {
         });
     }
+    fetchHistory() {
+        let history_url = `${environment.api_url}/study/${this.study_uuid}?scope=includeHistory`;
+        $.ajax({
+            url: history_url,
+            headers: {
+                "Authorization": 'Bearer ' + this.token
+            },
+            dataType: 'json',
+        }).done(function (data) {
+            let result = data
+            if (result.Histories.length > 0) {
+                this.history_arr.map(x => {
+                    return result.Histories.map(y => {
+                        if (y.id == x.id) {
+                            console.log('index', y.id, x.id)
+                            x.show = true
+                        }
+                    })
+                })
+            }
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            this.index_error = `Could not fetch search index from ${history_url}.`;
+        }.bind(this)).always(() => {
+        });
+    }
+    fetchRef(){
+        let ref_url = `${environment.api_url}/study/${this.study_uuid}?scope=includeReferralReason`;
+        $.ajax({
+            url: ref_url,
+            headers: {
+                "Authorization": 'Bearer ' + this.token
+            },
+            dataType: 'json',
+        }).done(function (data) {
+            let result = data
+            if (result.ReferralReasons.length > 0) {
+                this.referral_reason.map(x => {
+                    return result.ReferralReasons.map(y => {
+                        if (y.id == x.id) {
+                            console.log('index', y.id, x.id)
+                            x.show = true
+                        }
+                    })
+                })
+            }
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            this.index_error = `Could not fetch search index from ${ref_url}.`;
+        }.bind(this)).always(() => {
+        });
+    }
     updateOuestions() {
         let update_url = `${environment.api_url}/question/${this.study_uuid}`;
         let req_data = {
@@ -235,7 +327,6 @@ export class PatientIntakeFormComponent implements OnInit {
             if ('error' in data) {
                 this.action_error = data['error'];
             } else {
-                this.modalService.dismissAll()
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${this.index_url}.`;
