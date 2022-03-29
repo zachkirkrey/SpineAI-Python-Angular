@@ -13,10 +13,10 @@ const History_Study = sequelize.define('History_Study')
 Study.belongsToMany(History, { through: History_Study })
 History.belongsToMany(Study, { through: History_Study })
 
-const userCity = await UserCity.create({
-    userId: user.userId,
-    cityId: city.cityId,
-  })
+//const userCity = await UserCity.create({
+//    userId: user.userId,
+//    cityId: city.cityId,
+//  })
 
 
 //server.use(rjwt(config_jwt.jwt).unless({
@@ -104,6 +104,29 @@ server.post('/search/pacs', function (req, res, next) {
                     'message': 'No saved data found!!'
                 })
             }
+
+        })
+});
+
+server.post('/save/history', function (req, res, next) {
+    let history= req.body.history
+    let study= req.body.study
+    History_Study.create({
+        history: history,
+        study: study,
+      })
+        .then(data => {
+            console.log('history_save',data)
+            //let searchPacs = data
+            //if (searchPacs != null) {
+            //    res.send(
+            //        data.dataValues
+            //    );
+            //} else if (searchPacs == null) {
+            //    res.send({
+            //        'message': 'No saved data found!!'
+            //    })
+            //}
 
         })
 });

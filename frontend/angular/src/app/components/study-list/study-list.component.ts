@@ -229,8 +229,8 @@ export class StudyListComponent implements OnInit {
     searchPacsNavigate(uuid) {
         this.router.navigate(['/fetch/' + uuid]);
     }
-    importMRINavigate(uuid) {
-        this.router.navigate(['/intake/' + uuid])
+    importMRINavigate(uuid,id) {
+        this.router.navigate(['/intake/' + uuid+'/'+id])
     }
     tableData() {
         function sort_by_creation(x, y) {

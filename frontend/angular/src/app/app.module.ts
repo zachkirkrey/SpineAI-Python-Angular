@@ -45,7 +45,7 @@ const appRoutes: Routes = [
     { path: 'study/:study_id', loadChildren: () => import('./components/spine-report/spine-report.module').then(res => res.SpineReportModule), data: { header: true } },
     { path: 'studies', component: StudyListComponent, data: { header: true } },
     { path: 'intake', component: IntakeFormComponent, data: { header: true } },
-    { path: 'intake/:intake_id', component: IntakeFormComponent, data: { header: true } },
+    { path: 'intake/:intake_id/:studty_id', component: IntakeFormComponent, data: { header: true } },
     { path: 'fetch/:fetch_id', component: FetchFormComponent, data: { header: true } },
     { path: 'fetch', component: FetchFormComponent, data: { header: true } },
     { path: 'viewer', component: ViewerComponent, data: { header: false } },

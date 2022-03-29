@@ -73,10 +73,11 @@ export class PatientIntakeFormComponent implements OnInit {
         console.log('Value', value, name)
     }
     saveHistory() {
-        let history_save_url = `${environment.api_url}/history?Studies.id=${this.study_id}&History.id=1`;
+        //let history_save_url = `${environment.api_url}/history?Studies.id=${this.study_id}&History.id=1`;
+        let history_save_url = `${environment.api_url}/save/history`;
         let req_data = {
-            'uuid': 'c772f2b6-9546-4176-a2b1-a370980666dd',
-            'history': 'Cardiovascular Disease'
+            'history_id': '1',
+            'study_id': this.study_id
         }
         $.ajax({
             url: history_save_url,
