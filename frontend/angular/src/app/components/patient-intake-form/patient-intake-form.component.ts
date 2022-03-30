@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'app-patient-intake-form',
     templateUrl: './patient-intake-form.component.html',
@@ -15,18 +16,6 @@ export class PatientIntakeFormComponent implements OnInit {
     right_leg: any
     back_lower: any
     leg: any
-    ref_error: boolean = false
-    symptoms_error: boolean = false
-    other_error: boolean = false
-    history_error: boolean = false
-    lower_back_error: boolean = false
-    left_leg_error: boolean = false
-    right_leg_error: boolean = false
-    back_lower_error: boolean = false
-    leg_error: boolean = false
-    spineSurgery_error: boolean = false
-    smoker_error: boolean = false
-    mri_status_error: boolean = false
     study_id: any
     token: any
     study_uuid: any
@@ -34,16 +23,20 @@ export class PatientIntakeFormComponent implements OnInit {
     otherQues = []
     patient_name: any
     mrn: any
-    referral_reason = [{ 'id': 1, 'name': 'Herniated or bulging disc', 'show': false }, { 'id': 2, 'name': 'Arthritis or degenerative changes', 'show': false }, { 'id': 3, 'name': 'Spondylolisthesis', 'show': false }, { 'id': 4, 'name': 'Fracture', 'show': false }]
-    symptoms_arr = [{ 'id': 1, 'name': 'Bowel or bladder dysfunction', 'show': false }, { 'id': 2, 'name': 'Saddle anesthesia', 'show': false }, { 'id': 3, 'name': 'Rapidly progressing weakness', 'show': false }]
+    closeResult = '';
+    referral_reason = []
+    symptoms_arr = []
+    patient_save: boolean = false
     prev_spine = [{ 'id': 1, 'name': 'Yes', 'value': true }, { 'id': 2, 'name': 'No', 'value': false }]
-    otherTreat_arr = [{ 'id': 1, 'name': 'Physical Therapy', 'show': false }, { 'id': 2, 'name': 'Steroidal Injections', 'show': false }, { 'id': 3, 'name': 'Ablation Therapy', 'show': false }]
-    history_arr = [{ 'id': 1, 'name': 'Cardiovascular Disease', 'show': false }, { 'id': 2, 'name': 'Pulmonary Disease', 'show': false }, { 'id': 3, 'name': 'Cancer', 'show': false }, { 'id': 4, 'name': 'Rheumatologic disorders', 'show': false }, { 'id': 5, 'name': 'Endocrine', 'show': false }]
+    otherTreat_arr = []
+    history_arr = []
     smoker_arr = [{ 'id': 1, 'name': 'Yes', 'value': true }, { 'id': 2, 'name': 'No', 'value': false }]
     mri_arr = [{ 'id': 1, 'name': 'Upload Link Sent', 'show': false }, { 'id': 2, 'name': 'Mailing In', 'show': false }, { 'id': 3, 'name': 'In System', 'show': false }]
     pain_arr = [{ 'id': 1, 'name': 'Lower Back', 'show': false }, { 'id': 2, 'name': 'Left Leg', 'show': false }, { 'id': 3, 'name': 'Right Leg', 'show': false }, { 'id': 4, 'name': '% Lower Back', 'show': false }, { 'id': 5, 'name': '% Leg', 'show': false }]
     number_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    constructor(private router: Router, private route: ActivatedRoute,) {
+    showMsg: any
+    @ViewChild('msgModal') msgModal: TemplateRef<any>;
+    constructor(private router: Router, private route: ActivatedRoute, private modalService: NgbModal) {
         this.study_id = this.route.snapshot.params.id
         this.study_uuid = this.route.snapshot.params.uuid
     }
@@ -61,7 +54,7 @@ export class PatientIntakeFormComponent implements OnInit {
         this.router.navigate(['studies']);
     }
     onItemChange(event, id, show, name) {
-     if (name == 'history') {
+        if (name == 'history') {
             this.history_arr.map(x => {
                 if (x.id == id) {
                     x.show = !show
@@ -73,8 +66,7 @@ export class PatientIntakeFormComponent implements OnInit {
                 }
             })
         }
-       else if(name == 'refReason'){
-        console.log("refReason", id, show)
+        else if (name == 'refReason') {
             this.referral_reason.map(x => {
                 if (x.id == id) {
                     x.show = !show
@@ -86,6 +78,32 @@ export class PatientIntakeFormComponent implements OnInit {
                 }
             })
         }
+        else if (name == 'otherTreatment') {
+            this.otherTreat_arr.map(x => {
+                if (x.id == id) {
+                    x.show = !show
+                }
+            })
+            this.otherTreat_arr.map(x => {
+                if (x.show == true) {
+                    this.saveOthrTreat(x.id)
+                }
+            })
+        }
+        else if (name == 'symptoms') {
+            this.symptoms_arr.map(x => {
+                if (x.id == id) {
+                    x.show = !show
+                }
+            })
+            this.symptoms_arr.map(x => {
+                if (x.show == true) {
+                    this.saveSymptoms(x.id)
+                }
+            })
+        }
+
+
     }
     onSelectChange(value, name) {
         console.log('Value', value, name)
@@ -106,8 +124,6 @@ export class PatientIntakeFormComponent implements OnInit {
             data: req_data,
 
         }).done(function (data) {
-            console.log('history_save', data)
-
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${history_save_url}.`;
         }.bind(this)).always(() => {
@@ -129,10 +145,52 @@ export class PatientIntakeFormComponent implements OnInit {
             data: req_data,
 
         }).done(function (data) {
-            console.log('ref_save_url', data)
-
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${ref_save_url}.`;
+        }.bind(this)).always(() => {
+        });
+    }
+    saveOthrTreat(id) {
+        let treat_save_url = `${environment.api_url}/save/OtherTreatments`;
+        let req_data = {
+            'othertreatment': id,
+            'study': parseInt(this.study_id)
+        }
+        $.ajax({
+            url: treat_save_url,
+            dataType: 'json',
+            type: "POST",
+            headers: {
+                "Authorization": 'Bearer ' + this.token
+            },
+            data: req_data,
+
+        }).done(function (data) {
+
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            this.action_error = `Data Not ${treat_save_url}.`;
+        }.bind(this)).always(() => {
+        });
+    }
+    saveSymptoms(id) {
+        let symptoms_save_url = `${environment.api_url}/save/symptoms`;
+        let req_data = {
+            'symptoms': id,
+            'study': parseInt(this.study_id)
+        }
+        $.ajax({
+            url: symptoms_save_url,
+            dataType: 'json',
+            type: "POST",
+            headers: {
+                "Authorization": 'Bearer ' + this.token
+            },
+            data: req_data,
+
+        }).done(function (data) {
+
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            this.action_error = `Data Not ${symptoms_save_url}.`;
         }.bind(this)).always(() => {
         });
     }
@@ -171,7 +229,7 @@ export class PatientIntakeFormComponent implements OnInit {
                 y.show = false
 
             })
-
+            this.fetchSymptoms()
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.index_error = `Could not fetch search index from ${symptoms_url}.`;
         }.bind(this)).always(() => {
@@ -191,6 +249,7 @@ export class PatientIntakeFormComponent implements OnInit {
                 y.show = false
 
             })
+            this.fetchOthrTreat()
 
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.index_error = `Could not fetch search index from ${treatments_url}.`;
@@ -244,7 +303,6 @@ export class PatientIntakeFormComponent implements OnInit {
                 this.study_id = this.intake_form.OtherQuestions.length > 0 && this.intake_form.OtherQuestions[0].study
             }
 
-
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.index_error = `Could not fetch search index from ${question_url}.`;
         }.bind(this)).always(() => {
@@ -264,7 +322,6 @@ export class PatientIntakeFormComponent implements OnInit {
                 this.history_arr.map(x => {
                     return result.Histories.map(y => {
                         if (y.id == x.id) {
-                            console.log('index', y.id, x.id)
                             x.show = true
                         }
                     })
@@ -275,7 +332,55 @@ export class PatientIntakeFormComponent implements OnInit {
         }.bind(this)).always(() => {
         });
     }
-    fetchRef(){
+    fetchOthrTreat() {
+        let treat_url = `${environment.api_url}/study/${this.study_uuid}?scope=includeOtherTreatments`;
+        $.ajax({
+            url: treat_url,
+            headers: {
+                "Authorization": 'Bearer ' + this.token
+            },
+            dataType: 'json',
+        }).done(function (data) {
+            let result = data
+            if (result.OtherTreatments.length > 0) {
+                this.otherTreat_arr.map(x => {
+                    return result.OtherTreatments.map(y => {
+                        if (y.id == x.id) {
+                            x.show = true
+                        }
+                    })
+                })
+            }
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            this.index_error = `Could not fetch search index from ${treat_url}.`;
+        }.bind(this)).always(() => {
+        });
+    }
+    fetchSymptoms() {
+        let symptoms_url = `${environment.api_url}/study/${this.study_uuid}?scope=includeSymptoms`;
+        $.ajax({
+            url: symptoms_url,
+            headers: {
+                "Authorization": 'Bearer ' + this.token
+            },
+            dataType: 'json',
+        }).done(function (data) {
+            let result = data
+            if (result.Symptoms.length > 0) {
+                this.symptoms_arr.map(x => {
+                    return result.Symptoms.map(y => {
+                        if (y.id == x.id) {
+                            x.show = true
+                        }
+                    })
+                })
+            }
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            this.index_error = `Could not fetch search index from ${symptoms_url}.`;
+        }.bind(this)).always(() => {
+        });
+    }
+    fetchRef() {
         let ref_url = `${environment.api_url}/study/${this.study_uuid}?scope=includeReferralReason`;
         $.ajax({
             url: ref_url,
@@ -289,7 +394,6 @@ export class PatientIntakeFormComponent implements OnInit {
                 this.referral_reason.map(x => {
                     return result.ReferralReasons.map(y => {
                         if (y.id == x.id) {
-                            console.log('index', y.id, x.id)
                             x.show = true
                         }
                     })
@@ -327,13 +431,15 @@ export class PatientIntakeFormComponent implements OnInit {
             if ('error' in data) {
                 this.action_error = data['error'];
             } else {
+                this.open(this.msgModal)
+                this.showMsg = 'Patient Information Updated Successfully !!'
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${this.index_url}.`;
         }.bind(this)).always(() => {
         });
     }
-    saveOuestions() {
+    saveQuestions() {
         let question_url = `${environment.api_url}/questions`;
         let req_data = {
             "lower_back": this.lower_back,
@@ -358,13 +464,35 @@ export class PatientIntakeFormComponent implements OnInit {
             data: req_data,
         }).done(function (data) {
             if ('error' in data) { } else {
+                this.patient_save = true
+                this.open(this.msgModal)
+                this.showMsg = 'Patient information saved successfully !!'
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${question_url}.`;
         }.bind(this)).always(() => {
         });
     }
-    savePatient() {
+    closeDelModal() {
+        this.modalService.dismissAll()
+    }
+    open(content) {
+        this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+            this.closeResult = `Closed with: ${result}`;
+        }, (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        });
+    }
+    getDismissReason(reason: any): string {
+        if (reason === ModalDismissReasons.ESC) {
+            return 'by pressing ESC';
+        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        } else {
+            return `with: ${reason}`;
+        }
+    }
+    savePatient(content) {
         let referralArr = this.referral_reason.filter(x => {
             return x.show == true
         })
@@ -378,42 +506,15 @@ export class PatientIntakeFormComponent implements OnInit {
             return x.show == true
         })
         console.log('save', referralArr, this.lower_back, this.left_leg, this.right_leg, this.back_lower, this.leg, symptoms, this.spineSurgery, otherTreatArr, historyArr, this.smoker, this.mri_status)
-        if (referralArr.length < 0) {
-            this.ref_error = true
-        } if (symptoms.length < 0) {
-            this.symptoms_error = true
-        } if (otherTreatArr.length < 0) {
-            this.other_error = true
-        } if (historyArr.length < 0) {
-            this.history_error = true
-        } if (this.lower_back == undefined) {
-            this.lower_back_error = true
+        if (referralArr.length == 0 || symptoms.length == 0 || otherTreatArr.length == 0 || historyArr.length == 0 || this.lower_back == undefined || this.left_leg == undefined || this.right_leg == undefined || this.back_lower == undefined || this.leg == undefined || this.spineSurgery == undefined || this.smoker == undefined || this.mri_status == undefined) {
+            this.open(content)
+            this.showMsg = 'Please fill all the fields !!'
         }
-        if (this.left_leg == undefined) {
-            this.left_leg_error = true
-        }
-        if (this.right_leg == undefined) {
-            this.right_leg_error = true
-        }
-        if (this.back_lower == undefined) {
-            this.back_lower_error = true
-        }
-        if (this.leg == undefined) {
-            this.leg_error = true
-        }
-        if (this.spineSurgery == undefined) {
-            this.spineSurgery_error = true
-        }
-        if (this.smoker == undefined) {
-            this.smoker_error = true
-        }
-        if (this.mri_status == undefined) {
-            this.mri_status_error = true
-        }
-        if (this.otherQues.length > 0) {
+        else if (this.otherQues.length > 0 || this.patient_save == true) {
             this.updateOuestions()
-        } else {
-            this.saveOuestions()
+        }
+        else {
+            this.saveQuestions()
         }
 
     }

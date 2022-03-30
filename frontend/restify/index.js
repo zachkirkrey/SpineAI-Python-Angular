@@ -131,7 +131,6 @@ server.post('/save/history', function (req, res, next) {
     //History Save
     let history = parseInt(req.body.history)
     let study = parseInt(req.body.study)
-    console.log('req.body', history, study)
     joinTable.destroy({
         where: {},
         truncate: true
@@ -141,7 +140,6 @@ server.post('/save/history', function (req, res, next) {
                 Study: study,
             })
             .then(data => {
-                console.log('history_save', data)
                 res.send({
                     'message': 'Data saved successfully'
                 })
@@ -177,7 +175,6 @@ server.post('/save/ReferralReason', function (req, res, next) {
     //Referral Reason Save
     let ref = parseInt(req.body.referralreason)
     let study = parseInt(req.body.study)
-    console.log('req.body', ref, study)
     refStudyTable.destroy({
         where: {},
         truncate: true
@@ -187,7 +184,96 @@ server.post('/save/ReferralReason', function (req, res, next) {
                 Study: study
             })
             .then(data => {
-                console.log('refStudyTable', data)
+                res.send({
+                    'message': 'Data saved successfully'
+                })
+            })
+    })
+
+});
+
+server.post('/save/OtherTreatments', function (req, res, next) {
+    //Other Treatment Save
+    let OthrTreat = require('./models/other-treatments')(sequelize);
+    let Study = require('./models/study')(sequelize);
+    tableOthrTreat = OthrTreat.getTableName();
+    studyTable = Study.getTableName();
+    let treatStudyTable = sequelize.define(tableOthrTreat + '_' + studyTable, {
+        [tableOthrTreat]: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        [studyTable]: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        }
+    });
+
+    OthrTreat.belongsToMany(Study, {
+        through: treatStudyTable,
+        foreignKey: tableOthrTreat.toLowerCase()
+    });
+    Study.belongsToMany(OthrTreat, {
+        through: treatStudyTable,
+        foreignKey: studyTable.toLowerCase()
+    });
+    //Other Treatment Save
+    let othertreatment = parseInt(req.body.othertreatment)
+    let study = parseInt(req.body.study)
+    treatStudyTable.destroy({
+        where: {},
+        truncate: true
+    }).then(data => {
+        treatStudyTable.create({
+                OtherTreatments: othertreatment,
+                Study: study
+            })
+            .then(data => {
+                res.send({
+                    'message': 'Data saved successfully'
+                })
+            })
+    })
+
+});
+
+server.post('/save/symptoms', function (req, res, next) {
+    //symptoms Save
+    let Symptoms = require('./models/symptoms')(sequelize);
+    let Study = require('./models/study')(sequelize);
+    tableSymptoms = Symptoms.getTableName();
+    studyTable = Study.getTableName();
+    let sympStudyTable = sequelize.define(studyTable + '_' + tableSymptoms, {
+        [tableSymptoms]: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        [studyTable]: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        }
+    });
+
+    Symptoms.belongsToMany(Study, {
+        through: sympStudyTable,
+        foreignKey: tableSymptoms.toLowerCase()
+    });
+    Study.belongsToMany(Symptoms, {
+        through: sympStudyTable,
+        foreignKey: studyTable.toLowerCase()
+    });
+    //symptoms Save
+    let symptoms = parseInt(req.body.symptoms)
+    let study = parseInt(req.body.study)
+    sympStudyTable.destroy({
+        where: {},
+        truncate: true
+    }).then(data => {
+        sympStudyTable.create({
+                Symptoms: symptoms,
+                Study: study
+            })
+            .then(data => {
                 res.send({
                     'message': 'Data saved successfully'
                 })

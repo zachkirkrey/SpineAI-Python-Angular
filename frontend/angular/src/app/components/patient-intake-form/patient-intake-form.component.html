@@ -5,23 +5,23 @@
                 (click)="navigate()">
                 <span> &lt; </span>
                 All Patients
-            </button> Last Updated:3/14/2022
+            </button> <span>Last Updated: 3/14/2022</span>
         </div>
         <div class="add-patient-con">
             <div class="fld_o">
                 <div class="form-group-sec">
-                    <label>Patient Name:</label>
-                    {{patient_name}}
+                    <label class="head_ttl">Patient Name:</label>
+                    <span class="ov_fld">{{patient_name}}</span>
                 </div>
                 <div class="form-group-sec">
-                    <label>MRN:</label>
-                    {{mrn}}
+                    <label class="head_ttl">MRN:</label>
+                    <span class="ov_fld">{{mrn}} </span>
                 </div>
             </div>
             <div class="fld_o">
                 <div class="form-group-sec">
-                    <label>Referral Reason:</label>
-                    <ul>
+                    <label class="head_ttl">Referral Reason:</label>
+                    <ul class="grid_block">
                         <li *ngFor="let item of referral_reason; let i = index">
                             <mat-checkbox color="primary" [checked]="item.show"
                                 (change)="onItemChange($event,item.id,item.show,'refReason')">
@@ -33,10 +33,11 @@
             </div>
             <div class="fld_o">
                 <div class="form-group-sec date-input">
-                    <label>Pain Location:</label>
-                    <ul>
+                    <label class="head_ttl">Pain Location:</label>
+                    <ul class="pl_items">
                         <li *ngFor="let item of pain_arr; let i= index">
-                            <div *ngIf="item.name == 'Lower Back'">{{item.name}}
+                            <div *ngIf="item.name == 'Lower Back'">
+                                <span class="ol_op_n">{{item.name}}</span>
                                 <select [(ngModel)]="lower_back" name="lower_back"
                                     (change)="onSelectChange(lower_back,'lower_back')">
                                     <option *ngFor="let item of number_arr" value={{item}}>
@@ -44,7 +45,8 @@
                                     </option>
                                 </select>
                             </div>
-                            <div *ngIf="item.name == 'Left Leg'">{{item.name}}
+                            <div *ngIf="item.name == 'Left Leg'">
+                                <span class="ol_op_n">{{item.name}}</span>
                                 <select [(ngModel)]="left_leg" name="left_leg"
                                     (change)="onSelectChange(left_leg,'left_leg')">
                                     <option *ngFor="let item of number_arr" value={{item}}>
@@ -52,7 +54,8 @@
                                     </option>
                                 </select>
                             </div>
-                            <div *ngIf="item.name == 'Right Leg'">{{item.name}}
+                            <div *ngIf="item.name == 'Right Leg'">
+                                <span class="ol_op_n">{{item.name}}</span>
                                 <select [(ngModel)]="right_leg" name="right_leg"
                                     (change)="onSelectChange(right_leg,'right_leg')">
                                     <option *ngFor="let item of number_arr" value={{item}}>
@@ -60,13 +63,15 @@
                                     </option>
                                 </select>
                             </div>
-                            <div *ngIf="item.name == '% Lower Back'">{{item.name}}
-                                <input type="number" class="form-control" placeholder="" name="back_lower"
+                            <div *ngIf="item.name == '% Lower Back'">
+                                <span class="ol_op_n">{{item.name}}</span>
+                                <input type="text" maxlength="3" class="form-control" placeholder="" name="back_lower"
                                     [(ngModel)]="back_lower" [ngModelOptions]="{standalone: true}">%
                             </div>
-                            <div *ngIf="item.name == '% Leg'">{{item.name}}
-                                <input type="number" class="form-control" placeholder="" name="leg" [(ngModel)]="leg"
-                                    [ngModelOptions]="{standalone: true}">%
+                            <div *ngIf="item.name == '% Leg'">
+                                <span class="ol_op_n">{{item.name}}</span>
+                                <input type="text" maxlength="3" class="form-control" placeholder="" name="leg"
+                                    [(ngModel)]="leg" [ngModelOptions]="{standalone: true}">%
                             </div>
                         </li>
                     </ul>
@@ -74,7 +79,7 @@
             </div>
             <div class="fld_o">
                 <div class="form-group-sec date-input">
-                    <label>Symptoms:</label>
+                    <label class="head_ttl">Symptoms:</label>
                     <ul>
                         <li *ngFor="let item of symptoms_arr; let i = index">
                             <mat-checkbox color="primary" [checked]="item.show"
@@ -86,8 +91,8 @@
                 </div>
             </div>
             <div class="fld_o">
-                <div class="form-group-sec date-input">
-                    <label>Previous Spine Surgery:</label>
+                <div class="form-group-sec date-input pss_s">
+                    <label class="head_ttl">Previous Spine Surgery:</label>
                     <select [(ngModel)]="spineSurgery" name="spineSurgery"
                         (change)="onSelectChange(spineSurgery,'prevSpine')">
                         <option *ngFor="let item of prev_spine" value={{item.value}}>
@@ -98,7 +103,7 @@
             </div>
             <div class="fld_o">
                 <div class="form-group-sec date-input">
-                    <label>Other Treatments:</label>
+                    <label class="head_ttl">Other Treatments:</label>
                     <ul>
                         <li *ngFor="let item of otherTreat_arr; let i = index">
                             <mat-checkbox color="primary" [checked]="item.show"
@@ -111,8 +116,8 @@
             </div>
             <div class="fld_o">
                 <div class="form-group-sec date-input">
-                    <label>History:</label>
-                    <ul>
+                    <label class="head_ttl">History:</label>
+                    <ul class="grid_block">
                         <li *ngFor="let item of history_arr; let i = index">
                             <mat-checkbox color="primary" [checked]="item.show"
                                 (change)="onItemChange($event,item.id,item.show,'history')">
@@ -123,8 +128,8 @@
                 </div>
             </div>
             <div class="fld_o">
-                <div class="form-group-sec date-input">
-                    <label>Current Smoker:</label>
+                <div class="form-group-sec date-input pss_s">
+                    <label class="head_ttl">Current Smoker:</label>
                     <select [(ngModel)]="smoker" name="smoker" (change)="onSelectChange(smoker,'smoker')">
                         <option *ngFor="let item of smoker_arr" value={{item.value}}>
                             {{item.name}}
@@ -133,8 +138,8 @@
                 </div>
             </div>
             <div class="fld_o">
-                <div class="form-group-sec date-input">
-                    <label>MRI Status:</label>
+                <div class="form-group-sec date-input pss_s">
+                    <label class="head_ttl">MRI Status:</label>
                     <select [(ngModel)]="mri_status" name="mri_status"
                         (change)="onSelectChange(mri_status,'mri_status')">
                         <option *ngFor="let item of mri_arr" value={{item.name}}>
@@ -145,5 +150,14 @@
             </div>
         </div>
     </div>
-    <button type="button" class="svbtn" (click)="savePatient()">Save</button>
+    <button type="button" class="svbtn" (click)="savePatient(msgModal)">Save</button>
 </form>
+
+<ng-template #msgModal let-modal>
+    <div class="modal-body custxt add-patient-form ">
+        {{showMsg}}
+    </div>
+    <div class="modal-footer cus_btn add-patient-footer">
+        <button type="button" class="btn chk_pf_btn n_btn btn-outline-dark" (click)="closeDelModal()">Ok</button>
+    </div>
+</ng-template>
