@@ -140,7 +140,7 @@
             <div class="fld_o">
                 <div class="form-group-sec date-input pss_s">
                     <label class="head_ttl">MRI Status:</label>
-                    <select [(ngModel)]="mri_status" name="mri_status"
+                    <select [(ngModel)]="mri_status" class="mristts" name="mri_status"
                         (change)="onSelectChange(mri_status,'mri_status')">
                         <option *ngFor="let item of mri_arr" value={{item.name}}>
                             {{item.name}}
