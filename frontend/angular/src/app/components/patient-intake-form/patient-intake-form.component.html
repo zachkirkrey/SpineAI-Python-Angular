@@ -5,7 +5,7 @@
                 (click)="navigate()">
                 <span> &lt; </span>
                 All Patients
-            </button> <span>Last Updated: 3/14/2022</span>
+            </button> <span>Last Updated: {{updation_datetime}}</span>
         </div>
         <div class="add-patient-con">
             <div class="fld_o">
@@ -65,13 +65,23 @@
                             </div>
                             <div *ngIf="item.name == '% Lower Back'">
                                 <span class="ol_op_n">{{item.name}}</span>
-                                <input type="text" maxlength="3" class="form-control" placeholder="" name="back_lower"
-                                    [(ngModel)]="back_lower" [ngModelOptions]="{standalone: true}">%
+                                <input type="text" minlength="1" maxlength="3" class="form-control"
+                                    (input)="keyPress(back_lower,$event,'back_lower')" placeholder="" name="back_lower"
+                                    [(ngModel)]="back_lower" [ngModelOptions]="{standalone: true}"
+                                    [pattern]="unamePattern">%
+                                <div class="error_msg">
+                                    {{lower_back_ValidateMsg}}
+                                </div>
                             </div>
+
                             <div *ngIf="item.name == '% Leg'">
                                 <span class="ol_op_n">{{item.name}}</span>
                                 <input type="text" maxlength="3" class="form-control" placeholder="" name="leg"
-                                    [(ngModel)]="leg" [ngModelOptions]="{standalone: true}">%
+                                    [(ngModel)]="leg" [ngModelOptions]="{standalone: true}"
+                                    (input)="keyPress(leg,$event,'leg')">%
+                                <div class="error_msg">
+                                    {{leg_validation}}
+                                </div>
                             </div>
                         </li>
                     </ul>

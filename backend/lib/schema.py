@@ -481,4 +481,5 @@ class OtherQuestions(db.Entity):
     previous_spine_surgery = Optional(bool, default=False)
     current_smoker = Optional(bool, default=False)
     mri_status = Required(str)
+    updation_datetime = Required(datetime, default=datetime.now)
     study = Required(Study)

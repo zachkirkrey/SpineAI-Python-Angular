@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
 @Component({
     selector: 'app-patient-intake-form',
     templateUrl: './patient-intake-form.component.html',
@@ -35,12 +36,17 @@ export class PatientIntakeFormComponent implements OnInit {
     pain_arr = [{ 'id': 1, 'name': 'Lower Back', 'show': false }, { 'id': 2, 'name': 'Left Leg', 'show': false }, { 'id': 3, 'name': 'Right Leg', 'show': false }, { 'id': 4, 'name': '% Lower Back', 'show': false }, { 'id': 5, 'name': '% Leg', 'show': false }]
     number_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     showMsg: any
+    updation_datetime: any
+    unamePattern = "(100)|(0*\d{1,2})";
+    lower_back_ValidateMsg: any
+    leg_validation: any
     @ViewChild('msgModal') msgModal: TemplateRef<any>;
     constructor(private router: Router, private route: ActivatedRoute, private modalService: NgbModal) {
         this.study_id = this.route.snapshot.params.id
         this.study_uuid = this.route.snapshot.params.uuid
     }
     ngOnInit(): void {
+        this.updation_datetime = moment(new Date()).format('MM/DD/YYYY')
         this.getReferralReason()
         this.getSymptoms()
         this.getTreatments()
@@ -301,6 +307,7 @@ export class PatientIntakeFormComponent implements OnInit {
                 this.smoker = this.intake_form.OtherQuestions.length > 0 && this.intake_form.OtherQuestions[0].current_smoker
                 this.mri_status = this.intake_form.OtherQuestions.length > 0 && this.intake_form.OtherQuestions[0].mri_status
                 this.study_id = this.intake_form.OtherQuestions.length > 0 && this.intake_form.OtherQuestions[0].study
+                this.updation_datetime = this.intake_form.OtherQuestions.length > 0 && moment(this.intake_form.OtherQuestions[0].updation_datetime).format('MM/DD/YYYY')
             }
 
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
@@ -406,6 +413,7 @@ export class PatientIntakeFormComponent implements OnInit {
     }
     updateOuestions() {
         let update_url = `${environment.api_url}/question/${this.study_uuid}`;
+        let formatted_time = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
         let req_data = {
             "lower_back": this.lower_back,
             "left_leg": this.left_leg,
@@ -417,7 +425,8 @@ export class PatientIntakeFormComponent implements OnInit {
             "mri_status": this.mri_status,
             "study": this.study_id,
             'uuid': this.study_uuid,
-            'id': this.study_id
+            'id': this.study_id,
+            'updation_datetime': formatted_time
         }
         $.ajax({
             url: update_url,
@@ -441,6 +450,7 @@ export class PatientIntakeFormComponent implements OnInit {
     }
     saveQuestions() {
         let question_url = `${environment.api_url}/questions`;
+        let formatted_time = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
         let req_data = {
             "lower_back": this.lower_back,
             "left_leg": this.left_leg,
@@ -452,7 +462,8 @@ export class PatientIntakeFormComponent implements OnInit {
             "mri_status": this.mri_status,
             "study": this.study_id,
             'uuid': this.study_uuid,
-            'id': this.study_id
+            'id': this.study_id,
+            'updation_datetime': formatted_time
         }
         $.ajax({
             url: question_url,
@@ -517,5 +528,25 @@ export class PatientIntakeFormComponent implements OnInit {
             this.saveQuestions()
         }
 
+    }
+    keyPress(value, e, name) {
+        if (name == 'back_lower') {
+            if (parseInt(value) < 1 || parseInt(value) > 100) {
+                console.log("Value should be between 0 - 100");
+                this.lower_back_ValidateMsg = 'Value should be between 1 - 100'
+                return;
+            } else {
+                this.lower_back_ValidateMsg = ''
+            }
+        }
+        else if (name == 'leg') {
+            if (parseInt(value) < 100) {
+                console.log("Value should be between 0 - 100");
+                this.leg_validation = 'Value should be above 100'
+                return;
+            } else {
+                this.leg_validation = ''
+            }
+        }
     }
 }

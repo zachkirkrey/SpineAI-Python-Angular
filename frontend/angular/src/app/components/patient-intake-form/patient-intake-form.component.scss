@@ -117,9 +117,17 @@ span.ol_op_n {
   padding: 0 5px;
   margin-left: 10px;
 }
-.mristts{ width: 160px !important;}
+
+.mristts {
+  width: 160px !important;
+}
 
 .chk_pf_btn {
   width: 100px;
   margin: auto;
+}
+
+.error_msg {
+  color: red;
+  font-size: 14px;
 }

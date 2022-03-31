@@ -36,6 +36,9 @@ module.exports = function(sequelize) {
       type: DataTypes.STRING,
       allowNull: false
     },
+    updation_datetime:{
+        type: DataTypes.DATE,
+    },
     study: {
       type: DataTypes.INTEGER,
       allowNull: false,
