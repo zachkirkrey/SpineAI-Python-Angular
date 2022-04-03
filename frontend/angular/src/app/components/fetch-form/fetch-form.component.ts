@@ -3,9 +3,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {ApiService, LookupStudy} from 'src/app/services/api/api.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {catchError, map, switchMap, tap} from 'rxjs/operators';
+import {catchError, flatMap, map, mergeMap, shareReplay, tap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
-import {v4 as uuidv4} from 'uuid';
 
 function yyyymmdd(date: Date) {
   const mm = date.getMonth() + 1; // getMonth() is zero-based
@@ -134,19 +133,21 @@ export class FetchFormComponent implements OnInit {
         diagnosis: '',
         appointment_date: ''
       }).pipe(
+        shareReplay(),
         map(study => {
           return study.uuid;
         }),
       );
 
       uuid$.pipe(
-        switchMap(uuid => {
+        mergeMap(uuid => {
           return this.api.addFetchIngestion({
             accession_number: accessionNumber,
             uuid,
             name,
           });
-        })
+        }),
+        shareReplay(),
       ).subscribe(
           (ingestion) => this.router.navigate(['/fetch', ingestion.uuid]),
           error => this.error = error);

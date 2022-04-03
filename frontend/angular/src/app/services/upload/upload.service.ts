@@ -8,7 +8,7 @@ import {
 } from '@angular/common/http';
 
 import { Observable, Subject, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import {catchError, shareReplay} from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 const api_url = environment.api_url;
@@ -85,7 +85,8 @@ export class UploadService {
         const progress = new Subject<number>();
         this.http.request(req)
             .pipe(
-                catchError(this.handleError.bind(this))
+                shareReplay(),
+                catchError(this.handleError.bind(this)),
             )
             .subscribe(event => {
                 if (event.type === HttpEventType.UploadProgress) {
@@ -102,6 +103,6 @@ export class UploadService {
                 }
             });
 
-        return progress.asObservable()
+        return progress.asObservable();
     }
 }

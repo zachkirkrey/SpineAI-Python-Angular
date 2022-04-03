@@ -3,14 +3,19 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable, EMPTY, throwError, of } from 'rxjs';
-import { forkJoin } from 'rxjs/observable/forkJoin';
-import { delay, take, flatMap, concatMap, retryWhen, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import {
+  map,
+  mergeMap,
+  shareReplay
+} from 'rxjs/operators';
 
 import { AppSettings } from 'src/app/app.init';
 import { UploadService, UploadStatus } from 'src/app/services/upload/upload.service';
 
 import { environment } from 'src/environments/environment';
+import {ApiService} from '../../services/api/api.service';
+import {v4 as uuidv4} from 'uuid';
 
 declare var $: any;
 
@@ -33,7 +38,8 @@ export class IntakeFormComponent implements OnInit {
     uploadErrorCode: number;
 
     progressMsg: string;
-    study_id: any
+    // tslint:disable-next-line:variable-name
+    study_id: number;
     uploadForm: FormGroup;
     validSexValues: string[] = ['Sex', 'MALE', 'FEMALE'];
 
@@ -41,6 +47,7 @@ export class IntakeFormComponent implements OnInit {
         private fb: FormBuilder,
         private router: Router,
         private http: HttpClient,
+        private api: ApiService,
         private uploadService: UploadService, private route: ActivatedRoute) {
 
         this.uploadForm = fb.group({
@@ -51,7 +58,7 @@ export class IntakeFormComponent implements OnInit {
             sex: new FormControl(null)
         });
         this.uploadForm.controls['sex'].setValue('Sex');
-        this.study_id = this.route.snapshot.params.studty_id
+        this.study_id = this.route.snapshot.params.studty_id;
         console.log('study_id', this.study_id)
     }
 
@@ -87,12 +94,46 @@ export class IntakeFormComponent implements OnInit {
             }
         });
 
-        this.progress = this.uploadService.upload(this.files, this.uploadForm.value, this.study_id);
-        this.progress.subscribe(function (progress) {
+        const studyId$ = this.study_id ? of(this.study_id) : this.api.addPatient({
+          created_by: true,
+          creation_datetime: new Date().toISOString(),
+          name: this.projectName,
+          file_dir_path: '',
+          file_dir_checksum: '',
+          image_file_type: '',
+          accession_number: '',
+          patient_age: '',
+          patient_name: this.projectName,
+          patient_size: '',
+          patient_sex: '',
+          study_instance_uid: '',
+          mrn: uuidv4(),
+          email: '',
+          date_of_birth: '',
+          phone_number: 0,
+          diagnosis: '',
+          appointment_date: ''
+        }).pipe(
+          shareReplay(),
+          map(study => {
+            this.study_id = study.id;
+            return study.id;
+          }),
+        );
+
+        this.progress = studyId$.pipe(
+          mergeMap(
+            studyId => this.uploadService
+              .upload(this.files, this.uploadForm.value, studyId)
+          ),
+          shareReplay(),
+        );
+
+        this.progress.subscribe((progress) => {
             if (progress >= 99) {
-                this.progressMsg = "Ingesting Study...";
+                this.progressMsg = 'Ingesting Study...';
             }
-        }.bind(this));
+        });
         return false;
     }
 
