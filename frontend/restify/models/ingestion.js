@@ -51,7 +51,7 @@ module.exports = function(sequelize) {
           model: sequelize.models.Study,
           key: 'id'
       }
-  }
+    }
   }, {
     defaultScope: {
       attributes: {

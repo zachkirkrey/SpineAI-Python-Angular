@@ -36,6 +36,8 @@ services:
         target: "/database"
       - "./logs:/logs"
     restart: unless-stopped
+    networks:
+      - api
 
 volumes:
   database:

@@ -35,6 +35,7 @@ import { ViewerComponent } from './components/viewer/viewer.component';
 import { PatientComponentComponent } from './components/patient-component/patient-component.component';
 import { CookieModule } from 'ngx-cookie';
 import { PatientIntakeFormComponent } from './components/patient-intake-form/patient-intake-form.component';
+import { ConfirmDialogComponent } from './components/modals/confirm-dialog.component';
 
 
 const appRoutes: Routes = [
@@ -74,6 +75,7 @@ const appRoutes: Routes = [
         ViewerComponent,
         PatientComponentComponent,
         PatientIntakeFormComponent,
+        ConfirmDialogComponent,
 
     ],
     imports: [

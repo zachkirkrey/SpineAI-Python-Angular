@@ -1,30 +1,46 @@
-import { Component, OnInit, QueryList, ViewChildren ,Input} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren, Input, OnChanges, SimpleChanges} from '@angular/core';
 
-import { ApiService } from 'src/app/services/api/api.service';
+import {ApiService, Ingestion} from 'src/app/services/api/api.service';
+import {catchError} from "rxjs/operators";
+import {of} from "rxjs";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'app-ingestion-list',
   templateUrl: './ingestion-list.component.html',
   styleUrls: ['./ingestion-list.component.scss']
 })
-export class IngestionListComponent implements OnInit {
-@Input() uuidId:any
+export class IngestionListComponent implements OnInit, OnChanges {
+  @Input() uuidId: string | undefined;
+
   constructor(
     private api: ApiService) { }
 
+  // tslint:disable-next-line:variable-name
   @ViewChildren('ingestion_rows') ingestion_rows: QueryList<any>;
 
-  ingestions: Array<any>;
-  tableReady: boolean;
+  ingestions: Array<Ingestion> = [];
+  tableReady = true;
 
   ngOnInit(): void {
-    this.api.getFetchIngestions(this.uuidId)
-      .subscribe(ingestions => this.loadIngestions(ingestions));
+    this.loadIngestions();
   }
 
-  loadIngestions(ingestions) {
-    this.ingestions = ingestions;
-    this.tableReady = true;
+  loadIngestions() {
+    if (this.uuidId) {
+      this.tableReady = false;
+      this.api.getFetchIngestions(this.uuidId)
+        .pipe(
+          catchError((err): Observable<Ingestion[]> => {
+            console.error(err);
+            return of([]);
+          })
+        )
+        .subscribe(ingestions => {
+          this.ingestions = ingestions;
+          this.tableReady = true;
+        });
+    }
   }
 
   ngAfterViewInit() {
@@ -36,4 +52,10 @@ export class IngestionListComponent implements OnInit {
     // });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    // const {uuidId} = changes;
+    // if ( uuidId) {
+    //   this.loadIngestions();
+    // }
+  }
 }

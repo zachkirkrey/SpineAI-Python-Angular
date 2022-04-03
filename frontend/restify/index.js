@@ -11,6 +11,10 @@ const {
 let User = require('./models/user')(sequelize);
 
 
+// const userCity = await UserCity.create({
+//     userId: user.userId,
+//     cityId: city.cityId,
+//   })
 
 
 //server.use(rjwt(config_jwt.jwt).unless({
@@ -82,6 +86,7 @@ server.post('/user', function (req, res, next) {
 
 
 server.post('/search/pacs', function (req, res, next) {
+    let Study = require('./models/study')(sequelize);
     Study.findOne({
             where: {
                 uuid: req.body.uuid

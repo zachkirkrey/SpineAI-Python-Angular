@@ -1,11 +1,11 @@
-<form class="fetchForm" [formGroup]="patientIDForm">
+<form class="fetchForm" [formGroup]="patientIDForm" (ngSubmit)="submitIDForm()">
   <div class="row">
     <div class="col-sm-12 col-xl-5">
       <div class="form-group">
         <label class="form-label">
           <strong>Patient MRN Number</strong>
         </label>
-        <input type="text" class="form-control" formControlName="patientID" placeholder="1234567890">
+        <input required [readonly]="uuidId" type="text" class="form-control" formControlName="patientID" placeholder="1234567890" (change)="readonly = true">
       </div>
       <div class="form-group">
         <label class="form-label">
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="col-12">
-      <button class="custom-button" (click)="submitIDForm()">
+      <button class="custom-button" type="submit" [ngClass]="{disabled: patientIDForm.invalid}" [disabled]="patientIDForm.invalid">
         Search
       </button>
       <button class="custom-button" (click)="formSubmitted = false; formDone = false">
@@ -49,7 +49,7 @@
     </tr>
     <tr *ngFor="let study of foundStudies">
       <td id="fetch_cell_{{ study.accession_number }}">
-        <a href (click)="fetch($event, study.accession_number)">
+        <a href="javascript:;" (click)="fetch($event, study.accession_number, study.patient_name)">
           {{ study.accession_number }}
         </a>
       </td>

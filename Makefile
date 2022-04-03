@@ -13,3 +13,6 @@ local:
 
 local-bg:
 	(cd docker && docker-compose -f local.docker-compose.yml up -d)
+
+local-restart:
+	(cd docker && docker-compose -f local.docker-compose.yml restart)
