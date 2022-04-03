@@ -86,7 +86,8 @@ class DicomClient(object):
         """
         ds = self._get_study_dataset()
         ds.PatientID = patient_id
-        ds.StudyDescription = "*MR*LUMBAR*"
+        #ds.StudyDescription = "*MR*LUMBAR*"
+        ds.Modality = "MR"
 
         if study_date:
             ds.StudyDate = study_date
