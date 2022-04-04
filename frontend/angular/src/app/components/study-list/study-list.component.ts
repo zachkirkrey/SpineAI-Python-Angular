@@ -69,6 +69,9 @@ export class StudyListComponent implements OnInit {
     reportCheckBox: any
     recommnCheckBox: any
     actionCheckBox: any
+    del_study_id: any
+    table_order= 'desc'
+    table_name='patient_name'
     actionList = ['Scheduled for Clinic', 'Surgery', 'Additional Testing', 'Injections', 'Physical Therapy', 'RTC/DC', 'Referral']
     columnList = [{
         id: 'mrn_col',
@@ -118,7 +121,7 @@ export class StudyListComponent implements OnInit {
     ngOnInit() {
         this.token = localStorage.getItem('token')
         this.section = 'Hide patient name';
-        this.tableData();
+        this.tableData(null);
         this.createdCheckbox = false
         this.importCheckBox = false
         this.mrnCheckbox = true
@@ -138,7 +141,6 @@ export class StudyListComponent implements OnInit {
         let actionCheckBox = this.cookie.get('action_col')
         if (columnArr != undefined) {
             this.columnList = JSON.parse(columnArr)
-            console.log('columnArr', this.columnList)
         } if (createdCheckbox != undefined) {
             this.createdCheckbox = createdCheckbox
         } if (importCheckBox != undefined) {
@@ -156,7 +158,6 @@ export class StudyListComponent implements OnInit {
         } if (actionCheckBox != undefined) {
             this.actionCheckBox = actionCheckBox
         }
-
     }
     checkPlaceHolder() {
         if (this.date_placeholder) {
@@ -229,10 +230,10 @@ export class StudyListComponent implements OnInit {
     searchPacsNavigate(uuid) {
         this.router.navigate(['/fetch/' + uuid]);
     }
-    importMRINavigate(uuid,id) {
-        this.router.navigate(['/intake/' + uuid+'/'+id])
+    importMRINavigate(uuid, id) {
+        this.router.navigate(['/intake/' + uuid + '/' + id])
     }
-    tableData() {
+    tableData(study_id) {
         function sort_by_creation(x, y) {
             return -1;
             if (x.creation_datetime > y.creation_datetime) {
@@ -242,7 +243,6 @@ export class StudyListComponent implements OnInit {
             }
             return 0;
         }
-
         // TODO(billy): Create a dev config for this url so this can work during
         // development.
         $.ajax({
@@ -252,14 +252,21 @@ export class StudyListComponent implements OnInit {
             },
             dataType: 'json',
         }).done(function (data) {
+            console.log('study_id', study_id)
             if ('error' in data) {
                 this.index_error = data['error'];
             } else {
                 this.index = data;
-                this.index.forEach(x => {
+                this.index.forEach((x, i) => {
                     x.show_icon = true
                     x.creation_datetime = moment(x.creation_datetime).format('YYYY-MM-DD')
-                    x.showList = false
+                    if (study_id != null && study_id == x.id) {
+                        x.showList = true
+                    }
+                    else {
+                        x.showList = false
+                    }
+
                     if (x.appointment_date != null) {
                         x.appointment_date = moment(x.appointment_date).format('YYYY-MM-DD')
                     }
@@ -395,7 +402,7 @@ export class StudyListComponent implements OnInit {
             if ('error' in data) {
                 this.action_error = data['error'];
             } else {
-                this.tableData()
+                this.tableData(null)
                 this.fetchAction()
                 this.modalService.dismissAll()
                 this.name = ''
@@ -431,7 +438,7 @@ export class StudyListComponent implements OnInit {
             this.action_error = `Data Not ${delete_url}.`;
         }.bind(this)).always(() => {
         });
-        this.tableData()
+        this.tableData(this.del_study_id)
         this.modalService.dismissAll()
     }
     closeModal() {
@@ -487,7 +494,6 @@ export class StudyListComponent implements OnInit {
                         })
                     })
                     this.index.map(x => {
-                        console.log('**')
                         let object = {
                             'study': x.id
                         }
@@ -503,6 +509,37 @@ export class StudyListComponent implements OnInit {
                         });
                     })
                 }
+                console.log('Order',this.table_order)
+                if (this.table_order == 'desc') {
+                    if(this.table_name == 'patient_name'){
+                        this.index.sort(function (a, b) { return (a.patient_name > b.patient_name) ? 1 : ((b.patient_name > a.patient_name) ? -1 : 0); });
+                    } else if(this.table_name == 'mrn'){
+                        console.log('****')
+                        this.index.sort(function (a, b) { return (a.mrn > b.mrn) ? 1 : ((b.mrn > a.mrn) ? -1 : 0); });
+                    }else if(this.table_name == 'appt'){
+                        this.index.sort(function (a, b) { return (a.appointment_date > b.appointment_date) ? 1 : ((b.appointment_date > a.appointment_date) ? -1 : 0); });
+                    }else if(this.table_name == 'created_date'){
+                        this.index.sort(function (a, b) { return (a.creation_datetime > b.creation_datetime) ? 1 : ((b.creation_datetime > a.creation_datetime) ? -1 : 0); });
+                    }else if(this.table_name == 'import_id'){
+                        this.index.sort(function (a, b) { return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0); });
+                    }
+
+                } else if (this.table_order == 'asc') {
+                    if(this.table_name == 'patient_name'){
+                        this.index.sort(function (a, b) { return (a.patient_name < b.patient_name) ? 1 : ((b.patient_name < a.patient_name) ? -1 : 0); });
+                    } else if(this.table_name == 'mrn'){
+                        this.index.sort(function (a, b) { return (a.mrn < b.mrn) ? 1 : ((b.mrn < a.mrn) ? -1 : 0); });
+                    }else if(this.table_name == 'appt'){
+                        this.index.sort(function (a, b) { return (a.appointment_date < b.appointment_date) ? 1 : ((b.appointment_date < a.appointment_date) ? -1 : 0); });
+                    }else if(this.table_name == 'created_date'){
+                        this.index.sort(function (a, b) { return (a.creation_datetime < b.creation_datetime) ? 1 : ((b.creation_datetime < a.creation_datetime) ? -1 : 0); });
+                    }else if(this.table_name == 'import_id'){
+                        this.index.sort(function (a, b) { return (a.name < b.name) ? 1 : ((b.name < a.name) ? -1 : 0); });
+                    }
+                }
+
+
+                console.log('fetchActions', this.index)
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${this.action_fetch_url}.`;
@@ -524,6 +561,7 @@ export class StudyListComponent implements OnInit {
         });
     }
     saveAction(id, index) {
+        localStorage.setItem('patient_order', JSON.stringify(this.index))
         let report_Arr = []
         report_Arr = this.action_arr
         report_Arr.forEach(element => {
@@ -531,13 +569,14 @@ export class StudyListComponent implements OnInit {
         });
 
     }
-    deleteAction(id, content) {
+    deleteAction(id, content, study_id) {
         this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
             this.closeResult = `Closed with: ${result}`;
         }, (reason) => {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         });
         this.del_action_id = id
+        this.del_study_id = study_id
 
     }
     closeDelModal() {
@@ -583,7 +622,7 @@ export class StudyListComponent implements OnInit {
             this.action_error = `Data Not ${this.index_url}.`;
         }.bind(this)).always(() => {
         });
-        this.tableData()
+        this.tableData(study_id)
         this.action_arr = []
     }
     showHide(id, showIndex, showList) {
@@ -633,6 +672,12 @@ export class StudyListComponent implements OnInit {
             this.isShown = true;
             this.section = 'Hide patient name';
         }
+    }
+    sortOrder(name) {
+        let table = $('#reports_table').DataTable();
+        this.table_order = table.order()[0][1]
+        this.table_name = name
+        console.log('order', this.table_order)
     }
     ngAfterViewInit() {
         // Ellipsis renderer for datatables.net from

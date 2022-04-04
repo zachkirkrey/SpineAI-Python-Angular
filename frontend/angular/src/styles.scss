@@ -35,6 +35,15 @@ strong {
   background-color: $blue;
   color: $white;
 
+  &:hover {
+    background: #1c5297;
+  }
+
+  &:focus,
+  &:active {
+    box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 50%);
+  }
+
   i {
     margin-right: 5px;
   }
@@ -61,6 +70,7 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+
 // 4-1-2022
 .dataTables_length {
   label {
@@ -83,6 +93,14 @@ body {
 .export-btn.mat-button {
   background-color: #376fb6;
   color: #fff;
+
+  &:hover {
+    background: #1c5297;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 50%);
+  }
 }
 
 .export-btn-list {
@@ -307,8 +325,19 @@ div#reports_table_paginate {
 }
 
 .modal-footer.add-patient-footer button.btn.btn-outline-dark {
-  color: #376fb6;
+  color: #fff;
   border: 1px solid #376fb6;
+  background-color: #376fb6;
+  transition: all .3s ease;
+
+  &:hover {
+    background: #1c5297;
+  }
+
+  &:focus,
+  &:active {
+    box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 50%);
+  }
 }
 
 .modal-footer.add-patient-footer button.btn.btn-outline-dark:hover {
@@ -580,10 +609,19 @@ div#reports_table_wrapper .search-pacs:hover {
 
 button.svbtn {
   border: #376fb6 solid 1px;
-  background-color: transparent;
+  background-color: #376fb6;
   padding: 10px;
-  color: #376fb6;
+  color: #fff;
   border-radius: 6px;
+
+  &:hover {
+    background: #1c5297;
+  }
+
+  &:focus,
+  &:active {
+    box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 50%);
+  }
 }
 
 .modal-open .modal {

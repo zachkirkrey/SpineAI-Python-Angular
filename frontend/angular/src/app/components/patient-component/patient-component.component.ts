@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren, ViewChild, TemplateRef } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
@@ -55,10 +55,12 @@ export class PatientComponentComponent implements OnInit {
     fetchArr = []
     closeResult = '';
     del_action_id: any
+    showMsg: any
     readonly api_url = environment.api_url;
     readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports`;
     readonly action_fetch_url = `${environment.api_url}/action`;
     readonly action_save_url = `${environment.api_url}/action`;
+    @ViewChild('msgModal') msgModal: TemplateRef<any>;
     actionList = ['Scheduled for Clinic', 'Surgery', 'Additional Testing', 'Injections', 'Physical Therapy', 'RTC/DC', 'Referral']
     @ViewChildren('report_rows') report_rows: QueryList<any>;
     constructor(private router: Router, private route: ActivatedRoute, private modalService: NgbModal) {
@@ -298,6 +300,13 @@ export class PatientComponentComponent implements OnInit {
             return `with: ${reason}`;
         }
     }
+    open(content) {
+        this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+            this.closeResult = `Closed with: ${result}`;
+        }, (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        });
+    }
     delModal() {
         this.report_actions = []
         let delete_url = `${environment.api_url}/action/${this.del_action_id}`
@@ -347,7 +356,8 @@ export class PatientComponentComponent implements OnInit {
             if ('error' in data) {
                 this.action_error = data['error'];
             } else {
-                this.modalService.dismissAll()
+                this.open(this.msgModal)
+                this.showMsg = 'Patient Information Updated Successfully !!'
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${this.index_url}.`;

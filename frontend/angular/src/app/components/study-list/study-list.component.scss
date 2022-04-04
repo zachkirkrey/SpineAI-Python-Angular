@@ -185,6 +185,15 @@ div#reports_table_wrapper>.row:nth-child(1) div {
   padding: 4px 0;
   border-radius: 5px;
   margin-left: 5px;
+
+  &:hover {
+    background: #1c5297;
+  }
+
+  &:focus,
+  &:active {
+    box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 50%);
+  }
 }
 
 
@@ -273,6 +282,4 @@ td.name_col.ng-star-inserted:hover {
     width: 100%;
     text-align: left;
   }
-
-
 }

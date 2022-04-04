@@ -47,7 +47,7 @@
   }
 
   .header-tabs {
-    > div {
+    >div {
       display: inline-block;
       text-transform: uppercase;
       padding: 15px 25px;
@@ -78,6 +78,10 @@
     flex: 1;
     padding: 15px 20px;
     outline: none !important;
+
+    &:focus {
+      box-shadow: none;
+    }
   }
 
   .custom-button:hover {
@@ -86,7 +90,7 @@
 }
 
 .footer {
-  a{
+  a {
     color: $blue;
   }
 }

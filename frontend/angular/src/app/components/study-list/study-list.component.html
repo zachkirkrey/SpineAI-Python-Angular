@@ -78,15 +78,15 @@
                     *ngIf="index_complete && !index_error">
                     <thead>
                         <tr *ngIf="isShown == true">
-                            <th id="mrn_col_head" [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'">MRN #
+                            <th id="mrn_col_head" [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'" (click)="sortOrder('mrn')">MRN #
                             </th>
-                            <th id="apt_col_head" [style.display]="aptCheckBox == false ? 'none' : 'table-cell'">APPT
+                            <th id="apt_col_head" [style.display]="aptCheckBox == false ? 'none' : 'table-cell'" (click)="sortOrder('appt')">APPT
                                 DATE</th>
                             <th id="created_col_head"
-                                [style.display]="createdCheckbox == false ? 'none' : 'table-cell'">CREATED DATE</th>
-                            <th id="name_col_head" [style.display]="nameCheckBox == false ? 'none' : 'table-cell'">
+                                [style.display]="createdCheckbox == false ? 'none' : 'table-cell'" (click)="sortOrder('created_date')">CREATED DATE</th>
+                            <th id="name_col_head" [style.display]="nameCheckBox == false ? 'none' : 'table-cell'" (click)="sortOrder('patient_name')">
                                 PATIENT NAME</th>
-                            <th id="import_col_head" [style.display]="importCheckBox == false ? 'none' : 'table-cell'">
+                            <th id="import_col_head" [style.display]="importCheckBox == false ? 'none' : 'table-cell'" (click)="sortOrder('import_id')">
                                 IMPORT ID</th>
                             <th id="report_col_head" [style.display]="reportCheckBox == false ? 'none' : 'table-cell'">
                                 REPORT</th>
@@ -96,13 +96,13 @@
                                 [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">ACTION</th>
                         </tr>
                         <tr *ngIf="isShown == false">
-                            <th id="mrn_col_head" [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'">MRN #
+                            <th id="mrn_col_head" [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'" (click)="sortOrder('mrn')">MRN #
                             </th>
-                            <th id="apt_col_head" [style.display]="aptCheckBox == false ? 'none' : 'table-cell'">APPT
+                            <th id="apt_col_head" [style.display]="aptCheckBox == false ? 'none' : 'table-cell'" (click)="sortOrder('appt')">APPT
                                 DATE</th>
                             <th id="created_col_head"
-                                [style.display]="createdCheckbox == false ? 'none' : 'table-cell'">CREATED DATE</th>
-                            <th id="import_col_head" [style.display]="importCheckBox == false ? 'none' : 'table-cell'">
+                                [style.display]="createdCheckbox == false ? 'none' : 'table-cell'" (click)="sortOrder('created_date')">CREATED DATE</th>
+                            <th id="import_col_head" [style.display]="importCheckBox == false ? 'none' : 'table-cell'" (click)="sortOrder('import_id')">
                                 IMPORT ID</th>
                             <th id="report_col_head" [style.display]="reportCheckBox == false ? 'none' : 'table-cell'">
                                 REPORT</th>
@@ -188,7 +188,7 @@
 
                                     <li *ngFor="let report of metadata.report_action">
                                         <img class="action_img" width="13px" src="assets/img/cross.png" alt=""
-                                            (click)="deleteAction(report.id,deleteModal)" />
+                                            (click)="deleteAction(report.id,deleteModal,metadata.id)" />
                                         {{report.time}} {{report.name}}
                                     </li>
                                     <li *ngFor="let report of report_action[i]">

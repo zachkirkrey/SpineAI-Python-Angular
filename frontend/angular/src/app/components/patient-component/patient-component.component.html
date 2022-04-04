@@ -1,7 +1,7 @@
 <form>
 
     <div class="form-group">
-    <div class="addpatbtno">
+        <div class="addpatbtno">
             <button class="mat-focus-indicator export-btn backtopatient add-patient mat-button mat-button-base"
                 (click)="navigate()">
                 <span> &lt; </span>
@@ -157,5 +157,14 @@
     <div class="modal-footer cus_btn add-patient-footer">
         <button type="button" class="btn y_btn btn-outline-dark" (click)="delModal()">Yes</button>
         <button type="button" class="btn n_btn btn-outline-dark" (click)="closeDelModal()">No</button>
+    </div>
+</ng-template>
+
+<ng-template #msgModal let-modal>
+    <div class="modal-body custxt add-patient-form ">
+        {{showMsg}}
+    </div>
+    <div class="modal-footer cus_btn add-patient-footer">
+        <button type="button" class="btn chk_pf_btn n_btn btn-outline-dark" (click)="closeDelModal()">Ok</button>
     </div>
 </ng-template>

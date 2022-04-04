@@ -4,6 +4,15 @@
   justify-content: space-between;
   margin: 10px 0;
 
+  &.fld-header {
+    width: 100%;
+    max-width: 800px;
+
+    &>div {
+      flex: 1 1 50%;
+    }
+  }
+
   @media (max-width:960px) {
     width: 100%;
   }
@@ -13,13 +22,14 @@
   margin-bottom: 20px;
 }
 
-.addpatbtno .export-btn.mat-button {
-  background-color: #376fb6;
-  color: #fff;
-  border: none;
-  padding: 10px 15px !important;
-  border-radius: 5px;
-  margin-right: 20px !important;
+.addpatbtno {
+  .export-btn.mat-button {
+    border: none;
+    padding: 10px 15px !important;
+    border-radius: 5px;
+    margin-right: 20px !important;
+    line-height: 1;
+  }
 }
 
 .addpatbtno button span {
