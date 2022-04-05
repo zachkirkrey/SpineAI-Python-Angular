@@ -84,7 +84,7 @@ module.exports = function (finale, sequelize) {
         endpoints: ['/questions', '/question/:uuid'],
         associations: false
     });
-    
+
 
 
     // Log access to the following resources.

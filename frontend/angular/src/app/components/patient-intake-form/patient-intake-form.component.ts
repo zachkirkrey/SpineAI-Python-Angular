@@ -9,6 +9,11 @@ import * as moment from 'moment';
     styleUrls: ['./patient-intake-form.component.scss']
 })
 export class PatientIntakeFormComponent implements OnInit {
+
+    readonly symptoms_save_url = `${environment.api_url}/symptoms`;
+    readonly history_save_url = `${environment.api_url}/history`
+    readonly otherTreatment_save_url = `${environment.api_url}/treatments`
+    readonly reason_save_url = `${environment.api_url}/referralreasons`
     spineSurgery: any
     smoker: any
     mri_status: any
@@ -25,12 +30,16 @@ export class PatientIntakeFormComponent implements OnInit {
     patient_name: any
     mrn: any
     closeResult = '';
-    referral_reason = []
-    symptoms_arr = []
+    referral_reason = [{ 'id': 1, 'uuid': 'c772f2b6-9546-4176-a2b1-a370980666dd', 'reason': 'Herniated or bulging disc', 'show': false }, { 'id': 2, 'uuid': '22ade68d-70bc-48e4-8f4a-df680f3ae020', 'reason': 'Arthritis or degenerative changes', 'show': false }, { 'id': 3, 'uuid': '452ca65a-c772-4484-a17c-96ad2f2bf673', 'reason': 'Spondylolisthesis', 'show': false }, { 'id': 4, 'uuid': '5b770340-30f5-4468-86b0-7195961f9aa4', 'reason': 'Fracture', 'show': false }, { 'id': 5, 'uuid': '1499b89c-84cf-4c76-8bdb-884d619a031f', 'reason': 'Tumor / mass / cancer', 'show': false }, { 'id': 6, 'uuid': '92cbcea9-657d-4c8b-9a67-092d903ecbbe', 'reason': 'Problems from a prior surgery or issues with hardware or implant', 'show': false }, { 'id': 7, 'uuid': '01c84a65-0142-40c4-8411-f8361b4a7575', 'reason': 'Other', 'show': false }]
+
+    symptoms_arr = [{ 'id': 1, 'uuid': 'c772f2b6-9546-4176-a2b1-a370980666dd', 'symptom': 'Bowel or bladder dysfunction', 'show': false }, { 'id': 2, 'uuid': '22ade68d-70bc-48e4-8f4a-df680f3ae020', 'symptom': 'Saddle anesthesia', 'show': false }, { 'id': 3, 'uuid': '452ca65a-c772-4484-a17c-96ad2f2bf673', 'symptom': 'Rapidly progressing weakness', 'show': false }]
+
     patient_save: boolean = false
     prev_spine = [{ 'id': 1, 'name': 'Yes', 'value': true }, { 'id': 2, 'name': 'No', 'value': false }]
-    otherTreat_arr = []
-    history_arr = []
+    otherTreat_arr = [{ 'id': 1, 'uuid': 'c772f2b6-9546-4176-a2b1-a370980666dd', 'treatment': 'Physical Therapy', 'show': false }, { 'id': 2, 'uuid': '22ade68d-70bc-48e4-8f4a-df680f3ae020', 'treatment': 'Steroidal Injections', 'show': false }, { 'id': 3, 'uuid': '452ca65a-c772-4484-a17c-96ad2f2bf673', 'treatment': 'Ablation Therapy', 'show': false }]
+
+    history_arr = [{ 'id': 1, 'uuid': 'c772f2b6-9546-4176-a2b1-a370980666dd', 'history': 'Cardiovascular Disease', 'show': false }, { 'id': 2, 'uuid': '22ade68d-70bc-48e4-8f4a-df680f3ae020', 'history': 'Pulmonary Disease', 'show': false }, { 'id': 3, 'uuid': '452ca65a-c772-4484-a17c-96ad2f2bf673', 'history': 'Cancer', 'show': false }, { 'id': 4, 'uuid': '5b770340-30f5-4468-86b0-7195961f9aa4', 'history': 'Rheumatologic disorders', 'show': false }, { 'id': 5, 'uuid': '1499b89c-84cf-4c76-8bdb-884d619a031f', 'history': 'Endocrine', 'show': false }, { 'id': 6, 'uuid': '92cbcea9-657d-4c8b-9a67-092d903ecbbe', 'history': 'Thyroid Disorder', 'show': false }]
+
     smoker_arr = [{ 'id': 1, 'name': 'Yes', 'value': true }, { 'id': 2, 'name': 'No', 'value': false }]
     mri_arr = [{ 'id': 1, 'name': 'Upload Link Sent', 'show': false }, { 'id': 2, 'name': 'Mailing In', 'show': false }, { 'id': 3, 'name': 'In System', 'show': false }]
     pain_arr = [{ 'id': 1, 'name': 'Lower Back', 'show': false }, { 'id': 2, 'name': 'Left Leg', 'show': false }, { 'id': 3, 'name': 'Right Leg', 'show': false }, { 'id': 4, 'name': '% Lower Back', 'show': false }, { 'id': 5, 'name': '% Leg', 'show': false }]
@@ -209,7 +218,20 @@ export class PatientIntakeFormComponent implements OnInit {
             },
             dataType: 'json',
         }).done(function (data) {
-            this.referral_reason = data
+            let result = data
+            if (result.length == 0) {
+                this.referral_reason.forEach(x => {
+                    let req_data = {
+                        'id': x.id,
+                        'uuid': x.uuid,
+                        'reason': x.reason
+
+                    }
+                    this.createReason(req_data)
+                })
+            } else {
+                this.referral_reason = data
+            }
             this.referral_reason.forEach(y => {
                 y.show = false
 
@@ -230,7 +252,20 @@ export class PatientIntakeFormComponent implements OnInit {
             },
             dataType: 'json',
         }).done(function (data) {
-            this.symptoms_arr = data
+            let result = data
+            if (result.length == 0) {
+                this.symptoms_arr.forEach(x => {
+                    let req_data = {
+                        "id": x.id,
+                        "uuid": x.uuid,
+                        "symptom": x.symptom
+                    }
+                    this.createSymptom(req_data)
+                })
+            }
+            else {
+                this.symptoms_arr = data
+            }
             this.symptoms_arr.forEach(y => {
                 y.show = false
 
@@ -250,7 +285,19 @@ export class PatientIntakeFormComponent implements OnInit {
             },
             dataType: 'json',
         }).done(function (data) {
-            this.otherTreat_arr = data
+            let result = data
+            if (result.length == 0) {
+                this.otherTreat_arr.forEach(x => {
+                    let req_data = {
+                        'id': x.id,
+                        'uuid': x.uuid,
+                        'treatment': x.treatment
+                    }
+                    this.createOtherTreatment(req_data)
+                })
+            } else {
+                this.otherTreat_arr = data
+            }
             this.otherTreat_arr.forEach(y => {
                 y.show = false
 
@@ -271,7 +318,19 @@ export class PatientIntakeFormComponent implements OnInit {
             },
             dataType: 'json',
         }).done(function (data) {
-            this.history_arr = data
+            let result = data
+            if (result.length == 0) {
+                this.history_arr.forEach(x => {
+                    let req_data = {
+                        'id': x.id,
+                        'uuid': x.uuid,
+                        'history': x.history
+                    }
+                    this.createHistory(req_data)
+                });
+            } else {
+                this.history_arr = data
+            }
             this.history_arr.forEach(y => {
                 y.show = false
 
@@ -548,5 +607,91 @@ export class PatientIntakeFormComponent implements OnInit {
                 this.leg_validation = ''
             }
         }
+    }
+
+    createSymptom(req_data) {
+        $.ajax({
+            url: this.symptoms_save_url,
+            dataType: 'json',
+            type: "POST",
+            headers: {
+                "Authorization": 'Bearer ' + this.token
+            },
+            data: req_data,
+        }).done(function (data) {
+            if ('error' in data) {
+            } else {
+
+
+            }
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            this.action_error = `Data Not ${this.index_url}.`;
+        }.bind(this)).always(() => {
+        });
+
+    }
+
+    createHistory(req_data) {
+        $.ajax({
+            url: this.history_save_url,
+            dataType: 'json',
+            type: "POST",
+            headers: {
+                "Authorization": 'Bearer ' + this.token
+            },
+            data: req_data,
+        }).done(function (data) {
+            if ('error' in data) {
+            } else {
+
+
+            }
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            this.action_error = `Data Not ${this.index_url}.`;
+        }.bind(this)).always(() => {
+        });
+
+    }
+    createOtherTreatment(req_data) {
+        $.ajax({
+            url: this.otherTreatment_save_url,
+            dataType: 'json',
+            type: "POST",
+            headers: {
+                "Authorization": 'Bearer ' + this.token
+            },
+            data: req_data,
+        }).done(function (data) {
+            if ('error' in data) {
+            } else {
+
+
+            }
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            this.action_error = `Data Not ${this.index_url}.`;
+        }.bind(this)).always(() => {
+        });
+
+    }
+    createReason(req_data) {
+        $.ajax({
+            url: this.reason_save_url,
+            dataType: 'json',
+            type: "POST",
+            headers: {
+                "Authorization": 'Bearer ' + this.token
+            },
+            data: req_data,
+        }).done(function (data) {
+            if ('error' in data) {
+            } else {
+
+
+            }
+        }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
+            this.action_error = `Data Not ${this.index_url}.`;
+        }.bind(this)).always(() => {
+        });
+
     }
 }
