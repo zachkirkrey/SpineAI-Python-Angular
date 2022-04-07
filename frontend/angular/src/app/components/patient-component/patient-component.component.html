@@ -1,12 +1,15 @@
 <form>
 
     <div class="form-group">
-        <div class="addpatbtno">
+        <div class="addpatbtno d-flex align-items-center">
             <button class="mat-focus-indicator export-btn backtopatient add-patient mat-button mat-button-base"
                 (click)="navigate()">
                 <span> &lt; </span>
                 All Patients
             </button>
+            <mat-checkbox class="example-margin ml-4" (change)="toggleDisplay($event)" [checked]="archived_status">
+                Archived</mat-checkbox>
+
         </div>
         <div class="add-patient-con">
             <div class="fld_o">

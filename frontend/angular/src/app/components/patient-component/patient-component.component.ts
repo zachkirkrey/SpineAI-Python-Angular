@@ -55,6 +55,7 @@ export class PatientComponentComponent implements OnInit {
     fetchArr = []
     closeResult = '';
     del_action_id: any
+    archived_status: boolean = false
     showMsg: any
     readonly api_url = environment.api_url;
     readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports`;
@@ -342,7 +343,8 @@ export class PatientComponentComponent implements OnInit {
             "date_of_birth": this.date_picker,
             "phone_number": this.telephone,
             "diagnosis": this.diagnosis,
-            "appointment_date": this.appt_date
+            "appointment_date": this.appt_date,
+            'archived_status': this.archived_status
         }
         $.ajax({
             url: patient_save_url,
@@ -455,6 +457,10 @@ export class PatientComponentComponent implements OnInit {
             $('#reports_table').on('draw.dt', load_recommendation);
             load_recommendation(this.token);
         });
+    }
+    toggleDisplay(event) {
+        console.log('Event', event)
+        this.archived_status = event.checked
     }
 
 }

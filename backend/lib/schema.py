@@ -141,6 +141,8 @@ class Study(db.Entity, StudyMixin):
     diagnosis = Required(str)
     created_by = Optional(bool, default=False)
     appointment_date = Optional(datetime)
+    archived_status = Optional(bool, default=False)
+
     classifications = Set('Classification')
     segmentations = Set('Segmentation')
     canal_segmentations = Set('CanalSegmentation')
@@ -483,4 +485,4 @@ class OtherQuestions(db.Entity):
     mri_status = Optional(str)
     updation_datetime = Required(datetime, default=datetime.now)
     study = Optional(Study)
-    archived_status = Optional(bool, default=False)
+
