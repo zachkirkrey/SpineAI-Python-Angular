@@ -739,7 +739,7 @@ export class StudyListComponent implements OnInit {
                 })
                     .done(function (data) {
                         if (!data || !data.length) {
-                            $(elem).html('Unknown');
+                            $(elem).html('None');
                         } else {
                             if (data[0].surgery_recommended) {
                                 $(elem).html('<span style="color: red;">Schedule Consult</span>');
