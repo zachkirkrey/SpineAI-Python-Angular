@@ -511,17 +511,17 @@ export class PatientIntakeFormComponent implements OnInit {
         let question_url = `${environment.api_url}/questions`;
         let formatted_time = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
         let req_data = {
-            "lower_back": this.lower_back,
-            "left_leg": this.left_leg,
-            "right_leg": this.right_leg,
-            "percent_lower_back": this.back_lower,
-            "percent_leg": this.leg,
-            "previous_spine_surgery": this.spineSurgery,
-            "current_smoker": this.smoker,
-            "mri_status": this.mri_status,
-            "study": this.study_id,
-            'uuid': this.study_uuid,
-            'id': this.study_id,
+            "lower_back": this.lower_back?this.lower_back :'',
+            "left_leg": this.left_leg?this.left_leg:'',
+            "right_leg": this.right_leg?this.right_leg:'',
+            "percent_lower_back": this.back_lower?this.back_lower:'',
+            "percent_leg": this.leg?this.leg:'',
+            "previous_spine_surgery": this.spineSurgery?this.spineSurgery:'',
+            "current_smoker": this.smoker?this.smoker:'',
+            "mri_status": this.mri_status?this.mri_status:'',
+            "study": this.study_id?this.study_id:'',
+            'uuid': this.study_uuid?this.study_uuid:'',
+            'id': this.study_id?this.study_id:'',
             'updation_datetime': formatted_time
         }
         $.ajax({
@@ -575,10 +575,9 @@ export class PatientIntakeFormComponent implements OnInit {
         let historyArr = this.history_arr.filter(x => {
             return x.show == true
         })
-        console.log('save', referralArr, this.lower_back, this.left_leg, this.right_leg, this.back_lower, this.leg, symptoms, this.spineSurgery, otherTreatArr, historyArr, this.smoker, this.mri_status)
-        if (referralArr.length == 0 || symptoms.length == 0 || otherTreatArr.length == 0 || historyArr.length == 0 || this.lower_back == undefined || this.left_leg == undefined || this.right_leg == undefined || this.back_lower == undefined || this.leg == undefined || this.spineSurgery == undefined || this.smoker == undefined || this.mri_status == undefined) {
+        if (referralArr.length == 0) {
             this.open(content)
-            this.showMsg = 'Please fill all the fields !!'
+            this.showMsg = 'Please fill the Referral Reason !!'
         }
         else if (this.otherQues.length > 0 || this.patient_save == true) {
             this.updateOuestions()

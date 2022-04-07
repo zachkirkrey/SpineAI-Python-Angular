@@ -126,11 +126,14 @@
                             <td class="import_col" [style.display]="importCheckBox == false ? 'none' : 'table-cell'">{{
                                 metadata.name }}</td>
                             <td class="report_col" [style.display]="reportCheckBox == false ? 'none' : 'table-cell'">
-                                <ng-template [ngIf]="metadata.Reports.length" [ngIfElse]="noReport">
+                              <ng-template [ngIf]="metadata.Reports.length" [ngIfElse]="noReport">
                                     <ng-template [ngIf]="metadata.Reports[0].state == 'PROCESSED'"
                                         [ngIfElse]="reportNotProcessed">
-                                        <a href="/study/{{ metadata.uuid }}">Report</a>&nbsp;&nbsp;&#124;&nbsp;
-                                        <a href="javascript:void(0)"
+                                        <a class="search-pacs" (click)="redirect('intake',metadata.uuid,metadata.id)">
+                                            Intake
+                                        </a> &nbsp;&nbsp;&#124;&nbsp;
+                                        <a class="search-pacs" href="/study/{{ metadata.uuid }}">Report</a>&nbsp;&nbsp;&#124;&nbsp;
+                                        <a class="search-pacs"href="javascript:void(0)"
                                             (click)="showViewer(metadata.uuid,metadata)">Viewer</a>
                                     </ng-template>
                                     <ng-template #reportNotProcessed>
