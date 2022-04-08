@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Component({
     selector: 'app-patient-component',
@@ -89,7 +90,6 @@ export class PatientComponentComponent implements OnInit {
             dataType: 'json',
         }).done(function (data) {
             if ('error' in data) {
-                console.log('error')
             } else {
                 this.index = data;
                 if (this.index != undefined && this.index.length > 0) {
@@ -131,7 +131,7 @@ export class PatientComponentComponent implements OnInit {
                         this.report = this.patient_info[0].Reports
                         this.show_icon = obj.show_icon
                         this.showList = obj.showList
-                        console.log('patient_info', this.metadata, ' ', this.showList)
+                        this.archived_status = this.patient_info[0].archived_status
                     }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
                         this.index_error = `Could not fetch search index from ${patient_url}.`;
                     }.bind(this)).always(() => {
@@ -163,8 +163,6 @@ export class PatientComponentComponent implements OnInit {
                     'id': x.id
                 })
             })
-            console.log('data', this.report_actions)
-
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.index_error = `Could not fetch search index from ${patient_url}.`;
         }.bind(this)).always(() => {
@@ -233,11 +231,9 @@ export class PatientComponentComponent implements OnInit {
         this.action_arr.push(object)
         this.patient_info
         this.show_icon = false
-        console.log('Action_Arr', this.action_arr)
     }
     showHide() {
         this.showList = !this.showList
-        console.log('showList', this.showList)
     }
     saveAction(id, index) {
         let report_Arr = []
@@ -459,7 +455,6 @@ export class PatientComponentComponent implements OnInit {
         });
     }
     toggleDisplay(event) {
-        console.log('Event', event)
         this.archived_status = event.checked
     }
 

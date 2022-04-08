@@ -80,6 +80,9 @@
                         <tr *ngIf="isShown == true">
                             <th id="mrn_col_head" [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'" (click)="sortOrder('mrn')">MRN #
                             </th>
+
+                            <th id="status_col_head" [style.display]="statusCheckbox == false ? 'none' : 'table-cell'" (click)="sortOrder('status')">Status
+                            </th>
                             <th id="apt_col_head" [style.display]="aptCheckBox == false ? 'none' : 'table-cell'" (click)="sortOrder('appt')">APPT
                                 DATE</th>
                             <th id="created_col_head"
@@ -97,6 +100,8 @@
                         </tr>
                         <tr *ngIf="isShown == false">
                             <th id="mrn_col_head" [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'" (click)="sortOrder('mrn')">MRN #
+                            </th>
+                            <th id="status_col_head" [style.display]="statusCheckbox == false ? 'none' : 'table-cell'" (click)="sortOrder('status')">Status
                             </th>
                             <th id="apt_col_head" [style.display]="aptCheckBox == false ? 'none' : 'table-cell'" (click)="sortOrder('appt')">APPT
                                 DATE</th>
@@ -116,6 +121,8 @@
                         <tr #report_rows *ngFor="let metadata of index; let i = index" [attr.data-index]="i">
                             <td class="mrn_col" [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'"
                                 (click)="navigateToPatient(metadata.uuid)">{{metadata.mrn}}</td>
+                                <td class="status_col" [style.display]="statusCheckbox == false ? 'none' : 'table-cell'"
+                                (click)="navigateToPatient(metadata.uuid)">{{metadata.archived_status == true? 'Archived':'Active'}}</td>
                             <td class="apt_col" [style.display]="aptCheckBox == false ? 'none' : 'table-cell'">
                                 {{metadata.appointment_date == 'Invalid date'? '':metadata.appointment_date}}</td>
                             <td class="created_col" [style.display]="createdCheckbox == false ? 'none' : 'table-cell'">

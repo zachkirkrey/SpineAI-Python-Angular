@@ -137,7 +137,9 @@ server.post('/save/history', function (req, res, next) {
     let history = parseInt(req.body.history)
     let study = parseInt(req.body.study)
     joinTable.destroy({
-        where: {},
+        where: {
+            'id':study
+        },
         truncate: true
     }).then(data => {
         joinTable.create({
