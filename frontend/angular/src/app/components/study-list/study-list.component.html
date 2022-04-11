@@ -28,6 +28,11 @@
 
 
                 <div class="export-wrap">
+                    <section class="example-section">
+                        <mat-checkbox class="example-margin" (change)="showArchived($event)">Show Archived
+                        </mat-checkbox>
+                    </section>
+
                     <section class="example-section" *ngIf="visibility">
                         <mat-checkbox class="example-margin" (change)="toggleDisplay($event)">{{section}}</mat-checkbox>
                     </section>
@@ -78,18 +83,23 @@
                     *ngIf="index_complete && !index_error">
                     <thead>
                         <tr *ngIf="isShown == true">
-                            <th id="mrn_col_head" [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'" (click)="sortOrder('mrn')">MRN #
+                            <th id="mrn_col_head" [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'"
+                                (click)="sortOrder('mrn')">MRN #
                             </th>
 
-                            <th id="status_col_head" [style.display]="statusCheckbox == false ? 'none' : 'table-cell'" (click)="sortOrder('status')">Status
+                            <th id="status_col_head" [style.display]="statusCheckbox == false ? 'none' : 'table-cell'"
+                                (click)="sortOrder('status')">Status
                             </th>
-                            <th id="apt_col_head" [style.display]="aptCheckBox == false ? 'none' : 'table-cell'" (click)="sortOrder('appt')">APPT
+                            <th id="apt_col_head" [style.display]="aptCheckBox == false ? 'none' : 'table-cell'"
+                                (click)="sortOrder('appt')">APPT
                                 DATE</th>
-                            <th id="created_col_head"
-                                [style.display]="createdCheckbox == false ? 'none' : 'table-cell'" (click)="sortOrder('created_date')">CREATED DATE</th>
-                            <th id="name_col_head" [style.display]="nameCheckBox == false ? 'none' : 'table-cell'" (click)="sortOrder('patient_name')">
+                            <th id="created_col_head" [style.display]="createdCheckbox == false ? 'none' : 'table-cell'"
+                                (click)="sortOrder('created_date')">CREATED DATE</th>
+                            <th id="name_col_head" [style.display]="nameCheckBox == false ? 'none' : 'table-cell'"
+                                (click)="sortOrder('patient_name')">
                                 PATIENT NAME</th>
-                            <th id="import_col_head" [style.display]="importCheckBox == false ? 'none' : 'table-cell'" (click)="sortOrder('import_id')">
+                            <th id="import_col_head" [style.display]="importCheckBox == false ? 'none' : 'table-cell'"
+                                (click)="sortOrder('import_id')">
                                 IMPORT ID</th>
                             <th id="report_col_head" [style.display]="reportCheckBox == false ? 'none' : 'table-cell'">
                                 REPORT</th>
@@ -99,15 +109,19 @@
                                 [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">ACTION</th>
                         </tr>
                         <tr *ngIf="isShown == false">
-                            <th id="mrn_col_head" [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'" (click)="sortOrder('mrn')">MRN #
+                            <th id="mrn_col_head" [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'"
+                                (click)="sortOrder('mrn')">MRN #
                             </th>
-                            <th id="status_col_head" [style.display]="statusCheckbox == false ? 'none' : 'table-cell'" (click)="sortOrder('status')">Status
+                            <th id="status_col_head" [style.display]="statusCheckbox == false ? 'none' : 'table-cell'"
+                                (click)="sortOrder('status')">Status
                             </th>
-                            <th id="apt_col_head" [style.display]="aptCheckBox == false ? 'none' : 'table-cell'" (click)="sortOrder('appt')">APPT
+                            <th id="apt_col_head" [style.display]="aptCheckBox == false ? 'none' : 'table-cell'"
+                                (click)="sortOrder('appt')">APPT
                                 DATE</th>
-                            <th id="created_col_head"
-                                [style.display]="createdCheckbox == false ? 'none' : 'table-cell'" (click)="sortOrder('created_date')">CREATED DATE</th>
-                            <th id="import_col_head" [style.display]="importCheckBox == false ? 'none' : 'table-cell'" (click)="sortOrder('import_id')">
+                            <th id="created_col_head" [style.display]="createdCheckbox == false ? 'none' : 'table-cell'"
+                                (click)="sortOrder('created_date')">CREATED DATE</th>
+                            <th id="import_col_head" [style.display]="importCheckBox == false ? 'none' : 'table-cell'"
+                                (click)="sortOrder('import_id')">
                                 IMPORT ID</th>
                             <th id="report_col_head" [style.display]="reportCheckBox == false ? 'none' : 'table-cell'">
                                 REPORT</th>
@@ -121,8 +135,9 @@
                         <tr #report_rows *ngFor="let metadata of index; let i = index" [attr.data-index]="i">
                             <td class="mrn_col" [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'"
                                 (click)="navigateToPatient(metadata.uuid)">{{metadata.mrn}}</td>
-                                <td class="status_col" [style.display]="statusCheckbox == false ? 'none' : 'table-cell'"
-                                (click)="navigateToPatient(metadata.uuid)">{{metadata.archived_status == true? 'Archived':'Active'}}</td>
+                            <td class="status_col" [style.display]="statusCheckbox == false ? 'none' : 'table-cell'"
+                                (click)="navigateToPatient(metadata.uuid)">{{metadata.archived_status == true?
+                                'Archived':'Active'}}</td>
                             <td class="apt_col" [style.display]="aptCheckBox == false ? 'none' : 'table-cell'">
                                 {{metadata.appointment_date == 'Invalid date'? '':metadata.appointment_date}}</td>
                             <td class="created_col" [style.display]="createdCheckbox == false ? 'none' : 'table-cell'">
@@ -133,14 +148,15 @@
                             <td class="import_col" [style.display]="importCheckBox == false ? 'none' : 'table-cell'">{{
                                 metadata.name }}</td>
                             <td class="report_col" [style.display]="reportCheckBox == false ? 'none' : 'table-cell'">
-                              <ng-template [ngIf]="metadata.Reports.length" [ngIfElse]="noReport">
+                                <ng-template [ngIf]="metadata.Reports.length" [ngIfElse]="noReport">
                                     <ng-template [ngIf]="metadata.Reports[0].state == 'PROCESSED'"
                                         [ngIfElse]="reportNotProcessed">
                                         <a class="search-pacs" (click)="redirect('intake',metadata.uuid,metadata.id)">
                                             Intake
                                         </a> &nbsp;&nbsp;&#124;&nbsp;
-                                        <a class="search-pacs" href="/study/{{ metadata.uuid }}">Report</a>&nbsp;&nbsp;&#124;&nbsp;
-                                        <a class="search-pacs"href="javascript:void(0)"
+                                        <a class="search-pacs"
+                                            href="/study/{{ metadata.uuid }}">Report</a>&nbsp;&nbsp;&#124;&nbsp;
+                                        <a class="search-pacs" href="javascript:void(0)"
                                             (click)="showViewer(metadata.uuid,metadata)">Viewer</a>
                                     </ng-template>
                                     <ng-template #reportNotProcessed>

@@ -112,8 +112,13 @@
 
 }
 
-.export-wrap mat-checkbox#mat-checkbox-1 {
+.export-wrap mat-checkbox.mat-checkbox {
   color: #333;
+  padding-right: 10px;
+
+  label {
+    margin-bottom: 0 !important;
+  }
 }
 
 div#reports_table_wrapper>.row:nth-child(1) {
@@ -230,9 +235,9 @@ div#reports_table_wrapper>.row:nth-child(1) div {
   padding-bottom: 11px;
 }
 
-#mat-checkbox-1 {
-  padding: 7px 10px 0 0 !important;
-}
+//.mat-checkbox {
+//  padding: 7px 10px 0 0 !important;
+//}
 
 
 .export-btn.add-patient {
@@ -262,6 +267,11 @@ td.name_col.ng-star-inserted:hover {
   .addpatbtno,
   .export-wrap {
     width: 100%;
+    flex-direction: column;
+
+    .export-btn.mat-button {
+      margin: 10px 0 0;
+    }
   }
 }
 

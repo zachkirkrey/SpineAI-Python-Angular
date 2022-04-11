@@ -188,6 +188,7 @@ export class StudyListComponent implements OnInit {
         this.cookie.put('columnList', JSON.stringify(this.columnList))
         if (value == false) {
             var all_col = document.getElementsByClassName(col_name);
+            console.log('all_col', document.getElementsByClassName(col_name))
             for (var i = 0; i < all_col.length; i++) {
                 (all_col[i] as HTMLElement).style.display = "table-cell";
             }
@@ -789,6 +790,21 @@ export class StudyListComponent implements OnInit {
     redirect(value, uuid, id) {
         if (value == 'intake') {
             this.router.navigate(['/detais/form/' + uuid + '/' + id])
+        }
+    }
+    showArchived(event) {
+        if (event.checked == true) {
+            let obj = this.index.find(x => {
+                if (x.archived_status == true) {
+                    return x
+                }
+            })
+            let arr = []
+            arr.push(obj)
+            this.index = arr
+        }
+        else {
+            this.tableData(null)
         }
     }
 }
