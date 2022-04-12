@@ -486,3 +486,10 @@ class OtherQuestions(db.Entity):
     updation_datetime = Required(datetime, default=datetime.now)
     study = Optional(Study)
 
+
+class LogoImage(db.Entity):
+    id = PrimaryKey(int, auto=True)
+    uuid = Required(str, index=True, default=get_uuid)
+    creation_datetime = Required(datetime, default=datetime.now)
+    png_base64_str = Required(str)
+    active = Optional(bool, default=True)

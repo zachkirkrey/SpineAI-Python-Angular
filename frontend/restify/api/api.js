@@ -84,6 +84,11 @@ module.exports = function (finale, sequelize) {
         endpoints: ['/questions', '/question/:uuid'],
         associations: false
     });
+    let logoImageResource = finale.resource({
+        model: sequelize.models.LogoImage,
+        endpoints: ['/logoimage', '/logoimage/:uuid'],
+        associations: false
+    });
 
 
 
@@ -104,7 +109,8 @@ module.exports = function (finale, sequelize) {
             symptomsResource,
             treatmentsResource,
             historyResource,
-            questionsResource
+            questionsResource,
+            logoImageResource
         ].forEach(resource => resource.use(apiLogMiddleware));
     }
 
