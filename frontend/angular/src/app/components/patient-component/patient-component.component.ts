@@ -355,7 +355,7 @@ export class PatientComponentComponent implements OnInit {
                 this.action_error = data['error'];
             } else {
                 this.open(this.msgModal)
-                this.showMsg = 'Patient Information Updated Successfully !!'
+                this.showMsg = 'Patient Information Updated Successfully'
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${this.index_url}.`;
