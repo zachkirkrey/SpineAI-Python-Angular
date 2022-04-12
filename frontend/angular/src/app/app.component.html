@@ -1,68 +1,99 @@
 <!-- <div id="loading"></div> -->
 <div class="page">
     <div class="page-main">
-           <div class="header" *ngIf="visibility == true">
-               <div class="header-brand py-3">
-                   <a href="/">
-                       <img id="logo" src="assets/img/theseus-horizontal.png" class="header-brand-img" alt="Logo">
-                   </a>
-                   <div id="sublogo" style="display: none;">Powered by&nbsp;&nbsp;<img
-                           src="assets/img/theseus-horizontal.png" /></div>
-                   <div id="header-status">
-                       <p *ngIf="!environment.production">
-                           Dev Environment
-                       </p>
-                       <p *ngIf="loggedIn">
-                           Logged in as: {{ user.email }}
-                           (<a href="{{ environment.oauth_url }}/oauth2/logout">Logout</a>)
-                       </p>
-                   </div>
-               </div>
-           </div> <!-- header -->
+        <div class="header" *ngIf="visibility == true">
+            <div class="header-brand py-3">
+                <a href="/">
+                    <img *ngIf="defaultLogo == 'true' || defaultLogo == null" id="logo"
+                        src="assets/img/theseus-horizontal.png" class="header-brand-img" alt="Logo">
+                </a>
+                <div id="sublogo" style="display: none;">Powered by&nbsp;&nbsp;<img
+                        src="assets/img/theseus-horizontal.png" /></div>
+                <div id="header-status">
+                    <p *ngIf="!environment.production">
+                        Dev Environment
+                    </p>
+                    <p *ngIf="loggedIn">
+                        Logged in as: {{ user.email }}
+                        (<a href="{{ environment.oauth_url }}/oauth2/logout">Logout</a>)
+                    </p>
+                </div>
+            </div>
+        </div> <!-- header -->
 
-           <div>
-               <div class="container">
-                   <div class="row">
-                       <div class="col-sm-12">
-                           <div class="card">
-                               <div class="main-buttons top-tabs-wrap d-flex" [ngClass]="{'hidden': pageType == 'LOGIN'}" *ngIf="visibility == true">
-                                   <button class="custom-button" [ngClass]="{'disabled' : pageType !== 'STUDIES'}"
-                                       (click)="onLoadReport()">
-                                       <i class="fa fa-archive"></i>
-                                       <span>MANAGE PATIENTS</span>
-                                   </button>
-                                   <button *ngIf="environment.dicom_api_enabled" class="custom-button"
-                                   [ngClass]="{'disabled' : pageType !== 'FETCH'}" (click)="onDICOMFetch()">
-                                       <i class="fa fa-server"></i>
-                                       <span>SEARCH PACS</span>
-                                   </button>
-                                   <button class="custom-button" [ngClass]="{'disabled' : pageType !== 'INTAKE'}"
-                                       (click)="onProcessData()">
-                                       <i class="fa fa-gears"></i>
-                                       <span>IMPORT MRI</span>
-                                   </button>
-                                   <button id="view_report" class="custom-button"
-                                       [ngClass]="{'disabled' : pageType !== 'VIEW_REPORT'}" (click)="onViewReport()"
-                                       [disabled]="studyId == ''">
-                                       <i class="fa fa-file-text-o"></i>
-                                       <span>View Report</span>
-                                   </button>
-                               </div>
-                               <div class="p-4">
-                                   <router-outlet></router-outlet>
-                               </div>
-                   </div>
-                       </div>
-                   </div> <!-- row -->
-               </div>
-           </div>
-       </div>
+        <div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="main-buttons top-tabs-wrap d-flex" [ngClass]="{'hidden': pageType == 'LOGIN'}"
+                                *ngIf="visibility == true">
+                                <div
+                                    *ngIf="(pageType != 'BRANDING' && pageType != 'USERS' && pageType != 'OPTIONS' && pageType != 'EXPORTS')">
+                                    <button class="custom-button" [ngClass]="{'disabled' : pageType !== 'STUDIES'}"
+                                        (click)="onLoadReport()">
+                                        <i class="fa fa-archive"></i>
+                                        <span>MANAGE PATIENTS</span>
+                                    </button>
+                                    <button *ngIf="environment.dicom_api_enabled" class="custom-button"
+                                        [ngClass]="{'disabled' : pageType !== 'FETCH'}" (click)="onDICOMFetch()">
+                                        <i class="fa fa-server"></i>
+                                        <span>SEARCH PACS</span>
+                                    </button>
+                                    <button class="custom-button" [ngClass]="{'disabled' : pageType !== 'INTAKE'}"
+                                        (click)="onProcessData()">
+                                        <i class="fa fa-gears"></i>
+                                        <span>IMPORT MRI</span>
+                                    </button>
+                                    <button id="view_report" class="custom-button"
+                                        [ngClass]="{'disabled' : pageType !== 'VIEW_REPORT'}" (click)="onViewReport()"
+                                        [disabled]="studyId == ''">
+                                        <i class="fa fa-file-text-o"></i>
+                                        <span>View Report</span>
+                                    </button>
+                                </div>
+                                <!--Admin Section-->
+                                <div
+                                    *ngIf="(pageType != 'INTAKE' && pageType != 'FETCH' && pageType != 'STUDIES' && pageType != 'VIEW_REPORT')">
+                                    <button class="custom-button" [ngClass]="{'disabled' : pageType !== 'BRANDING'}"
+                                        (click)="redirectoPage('admin/branding')">
+                                        <i class="fa fa-archive"></i>
+                                        <span>BRANDING</span>
+                                    </button>
 
-       <!--footer-->
-       <footer class="footer" *ngIf="visibility == true">
-           <div class="text-center">
-               Copyright © 2020 <a href="#">Theseus AI. </a><a href="https://www.theseusai.com">www.theseusai.com</a>
-           </div>
-       </footer>
-       <!-- End Footer-->
-   </div> <!-- page -->
+                                    <button class="custom-button" [ngClass]="{'disabled' : pageType !== 'USERS'}">
+                                        <i class="fa fa-archive"></i>
+                                        <span>USERS</span>
+                                    </button>
+
+                                    <button class="custom-button" [ngClass]="{'disabled' : pageType !== 'OPTIONS'}">
+                                        <i class="fa fa-archive"></i>
+                                        <span>OPTIONS</span>
+                                    </button>
+
+                                    <button class="custom-button" [ngClass]="{'disabled' : pageType !== 'EXPORTS'}">
+                                        <i class="fa fa-archive"></i>
+                                        <span>EXPORTS</span>
+                                    </button>
+                                </div>
+                                <!--Admin Section-->
+                            </div>
+
+                            <div class="p-4">
+                                <router-outlet></router-outlet>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- row -->
+            </div>
+        </div>
+    </div>
+
+    <!--footer-->
+    <footer class="footer" *ngIf="visibility == true">
+        <div class="text-center">
+            Copyright © 2020 <a href="#">Theseus AI. </a><a href="https://www.theseusai.com">www.theseusai.com</a>
+        </div>
+    </footer>
+    <!-- End Footer-->
+</div> <!-- page -->

@@ -36,6 +36,10 @@ import { PatientComponentComponent } from './components/patient-component/patien
 import { CookieModule } from 'ngx-cookie';
 import { PatientIntakeFormComponent } from './components/patient-intake-form/patient-intake-form.component';
 import { ConfirmDialogComponent } from './components/modals/confirm-dialog.component';
+import { AdminBrandingComponent } from './components/admin-branding/admin-branding.component';
+import { AdminUsersComponent } from './components/admin-users/admin-users.component';
+import { AdminOptionsComponent } from './components/admin-options/admin-options.component';
+import { AdminExportComponent } from './components/admin-export/admin-export.component';
 
 
 const appRoutes: Routes = [
@@ -52,6 +56,10 @@ const appRoutes: Routes = [
     { path: 'viewer', component: ViewerComponent, data: { header: false } },
     { path: 'patient/:id', component: PatientComponentComponent, data: { header: true } },
     { path: 'detais/form/:uuid/:id', component: PatientIntakeFormComponent, data: { header: true } },
+    { path: 'admin/branding', component: AdminBrandingComponent, data: { header: true } },
+    { path: 'admin/users', component: AdminUsersComponent, data: { header: true } },
+    { path: 'admin/option', component: AdminOptionsComponent, data: { header: true } },
+    { path: 'admin/export', component: AdminExportComponent, data: { header: true } },
     {
         path: '**',
         redirectTo: '/login_pass',
@@ -76,6 +84,10 @@ const appRoutes: Routes = [
         PatientComponentComponent,
         PatientIntakeFormComponent,
         ConfirmDialogComponent,
+        AdminBrandingComponent,
+        AdminUsersComponent,
+        AdminOptionsComponent,
+        AdminExportComponent,
 
     ],
     imports: [

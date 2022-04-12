@@ -7,6 +7,7 @@ import { PageType, WhiteLabel } from './app.config';
 import { LegacyReportData } from './components/legacy-report/legacy-report.component';
 
 import { UserService } from './services/user/user.service';
+import { UploadService } from './services/upload/upload.service';
 import 'rxjs/add/operator/filter';
 
 @Component({
@@ -23,7 +24,7 @@ export class AppComponent {
     studyId: string;
     visibility: boolean = true;
     titles: any
-
+    defaultLogo: any
 
     loggedIn: boolean = false;
     user: any = null;
@@ -33,7 +34,8 @@ export class AppComponent {
         private segResultsData: LegacyReportData,
         private userService: UserService,
         private location: Location,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private uploadService: UploadService
     ) {
         router.events
             .filter(e => e instanceof NavigationEnd)
@@ -54,6 +56,18 @@ export class AppComponent {
                     this.pageType = PageType.INTAKE;
                 } else if (event.urlAfterRedirects.includes('fetch')) {
                     this.pageType = PageType.FETCH;
+                }
+                else if (event.urlAfterRedirects.includes('branding')) {
+                    this.pageType = PageType.BRANDING;
+                }
+                else if (event.urlAfterRedirects.includes('users')) {
+                    this.pageType = PageType.USERS;
+                }
+                else if (event.urlAfterRedirects.includes('option')) {
+                    this.pageType = PageType.OPTIONS;
+                }
+                else if (event.urlAfterRedirects.includes('export')) {
+                    this.pageType = PageType.EXPORTS;
                 }
             }
         });
@@ -79,6 +93,13 @@ export class AppComponent {
     }
 
     async ngOnInit() {
+        this.uploadService.data.subscribe(data => {
+            this.defaultLogo = data
+            console.log('defaultLogo', this.defaultLogo)
+            //do what ever needs doing when data changes
+        })
+        this.defaultLogo = localStorage.getItem('default-image')
+        console.log('defaultLogo', this.defaultLogo)
         for (var label of WhiteLabel) {
             if (window.location.host.search(label.url) >= 0) {
                 $('#logo').attr('src', label.logoImg);
@@ -109,5 +130,8 @@ export class AppComponent {
                 this.router.navigate(['login']);
             }
         }
+    }
+    redirectoPage(pageType) {
+        this.router.navigate([pageType])
     }
 }

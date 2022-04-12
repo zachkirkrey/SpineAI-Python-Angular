@@ -1,0 +1,8 @@
+<div>
+    Upload Custom Logo
+
+    <a href="javascript:void(0)" (click)="restoreImage()">Revert to default</a>
+    <input class="form-control" type="file" (change)="onChange($event)" accept="image/png">
+    <div>{{showImgErr}}</div>
+    <button type="button" class="svbtn" (click)="saveImage()">Save</button>
+</div>

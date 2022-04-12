@@ -7,8 +7,8 @@ import {
     HttpResponse
 } from '@angular/common/http';
 
-import { Observable, Subject, throwError } from 'rxjs';
-import {catchError, shareReplay} from 'rxjs/operators';
+import { Observable, Subject, throwError, BehaviorSubject } from 'rxjs';
+import { catchError, shareReplay } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 const api_url = environment.api_url;
@@ -30,7 +30,8 @@ export interface UploadResponse {
     providedIn: 'root'
 })
 export class UploadService {
-
+    private defaultLogo = new BehaviorSubject<any>('false');
+    data = this.defaultLogo.asObservable();
     constructor(private http: HttpClient) { }
 
     // Note we assume one upload per session.
@@ -104,5 +105,11 @@ export class UploadService {
             });
 
         return progress.asObservable();
+    }
+
+
+    setSpineLogo(v: any) {
+        this.defaultLogo.next(v);
+
     }
 }
