@@ -88,7 +88,7 @@
                             </th>
 
                             <th id="status_col_head" [style.display]="statusCheckbox == false ? 'none' : 'table-cell'"
-                                (click)="sortOrder('status')">Status
+                                (click)="sortOrder('status')">STATUS
                             </th>
                             <th id="apt_col_head" [style.display]="aptCheckBox == false ? 'none' : 'table-cell'"
                                 (click)="sortOrder('appt')">APPT
@@ -113,7 +113,7 @@
                                 (click)="sortOrder('mrn')">MRN #
                             </th>
                             <th id="status_col_head" [style.display]="statusCheckbox == false ? 'none' : 'table-cell'"
-                                (click)="sortOrder('status')">Status
+                                (click)="sortOrder('status')">STATUS
                             </th>
                             <th id="apt_col_head" [style.display]="aptCheckBox == false ? 'none' : 'table-cell'"
                                 (click)="sortOrder('appt')">APPT
@@ -225,8 +225,11 @@
                             </td>
                         </tr>
                     </tbody>
+                    <a href="javascript:void(0)" (click)="navigate()">Admin</a>
                 </table>
+                <!--<a href="javascript:void(0)" (click)="navigate()">Admin</a>-->
             </div> <!-- /table-responsive -->
+
         </div>
     </div> <!-- /row -->
 </form>

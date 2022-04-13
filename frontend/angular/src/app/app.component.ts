@@ -25,6 +25,7 @@ export class AppComponent {
     visibility: boolean = true;
     titles: any
     defaultLogo: any
+    spineAILogo: any = ''
 
     loggedIn: boolean = false;
     user: any = null;
@@ -96,10 +97,12 @@ export class AppComponent {
         this.uploadService.data.subscribe(data => {
             this.defaultLogo = data
             console.log('defaultLogo', this.defaultLogo)
-            //do what ever needs doing when data changes
         })
         this.defaultLogo = localStorage.getItem('default-image')
-        console.log('defaultLogo', this.defaultLogo)
+        this.uploadService.dataLogo.subscribe(data => {
+            this.spineAILogo = data
+        })
+        this.spineAILogo = localStorage.getItem('logo-img')
         for (var label of WhiteLabel) {
             if (window.location.host.search(label.url) >= 0) {
                 $('#logo').attr('src', label.logoImg);

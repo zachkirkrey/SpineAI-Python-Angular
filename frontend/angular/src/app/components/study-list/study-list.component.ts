@@ -42,6 +42,7 @@ export class StudyListComponent implements OnInit {
     appt_date: any
     telephone: any;
     diagnosis: any;
+    show_Archived = false
     email_error: boolean = false
     email_validate: boolean = false
     mrn_error: boolean = false
@@ -83,7 +84,7 @@ export class StudyListComponent implements OnInit {
         id: 'status_col',
         name: 'statusCheckbox',
         show: false,
-        colName: 'Status'
+        colName: 'STATUS'
     }, {
         id: 'apt_col',
         name: 'aptCheckbox',
@@ -517,32 +518,56 @@ export class StudyListComponent implements OnInit {
                         });
                     })
                 }
-                if (this.table_order == 'desc') {
-                    if (this.table_name == 'patient_name') {
-                        this.index.sort(function (a, b) { return (a.patient_name > b.patient_name) ? 1 : ((b.patient_name > a.patient_name) ? -1 : 0); });
-                    } else if (this.table_name == 'mrn') {
-                        this.index.sort(function (a, b) { return (a.mrn > b.mrn) ? 1 : ((b.mrn > a.mrn) ? -1 : 0); });
-                    } else if (this.table_name == 'appt') {
-                        this.index.sort(function (a, b) { return (a.appointment_date > b.appointment_date) ? 1 : ((b.appointment_date > a.appointment_date) ? -1 : 0); });
-                    } else if (this.table_name == 'created_date') {
-                        this.index.sort(function (a, b) { return (a.creation_datetime > b.creation_datetime) ? 1 : ((b.creation_datetime > a.creation_datetime) ? -1 : 0); });
-                    } else if (this.table_name == 'import_id') {
-                        this.index.sort(function (a, b) { return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0); });
-                    }
+                let obj = []
+                let active_obj = this.index.filter(x => x.archived_status != true)
+                let archived_obj = this.index.filter(x => x.archived_status == true)
+                if (active_obj.length > 0 && archived_obj.length > 0) {
+                    obj = active_obj.concat(archived_obj)
+                    console.log('obj', obj)
+                }
+                if (active_obj.length > 0 && archived_obj.length == 0) {
+                    obj = active_obj
+                }
+                if (active_obj.length == 0 && archived_obj.length > 0) {
+                    obj = archived_obj
+                }
 
-                } else if (this.table_order == 'asc') {
-                    if (this.table_name == 'patient_name') {
-                        this.index.sort(function (a, b) { return (a.patient_name < b.patient_name) ? 1 : ((b.patient_name < a.patient_name) ? -1 : 0); });
-                    } else if (this.table_name == 'mrn') {
-                        this.index.sort(function (a, b) { return (a.mrn < b.mrn) ? 1 : ((b.mrn < a.mrn) ? -1 : 0); });
-                    } else if (this.table_name == 'appt') {
-                        this.index.sort(function (a, b) { return (a.appointment_date < b.appointment_date) ? 1 : ((b.appointment_date < a.appointment_date) ? -1 : 0); });
-                    } else if (this.table_name == 'created_date') {
-                        this.index.sort(function (a, b) { return (a.creation_datetime < b.creation_datetime) ? 1 : ((b.creation_datetime < a.creation_datetime) ? -1 : 0); });
-                    } else if (this.table_name == 'import_id') {
-                        this.index.sort(function (a, b) { return (a.name < b.name) ? 1 : ((b.name < a.name) ? -1 : 0); });
+                if (this.show_Archived == false) {
+                    this.index = active_obj
+                } if (this.show_Archived == true) {
+                    this.index = obj
+                }
+
+                console.log('Filter', active_obj, archived_obj, this.show_Archived)
+                if (this.index != undefined) {
+                    if (this.table_order == 'desc') {
+                        if (this.table_name == 'patient_name') {
+                            this.index.sort(function (a, b) { return (a.patient_name > b.patient_name) ? 1 : ((b.patient_name > a.patient_name) ? -1 : 0); });
+                        } else if (this.table_name == 'mrn') {
+                            this.index.sort(function (a, b) { return (a.mrn > b.mrn) ? 1 : ((b.mrn > a.mrn) ? -1 : 0); });
+                        } else if (this.table_name == 'appt') {
+                            this.index.sort(function (a, b) { return (a.appointment_date > b.appointment_date) ? 1 : ((b.appointment_date > a.appointment_date) ? -1 : 0); });
+                        } else if (this.table_name == 'created_date') {
+                            this.index.sort(function (a, b) { return (a.creation_datetime > b.creation_datetime) ? 1 : ((b.creation_datetime > a.creation_datetime) ? -1 : 0); });
+                        } else if (this.table_name == 'import_id') {
+                            this.index.sort(function (a, b) { return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0); });
+                        }
+
+                    } else if (this.table_order == 'asc') {
+                        if (this.table_name == 'patient_name') {
+                            this.index.sort(function (a, b) { return (a.patient_name < b.patient_name) ? 1 : ((b.patient_name < a.patient_name) ? -1 : 0); });
+                        } else if (this.table_name == 'mrn') {
+                            this.index.sort(function (a, b) { return (a.mrn < b.mrn) ? 1 : ((b.mrn < a.mrn) ? -1 : 0); });
+                        } else if (this.table_name == 'appt') {
+                            this.index.sort(function (a, b) { return (a.appointment_date < b.appointment_date) ? 1 : ((b.appointment_date < a.appointment_date) ? -1 : 0); });
+                        } else if (this.table_name == 'created_date') {
+                            this.index.sort(function (a, b) { return (a.creation_datetime < b.creation_datetime) ? 1 : ((b.creation_datetime < a.creation_datetime) ? -1 : 0); });
+                        } else if (this.table_name == 'import_id') {
+                            this.index.sort(function (a, b) { return (a.name < b.name) ? 1 : ((b.name < a.name) ? -1 : 0); });
+                        }
                     }
                 }
+
 
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
@@ -793,18 +818,20 @@ export class StudyListComponent implements OnInit {
         }
     }
     showArchived(event) {
-        if (event.checked == true) {
-            let obj = this.index.find(x => {
-                if (x.archived_status == true) {
-                    return x
-                }
-            })
-            let arr = []
-            arr.push(obj)
-            this.index = arr
+        if (this.index != undefined) {
+            if (event.checked == true) {
+                this.show_Archived = true
+                this.tableData(null)
+            }
+            else {
+                this.show_Archived = false
+                this.tableData(null)
+
+            }
         }
-        else {
-            this.tableData(null)
-        }
+
+    }
+    navigate() {
+        this.router.navigate(['admin/branding'])
     }
 }

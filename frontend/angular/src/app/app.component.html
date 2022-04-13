@@ -3,9 +3,11 @@
     <div class="page-main">
         <div class="header" *ngIf="visibility == true">
             <div class="header-brand py-3">
-                <a href="/">
+                <a href="javascript:void(0)">
                     <img *ngIf="defaultLogo == 'true' || defaultLogo == null" id="logo"
                         src="assets/img/theseus-horizontal.png" class="header-brand-img" alt="Logo">
+                    <img *ngIf="spineAILogo != '' && (defaultLogo != 'true' && defaultLogo != null)" id="logo"
+                        [src]="spineAILogo" class="header-brand-img" alt="Logo">
                 </a>
                 <div id="sublogo" style="display: none;">Powered by&nbsp;&nbsp;<img
                         src="assets/img/theseus-horizontal.png" /></div>

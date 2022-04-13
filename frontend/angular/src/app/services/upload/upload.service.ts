@@ -32,6 +32,8 @@ export interface UploadResponse {
 export class UploadService {
     private defaultLogo = new BehaviorSubject<any>('false');
     data = this.defaultLogo.asObservable();
+    private imgLogo = new BehaviorSubject<string>('');
+    dataLogo = this.imgLogo.asObservable();
     constructor(private http: HttpClient) { }
 
     // Note we assume one upload per session.
@@ -110,6 +112,10 @@ export class UploadService {
 
     setSpineLogo(v: any) {
         this.defaultLogo.next(v);
+
+    }
+    setSpineImgLogo(v: any) {
+        this.imgLogo.next(v);
 
     }
 }
