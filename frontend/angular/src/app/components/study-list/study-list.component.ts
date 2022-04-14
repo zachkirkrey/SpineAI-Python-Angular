@@ -6,6 +6,9 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import { Router, NavigationEnd } from '@angular/router';
 import { CookieService } from 'ngx-cookie';
+import {ActionListValues} from "../../helpers/action-list.enum";
+import {StudyWithActions} from "../../services/api/api.service";
+import {HistoryComponent} from "./history/history.component";
 
 
 @Component({
@@ -16,13 +19,16 @@ import { CookieService } from 'ngx-cookie';
 export class StudyListComponent implements OnInit {
 
     readonly api_url = environment.api_url;
-    readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports`;
+    readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports&scope=includeLastAction`;
     readonly action_save_url = `${environment.api_url}/action`;
     readonly action_fetch_url = `${environment.api_url}/action`;
     readonly patient_save_url = `${environment.api_url}/studies`;
 
     old_index = 0
-    index = [];
+    index: (StudyWithActions & {
+      show_icon: boolean;
+      showList: boolean;
+    })[] = []; // todo clean up
     index_complete = false;
     index_error: string;
     action_error: string;
@@ -73,8 +79,8 @@ export class StudyListComponent implements OnInit {
     actionCheckBox: any
     del_study_id: any
     table_order = 'desc'
-    table_name = 'patient_name'
-    actionList = ['Scheduled for Clinic', 'Surgery', 'Additional Testing', 'Injections', 'Physical Therapy', 'RTC/DC', 'Referral']
+    table_name ='patient_name'
+    actionList =  ActionListValues;
     columnList = [{
         id: 'mrn_col',
         name: 'mrnCheckbox',
@@ -186,21 +192,29 @@ export class StudyListComponent implements OnInit {
                 x.show = !value
             }
         })
-        this.cookie.put('columnList', JSON.stringify(this.columnList))
+        this.cookie.put('columnList', JSON.stringify(this.columnList));
+        const heads = [
+          col_name + "_head",
+          col_name + "_head1",
+          col_name + "_head2",
+        ]
+          .map(name => document.getElementById(name))
+          .filter(val => !!val);
+
         if (value == false) {
             var all_col = document.getElementsByClassName(col_name);
             console.log('all_col', document.getElementsByClassName(col_name))
             for (var i = 0; i < all_col.length; i++) {
                 (all_col[i] as HTMLElement).style.display = "table-cell";
             }
-            document.getElementById(col_name + "_head").style.display = "table-cell";
+            heads.forEach(val => val.style.display = 'table-cell');
         }
         else {
             var all_col = document.getElementsByClassName(col_name);
             for (var i = 0; i < all_col.length; i++) {
                 (all_col[i] as HTMLElement).style.display = "none";
             }
-            document.getElementById(col_name + "_head").style.display = "none";
+            heads.forEach(val => val.style.display = 'none');
         }
         if (col_name == 'mrn_col') {
             this.mrnCheckbox = !value
@@ -274,28 +288,23 @@ export class StudyListComponent implements OnInit {
                 this.index = data;
                 this.index.forEach((x, i) => {
                     x.show_icon = true
-                    x.creation_datetime = moment(x.creation_datetime).format('YYYY-MM-DD')
                     if (study_id != null && study_id == x.id) {
                         x.showList = true
                     }
                     else {
                         x.showList = false
                     }
-
-                    if (x.appointment_date != null) {
-                        x.appointment_date = moment(x.appointment_date).format('YYYY-MM-DD')
-                    }
                 });
                 data.forEach(element => {
                     element.Reports = element.Reports.filter(report => report.type == 'PDF_SIMPLE');
                     element.Reports.sort(sort_by_creation);
                 });
-                this.fetchAction()
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.index_error = `Could not fetch search index from ${this.index_url}.`;
         }.bind(this)).always(() => {
             this.index_complete = true;
+            this.fetchAction();
         });
         this.action_arr = []
     }
@@ -573,6 +582,10 @@ export class StudyListComponent implements OnInit {
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${this.action_fetch_url}.`;
         }.bind(this)).always(() => {
+          setTimeout(function (){
+            const table = $('#reports_table').DataTable();
+            table.draw();
+          }, 200);
         });
         this.action_arr = []
     }
@@ -817,6 +830,21 @@ export class StudyListComponent implements OnInit {
             this.router.navigate(['/detais/form/' + uuid + '/' + id])
         }
     }
+
+  showActions(metadata: StudyWithActions) {
+    const modalRef = this.modalService.open(HistoryComponent, {
+      backdrop: true,
+    });
+    (modalRef.componentInstance as HistoryComponent).studyId = metadata.id.toString();
+
+    modalRef.dismissed.subscribe(res => {
+      if (res) {
+        this.tableData(null);
+        // window.location.reload(); // TODO: redo after figuring out the study loading logic
+      }
+    });
+  }
+  
     showArchived(event) {
         if (this.index != undefined) {
             if (event.checked == true) {

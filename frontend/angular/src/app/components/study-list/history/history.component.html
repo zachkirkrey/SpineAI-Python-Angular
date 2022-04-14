@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <h4 class="modal-title">History</h4>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+  <ul *ngIf="actions.length" class="list-actions">
+    <li *ngFor="let action of actions">
+      {{ action.creation_datetime | date:'shortDate' }} {{ action.name }}
+    </li>
+  </ul>
+
+  <form #form=ngForm (ngSubmit)="submit()">
+    <p>
+      <select required [(ngModel)]="selectedAction" name="action" class="custom-select custom-select-sm form-control form-control-sm">
+        <option *ngFor="let item of actionList" [value]='item'>
+          {{item}}
+        </option>
+      </select>
+    </p>
+    <button type="submit" [ngClass]="{disabled: processing || !form.valid}" class="custom-button outlined" [disabled]="processing || !form.valid">Save</button>
+  </form>
+</div>

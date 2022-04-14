@@ -105,8 +105,12 @@
                                 REPORT</th>
                             <th id="recommn_col_head"
                                 [style.display]="recommnCheckBox == false ? 'none' : 'table-cell'">RECOMMENDATION</th>
-                            <th id="action_col_head" class="action-report"
-                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">ACTION</th>
+                            <th id="action_col_head1"
+                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">LAST ACTION</th>
+                            <th id="action_col_head2"
+                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">LAST ACTION DATE</th>
+<!--                            <th id="action_col_head" class="action-report"-->
+<!--                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">ACTION</th>-->
                         </tr>
                         <tr *ngIf="isShown == false">
                             <th id="mrn_col_head" [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'"
@@ -127,8 +131,12 @@
                                 REPORT</th>
                             <th id="recommn_col_head"
                                 [style.display]="recommnCheckBox == false ? 'none' : 'table-cell'">RECOMMENDATION</th>
-                            <th id="action_col_head" class="action-report"
-                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">ACTION</th>
+                            <th id="action_col_head1"
+                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">LAST ACTION</th>
+                            <th id="action_col_head2"
+                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">LAST ACTION DATE</th>
+<!--                            <th id="action_col_head" class="action-report"-->
+<!--                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">ACTION</th>-->
                         </tr>
                     </thead>
                     <tbody>
@@ -138,10 +146,16 @@
                             <td class="status_col" [style.display]="statusCheckbox == false ? 'none' : 'table-cell'"
                                 (click)="navigateToPatient(metadata.uuid)">{{metadata.archived_status == true?
                                 'Archived':'Active'}}</td>
-                            <td class="apt_col" [style.display]="aptCheckBox == false ? 'none' : 'table-cell'">
-                                {{metadata.appointment_date == 'Invalid date'? '':metadata.appointment_date}}</td>
-                            <td class="created_col" [style.display]="createdCheckbox == false ? 'none' : 'table-cell'">
-                                {{ metadata.creation_datetime }}</td>
+                            <td class="apt_col"
+                                [attr.data-sort]="metadata.appointment_date | date:'yyyy-MM-dd'"
+                                [style.display]="aptCheckBox == false ? 'none' : 'table-cell'">
+                                {{metadata.appointment_date | date }}
+                            </td>
+                            <td class="created_col"
+                                [attr.data-sort]="metadata.creation_datetime | date:'yyyy-MM-dd'"
+                                [style.display]="createdCheckbox == false ? 'none' : 'table-cell'">
+                                {{ metadata.creation_datetime | date }}
+                            </td>
                             <td class="name_col" [style.display]="nameCheckBox == false ? 'none' : 'table-cell'"
                                 (click)="navigateToPatient(metadata.uuid)" *ngIf="isShown == true">{{
                                 metadata.patient_name }}</td>
@@ -197,32 +211,41 @@
                             <td class="recommn_col" [style.display]="recommnCheckBox == false ? 'none' : 'table-cell'">
                                 <div class="recommendation_cell" [attr.data-study-id]="metadata.id"></div>
                             </td>
-                            <td class="action_col" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">
-                                <select [(ngModel)]="action[i]" name="action" (change)="actionValues(action[i],i)">
-                                    <option *ngFor="let item of actionList" value={{item}}>
-                                        {{item}}
-                                    </option>
-                                </select>
-                                <img class="show-img" *ngIf="metadata.show_icon == true && metadata.report_action"
-                                    width="20px" src="assets/img/clipboard.png" alt=""
-                                    (click)="showHide(metadata.id,i,metadata.showList)" />
-                                <span *ngIf="action[i]" class="save-icon" (click)="saveAction(metadata.id,i)">
-                                    <img *ngIf="metadata.show_icon == false " width="15px"
-                                        src="assets/img/save_icon.png" alt="" />
-                                </span>
-                                <ul *ngIf="(action[i] || metadata.report_action) && metadata.showList">
-
-                                    <li *ngFor="let report of metadata.report_action">
-                                        <img class="action_img" width="13px" src="assets/img/cross.png" alt=""
-                                            (click)="deleteAction(report.id,deleteModal,metadata.id)" />
-                                        {{report.time}} {{report.name}}
-                                    </li>
-                                    <li *ngFor="let report of report_action[i]">
-                                    </li>
-
-                                </ul>
-
+                            <td class="action_col action_click" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'"
+                                role="button" (click)="showActions(metadata)">
+                              {{ metadata.Actions.length ? metadata.Actions[0].name : 'N/A' }}
                             </td>
+                            <td class="action_col"
+                                [attr.data-sort]="metadata.Actions.length ? (metadata.Actions[0].creation_datetime | date:'yyyy-MM-dd') : '0'"
+                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">
+                              {{ metadata.Actions.length ? (metadata.Actions[0].creation_datetime | date) : 'N/A' }}
+                            </td>
+<!--                            <td class="action_col" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">-->
+<!--                                <select [(ngModel)]="action[i]" name="action" (change)="actionValues(action[i],i)">-->
+<!--                                    <option *ngFor="let item of actionList" value={{item}}>-->
+<!--                                        {{item}}-->
+<!--                                    </option>-->
+<!--                                </select>-->
+<!--                                <img class="show-img" *ngIf="metadata.show_icon == true && metadata.report_action"-->
+<!--                                    width="20px" src="assets/img/clipboard.png" alt=""-->
+<!--                                    (click)="showHide(metadata.id,i,metadata.showList)" />-->
+<!--                                <span *ngIf="action[i]" class="save-icon" (click)="saveAction(metadata.id,i)">-->
+<!--                                    <img *ngIf="metadata.show_icon == false " width="15px"-->
+<!--                                        src="assets/img/save_icon.png" alt="" />-->
+<!--                                </span>-->
+<!--                                <ul *ngIf="(action[i] || metadata.report_action) && metadata.showList">-->
+
+<!--                                    <li *ngFor="let report of metadata.report_action">-->
+<!--                                        <img class="action_img" width="13px" src="assets/img/cross.png" alt=""-->
+<!--                                            (click)="deleteAction(report.id,deleteModal,metadata.id)" />-->
+<!--                                        {{report.time}} {{report.name}}-->
+<!--                                    </li>-->
+<!--                                    <li *ngFor="let report of report_action[i]">-->
+<!--                                    </li>-->
+
+<!--                                </ul>-->
+
+<!--                            </td>-->
                         </tr>
                     </tbody>
                     <a href="javascript:void(0)" (click)="navigate()">Admin</a>

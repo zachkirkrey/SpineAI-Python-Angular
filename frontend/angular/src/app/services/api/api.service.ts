@@ -80,6 +80,32 @@ export interface Study {
   appointment_date: string | Date;
 }
 
+export interface Report {
+
+  id: number;
+  uuid: string;
+  state: string;
+  type: string;
+  creation_datetime: string | Date;
+  started_datetime: string | Date;
+  completed_datetime: string | Date;
+  error_str: string;
+  num_narrow_slices: number;
+  surgery_recommended: boolean;
+}
+
+export interface Action {
+  id: number;
+  name: string;
+  creation_datetime: string | Date;
+  study: number;
+}
+
+export interface StudyWithActions extends Study {
+  Actions: Action[];
+  Reports: Report[];
+}
+
 // export interface Patient {
 //
 // }
@@ -182,6 +208,18 @@ export class ApiService {
 
     getPacIngestions(uuid) {
          return this.http.get<any>(`${this.apiUrl}/ingestions?type=DICOM_FETCH`, this.options());
+    }
+
+    getStudyActions(studyId): Observable<Action[]> {
+      return this.http.get<Action[]>(`${this.apiUrl}/action?study=${studyId}`, this.options());
+    }
+
+    addStudyAction(studyId, action: Omit<Action, 'id' | 'creation_datetime' | 'study'>): Observable<Action> {
+      return this.http.post<Action>(`${this.apiUrl}/action`, {
+        ...action,
+        study: studyId,
+        creation_datetime: new Date().toISOString(),
+      } as Action, this.options());
     }
 
     getFetchIngestions(uuid) {

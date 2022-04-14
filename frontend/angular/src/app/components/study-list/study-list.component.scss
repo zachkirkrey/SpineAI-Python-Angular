@@ -256,10 +256,13 @@ div#reports_table_wrapper>.row:nth-child(1) div {
   width: 50%;
 }
 
-td.mrn_col.sorting_1:hover,
-td.name_col.ng-star-inserted:hover {
-  background-color: #f2f0f063;
+td.mrn_col.sorting_1,
+td.name_col.ng-star-inserted,
+td.action_click {
   cursor: pointer;
+  &:hover {
+    background-color: #f2f0f063;
+  }
 }
 
 @media screen and (max-width:767px) {

@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import {ActionListValues} from '../../helpers/action-list.enum';
 import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Component({
@@ -63,7 +64,7 @@ export class PatientComponentComponent implements OnInit {
     readonly action_fetch_url = `${environment.api_url}/action`;
     readonly action_save_url = `${environment.api_url}/action`;
     @ViewChild('msgModal') msgModal: TemplateRef<any>;
-    actionList = ['Scheduled for Clinic', 'Surgery', 'Additional Testing', 'Injections', 'Physical Therapy', 'RTC/DC', 'Referral']
+    actionList = ActionListValues;
     @ViewChildren('report_rows') report_rows: QueryList<any>;
     constructor(private router: Router, private route: ActivatedRoute, private modalService: NgbModal) {
         this.patient_id = this.route.snapshot.params.id

@@ -199,6 +199,15 @@ module.exports = function (sequelize) {
             model: Action
         }, ]
     });
+    Study.addScope('includeLastAction', {
+        include: [
+            {
+                model: Action,
+                order: [['creation_datetime', 'DESC']],
+                limit: 1,
+            },
+        ]
+    });
     Study.addScope('includeHistory', {
         include: [{
             model: History

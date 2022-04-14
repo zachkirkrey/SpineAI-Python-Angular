@@ -36,6 +36,7 @@ import { PatientComponentComponent } from './components/patient-component/patien
 import { CookieModule } from 'ngx-cookie';
 import { PatientIntakeFormComponent } from './components/patient-intake-form/patient-intake-form.component';
 import { ConfirmDialogComponent } from './components/modals/confirm-dialog.component';
+import { HistoryComponent } from './components/study-list/history/history.component';
 import { AdminBrandingComponent } from './components/admin-branding/admin-branding.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { AdminOptionsComponent } from './components/admin-options/admin-options.component';
@@ -84,6 +85,7 @@ const appRoutes: Routes = [
         PatientComponentComponent,
         PatientIntakeFormComponent,
         ConfirmDialogComponent,
+        HistoryComponent,
         AdminBrandingComponent,
         AdminUsersComponent,
         AdminOptionsComponent,
