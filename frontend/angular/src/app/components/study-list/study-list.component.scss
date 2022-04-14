@@ -296,3 +296,18 @@ td.action_click {
     text-align: left;
   }
 }
+
+a.admin-text {
+    position: absolute;
+    left: 62%;
+    bottom: -55px;
+    z-index: 99;
+}
+.table-responsive-sec {
+    position: relative;
+}
+@media (max-width: 768px) {
+    a.admin-text {
+        bottom: -45px;
+    }
+}

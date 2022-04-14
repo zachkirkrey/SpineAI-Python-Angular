@@ -97,3 +97,17 @@
 .hidden {
   display: none !important;
 }
+.main-buttons.top-tabs-wrap>div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width:767px) {
+    .main-buttons.top-tabs-wrap>div button.custom-button {
+        flex: unset;
+        width: 50%;
+        padding: 15px 8px;
+    }
+}

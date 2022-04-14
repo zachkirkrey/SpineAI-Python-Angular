@@ -6,9 +6,9 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import { Router, NavigationEnd } from '@angular/router';
 import { CookieService } from 'ngx-cookie';
-import {ActionListValues} from "../../helpers/action-list.enum";
-import {StudyWithActions} from "../../services/api/api.service";
-import {HistoryComponent} from "./history/history.component";
+import { ActionListValues } from "../../helpers/action-list.enum";
+import { StudyWithActions } from "../../services/api/api.service";
+import { HistoryComponent } from "./history/history.component";
 
 
 @Component({
@@ -26,8 +26,9 @@ export class StudyListComponent implements OnInit {
 
     old_index = 0
     index: (StudyWithActions & {
-      show_icon: boolean;
-      showList: boolean;
+        show_icon: boolean;
+        showList: boolean;
+        archived_status: boolean
     })[] = []; // todo clean up
     index_complete = false;
     index_error: string;
@@ -79,8 +80,8 @@ export class StudyListComponent implements OnInit {
     actionCheckBox: any
     del_study_id: any
     table_order = 'desc'
-    table_name ='patient_name'
-    actionList =  ActionListValues;
+    table_name = 'patient_name'
+    actionList = ActionListValues;
     columnList = [{
         id: 'mrn_col',
         name: 'mrnCheckbox',
@@ -194,12 +195,12 @@ export class StudyListComponent implements OnInit {
         })
         this.cookie.put('columnList', JSON.stringify(this.columnList));
         const heads = [
-          col_name + "_head",
-          col_name + "_head1",
-          col_name + "_head2",
+            col_name + "_head",
+            col_name + "_head1",
+            col_name + "_head2",
         ]
-          .map(name => document.getElementById(name))
-          .filter(val => !!val);
+            .map(name => document.getElementById(name))
+            .filter(val => !!val);
 
         if (value == false) {
             var all_col = document.getElementsByClassName(col_name);
@@ -300,6 +301,7 @@ export class StudyListComponent implements OnInit {
                     element.Reports.sort(sort_by_creation);
                 });
             }
+
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.index_error = `Could not fetch search index from ${this.index_url}.`;
         }.bind(this)).always(() => {
@@ -547,11 +549,12 @@ export class StudyListComponent implements OnInit {
                     this.index = obj
                 }
 
-                console.log('Filter', active_obj, archived_obj, this.show_Archived)
+                console.log('Filter', this.show_Archived, this.index)
                 if (this.index != undefined) {
                     if (this.table_order == 'desc') {
                         if (this.table_name == 'patient_name') {
                             this.index.sort(function (a, b) { return (a.patient_name > b.patient_name) ? 1 : ((b.patient_name > a.patient_name) ? -1 : 0); });
+                            console.log('Indexr', this.index)
                         } else if (this.table_name == 'mrn') {
                             this.index.sort(function (a, b) { return (a.mrn > b.mrn) ? 1 : ((b.mrn > a.mrn) ? -1 : 0); });
                         } else if (this.table_name == 'appt') {
@@ -565,6 +568,7 @@ export class StudyListComponent implements OnInit {
                     } else if (this.table_order == 'asc') {
                         if (this.table_name == 'patient_name') {
                             this.index.sort(function (a, b) { return (a.patient_name < b.patient_name) ? 1 : ((b.patient_name < a.patient_name) ? -1 : 0); });
+                            console.log('Indexs', this.index)
                         } else if (this.table_name == 'mrn') {
                             this.index.sort(function (a, b) { return (a.mrn < b.mrn) ? 1 : ((b.mrn < a.mrn) ? -1 : 0); });
                         } else if (this.table_name == 'appt') {
@@ -582,10 +586,10 @@ export class StudyListComponent implements OnInit {
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${this.action_fetch_url}.`;
         }.bind(this)).always(() => {
-          setTimeout(function (){
-            const table = $('#reports_table').DataTable();
-            table.draw();
-          }, 200);
+            //setTimeout(function () {
+            //    const table = $('#reports_table').DataTable();
+            //    table.draw();
+            //}, 200);
         });
         this.action_arr = []
     }
@@ -831,20 +835,20 @@ export class StudyListComponent implements OnInit {
         }
     }
 
-  showActions(metadata: StudyWithActions) {
-    const modalRef = this.modalService.open(HistoryComponent, {
-      backdrop: true,
-    });
-    (modalRef.componentInstance as HistoryComponent).studyId = metadata.id.toString();
+    showActions(metadata: StudyWithActions) {
+        const modalRef = this.modalService.open(HistoryComponent, {
+            backdrop: true,
+        });
+        (modalRef.componentInstance as HistoryComponent).studyId = metadata.id.toString();
 
-    modalRef.dismissed.subscribe(res => {
-      if (res) {
-        this.tableData(null);
-        // window.location.reload(); // TODO: redo after figuring out the study loading logic
-      }
-    });
-  }
-  
+        modalRef.dismissed.subscribe(res => {
+            if (res) {
+                this.tableData(null);
+                // window.location.reload(); // TODO: redo after figuring out the study loading logic
+            }
+        });
+    }
+
     showArchived(event) {
         if (this.index != undefined) {
             if (event.checked == true) {

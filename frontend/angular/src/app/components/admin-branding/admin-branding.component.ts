@@ -37,8 +37,8 @@ export class AdminBrandingComponent implements OnInit {
                 this.showImgErr = 'Please upload a file with type png only.'
                 event.target.value = ''
             }
-            else if (width != 530 && height != 30) {
-                this.showImgErr = "Image should be 530 x 30 size"
+            else if (width != 530 && height != 150) {
+                this.showImgErr = "Image should be 530 x 150 size"
                 event.target.value = ''
             }
             else {

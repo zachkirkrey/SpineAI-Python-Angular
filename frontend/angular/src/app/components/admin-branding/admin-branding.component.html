@@ -1,10 +1,10 @@
-<div>
-    <div>
+<div class="upload-logo-sec">
+    <div class="back-manage">
         <a href="javascript:void(0)" (click)="navigate()">Back to Manage Patients</a>
     </div>
-    Upload Custom Logo
+    <h3>Upload Custom Logo</h3>
     <div><a href="javascript:void(0)" (click)="restoreImage()">Revert to default</a></div>
     <input class="form-control" type="file" (change)="onChange($event)" accept="image/png">
-    <div>{{showImgErr}}</div>
+    <div class="error">{{showImgErr}}</div>
     <button type="button" class="svbtn" (click)="saveImage()">Save</button>
 </div>
