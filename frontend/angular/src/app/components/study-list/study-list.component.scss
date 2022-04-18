@@ -233,12 +233,11 @@ div#reports_table_wrapper>.row:nth-child(1) div {
   margin-bottom: 15px;
   border-bottom: #ddd solid 1px !important;
   padding-bottom: 11px;
+
+  @media (max-width: 1199px) {
+    flex-direction: column;
+  }
 }
-
-//.mat-checkbox {
-//  padding: 7px 10px 0 0 !important;
-//}
-
 
 .export-btn.add-patient {
   bottom: 0 !important;
@@ -250,16 +249,71 @@ div#reports_table_wrapper>.row:nth-child(1) div {
   justify-content: flex-end;
   align-items: center;
   position: relative;
+
+  @media (max-width: 1199px) {
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+.Appt-date-wrap {
+  span {
+    margin-right: 10px;
+
+    @media (max-width: 575px) {
+      display: block;
+      text-align: right;
+    }
+  }
+}
+
+.buttons-wrap,
+.checkbox-wrap {
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
+
+  .example-section {
+    width: 100%;
+
+    @media (max-width: 575px) {
+      ::ng-deep {
+        .mat-checkbox {
+          width: 100%;
+
+          label {
+            display: block;
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
 }
 
 .addpatbtno {
   width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 15px;
+
+  @media (max-width: 1199px) {
+    justify-content: space-between;
+    width: 100%;
+    padding-right: 0;
+  }
 }
 
 td.mrn_col.sorting_1,
 td.name_col.ng-star-inserted,
 td.action_click {
   cursor: pointer;
+
   &:hover {
     background-color: #f2f0f063;
   }
@@ -270,7 +324,7 @@ td.action_click {
   .addpatbtno,
   .export-wrap {
     width: 100%;
-    flex-direction: column;
+    //flex-direction: column;
 
     .export-btn.mat-button {
       margin: 10px 0 0;
@@ -298,16 +352,18 @@ td.action_click {
 }
 
 a.admin-text {
-    position: absolute;
-    left: 62%;
-    bottom: -55px;
-    z-index: 99;
+  position: absolute;
+  left: 62%;
+  bottom: -55px;
+  z-index: 99;
 }
+
 .table-responsive-sec {
-    position: relative;
+  position: relative;
 }
+
 @media (max-width: 768px) {
-    a.admin-text {
-        bottom: -45px;
-    }
+  a.admin-text {
+    bottom: -45px;
+  }
 }

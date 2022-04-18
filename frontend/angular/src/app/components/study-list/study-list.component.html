@@ -15,64 +15,107 @@
             </div>
             <div class="topbtno">
                 <div class="addpatbtno">
-                    <button class="mat-focus-indicator export-btn add-patient mat-button mat-button-base"
-                        (click)="open(content)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-plus" viewBox="0 0 16 16">
-                            <path
-                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                        </svg>
-                        Add Patient
-                    </button>
+                    <div class="add-patient-wrap">
+
+                        <button class="mat-focus-indicator export-btn add-patient mat-button mat-button-base"
+                            (click)="open(content)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus" viewBox="0 0 16 16">
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                            </svg>
+                            Add Patient
+                        </button>
+                    </div>
+                    <div class="Appt-date-wrap">
+                        <span>Appt Date:</span>
+                        <!--Appt Date DropDown-->
+                        <button class="export-btn" mat-button [matMenuTriggerFor]="apptDate">All Time</button>
+                        <mat-menu class="export-btn-list custom-export-btn" #apptDate="matMenu">
+                            <button mat-menu-item>
+                                <a href="javascript:void(0)" (click)="apptFilter('today')" target="_top"
+                                    class="custom-button">
+                                    <span>Today </span>
+                                </a>
+                            </button>
+                            <button mat-menu-item>
+                                <a href="javascript:void(0)" target="_top" class="custom-button"
+                                    (click)="apptFilter('last ten')">
+                                    <span>Last 10 days </span>
+                                </a>
+                            </button>
+                            <button mat-menu-item>
+                                <a href="javascript:void(0)" target="_top" class="custom-button"
+                                    (click)="apptFilter('next ten')">
+                                    <span>Next 10 days</span>
+                                </a>
+                            </button>
+                            <button mat-menu-item>
+                                <a href="javascript:void(0)" target="_top" class="custom-button"
+                                    (click)="apptFilter('none')">
+                                    <span>None</span>
+                                </a>
+                            </button>
+                        </mat-menu>
+                        <!--Appt Date DropDown-->
+                    </div>
                 </div>
 
 
                 <div class="export-wrap">
-                    <section class="example-section">
-                        <mat-checkbox class="example-margin" (change)="showArchived($event)">Show Archived
-                        </mat-checkbox>
-                    </section>
+                    <div class="checkbox-wrap">
+                        <section class="example-section">
+                            <mat-checkbox class="example-margin" (change)="showArchived($event)">Show Archived
+                            </mat-checkbox>
+                        </section>
 
-                    <section class="example-section" *ngIf="visibility">
-                        <mat-checkbox class="example-margin" (change)="toggleDisplay($event)">{{section}}</mat-checkbox>
-                    </section>
-
-                    <div class="cols_th">
-                        <!--Column Checkbox DropDown-->
-                        <div id="list1" class="dropdown-check-list" tabindex="100">
-                            <span class="anchor" (click)="colDropdown(colShow)">Columns</span>
-                            <ul class="items" *ngIf="colShow == true">
-                                <div id='control_sh' *ngFor="let item of columnList; let i = index">
-                                    <li> <input type="checkbox" value="" id="item.id" [checked]="item.show"
-                                            (change)="hide_show_table(item.id,item.show,i);">
-                                        {{item.colName}}</li>
-                                </div>
-                            </ul>
+                        <section class="example-section" *ngIf="visibility">
+                            <mat-checkbox class="example-margin" (change)="toggleDisplay($event)">{{section}}
+                            </mat-checkbox>
+                        </section>
+                    </div>
+                    <div class="buttons-wrap">
+                        <div class="cols_th">
+                            <!--Column Checkbox DropDown-->
+                            <div id="list1" class="dropdown-check-list" tabindex="100">
+                                <span class="anchor" (click)="colDropdown(colShow)">Columns</span>
+                                <ul class="items" *ngIf="colShow == true">
+                                    <div id='control_sh' *ngFor="let item of columnList; let i = index">
+                                        <li> <input type="checkbox" value="" id="item.id" [checked]="item.show"
+                                                (change)="hide_show_table(item.id,item.show,i);">
+                                            {{item.colName}}</li>
+                                    </div>
+                                </ul>
+                            </div>
+                            <!--Column DropDown-->
                         </div>
-                        <!--Column DropDown-->
+
+                        <button class="export-btn" mat-button [matMenuTriggerFor]="menu">Exports</button>
+                        <mat-menu class="export-btn-list custom-export-btn" #menu="matMenu">
+                            <button mat-menu-item>
+                                <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&count=1000"
+                                    target="_top" class="custom-button">
+                                    <span>Area </span>
+                                </a>
+                            </button>
+                            <button mat-menu-item>
+                                <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_heights&count=1000"
+                                    target="_top" class="custom-button">
+                                    <span>Vertical Diameter </span>
+                                </a>
+                            </button>
+                            <button mat-menu-item>
+                                <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_widths&count=1000"
+                                    target="_top" class="custom-button">
+                                    <span>Horizontal Diameter </span>
+                                </a>
+                            </button>
+                        </mat-menu>
                     </div>
 
-                    <button class="export-btn" mat-button [matMenuTriggerFor]="menu">Exports</button>
-                    <mat-menu class="export-btn-list custom-export-btn" #menu="matMenu">
-                        <button mat-menu-item>
-                            <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&count=1000"
-                                target="_top" class="custom-button">
-                                <span>Area </span>
-                            </a>
-                        </button>
-                        <button mat-menu-item>
-                            <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_heights&count=1000"
-                                target="_top" class="custom-button">
-                                <span>Vertical Diameter </span>
-                            </a>
-                        </button>
-                        <button mat-menu-item>
-                            <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_widths&count=1000"
-                                target="_top" class="custom-button">
-                                <span>Horizontal Diameter </span>
-                            </a>
-                        </button>
-                    </mat-menu>
+
+
+
 
                 </div>
             </div>
@@ -105,12 +148,12 @@
                                 REPORT</th>
                             <th id="recommn_col_head"
                                 [style.display]="recommnCheckBox == false ? 'none' : 'table-cell'">RECOMMENDATION</th>
-                            <th id="action_col_head1"
-                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">LAST ACTION</th>
-                            <th id="action_col_head2"
-                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">LAST ACTION DATE</th>
-<!--                            <th id="action_col_head" class="action-report"-->
-<!--                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">ACTION</th>-->
+                            <th id="action_col_head1" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">
+                                LAST ACTION</th>
+                            <th id="action_col_head2" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">
+                                LAST ACTION DATE</th>
+                            <!--                            <th id="action_col_head" class="action-report"-->
+                            <!--                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">ACTION</th>-->
                         </tr>
                         <tr *ngIf="isShown == false">
                             <th id="mrn_col_head" [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'"
@@ -131,12 +174,12 @@
                                 REPORT</th>
                             <th id="recommn_col_head"
                                 [style.display]="recommnCheckBox == false ? 'none' : 'table-cell'">RECOMMENDATION</th>
-                            <th id="action_col_head1"
-                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">LAST ACTION</th>
-                            <th id="action_col_head2"
-                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">LAST ACTION DATE</th>
-<!--                            <th id="action_col_head" class="action-report"-->
-<!--                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">ACTION</th>-->
+                            <th id="action_col_head1" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">
+                                LAST ACTION</th>
+                            <th id="action_col_head2" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">
+                                LAST ACTION DATE</th>
+                            <!--<th id="action_col_head" class="action-report"-->
+                            <!--[style.display]="actionCheckbox == false ? 'none' : 'table-cell'">ACTION</th>-->
                         </tr>
                     </thead>
                     <tbody>
@@ -147,12 +190,11 @@
                                 (click)="navigateToPatient(metadata.uuid)">{{metadata.archived_status == true?
                                 'Archived':'Active'}}</td>
                             <td class="apt_col"
-                                [attr.data-sort]="metadata.appointment_date | date:'yyyy-MM-dd'"
+                                [attr.data-sort]="metadata.appointment_date == 'Invalid date' ? '' :(metadata.appointment_date | date:'yyyy-MM-dd')"
                                 [style.display]="aptCheckBox == false ? 'none' : 'table-cell'">
-                                {{metadata.appointment_date | date }}
+                                {{metadata.appointment_date == 'Invalid date' ? '':(metadata.appointment_date | date)}}
                             </td>
-                            <td class="created_col"
-                                [attr.data-sort]="metadata.creation_datetime | date:'yyyy-MM-dd'"
+                            <td class="created_col" [attr.data-sort]="metadata.creation_datetime | date:'yyyy-MM-dd'"
                                 [style.display]="createdCheckbox == false ? 'none' : 'table-cell'">
                                 {{ metadata.creation_datetime | date }}
                             </td>
@@ -211,41 +253,42 @@
                             <td class="recommn_col" [style.display]="recommnCheckBox == false ? 'none' : 'table-cell'">
                                 <div class="recommendation_cell" [attr.data-study-id]="metadata.id"></div>
                             </td>
-                            <td class="action_col action_click" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'"
-                                role="button" (click)="showActions(metadata)">
-                              {{ metadata.Actions.length ? metadata.Actions[0].name : 'N/A' }}
+                            <td class="action_col action_click"
+                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'" role="button"
+                                (click)="showActions(metadata)">
+                                {{ metadata.Actions.length ? metadata.Actions[0].name : 'N/A' }}
                             </td>
                             <td class="action_col"
                                 [attr.data-sort]="metadata.Actions.length ? (metadata.Actions[0].creation_datetime | date:'yyyy-MM-dd') : '0'"
                                 [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">
-                              {{ metadata.Actions.length ? (metadata.Actions[0].creation_datetime | date) : 'N/A' }}
+                                {{ metadata.Actions.length ? (metadata.Actions[0].creation_datetime | date) : 'N/A' }}
                             </td>
-<!--                            <td class="action_col" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">-->
-<!--                                <select [(ngModel)]="action[i]" name="action" (change)="actionValues(action[i],i)">-->
-<!--                                    <option *ngFor="let item of actionList" value={{item}}>-->
-<!--                                        {{item}}-->
-<!--                                    </option>-->
-<!--                                </select>-->
-<!--                                <img class="show-img" *ngIf="metadata.show_icon == true && metadata.report_action"-->
-<!--                                    width="20px" src="assets/img/clipboard.png" alt=""-->
-<!--                                    (click)="showHide(metadata.id,i,metadata.showList)" />-->
-<!--                                <span *ngIf="action[i]" class="save-icon" (click)="saveAction(metadata.id,i)">-->
-<!--                                    <img *ngIf="metadata.show_icon == false " width="15px"-->
-<!--                                        src="assets/img/save_icon.png" alt="" />-->
-<!--                                </span>-->
-<!--                                <ul *ngIf="(action[i] || metadata.report_action) && metadata.showList">-->
+                            <!--                            <td class="action_col" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">-->
+                            <!--                                <select [(ngModel)]="action[i]" name="action" (change)="actionValues(action[i],i)">-->
+                            <!--                                    <option *ngFor="let item of actionList" value={{item}}>-->
+                            <!--                                        {{item}}-->
+                            <!--                                    </option>-->
+                            <!--                                </select>-->
+                            <!--                                <img class="show-img" *ngIf="metadata.show_icon == true && metadata.report_action"-->
+                            <!--                                    width="20px" src="assets/img/clipboard.png" alt=""-->
+                            <!--                                    (click)="showHide(metadata.id,i,metadata.showList)" />-->
+                            <!--                                <span *ngIf="action[i]" class="save-icon" (click)="saveAction(metadata.id,i)">-->
+                            <!--                                    <img *ngIf="metadata.show_icon == false " width="15px"-->
+                            <!--                                        src="assets/img/save_icon.png" alt="" />-->
+                            <!--                                </span>-->
+                            <!--                                <ul *ngIf="(action[i] || metadata.report_action) && metadata.showList">-->
 
-<!--                                    <li *ngFor="let report of metadata.report_action">-->
-<!--                                        <img class="action_img" width="13px" src="assets/img/cross.png" alt=""-->
-<!--                                            (click)="deleteAction(report.id,deleteModal,metadata.id)" />-->
-<!--                                        {{report.time}} {{report.name}}-->
-<!--                                    </li>-->
-<!--                                    <li *ngFor="let report of report_action[i]">-->
-<!--                                    </li>-->
+                            <!--                                    <li *ngFor="let report of metadata.report_action">-->
+                            <!--                                        <img class="action_img" width="13px" src="assets/img/cross.png" alt=""-->
+                            <!--                                            (click)="deleteAction(report.id,deleteModal,metadata.id)" />-->
+                            <!--                                        {{report.time}} {{report.name}}-->
+                            <!--                                    </li>-->
+                            <!--                                    <li *ngFor="let report of report_action[i]">-->
+                            <!--                                    </li>-->
 
-<!--                                </ul>-->
+                            <!--                                </ul>-->
 
-<!--                            </td>-->
+                            <!--                            </td>-->
                         </tr>
                     </tbody>
                     <a class="admin-text" href="javascript:void(0)" (click)="navigate()">Admin</a>

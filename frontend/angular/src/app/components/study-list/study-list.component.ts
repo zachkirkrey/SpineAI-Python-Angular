@@ -81,6 +81,7 @@ export class StudyListComponent implements OnInit {
     del_study_id: any
     table_order = 'desc'
     table_name = 'patient_name'
+    appt_filter: any = ''
     actionList = ActionListValues;
     columnList = [{
         id: 'mrn_col',
@@ -204,7 +205,6 @@ export class StudyListComponent implements OnInit {
 
         if (value == false) {
             var all_col = document.getElementsByClassName(col_name);
-            console.log('all_col', document.getElementsByClassName(col_name))
             for (var i = 0; i < all_col.length; i++) {
                 (all_col[i] as HTMLElement).style.display = "table-cell";
             }
@@ -534,7 +534,6 @@ export class StudyListComponent implements OnInit {
                 let archived_obj = this.index.filter(x => x.archived_status == true)
                 if (active_obj.length > 0 && archived_obj.length > 0) {
                     obj = active_obj.concat(archived_obj)
-                    console.log('obj', obj)
                 }
                 if (active_obj.length > 0 && archived_obj.length == 0) {
                     obj = active_obj
@@ -548,13 +547,35 @@ export class StudyListComponent implements OnInit {
                 } if (this.show_Archived == true) {
                     this.index = obj
                 }
+                if (this.appt_filter != '') {
+                    this.index.forEach(x => {
+                        x.appointment_date = moment(x.appointment_date).format("YYYY-MM-DD")
+                    })
+                    let today_date = moment(new Date()).format("YYYY-MM-DD");
+                    let filter_obj = []
+                    if (this.appt_filter == 'today') {
+                        filter_obj = this.index.filter(x => x.appointment_date == today_date)
+                    }
+                    else if (this.appt_filter == 'last ten') {
+                        let dt = new Date();
+                        dt.setDate(dt.getDate() - 10);
+                        let lastTen_date = moment(dt).format("YYYY-MM-DD");
+                        filter_obj = this.index.filter(x => x.appointment_date <= today_date && x.appointment_date >= lastTen_date)
+                    } else if (this.appt_filter == 'next ten') {
+                        var dt = new Date();
+                        dt.setDate(dt.getDate() + 10);
+                        let nextTen_date = moment(dt).format("YYYY-MM-DD");
+                        filter_obj = this.index.filter(x => x.appointment_date >= today_date && x.appointment_date <= nextTen_date)
+                    } else if (this.appt_filter == 'none') {
 
-                console.log('Filter', this.show_Archived, this.index)
+                        filter_obj = this.index.filter(x => x.appointment_date == 'Invalid date')
+                    }
+                    this.index = filter_obj
+                }
                 if (this.index != undefined) {
                     if (this.table_order == 'desc') {
                         if (this.table_name == 'patient_name') {
                             this.index.sort(function (a, b) { return (a.patient_name > b.patient_name) ? 1 : ((b.patient_name > a.patient_name) ? -1 : 0); });
-                            console.log('Indexr', this.index)
                         } else if (this.table_name == 'mrn') {
                             this.index.sort(function (a, b) { return (a.mrn > b.mrn) ? 1 : ((b.mrn > a.mrn) ? -1 : 0); });
                         } else if (this.table_name == 'appt') {
@@ -568,7 +589,6 @@ export class StudyListComponent implements OnInit {
                     } else if (this.table_order == 'asc') {
                         if (this.table_name == 'patient_name') {
                             this.index.sort(function (a, b) { return (a.patient_name < b.patient_name) ? 1 : ((b.patient_name < a.patient_name) ? -1 : 0); });
-                            console.log('Indexs', this.index)
                         } else if (this.table_name == 'mrn') {
                             this.index.sort(function (a, b) { return (a.mrn < b.mrn) ? 1 : ((b.mrn < a.mrn) ? -1 : 0); });
                         } else if (this.table_name == 'appt') {
@@ -865,5 +885,20 @@ export class StudyListComponent implements OnInit {
     }
     navigate() {
         this.router.navigate(['admin/branding'])
+    }
+    apptFilter(value) {
+        if (this.index != undefined || this.index.length > 0) {
+            this.appt_filter = value
+            if (value == 'today') {
+                this.tableData(null)
+            } else if (value == 'last ten') {
+                this.tableData(null)
+            } else if (value == 'next ten') {
+                this.tableData(null)
+            } else if (value == 'none') {
+                this.tableData(null)
+            }
+
+        }
     }
 }
