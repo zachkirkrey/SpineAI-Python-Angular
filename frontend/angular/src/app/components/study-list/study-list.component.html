@@ -123,7 +123,7 @@
 
             <div class="table-responsive">
                 <table id="reports_table" class="table table-striped table-bordered table-responsive-sec"
-                    *ngIf="index_complete && !index_error">
+                    *ngIf="index_complete && !index_error" data-ordering="false">
                     <thead>
                         <tr *ngIf="isShown == true">
                             <th id="mrn_col_head" [style.display]="mrnCheckbox == false ? 'none' : 'table-cell'"
@@ -148,9 +148,9 @@
                                 REPORT</th>
                             <th id="recommn_col_head"
                                 [style.display]="recommnCheckBox == false ? 'none' : 'table-cell'">RECOMMENDATION</th>
-                            <th id="action_col_head1" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">
+                            <th id="action_col_head1" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'"  (click)="sortOrder('last_action')">
                                 LAST ACTION</th>
-                            <th id="action_col_head2" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">
+                            <th id="action_col_head2" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'"  (click)="sortOrder('last_action_date')">
                                 LAST ACTION DATE</th>
                             <!--                            <th id="action_col_head" class="action-report"-->
                             <!--                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">ACTION</th>-->
@@ -174,9 +174,9 @@
                                 REPORT</th>
                             <th id="recommn_col_head"
                                 [style.display]="recommnCheckBox == false ? 'none' : 'table-cell'">RECOMMENDATION</th>
-                            <th id="action_col_head1" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">
+                            <th id="action_col_head1" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'" (click)="sortOrder('last_action')">
                                 LAST ACTION</th>
-                            <th id="action_col_head2" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">
+                            <th id="action_col_head2" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'"  (click)="sortOrder('last_action_date')">
                                 LAST ACTION DATE</th>
                             <!--<th id="action_col_head" class="action-report"-->
                             <!--[style.display]="actionCheckbox == false ? 'none' : 'table-cell'">ACTION</th>-->
@@ -315,11 +315,12 @@
                             (change)="alphabetValidate(name,'name')" name="name" [(ngModel)]="name">
                     </div>
                     <div class="form-group-sec"> <input id="mrn" class="form-control" placeholder="MRN" name="mrn"
-                            (change)="alphabetValidate(mrn,'mrn')" [(ngModel)]="mrn"></div>
+                            (change)="alphabetValidate(mrn,'mrn')" [(ngModel)]="mrn">
+                        <span class="error_class" *ngIf="mrn_error == true">Please fill this field</span>
+                    </div>
                     <div class="form-group-sec">
                         <input id="email" type="email" (change)="emailValidate(email)" class="form-control"
                             placeholder="Email" name="email" [(ngModel)]="email">
-                        <span class="error_class" *ngIf="email_error == true">Please enter a valid email address</span>
                     </div>
                     <div class="form-group-sec date-input">
                         <mat-form-field class="mr-sm-24" fxFlex>
@@ -333,12 +334,14 @@
                     <div class="form-group-sec">
                         <input id="telephone" class="form-control" placeholder="Telephone" name="telephone"
                             (change)="numberValidate(telephone)" [(ngModel)]="telephone">
-                        <span class="error_class" *ngIf="number_error == true">Please enter a valid Telephone
-                            Number</span>
                     </div>
                     <div class="form-group-sec">
-                        <input id="diagnosis" class="form-control" placeholder="Diagnosis" name="diagnosis"
-                            (change)="alphabetValidate(diagnosis,'diagnosis')" [(ngModel)]="diagnosis">
+                        <select [(ngModel)]="diagnosis" name="diagnosis" class="form-control">
+                            <option [ngValue]="null" [disabled]="true">Diagnosis</option>
+                            <option *ngFor="let item of diagnosisList" value={{item}}>
+                                {{item}}
+                            </option>
+                        </select>
                     </div>
                     <div class="form-group-sec date-input">
                         <mat-form-field class="mr-sm-24" fxFlex floatLabel=never>

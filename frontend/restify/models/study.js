@@ -14,8 +14,7 @@ module.exports = function (sequelize) {
             allowNull: false
         },
         name: {
-            type: DataTypes.STRING,
-            allowNull: false
+            type: DataTypes.STRING
         },
         creation_datetime: {
             type: DataTypes.DATE,
@@ -38,8 +37,7 @@ module.exports = function (sequelize) {
             allowNull: false
         },
         patient_name: {
-            type: DataTypes.STRING,
-            allowNull: false
+            type: DataTypes.STRING
         },
         patient_size: {
             type: DataTypes.STRING,
@@ -62,8 +60,7 @@ module.exports = function (sequelize) {
             allowNull: false
         },
         email: {
-            type: DataTypes.STRING,
-            allowNull: false
+            type: DataTypes.STRING
         },
         date_of_birth: {
             type: DataTypes.DATE,
@@ -71,7 +68,7 @@ module.exports = function (sequelize) {
         },
         phone_number: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         diagnosis: {
             type: DataTypes.STRING,

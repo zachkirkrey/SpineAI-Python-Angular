@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import {ActionListValues} from '../../helpers/action-list.enum';
+import { ActionListValues } from '../../helpers/action-list.enum';
 import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Component({
@@ -19,7 +19,7 @@ export class PatientComponentComponent implements OnInit {
     date_picker: any;
     appt_date: any;
     telephone: any;
-    diagnosis: any;
+    diagnosis = null;
     email_error: boolean = false
     email_validate: boolean = false
     mrn_error: boolean = false
@@ -57,6 +57,7 @@ export class PatientComponentComponent implements OnInit {
     fetchArr = []
     closeResult = '';
     del_action_id: any
+    diagnosisList = ['Neck / Cervical Ridiculopathy', 'Lumbar / Ridiculopathy', 'Tumor / Trauma', 'Scoliosis / Deformity']
     archived_status: boolean = false
     showMsg: any
     readonly api_url = environment.api_url;

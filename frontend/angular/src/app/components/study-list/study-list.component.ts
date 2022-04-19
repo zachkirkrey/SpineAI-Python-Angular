@@ -48,7 +48,7 @@ export class StudyListComponent implements OnInit {
     date_placeholder: string = "Appointment Date"
     appt_date: any
     telephone: any;
-    diagnosis: any;
+    diagnosis = null;
     show_Archived = false
     email_error: boolean = false
     email_validate: boolean = false
@@ -83,6 +83,7 @@ export class StudyListComponent implements OnInit {
     table_name = 'patient_name'
     appt_filter: any = ''
     actionList = ActionListValues;
+    diagnosisList = ['Neck / Cervical Ridiculopathy', 'Lumbar / Ridiculopathy', 'Tumor / Trauma', 'Scoliosis / Deformity']
     columnList = [{
         id: 'mrn_col',
         name: 'mrnCheckbox',
@@ -354,62 +355,36 @@ export class StudyListComponent implements OnInit {
         }
     }
     createPatient() {
-        if (this.email_validate == false) {
-            this.email_error = true
-        } else if (this.email_validate == true) {
-            this.email_error = false
-        }
-        if (this.name_validate == false) {
-            this.name_error = true
-        } else if (this.name_validate == true) {
-            this.name_error = false
-        }
-        if (this.mrn_validate == false) {
+        if (this.mrn == undefined || this.mrn == '') {
             this.mrn_error = true
-        } else if (this.mrn_validate == true) {
+        } else {
             this.mrn_error = false
-        }
-        if (this.diagnosis_validate == false) {
-            this.diagnosis_error = true
-        } else if (this.diagnosis_validate == true) {
-            this.diagnosis_error = false
-
-        }
-        if (this.number_validate == false) {
-            this.number_error = true
-        } else if (this.number_validate == true) {
-            this.number_error = false
-        }
-
-        if (this.date_picker == '') {
-            this.dob_error = true
-        }
-        else if (this.email_validate == true && this.number_validate == true) {
             this.savePatient()
-
         }
+
+
     }
     savePatient() {
         let formatted_time = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
         let req_data = {
             "uuid": uuidv4(),
             "creation_datetime": formatted_time,
-            "name": this.name,
+            "name": this.name == undefined ? '' : this.name,
             "file_dir_path": '',
             "file_dir_checksum": '',
             "image_file_type": '',
             "accession_number": '',
             "patient_age": '',
-            "patient_name": this.name,
+            "patient_name": this.name == undefined ? '' : this.name,
             "patient_size": '',
             "patient_sex": '',
             "study_instance_uid": '',
             "mrn": this.mrn,
-            "email": this.email,
+            "email": this.email == undefined ? '' : this.email,
             "date_of_birth": this.date_picker,
             "phone_number": this.telephone,
-            "diagnosis": this.diagnosis,
-            "appointment_date": this.appt_date
+            "diagnosis": this.diagnosis== undefined ? '' : this.diagnosis,
+            "appointment_date": this.appt_date == undefined ? '' : this.appt_date
         }
         $.ajax({
             url: this.patient_save_url,
@@ -572,40 +547,15 @@ export class StudyListComponent implements OnInit {
                     }
                     this.index = filter_obj
                 }
-                if (this.index != undefined) {
-                    if (this.table_order == 'desc') {
-                        if (this.table_name == 'patient_name') {
-                            this.index.sort(function (a, b) { return (a.patient_name > b.patient_name) ? 1 : ((b.patient_name > a.patient_name) ? -1 : 0); });
-                        } else if (this.table_name == 'mrn') {
-                            this.index.sort(function (a, b) { return (a.mrn > b.mrn) ? 1 : ((b.mrn > a.mrn) ? -1 : 0); });
-                        } else if (this.table_name == 'appt') {
-                            this.index.sort(function (a, b) { return (a.appointment_date > b.appointment_date) ? 1 : ((b.appointment_date > a.appointment_date) ? -1 : 0); });
-                        } else if (this.table_name == 'created_date') {
-                            this.index.sort(function (a, b) { return (a.creation_datetime > b.creation_datetime) ? 1 : ((b.creation_datetime > a.creation_datetime) ? -1 : 0); });
-                        } else if (this.table_name == 'import_id') {
-                            this.index.sort(function (a, b) { return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0); });
-                        }
-
-                    } else if (this.table_order == 'asc') {
-                        if (this.table_name == 'patient_name') {
-                            this.index.sort(function (a, b) { return (a.patient_name < b.patient_name) ? 1 : ((b.patient_name < a.patient_name) ? -1 : 0); });
-                        } else if (this.table_name == 'mrn') {
-                            this.index.sort(function (a, b) { return (a.mrn < b.mrn) ? 1 : ((b.mrn < a.mrn) ? -1 : 0); });
-                        } else if (this.table_name == 'appt') {
-                            this.index.sort(function (a, b) { return (a.appointment_date < b.appointment_date) ? 1 : ((b.appointment_date < a.appointment_date) ? -1 : 0); });
-                        } else if (this.table_name == 'created_date') {
-                            this.index.sort(function (a, b) { return (a.creation_datetime < b.creation_datetime) ? 1 : ((b.creation_datetime < a.creation_datetime) ? -1 : 0); });
-                        } else if (this.table_name == 'import_id') {
-                            this.index.sort(function (a, b) { return (a.name < b.name) ? 1 : ((b.name < a.name) ? -1 : 0); });
-                        }
-                    }
-                }
+                this.sortColumns()
 
 
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${this.action_fetch_url}.`;
         }.bind(this)).always(() => {
+
+
             //setTimeout(function () {
             //    const table = $('#reports_table').DataTable();
             //    table.draw();
@@ -741,8 +691,78 @@ export class StudyListComponent implements OnInit {
     }
     sortOrder(name) {
         let table = $('#reports_table').DataTable();
-        this.table_order = table.order()[0][1]
+        //this.table_order = table.order()[0][1]
+        if (this.table_order == 'desc') {
+            this.table_order = 'asc'
+        }
+        else if (this.table_order == 'asc') {
+            this.table_order = 'desc'
+        }
+
         this.table_name = name
+        console.log('name', name, this.table_order)
+        this.sortColumns()
+
+
+    }
+    sortColumns() {
+        if (this.index != undefined) {
+            if (this.table_order == 'desc') {
+                if (this.table_name == 'patient_name') {
+                    this.index.sort(function (a, b) { return (a.patient_name > b.patient_name) ? 1 : ((b.patient_name > a.patient_name) ? -1 : 0); });
+                } else if (this.table_name == 'mrn') {
+                    this.index.sort(function (a, b) { return (a.mrn > b.mrn) ? 1 : ((b.mrn > a.mrn) ? -1 : 0); });
+                } else if (this.table_name == 'appt') {
+                    this.index.sort(function (a, b) { return (a.appointment_date > b.appointment_date) ? 1 : ((b.appointment_date > a.appointment_date) ? -1 : 0); });
+                } else if (this.table_name == 'created_date') {
+                    this.index.sort(function (a, b) { return (a.creation_datetime > b.creation_datetime) ? 1 : ((b.creation_datetime > a.creation_datetime) ? -1 : 0); });
+                } else if (this.table_name == 'import_id') {
+                    this.index.sort(function (a, b) { return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0); });
+                }
+                else if (this.table_name == 'last_action') {
+                    this.index.sort(function (a, b) {
+                        if (b.Actions[0] != undefined && a.Actions[0] != undefined) {
+                            return (a.Actions[0].name > b.Actions[0].name) ? 1 : ((b.Actions[0].name > a.Actions[0].name) ? -1 : 0);
+                        }
+                    });
+                }
+                else if (this.table_name == 'last_action_date') {
+                    this.index.sort(function (a, b) {
+                        if (a.Actions[0] != undefined && b.Actions[0] != undefined) {
+                            return (a.Actions[0].creation_datetime > b.Actions[0].creation_datetime) ? 1 : ((b.Actions[0].creation_datetime > a.Actions[0].creation_datetime) ? -1 : 0);
+                        }
+                      });
+                }
+
+            } else if (this.table_order == 'asc') {
+                if (this.table_name == 'patient_name') {
+                    this.index.sort(function (a, b) { return (a.patient_name < b.patient_name) ? 1 : ((b.patient_name < a.patient_name) ? -1 : 0); });
+                } else if (this.table_name == 'mrn') {
+                    this.index.sort(function (a, b) { return (a.mrn < b.mrn) ? 1 : ((b.mrn < a.mrn) ? -1 : 0); });
+                } else if (this.table_name == 'appt') {
+                    this.index.sort(function (a, b) { return (a.appointment_date < b.appointment_date) ? 1 : ((b.appointment_date < a.appointment_date) ? -1 : 0); });
+                } else if (this.table_name == 'created_date') {
+                    this.index.sort(function (a, b) { return (a.creation_datetime < b.creation_datetime) ? 1 : ((b.creation_datetime < a.creation_datetime) ? -1 : 0); });
+                } else if (this.table_name == 'import_id') {
+                    this.index.sort(function (a, b) { return (a.name < b.name) ? 1 : ((b.name < a.name) ? -1 : 0); });
+                } else if (this.table_name == 'last_action') {
+                    this.index.sort(function (a, b) {
+                        if (a.Actions[0] != undefined && b.Actions[0] != undefined) {
+                            return (a.Actions[0].name < b.Actions[0].name) ? 1 : ((b.Actions[0].name < a.Actions[0].name) ? -1 : 0);
+                        }
+                    });
+                }
+                else if (this.table_name == 'last_action_date') {
+                    this.index.sort(function (a, b) {
+                        if (a.Actions[0] != undefined && b.Actions[0] != undefined) {
+                            return (a.Actions[0].creation_datetime < b.Actions[0].creation_datetime) ? 1 : ((b.Actions[0].creation_datetime < a.Actions[0].creation_datetime) ? -1 : 0);
+                        }
+
+                    });
+                }
+            }
+
+        }
     }
     ngAfterViewInit() {
         // Ellipsis renderer for datatables.net from
@@ -830,7 +850,7 @@ export class StudyListComponent implements OnInit {
                     targets: 2,
                     render: render_ellipsis(15, true, false, false)
                 }],
-                destroy: false
+                destroy: true
             });
             $('#reports_table').on('draw.dt', load_recommendation);
             load_recommendation(this.token);

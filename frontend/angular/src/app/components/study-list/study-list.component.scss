@@ -19,6 +19,10 @@
 
 }
 
+.table>thead>tr>th {
+    cursor: pointer;
+}
+
 .date-input {
   ::ng-deep {
     input {

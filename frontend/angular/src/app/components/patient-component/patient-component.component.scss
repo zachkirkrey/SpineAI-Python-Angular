@@ -14,6 +14,10 @@ select.act_sel_o {
   border-radius: 4px;
 }
 
+select.form-control:not([size]):not([multiple]) {
+  padding: 0 !important;
+}
+
 @media screen and (max-width:1200px) {
   .fld_o {
     width: 100%;

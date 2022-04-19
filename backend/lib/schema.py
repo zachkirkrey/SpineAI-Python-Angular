@@ -117,7 +117,7 @@ class Study(db.Entity, StudyMixin):
 
     creation_datetime = Required(datetime, default=datetime.now)
 
-    name = Required(str)
+    name = Optional(str)
     file_dir_path = Required(str)
     file_dir_checksum = Required(str)
 
@@ -135,10 +135,10 @@ class Study(db.Entity, StudyMixin):
 
     #added new fields for patient
     mrn = Required(str)
-    email = Required(str)
-    date_of_birth = Required(datetime)
-    phone_number = Required(int)
-    diagnosis = Required(str)
+    email = Optional(str)
+    date_of_birth = Optional(datetime)
+    phone_number = Optional(int)
+    diagnosis = Optional(str)
     created_by = Optional(bool, default=False)
     appointment_date = Optional(datetime)
     archived_status = Optional(bool, default=False)
