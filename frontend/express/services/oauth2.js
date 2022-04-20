@@ -80,7 +80,7 @@ class OAuth2 {
       req.session.oauth2AccessToken = bodyJson.access_token;
       req.session.oauth2UserId = bodyJson.userId;
       req.session.oauth2IdToken = bodyJson.id_token;
-      res.redirect(`/`);
+      res.redirect(`/studies`);
     })
     .catch(err => {
       // TODO(billy): Gracefully handle this error.
