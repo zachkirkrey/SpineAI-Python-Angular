@@ -19,8 +19,28 @@
 
 }
 
+select.form-control.appdate {
+  color: #fff;
+  background-color: #376fb6;
+  border-color: #376fb6;
+}
+
+select.form-control.appdate option {
+  background-color: #fff;
+  border: 1px solid #fff !important;
+  font-size: 16px;
+  font-weight: 500;
+  color: #505050;
+}
+
+.Appt-date-wrap label {
+  white-space: nowrap;
+  margin: 0;
+  margin-right: 10px;
+}
+
 .table>thead>tr>th {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .date-input {
@@ -219,7 +239,7 @@ div#reports_table_wrapper>.row:nth-child(1) div {
 }
 
 .cols_th ul.items.ng-star-inserted {
-  background: #f7f0f0;
+  background: #fff;
   position: absolute;
   left: 0;
   width: 225px;
@@ -229,6 +249,19 @@ div#reports_table_wrapper>.row:nth-child(1) div {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   box-shadow: #ccc 0px 3px 10px;
+}
+
+.cols_th ul.items.ng-star-inserted #control_sh {
+  color: #505050;
+  font-size: 14px;
+  font-weight: 500;
+  height: 30px;
+  line-height: 30px;
+  cursor: pointer;
+}
+
+.cols_th ul.items.ng-star-inserted #control_sh:hover {
+  opacity: 0.6;
 }
 
 .topbtno {
@@ -350,8 +383,14 @@ td.action_click {
   }
 
   .cols_th ul.items.ng-star-inserted {
-    width: 100%;
+    width: 155px;
+    //width: 100%;
     text-align: left;
+    //left: -50px;
+  }
+
+  .cols_th ul.items.ng-star-inserted #control_sh {
+    font-size: 12px;
   }
 }
 
@@ -369,5 +408,16 @@ a.admin-text {
 @media (max-width: 768px) {
   a.admin-text {
     bottom: -45px;
+  }
+}
+
+@media screen and (max-width: 475.98px) {
+  .addpatbtno {
+    flex-wrap: wrap;
+  }
+
+  .Appt-date-wrap {
+    margin: 1rem 0;
+    width: 100%;
   }
 }

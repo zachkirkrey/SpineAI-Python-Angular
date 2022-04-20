@@ -49,6 +49,7 @@ export class StudyListComponent implements OnInit {
     appt_date: any
     telephone: any;
     diagnosis = null;
+    apptDate: any
     show_Archived = false
     email_error: boolean = false
     email_validate: boolean = false
@@ -83,6 +84,7 @@ export class StudyListComponent implements OnInit {
     table_name = 'patient_name'
     appt_filter: any = ''
     actionList = ActionListValues;
+    apptDateList = [{ name: 'ALL TIME', value: 'all time' }, { name: 'TODAY', value: 'today' }, { name: 'LAST 10 DAYS', value: 'last ten' }, { name: 'NEXT 10 DAYS', value: 'next ten' }, { name: 'NONE', value: 'none' }]
     diagnosisList = ['Neck / Cervical Ridiculopathy', 'Lumbar / Ridiculopathy', 'Tumor / Trauma', 'Scoliosis / Deformity']
     columnList = [{
         id: 'mrn_col',
@@ -383,7 +385,7 @@ export class StudyListComponent implements OnInit {
             "email": this.email == undefined ? '' : this.email,
             "date_of_birth": this.date_picker,
             "phone_number": this.telephone,
-            "diagnosis": this.diagnosis== undefined ? '' : this.diagnosis,
+            "diagnosis": this.diagnosis == undefined ? '' : this.diagnosis,
             "appointment_date": this.appt_date == undefined ? '' : this.appt_date
         }
         $.ajax({
@@ -542,14 +544,13 @@ export class StudyListComponent implements OnInit {
                         let nextTen_date = moment(dt).format("YYYY-MM-DD");
                         filter_obj = this.index.filter(x => x.appointment_date >= today_date && x.appointment_date <= nextTen_date)
                     } else if (this.appt_filter == 'none') {
-
                         filter_obj = this.index.filter(x => x.appointment_date == 'Invalid date')
+                    } else if (this.appt_filter == 'all time') {
+                        filter_obj = this.index
                     }
                     this.index = filter_obj
                 }
                 this.sortColumns()
-
-
             }
         }.bind(this)).fail(function (jqXHR, textStatus, errorThrown) {
             this.action_error = `Data Not ${this.action_fetch_url}.`;
@@ -731,7 +732,7 @@ export class StudyListComponent implements OnInit {
                         if (a.Actions[0] != undefined && b.Actions[0] != undefined) {
                             return (a.Actions[0].creation_datetime > b.Actions[0].creation_datetime) ? 1 : ((b.Actions[0].creation_datetime > a.Actions[0].creation_datetime) ? -1 : 0);
                         }
-                      });
+                    });
                 }
 
             } else if (this.table_order == 'asc') {
@@ -906,19 +907,20 @@ export class StudyListComponent implements OnInit {
     navigate() {
         this.router.navigate(['admin/branding'])
     }
-    apptFilter(value) {
+    apptFilter(event) {
         if (this.index != undefined || this.index.length > 0) {
-            this.appt_filter = value
-            if (value == 'today') {
+            this.appt_filter = event.target.value
+            if (event.target.value == 'today') {
                 this.tableData(null)
-            } else if (value == 'last ten') {
+            } else if (event.target.value == 'last ten') {
                 this.tableData(null)
-            } else if (value == 'next ten') {
+            } else if (event.target.value == 'next ten') {
                 this.tableData(null)
-            } else if (value == 'none') {
+            } else if (event.target.value == 'none') {
+                this.tableData(null)
+            } else if (event.target.value == 'all time') {
                 this.tableData(null)
             }
-
         }
     }
 }

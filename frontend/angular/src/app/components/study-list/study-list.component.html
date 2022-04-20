@@ -27,38 +27,19 @@
                             Add Patient
                         </button>
                     </div>
-                    <div class="Appt-date-wrap">
-                        <span>Appt Date:</span>
-                        <!--Appt Date DropDown-->
-                        <button class="export-btn" mat-button [matMenuTriggerFor]="apptDate">All Time</button>
-                        <mat-menu class="export-btn-list custom-export-btn" #apptDate="matMenu">
-                            <button mat-menu-item>
-                                <a href="javascript:void(0)" (click)="apptFilter('today')" target="_top"
-                                    class="custom-button">
-                                    <span>Today </span>
-                                </a>
-                            </button>
-                            <button mat-menu-item>
-                                <a href="javascript:void(0)" target="_top" class="custom-button"
-                                    (click)="apptFilter('last ten')">
-                                    <span>Last 10 days </span>
-                                </a>
-                            </button>
-                            <button mat-menu-item>
-                                <a href="javascript:void(0)" target="_top" class="custom-button"
-                                    (click)="apptFilter('next ten')">
-                                    <span>Next 10 days</span>
-                                </a>
-                            </button>
-                            <button mat-menu-item>
-                                <a href="javascript:void(0)" target="_top" class="custom-button"
-                                    (click)="apptFilter('none')">
-                                    <span>None</span>
-                                </a>
-                            </button>
-                        </mat-menu>
-                        <!--Appt Date DropDown-->
+                    <!--Appt Date DropDown-->
+                    <div class="Appt-date-wrap d-flex align-items-center">
+                        <label>Appt Date:</label>
+                        <select class="appdate form-control"
+                            (change)='apptFilter($event)'
+                            >
+                            <option *ngFor="let item of apptDateList; let i = index" [value]="item.value"
+                                [selected]="item.name == 'All Time'">
+                                {{item.name}}
+                            </option>
+                        </select>
                     </div>
+                    <!--Appt Date DropDown-->
                 </div>
 
 
@@ -148,9 +129,11 @@
                                 REPORT</th>
                             <th id="recommn_col_head"
                                 [style.display]="recommnCheckBox == false ? 'none' : 'table-cell'">RECOMMENDATION</th>
-                            <th id="action_col_head1" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'"  (click)="sortOrder('last_action')">
+                            <th id="action_col_head1" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'"
+                                (click)="sortOrder('last_action')">
                                 LAST ACTION</th>
-                            <th id="action_col_head2" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'"  (click)="sortOrder('last_action_date')">
+                            <th id="action_col_head2" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'"
+                                (click)="sortOrder('last_action_date')">
                                 LAST ACTION DATE</th>
                             <!--                            <th id="action_col_head" class="action-report"-->
                             <!--                                [style.display]="actionCheckbox == false ? 'none' : 'table-cell'">ACTION</th>-->
@@ -174,9 +157,11 @@
                                 REPORT</th>
                             <th id="recommn_col_head"
                                 [style.display]="recommnCheckBox == false ? 'none' : 'table-cell'">RECOMMENDATION</th>
-                            <th id="action_col_head1" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'" (click)="sortOrder('last_action')">
+                            <th id="action_col_head1" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'"
+                                (click)="sortOrder('last_action')">
                                 LAST ACTION</th>
-                            <th id="action_col_head2" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'"  (click)="sortOrder('last_action_date')">
+                            <th id="action_col_head2" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'"
+                                (click)="sortOrder('last_action_date')">
                                 LAST ACTION DATE</th>
                             <!--<th id="action_col_head" class="action-report"-->
                             <!--[style.display]="actionCheckbox == false ? 'none' : 'table-cell'">ACTION</th>-->

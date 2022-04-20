@@ -514,13 +514,11 @@
             <h3> Action</h3>
             <div class="sel_o">
                 <select class="selfld" name="action" id="actionViewer" onchange="action_change()">
-                    <option value="Scheduled for Clinic">Scheduled for Clinic</option>
-                    <option value="Surgery">Surgery</option>
-                    <option value="Additional Testing">Additional Testing</option>
-                    <option value="Injections">Injections</option>
-                    <option value="Physical Therapy">Physical Therapy</option>
-                    <option value="RTC/DC">RTC/DC</option>
-                    <option value="Referral">Referral</option>
+                    <option value="AdditionalTesting">Additional Testing</option>
+                    <option value="PMR_Pain">PMR / Pain</option>
+                    <option value="NursePractitioner">Nurse Practitioner</option>
+                    <option value="Neurosurgeon">Neurosurgeon</option>
+                    <option value="NeurosurgeonUrgent">Neurosurgeon (urgent)</option>
                 </select>
                 <div id="show" class="selbtn" onclick="showHidefn('show')" style="display: none;"> Show History</div>
                 <div id="hide" class="selbtn" onclick="showHidefn('hide')"> Hide History</div>
@@ -994,12 +992,6 @@
                 },
                 data: req_data,
             }).done(function (data) {
-                //actionCall(action_obj.uuid)
-                //action_obj = JSON.parse(window.localStorage.getItem('obj'))
-                //let action_arr = action_obj.Actions
-                //action_arr.push(data)
-                console.log(data);
-                //displayArrayObjects(action_arr)
                 let name = data.name;
                 let creation_datetime = data.creation_datetime;
                 let new_element = name+" "+(moment(creation_datetime).format("MM/DD/YY hh:mm a"));
