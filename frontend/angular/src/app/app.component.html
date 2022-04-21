@@ -5,9 +5,10 @@
             <div class="header-brand py-3">
                 <a href="javascript:void(0)">
                     <img *ngIf="defaultLogo == 'true' || defaultLogo == null" id="logo"
-                        src="assets/img/theseus-horizontal.png" class="header-brand-img" alt="Logo">
+                        src="assets/img/theseus-horizontal.png" class="header-brand-img" alt="Logo"
+                        (click)="onLoadReport()">
                     <img *ngIf="spineAILogo != '' && (defaultLogo != 'true' && defaultLogo != null)" id="logo"
-                        [src]="spineAILogo" class="header-brand-img" alt="Logo">
+                        [src]="spineAILogo" class="header-brand-img" alt="Logo" (click)="onLoadReport()">
                 </a>
                 <div id="sublogo" style="display: none;">Powered by&nbsp;&nbsp;<img
                         src="assets/img/theseus-horizontal.png" /></div>

@@ -30,9 +30,7 @@
                     <!--Appt Date DropDown-->
                     <div class="Appt-date-wrap d-flex align-items-center">
                         <label>Appt Date:</label>
-                        <select class="appdate form-control"
-                            (change)='apptFilter($event)'
-                            >
+                        <select class="appdate form-control" (change)='apptFilter($event)'>
                             <option *ngFor="let item of apptDateList; let i = index" [value]="item.value"
                                 [selected]="item.name == 'All Time'">
                                 {{item.name}}
@@ -119,14 +117,20 @@
                                 DATE</th>
                             <th id="created_col_head" [style.display]="createdCheckbox == false ? 'none' : 'table-cell'"
                                 (click)="sortOrder('created_date')">CREATED DATE</th>
+                            <th id="diagnosis_col_head"
+                                [style.display]="diagnosisCheckBox == false ? 'none' : 'table-cell'"
+                                (click)="sortOrder('diagnosis')">
+                                DIAGNOSIS</th>
                             <th id="name_col_head" [style.display]="nameCheckBox == false ? 'none' : 'table-cell'"
                                 (click)="sortOrder('patient_name')">
                                 PATIENT NAME</th>
                             <th id="import_col_head" [style.display]="importCheckBox == false ? 'none' : 'table-cell'"
                                 (click)="sortOrder('import_id')">
                                 IMPORT ID</th>
+                            <th id="intake_col_head" [style.display]="intakeCheckBox == false ? 'none' : 'table-cell'">
+                                INTAKE</th>
                             <th id="report_col_head" [style.display]="reportCheckBox == false ? 'none' : 'table-cell'">
-                                REPORT</th>
+                                IMAGING</th>
                             <th id="recommn_col_head"
                                 [style.display]="recommnCheckBox == false ? 'none' : 'table-cell'">RECOMMENDATION</th>
                             <th id="action_col_head1" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'"
@@ -150,11 +154,17 @@
                                 DATE</th>
                             <th id="created_col_head" [style.display]="createdCheckbox == false ? 'none' : 'table-cell'"
                                 (click)="sortOrder('created_date')">CREATED DATE</th>
+                            <th id="diagnosis_col_head"
+                                [style.display]="diagnosisCheckBox == false ? 'none' : 'table-cell'"
+                                (click)="sortOrder('diagnosis')">
+                                DIAGNOSIS</th>
                             <th id="import_col_head" [style.display]="importCheckBox == false ? 'none' : 'table-cell'"
                                 (click)="sortOrder('import_id')">
                                 IMPORT ID</th>
+                            <th id="intake_col_head" [style.display]="intakeCheckBox == false ? 'none' : 'table-cell'">
+                                INTAKE</th>
                             <th id="report_col_head" [style.display]="reportCheckBox == false ? 'none' : 'table-cell'">
-                                REPORT</th>
+                                IMAGING</th>
                             <th id="recommn_col_head"
                                 [style.display]="recommnCheckBox == false ? 'none' : 'table-cell'">RECOMMENDATION</th>
                             <th id="action_col_head1" [style.display]="actionCheckbox == false ? 'none' : 'table-cell'"
@@ -183,18 +193,29 @@
                                 [style.display]="createdCheckbox == false ? 'none' : 'table-cell'">
                                 {{ metadata.creation_datetime | date }}
                             </td>
+                            <td class="diagnosis_col"
+                                [style.display]="diagnosisCheckbox == false ? 'none' : 'table-cell'">
+                                {{metadata.diagnosis}}</td>
                             <td class="name_col" [style.display]="nameCheckBox == false ? 'none' : 'table-cell'"
                                 (click)="navigateToPatient(metadata.uuid)" *ngIf="isShown == true">{{
                                 metadata.patient_name }}</td>
                             <td class="import_col" [style.display]="importCheckBox == false ? 'none' : 'table-cell'">{{
                                 metadata.name }}</td>
+                            <td *ngIf="(metadata.Histories.length == 0 && metadata.OtherQuestions.length == 0 && metadata.OtherTreatments.length == 0 && metadata.ReferralReasons.length == 0 && metadata.Symptoms.length == 0)"
+                                class="intake_col" [style.display]="intakeCheckBox == false ? 'none' : 'table-cell'"> <a
+                                    class="search-pacs" (click)="redirect('intake',metadata.uuid,metadata.id)">
+                                    Intake
+                                </a></td>
+                            <td class="intake_col" [style.display]="intakeCheckBox == false ? 'none' : 'table-cell'"
+                                *ngIf="(metadata.Histories.length > 0 ||metadata.OtherQuestions.length > 0||metadata.OtherTreatments.length > 0||metadata.ReferralReasons.length > 0 ||metadata.Symptoms.length>0)">
+                                <a class="search-pacs" (click)="redirect('intake',metadata.uuid,metadata.id)">
+                                    View
+                                </a>
+                            </td>
                             <td class="report_col" [style.display]="reportCheckBox == false ? 'none' : 'table-cell'">
                                 <ng-template [ngIf]="metadata.Reports.length" [ngIfElse]="noReport">
                                     <ng-template [ngIf]="metadata.Reports[0].state == 'PROCESSED'"
                                         [ngIfElse]="reportNotProcessed">
-                                        <a class="search-pacs" (click)="redirect('intake',metadata.uuid,metadata.id)">
-                                            Intake
-                                        </a> &nbsp;&nbsp;&#124;&nbsp;
                                         <a class="search-pacs"
                                             href="/study/{{ metadata.uuid }}">Report</a>&nbsp;&nbsp;&#124;&nbsp;
                                         <a class="search-pacs" href="javascript:void(0)"
@@ -214,20 +235,10 @@
                                 <ng-template #noReport>
                                     <!--new patient addition-->
                                     <div>
-                                        <a class="search-pacs" (click)="redirect('intake',metadata.uuid,metadata.id)">
-                                            Intake
-                                        </a>
-                                        |
                                         <a class="search-pacs" (click)="searchPacsNavigate(metadata.uuid)">
-                                            <!--<svg
-                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                                            <path
-                                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                                        </svg>-->
                                             PACS
                                         </a>
-                                        |
+                                        &nbsp;&nbsp;&#124;&nbsp;
                                         <a class="search-pacs" (click)="importMRINavigate(metadata.uuid,metadata.id)">
                                             Import
                                         </a>

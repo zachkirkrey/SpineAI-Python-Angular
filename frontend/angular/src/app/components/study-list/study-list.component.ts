@@ -19,7 +19,7 @@ import { HistoryComponent } from "./history/history.component";
 export class StudyListComponent implements OnInit {
 
     readonly api_url = environment.api_url;
-    readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports&scope=includeLastAction`;
+    readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports&scope=includeLastAction&scope=includeQuestions&scope=includeReferralReason&scope=includeOtherTreatments&scope=includeHistory&scope=includeSymptoms`;
     readonly action_save_url = `${environment.api_url}/action`;
     readonly action_fetch_url = `${environment.api_url}/action`;
     readonly patient_save_url = `${environment.api_url}/studies`;
@@ -76,9 +76,11 @@ export class StudyListComponent implements OnInit {
     statusCheckbox: any
     aptCheckBox: any
     nameCheckBox: any
+    diagnosisCheckBox: any
     reportCheckBox: any
     recommnCheckBox: any
     actionCheckBox: any
+    intakeCheckBox: any
     del_study_id: any
     table_order = 'desc'
     table_name = 'patient_name'
@@ -101,11 +103,17 @@ export class StudyListComponent implements OnInit {
         name: 'aptCheckbox',
         show: true,
         colName: 'APPT DATE'
-    }, {
+    },
+    {
         id: 'created_col',
         name: 'createdCheckbox',
         show: false,
         colName: 'CREATED DATE'
+    }, {
+        id: 'diagnosis_col',
+        name: 'diagnosisCheckbox',
+        show: true,
+        colName: 'DIAGNOSIS'
     }, {
         id: 'name_col',
         name: 'nameCheckbox',
@@ -117,10 +125,15 @@ export class StudyListComponent implements OnInit {
         show: false,
         colName: 'IMPORT ID'
     }, {
+        id: 'intake_col',
+        name: 'intakeCheckbox',
+        show: true,
+        colName: 'INTAKE'
+    }, {
         id: 'report_col',
         name: 'reportCheckbox',
         show: true,
-        colName: 'REPORT'
+        colName: 'IMAGING'
     }, {
         id: 'recommn_col',
         name: 'recommnCheckbox',
@@ -145,8 +158,10 @@ export class StudyListComponent implements OnInit {
         this.mrnCheckbox = true
         this.statusCheckbox = false
         this.aptCheckBox = true
+        this.diagnosisCheckBox = true
         this.nameCheckBox = true
         this.reportCheckBox = true
+        this.intakeCheckBox = true
         this.recommnCheckBox = true
         this.actionCheckBox = true
         let columnArr = this.cookie.get('columnList')
@@ -156,7 +171,9 @@ export class StudyListComponent implements OnInit {
         let statusCheckbox = this.cookie.get('status_col')
         let aptCheckBox = this.cookie.get('apt_col')
         let nameCheckBox = this.cookie.get('name_col')
+        let diagnosisCheckBox = this.cookie.get('diagnosis_col')
         let reportCheckBox = this.cookie.get('report_col')
+        let intakeCheckBox = this.cookie.get('intake_col')
         let recommnCheckBox = this.cookie.get('recommn_col')
         let actionCheckBox = this.cookie.get('action_col')
         if (columnArr != undefined) {
@@ -174,9 +191,17 @@ export class StudyListComponent implements OnInit {
             this.aptCheckBox = aptCheckBox
         } if (nameCheckBox != undefined) {
             this.nameCheckBox = nameCheckBox
-        } if (reportCheckBox != undefined) {
+        }
+        if (diagnosisCheckBox != undefined) {
+            this.diagnosisCheckBox = diagnosisCheckBox
+        }
+        if (reportCheckBox != undefined) {
             this.reportCheckBox = reportCheckBox
-        } if (recommnCheckBox != undefined) {
+        }
+        if (intakeCheckBox != undefined) {
+            this.intakeCheckBox = intakeCheckBox
+        }
+        if (recommnCheckBox != undefined) {
             this.recommnCheckBox = recommnCheckBox
         } if (actionCheckBox != undefined) {
             this.actionCheckBox = actionCheckBox
@@ -238,7 +263,11 @@ export class StudyListComponent implements OnInit {
         }
         if (col_name == 'name_col') {
             this.nameCheckBox = !value
-            this.cookie.put('apt_col', this.aptCheckBox)
+            this.cookie.put('name_col', this.nameCheckBox)
+        }
+        if (col_name == 'diagnosis_col') {
+            this.diagnosisCheckBox = !value
+            this.cookie.put('diagnosis_col', this.diagnosisCheckBox)
         }
         if (col_name == 'import_col') {
             this.importCheckBox = !value
@@ -247,6 +276,10 @@ export class StudyListComponent implements OnInit {
         if (col_name == 'report_col') {
             this.reportCheckBox = !value
             this.cookie.put('report_col', this.reportCheckBox)
+        }
+        if (col_name == 'intake_col') {
+            this.intakeCheckBox = !value
+            this.cookie.put('intake_col', this.intakeCheckBox)
         }
         if (col_name == 'recommn_col') {
             this.recommnCheckBox = !value
@@ -720,6 +753,9 @@ export class StudyListComponent implements OnInit {
                 } else if (this.table_name == 'import_id') {
                     this.index.sort(function (a, b) { return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0); });
                 }
+                else if (this.table_name == 'diagnosis') {
+                    this.index.sort(function (a, b) { return (a.diagnosis > b.diagnosis) ? 1 : ((b.diagnosis > a.diagnosis) ? -1 : 0); });
+                }
                 else if (this.table_name == 'last_action') {
                     this.index.sort(function (a, b) {
                         if (b.Actions[0] != undefined && a.Actions[0] != undefined) {
@@ -746,7 +782,10 @@ export class StudyListComponent implements OnInit {
                     this.index.sort(function (a, b) { return (a.creation_datetime < b.creation_datetime) ? 1 : ((b.creation_datetime < a.creation_datetime) ? -1 : 0); });
                 } else if (this.table_name == 'import_id') {
                     this.index.sort(function (a, b) { return (a.name < b.name) ? 1 : ((b.name < a.name) ? -1 : 0); });
-                } else if (this.table_name == 'last_action') {
+                } else if (this.table_name == 'diagnosis') {
+                    this.index.sort(function (a, b) { return (a.diagnosis < b.diagnosis) ? 1 : ((b.diagnosis < a.diagnosis) ? -1 : 0); });
+                }
+                else if (this.table_name == 'last_action') {
                     this.index.sort(function (a, b) {
                         if (a.Actions[0] != undefined && b.Actions[0] != undefined) {
                             return (a.Actions[0].name < b.Actions[0].name) ? 1 : ((b.Actions[0].name < a.Actions[0].name) ? -1 : 0);
