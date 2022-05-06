@@ -1,0 +1,35 @@
+@import 'src/assets/sass/variables';
+
+@import 'src/assets/uplor/plugins/datatable/jquery.dataTables.min';
+@import '/src/assets/uplor/plugins/datatable/dataTables.bootstrap4.min';
+
+
+.add-user {
+    bottom: 0 !important;
+    border-width: 0 !important;
+    padding: 8px 12px 8px 5px !important;
+    border-radius: 5px;
+}
+
+.users-table {
+    min-width: 100% !important;
+    margin-top: 20px;
+}
+
+.user-btns-wrapper {
+    list-style-type: none;
+    overflow: hidden;
+}
+
+.user-btns-wrapper > li {
+    display: inline-block;
+}
+
+.user-btns-wrapper > li > button{
+    padding: 0 !important;
+    margin: 0 5px 0 5px;
+}
+
+.delete-user-btn {
+    color: red;
+}

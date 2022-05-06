@@ -56,7 +56,7 @@ const appRoutes: Routes = [
     { path: 'fetch', component: FetchFormComponent, data: { header: true } },
     { path: 'viewer', component: ViewerComponent, data: { header: false } },
     { path: 'patient/:id', component: PatientComponentComponent, data: { header: true } },
-    { path: 'detais/form/:uuid/:id', component: PatientIntakeFormComponent, data: { header: true } },
+    { path: 'details/form/:uuid/:id', component: PatientIntakeFormComponent, data: { header: true } },
     { path: 'admin/branding', component: AdminBrandingComponent, data: { header: true } },
     { path: 'admin/users', component: AdminUsersComponent, data: { header: true } },
     { path: 'admin/option', component: AdminOptionsComponent, data: { header: true } },

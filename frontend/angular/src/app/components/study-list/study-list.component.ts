@@ -911,7 +911,7 @@ export class StudyListComponent implements OnInit {
     }
     redirect(value, uuid, id) {
         if (value == 'intake') {
-            this.router.navigate(['/detais/form/' + uuid + '/' + id])
+            this.router.navigate(['/details/form/' + uuid + '/' + id])
         }
     }
 

@@ -1,1 +1,162 @@
-<p>admin-users works!</p>
+<div>
+    <div class="row">
+        <div class="col-12">
+            <div id="page-header">
+            </div>
+            <div class="spinner-wrapper" *ngIf="!index_complete">
+                <div class="box-spinner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="error" *ngIf="index_error">
+                <span>Error: {{ index_error }}</span>
+            </div>
+            <div class="add-user-wrap">
+                <button class="mat-focus-indicator export-btn add-user mat-button mat-button-base"
+                    (click)="open(content)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-plus" viewBox="0 0 16 16">
+                        <path
+                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                    </svg>
+                    Add User
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table users-table">
+                    <thead>
+                        <tr>
+                          <th scope="col">FIRST</th>
+                          <th scope="col">LAST</th>
+                          <th scope="col">EMAIL</th>
+                          <th scope="col">ROLE</th>
+                          <th scope="col">DATE ADDED</th>
+                          <th scope="col">MANAGE</th>
+                          <th scope="col">IMAGING</th>
+                          <th scope="col">PATIENT PROFILE</th>
+                          <th scope="col">EXPORTS</th>
+                          <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <!-- TODO: Remove the dummy data -->
+                    <tbody>
+                        <tr>
+                            <td>Sam</td>
+                            <td>User</td>
+                            <td>sam@spineai.com</td>
+                            <td>Surgeon</td>
+                            <td>4/12/2022</td>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
+                                </div>
+                            </td>
+                            <td>
+                                <ul class="user-btns-wrapper">
+                                    <li>
+                                        <button type="button" class="btn btn-link">Edit</button>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="btn btn-link delete-user-btn">Delete</button>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>David</td>
+                            <td>User</td>
+                            <td>david@spineai.com</td>
+                            <td>Nurse</td>
+                            <td>3/20/2022</td>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
+                                </div>
+                            </td>
+                            <td>
+                                <ul class="user-btns-wrapper">
+                                    <li>
+                                        <button type="button" class="btn btn-link">Edit</button>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="btn btn-link delete-user-btn">Delete</button>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Office</td>
+                            <td>User</td>
+                            <td>officeuser@spineai.com</td>
+                            <td>Office</td>
+                            <td>2/14/2022</td>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
+                                </div>
+                            </td>
+                            <td>
+                                <ul class="user-btns-wrapper">
+                                    <li>
+                                        <button type="button" class="btn btn-link">Edit</button>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="btn btn-link delete-user-btn">Delete</button>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

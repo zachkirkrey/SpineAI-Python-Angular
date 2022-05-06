@@ -64,7 +64,8 @@
                                         <span>BRANDING</span>
                                     </button>
 
-                                    <button class="custom-button" [ngClass]="{'disabled' : pageType !== 'USERS'}">
+                                    <button class="custom-button" [ngClass]="{'disabled' : pageType !== 'USERS'}"
+                                            (click)="redirectoPage('admin/users')">
                                         <i class="fa fa-archive"></i>
                                         <span>USERS</span>
                                     </button>

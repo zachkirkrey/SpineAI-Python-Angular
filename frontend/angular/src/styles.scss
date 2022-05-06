@@ -156,7 +156,7 @@ div#reports_table_wrapper>.row:nth-child(1) div {
 
 .export-btn.mat-button:before {
   content: "";
-  border-left: 5px solid transparent;
+  border-left: 5px solid transparent !important;
   border-right: 5px solid transparent;
   border-top: 5px solid white;
   position: absolute;
@@ -387,7 +387,7 @@ div#reports_table_wrapper div#reports_table_filter {
   padding-left: 120px;
 }
 
-.export-btn.add-patient {
+.export-btn.add-patient, .export-btn.add-user {
   position: relative;
   margin: 0;
   bottom: -34px;
@@ -395,7 +395,7 @@ div#reports_table_wrapper div#reports_table_filter {
   z-index: 999;
 }
 
-.export-btn.mat-button.add-patient:before {
+.export-btn.mat-button.add-patient:before, .export-btn.mat-button.add-user:before {
   display: none;
 }
 
@@ -642,4 +642,107 @@ button.svbtn {
 
 .backtopatient {
   bottom: 0 !important;
+}
+
+/* Positioning */
+.center-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.center-horizontal {
+  left: auto;
+  right: auto;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.center-content {
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+.full-width {
+  width: 100% !important;
+}
+
+.half-width {
+  width: 50% !important;
+}
+
+.three-quarter-width {
+  width: 75% !important;
+}
+
+.full-height {
+  height: 100% !important;
+}
+
+.float-right {
+  float: right !important;
+}
+
+.float-left {
+  float: left !important;
+}
+/* End positioning */
+
+
+/* text */
+.default-font-size {
+  font-size: 16px !important;
+}
+.font-size-24 {
+  font-size: 24px !important;
+}
+.large-text {
+  font-size: large !important;
+}
+.larger-text {
+  font-size: larger !important;
+}
+.medium-text {
+  font-size: medium !important;
+}
+.small-text {
+  font-size: small !important;
+}
+.smaller-text {
+  font-size: smaller !important;
+}
+.x-small-text {
+  font-size: x-small !important;
+}
+.xx-small-text {
+  font-size: xx-small !important;
+}
+.bold-text {
+  font-weight: bold !important;
+}
+.bolder-text {
+  font-weight: bolder !important;
+}
+.lighter-text {
+  font-weight: lighter !important;
+}
+.capitalize-text {
+  text-transform: capitalize !important;
+}
+.lowercase-text {
+  text-transform: lowercase !important;
+}
+.uppercase-text {
+  text-transform: uppercase !important;
+}
+.center-text {
+  text-align: center !important;
+}
+.end-text {
+  text-align: end !important;
+}
+.start-text {
+  text-align: start !important;
 }
