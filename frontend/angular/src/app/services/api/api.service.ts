@@ -233,13 +233,14 @@ export class ApiService {
       });
     }
 
-    addFetchIngestion(data: Omit<Ingestion, 'creation_datetime' | 'type' | 'state' | 'error_str'>): Observable<Ingestion> {
+    addFetchIngestion(data: Omit<Ingestion, 'creation_datetime' | 'uuid' | 'type' | 'state' | 'error_str'>): Observable<Ingestion> {
          const date = new Date();
          const ingestion: Ingestion = {
            ...data,
             creation_datetime: date.toISOString(),
             type: 'DICOM_FETCH',
             state: 'NEW',
+            uuid: uuidv4(),
             error_str: '',
         };
 
@@ -254,23 +255,23 @@ export class ApiService {
 
     findStudies(patientID: string, studyDateStr: string): Observable<LookupStudy[]> {
 
-      // Local simulated patient data
-      if (local()) {
-        return of([
-          {
-            accession_number: uuidv4(),
-            patient_name: 'Example Patient',
-            study_date: new Date().toISOString(),
-            study_description: 'Something goes here',
-          },
-          {
-            accession_number: uuidv4(),
-            patient_name: 'Example Patient 2',
-            study_date: new Date().toISOString(),
-            study_description: 'Something else goes here',
-          },
-        ]);
-      }
+      // // Local simulated patient data
+      // if (local()) {
+      //   return of([
+      //     {
+      //       accession_number: uuidv4(),
+      //       patient_name: 'Example Patient',
+      //       study_date: new Date().toISOString(),
+      //       study_description: 'Something goes here',
+      //     },
+      //     {
+      //       accession_number: uuidv4(),
+      //       patient_name: 'Example Patient 2',
+      //       study_date: new Date().toISOString(),
+      //       study_description: 'Something else goes here',
+      //     },
+      //   ]);
+      // }
 
       const url = `${environment.backend_api_url}/api/v1/dicom/find_patient_id/${patientID}/${studyDateStr}`;
       return this.http.get<FindStudiesResponse | null>(url, this.options()).pipe(

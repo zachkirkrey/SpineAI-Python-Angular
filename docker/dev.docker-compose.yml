@@ -68,6 +68,26 @@ services:
         source: "./config/restify.yml"
         target: "/app/angular/config/docker-dev.yml"
     restart: unless-stopped
+  spineai-pacs:
+    image: jodogne/orthanc:1.10.1
+    environment:
+      ORTHANC__AUTHENTICATION_ENABLED: "true"
+#    expose:
+#      - 4242
+#      - 8042
+    ports:
+      - 4242:4242
+      - 8042:8042 # login port. login: orthanc/orthanc
+    volumes:
+      - type: bind
+        source: "./config/orthanc.json5"
+        target: "/etc/orthanc/orthanc.json"
+      - type: volume
+        source: "pacs-database"
+        target: "/var/lib/othanc/db"
+    restart: unless-stopped
+    networks:
+      - api
   certbot-get:
     image: certbot/dns-cloudflare:v1.3.0
     volumes:
@@ -99,6 +119,8 @@ volumes:
     name: spineai-database
   certbot-etc:
     name: spineai-certbot-etc
+  pacs-database:
+    name: spineai-pacs-database
 
 networks:
   api:

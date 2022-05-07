@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {ApiService, LookupStudy} from 'src/app/services/api/api.service';
+import {ApiService, Ingestion, LookupStudy} from 'src/app/services/api/api.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {catchError, flatMap, map, mergeMap, shareReplay, tap} from 'rxjs/operators';
+import {catchError, flatMap, map, mergeMap, shareReplay, switchMap, tap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 
 function yyyymmdd(date: Date) {
@@ -74,11 +74,12 @@ export class FetchFormComponent implements OnInit {
             tap(study => {
               this.patientIDForm.get('patientID').setValue(study.mrn);
               this.fetchForm.get('accessionNumber').setValue(study.accession_number);
+              this.submitIDForm();
             }),
             catchError((err, caught) => {
               this.action_error = err.message ?? err.error;
               return caught;
-            })
+            }),
           )
           .subscribe();
       }
@@ -113,14 +114,19 @@ export class FetchFormComponent implements OnInit {
       // TODO: now that a relation exists between a study and an ingestion based on the study column
       // ensure linking happens in the creation step
       // additionally, ensure no duplicates
-      const uuid$: Observable<string> = this.uuidId ? of(this.uuidId) : this.api.addPatient({
+      const id$: Observable<string> = this.uuidId ? this.api.getStudy(this.uuidId, '').pipe(
+        shareReplay(),
+        map(study => {
+          return study.id;
+        }),
+      ) : this.api.addPatient({
         created_by: true,
         creation_datetime: new Date().toISOString(),
         name,
         file_dir_path: '',
         file_dir_checksum: '',
         image_file_type: '',
-        accession_number: '',
+        accession_number: accessionNumber,
         patient_age: '',
         patient_name: name,
         patient_size: '',
@@ -135,17 +141,17 @@ export class FetchFormComponent implements OnInit {
       }).pipe(
         shareReplay(),
         map(study => {
-          return study.uuid;
+          return study.id;
         }),
       );
 
-      uuid$.pipe(
-        mergeMap(uuid => {
+      id$.pipe(
+        mergeMap(study => {
           return this.api.addFetchIngestion({
             accession_number: accessionNumber,
-            uuid,
+            study,
             name,
-          });
+          } as unknown as Ingestion);
         }),
         shareReplay(),
       ).subscribe(

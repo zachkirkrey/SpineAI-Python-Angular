@@ -34,7 +34,29 @@ services:
       - type: volume
         source: "database"
         target: "/database"
+      - type: bind
+        source: "./config/local.backend.yml"
+        target: "/app/config/dev-docker.yml"
       - "./logs:/logs"
+    restart: unless-stopped
+    ports:
+      - "8008:8008"
+    networks:
+      - api
+  spineai-pacs:
+    image: jodogne/orthanc:1.10.1
+    environment:
+      ORTHANC__AUTHENTICATION_ENABLED: "true"
+    ports:
+      - 4242:4242
+      - 8042:8042 # login port. login: orthanc/orthanc
+    volumes:
+      - type: bind
+        source: "./config/orthanc.json5"
+        target: "/etc/orthanc/orthanc.json"
+      - type: volume
+        source: "pacs-database"
+        target: "/var/lib/othanc/db"
     restart: unless-stopped
     networks:
       - api
@@ -42,6 +64,8 @@ services:
 volumes:
   database:
     name: spineai-database
+  pacs-database:
+    name: spineai-pacs-database
 
 networks:
   api:

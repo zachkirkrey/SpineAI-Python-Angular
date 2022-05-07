@@ -83,9 +83,15 @@ class HTTPRequestHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
         self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Credentials', 'true')
+        self.send_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, Access-Control-Allow-Origin')
         self.end_headers()
 
     def do_HEAD(self):
+        self._set_headers()
+
+    def do_OPTIONS(self):
         self._set_headers()
 
     def do_GET(self):

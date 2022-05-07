@@ -89,7 +89,9 @@ class AbstractListener(object):
                     raise e
                 logging.error(
                     'Error processing {} id "{}": {}: "{}"'.format(
-                        self.schema_class.__name__, event.id, type(e), str(e)))
+                        self.schema_class.__name__, event.id, type(e), str(e)),
+                    stack_info=True, exc_info=True
+                )
                 event.state = schema.EventState.ERROR.name
                 event.error_str = str(e)
 
@@ -164,7 +166,7 @@ class IngestionListener(AbstractListener):
             if study_uid in os.listdir(self.tmpdir.name):
                 study_dir = os.path.join(self.tmpdir.name, study_uid)
                 study = self.study_reader.ingest_study(
-                        study_dir, name=ingestion.accession_number)
+                        study_dir, name=ingestion.accession_number, study_id=ingestion.study.id)
 
                 shutil.rmtree(study_dir, ignore_errors=True)
 
