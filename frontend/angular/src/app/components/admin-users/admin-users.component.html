@@ -15,7 +15,7 @@
             </div>
             <div class="add-user-wrap">
                 <button class="mat-focus-indicator export-btn add-user mat-button mat-button-base"
-                    (click)="open(content)">
+                    (click)="openAddUserDialog(addUserModal)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-plus" viewBox="0 0 16 16">
                         <path
@@ -160,3 +160,75 @@
         </div>
     </div>
 </div>
+
+<ng-template #addUserModal let-modal>
+    <div class="modal-header add-user-header">
+        <h4 class="modal-title bold-text color-black" id="modal-basic-title">Add User</h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body add-user-form">
+        <form>
+            <div class="form-group">
+                <div class="add-patient-con">
+                    <div class="form-group-sec">
+                        <input id="first-name" class="form-control" placeholder="First Name" name="first-name">
+                    </div>
+                    <div class="form-group-sec"> 
+                        <input id="last-name" class="form-control" placeholder="Last Name" name="last-name">
+                    </div>
+                    <div class="form-group-sec">
+                        <input id="email" type="email" class="form-control" placeholder="Email" name="email">
+                    </div>
+                    <div class="form-group-sec">
+                        <input id="password" type="password" class="form-control" placeholder="Password" name="password">
+                    </div>
+                    <div class="form-group-sec">
+                        <select class="form-control" placeholder="Role" name="role">
+                            <option [ngValue]="null" [disabled]="true">Role</option>
+                            <option *ngFor="let role of userRoles" value={{role}}>
+                                {{role}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group-sec">
+                        <p class="color-red mtop-10">(Optional)</p>
+                    </div>
+                    <div class="mleft-10 mright-10 mtop-15">
+                        <p class="bolder-text color-black margin-0">Access:</p>
+                        <div class="mtop-10"></div>
+                        <div class="form-check display-inline-block">
+                            <input class="form-check-input" type="checkbox" value="" id="manageCheckbox">
+                            <label class="form-check-label" for="manageCheckbox">
+                              Manage
+                            </label>
+                        </div>
+                        <div class="form-check display-inline-block mleft-20">
+                            <input class="form-check-input" type="checkbox" value="" id="patientProfileCheckbox">
+                            <label class="form-check-label" for="patientProfileCheckbox">
+                              Patient Profile
+                            </label>
+                        </div>
+                        <div class="mtop-10"></div>
+                        <div class="form-check display-inline-block">
+                            <input class="form-check-input" type="checkbox" value="" id="imagingCheckbox">
+                            <label class="form-check-label" for="imagingCheckbox">
+                              Imaging
+                            </label>
+                        </div>
+                        <div class="form-check display-inline-block mleft-20">
+                            <input class="form-check-input" type="checkbox" value="" id="exportsCheckbox">
+                            <label class="form-check-label" for="exportsCheckbox">
+                              Exports
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer add-patient-footer">
+        <button type="button" class="btn btn-outline-dark mleft-10">Create User</button>
+    </div>
+</ng-template>

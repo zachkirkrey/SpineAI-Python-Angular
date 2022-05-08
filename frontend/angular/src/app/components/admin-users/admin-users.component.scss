@@ -7,8 +7,9 @@
 .add-user {
     bottom: 0 !important;
     border-width: 0 !important;
-    padding: 8px 12px 8px 5px !important;
+    padding: 7px 12px 7px 5px !important;
     border-radius: 5px;
+    z-index: unset !important;
 }
 
 .users-table {
@@ -32,4 +33,28 @@
 
 .delete-user-btn {
     color: red;
+}
+
+.add-user-header {
+    border-bottom: unset !important;
+    padding-bottom: 10px;
+}
+
+.form-group-sec {
+    margin-top: 15px;
+    width: 48% !important;
+}
+
+.add-user-form {
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+@media screen and (max-width:770px) {
+
+    .form-group-sec {
+      margin-top: 10px;
+      width: 100% !important;
+    }
+
 }
