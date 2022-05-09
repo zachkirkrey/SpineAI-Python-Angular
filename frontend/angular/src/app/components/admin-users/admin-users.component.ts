@@ -8,21 +8,41 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./admin-users.component.scss']
 })
 export class AdminUsersComponent implements OnInit {
-  userRoles: string[] = ['Surgeon', 'PMNR', 'Nurse', 'Office', 'Other']
+  userRoles: string[] = ['Surgeon', 'PMNR', 'Nurse', 'Office', 'Other'];
+  editUser: boolean = false;
 
-  constructor(private modelService: NgbModal) { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
 
-  openAddUserDialog(content){
-    this.modelService.open(content, {
+  openAddUserDialog(content, editUser: boolean = false){
+    if (editUser){
+      this.editUser = true;
+    }
+    else{
+      this.editUser = false;
+    }
+    this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic_title'
     }).result.then((result) => {},
     (reason) => {});
   }
 
-  closeModal(){
-    this.modelService.dismissAll();
+  closeAddUserModal(){
+    this.modalService.dismissAll();
+  }
+  deleteUserAction(content){
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title'
+    }).result.then((result) => {}, (reason) => {});
+  }
+
+  closeDelModal(){
+    this.modalService.dismissAll();
+  }
+
+  deleteUserModal(){
+
   }
 }

@@ -72,10 +72,12 @@
                             <td>
                                 <ul class="user-btns-wrapper">
                                     <li>
-                                        <button type="button" class="btn btn-link">Edit</button>
+                                        <button type="button" class="btn btn-link"
+                                            (click)="openAddUserDialog(addUserModal, true)">Edit</button>
                                     </li>
                                     <li>
-                                        <button type="button" class="btn btn-link delete-user-btn">Delete</button>
+                                        <button type="button" class="btn btn-link delete-user-btn"
+                                            (click)="deleteUserAction(deleteUserModal)">Delete</button>
                                     </li>
                                 </ul>
                             </td>
@@ -163,8 +165,8 @@
 
 <ng-template #addUserModal let-modal>
     <div class="modal-header add-user-header">
-        <h4 class="modal-title bold-text color-black" id="modal-basic-title">Add User</h4>
-        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+        <h4 class="modal-title bold-text color-black" id="modal-basic-title">{{editUser ? 'Edit User': 'Add User'}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeAddUserModal()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -229,6 +231,16 @@
         </form>
     </div>
     <div class="modal-footer add-patient-footer">
-        <button type="button" class="btn btn-outline-dark mleft-10">Create User</button>
+        <button type="button" class="btn btn-outline-dark mleft-10">{{editUser ? 'Edit User': 'Create User'}}</button>
+    </div>
+</ng-template>
+
+<ng-template #deleteUserModal let-modal>
+    <div class="modal-body custxt add-patient-form color-black">
+        Are you sure you want to delete this user ?
+    </div>
+    <div class="modal-footer cus_btn add-patient-footer">
+        <button type="button" class="btn btn-danger" (click)="deleteUser()">OK</button>
+        <button type="button" class="btn btn-outline-dark" (click)="closeDelModal()">Cancel</button>
     </div>
 </ng-template>
