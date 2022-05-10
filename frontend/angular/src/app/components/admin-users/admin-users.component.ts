@@ -10,6 +10,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class AdminUsersComponent implements OnInit {
   userRoles: string[] = ['Surgeon', 'PMNR', 'Nurse', 'Office', 'Other'];
   editUser: boolean = false;
+  index_complete: boolean = false;
+  index_error = '';
 
   constructor(private modalService: NgbModal) { }
 
