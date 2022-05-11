@@ -20,6 +20,7 @@ export class PatientComponentComponent implements OnInit {
     appt_date: any;
     telephone: any;
     diagnosis = null;
+    assignee: any;
     email_error: boolean = false
     email_validate: boolean = false
     mrn_error: boolean = false
