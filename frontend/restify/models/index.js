@@ -123,6 +123,7 @@ module.exports = function (sequelize) {
     let History = require('./history')(sequelize);
     let OtherQuestions = require('./questions')(sequelize);
     let LogoImage = require('./logo-image')(sequelize);
+    let User = require('./user')(sequelize)
 
     defineOneToMany(Study, Classification);
     defineOneToMany(Study, Segmentation);
@@ -287,6 +288,7 @@ module.exports = function (sequelize) {
         ReferralReason:ReferralReason,
         Symptoms:Symptoms,
         OtherTreatments:OtherTreatments,
-        LogoImage:LogoImage
+        LogoImage:LogoImage,
+        User:User
     }
 }

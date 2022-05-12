@@ -89,6 +89,11 @@ module.exports = function (finale, sequelize) {
         endpoints: ['/logoimage', '/logoimage/:uuid'],
         associations: false
     });
+    let userResource = finale.resource({
+        model: sequelize.models,
+        endpoints: ['/users', '/user/:uuid'],
+        associations: false
+    });
 
 
 
@@ -110,7 +115,8 @@ module.exports = function (finale, sequelize) {
             treatmentsResource,
             historyResource,
             questionsResource,
-            logoImageResource
+            logoImageResource,
+            userResource
         ].forEach(resource => resource.use(apiLogMiddleware));
     }
 
@@ -220,6 +226,12 @@ module.exports = function (finale, sequelize) {
                 return context.skip;
             }
         }
+        return context.continue;
+    });
+
+    userResource.list.fetch.before(function(req, res, context){
+        console("<<<----------the context test ---------->>>")
+        console.log(context);
         return context.continue;
     });
 };

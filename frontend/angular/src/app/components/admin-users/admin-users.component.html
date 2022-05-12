@@ -43,88 +43,12 @@
                     </thead>
                     <!-- TODO: Remove the dummy data -->
                     <tbody>
-                        <tr>
-                            <td>Sam</td>
-                            <td>User</td>
-                            <td>sam@spineai.com</td>
-                            <td>Surgeon</td>
-                            <td>4/12/2022</td>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
-                                </div>
-                            </td>
-                            <td>
-                                <ul class="user-btns-wrapper">
-                                    <li>
-                                        <button type="button" class="btn btn-link"
-                                            (click)="openAddUserDialog(addUserModal, true)">Edit</button>
-                                    </li>
-                                    <li>
-                                        <button type="button" class="btn btn-link delete-user-btn"
-                                            (click)="deleteUserAction(deleteUserModal)">Delete</button>
-                                    </li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>David</td>
-                            <td>User</td>
-                            <td>david@spineai.com</td>
-                            <td>Nurse</td>
-                            <td>3/20/2022</td>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input center-horizontal" type="checkbox" value="">
-                                </div>
-                            </td>
-                            <td>
-                                <ul class="user-btns-wrapper">
-                                    <li>
-                                        <button type="button" class="btn btn-link">Edit</button>
-                                    </li>
-                                    <li>
-                                        <button type="button" class="btn btn-link delete-user-btn">Delete</button>
-                                    </li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Office</td>
-                            <td>User</td>
-                            <td>officeuser@spineai.com</td>
-                            <td>Office</td>
-                            <td>2/14/2022</td>
+                        <tr *ngFor="let user of users">
+                            <td>{{user.first_name}}</td>
+                            <td>{{user.last_name}}</td>
+                            <td>{{user.username}}</td>
+                            <td>{{user.role}}</td>
+                            <td>{{user.date_added}}</td>
                             <td>
                                 <div class="form-check">
                                     <input class="form-check-input center-horizontal" type="checkbox" value="">
@@ -171,23 +95,27 @@
         </button>
     </div>
     <div class="modal-body add-user-form">
-        <form>
+        <form [formGroup]="addUserForm">
             <div class="form-group">
                 <div class="add-patient-con">
                     <div class="form-group-sec">
-                        <input id="first-name" class="form-control" placeholder="First Name" name="first-name">
+                        <input id="first-name" class="form-control" placeholder="First Name"
+                        name="first-name" formControlName="first_name" required>
                     </div>
                     <div class="form-group-sec"> 
-                        <input id="last-name" class="form-control" placeholder="Last Name" name="last-name">
+                        <input id="last-name" class="form-control" placeholder="Last Name"
+                        name="last-name" formControlName="last_name" required>
                     </div>
                     <div class="form-group-sec">
-                        <input id="email" type="email" class="form-control" placeholder="Email" name="email">
+                        <input id="email" type="email" class="form-control" placeholder="Email"
+                        name="email" formControlName="username" required>
                     </div>
                     <div class="form-group-sec">
-                        <input id="password" type="password" class="form-control" placeholder="Password" name="password">
+                        <input id="password" type="password" class="form-control" placeholder="Password"
+                        name="password" formControlName="password" required>
                     </div>
                     <div class="form-group-sec">
-                        <select class="form-control" placeholder="Role" name="role">
+                        <select class="form-control" placeholder="Role" name="role" formControlName="role">
                             <option [ngValue]="null" [disabled]="true">Role</option>
                             <option *ngFor="let role of userRoles" value={{role}}>
                                 {{role}}
@@ -231,7 +159,28 @@
         </form>
     </div>
     <div class="modal-footer add-patient-footer">
-        <button type="button" class="btn btn-outline-dark mleft-10">{{editUser ? 'Edit User': 'Create User'}}</button>
+        <!-- <button type="button" class="btn btn-outline-dark mleft-10">{{editUser ? 'Edit User': 'Create User'}}</button> -->
+        <div class="progress" *ngIf="userModalLoading">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+            role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+
+            </div>
+        </div>
+
+        <div class="full-width">
+            <button type="button" class="btn btn-outline mleft-10" *ngIf="!userModalLoading"
+            (onClick)="createUser()" [disabled]="!addUserForm.valid || userModalSuccess">
+            {{editUser ? 'Edit User': 'Create User'}}
+            </button>
+        </div>
+
+        <div class="alert alert-danger mtop-15" role="alert" *ngIf="userModalError">
+            Something went wrong, Please try again
+        </div>
+
+        <div class="alert alert-success mtop-15" role="alert" *ngIf="userModalSuccess">
+            {{editUser ? 'User successfully edited!': 'User successfully created!'}}
+        </div>
     </div>
 </ng-template>
 

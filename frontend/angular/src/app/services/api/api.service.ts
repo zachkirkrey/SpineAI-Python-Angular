@@ -285,4 +285,28 @@ export class ApiService {
     //     map(resp => resp?.studies ?? [])
     //   );
     // }
+
+    globalGetRequest(endpoint: string){
+      const url = `${this.apiUrl}/${endpoint}`;
+      return this.http.get(url, this.options());
+    }
+
+    globalGetMore(endpoint: string){
+      return this.http.get(endpoint, this.options());
+    }
+
+    globalPostRequest(endpoint: string, data: any){
+      const url = `${this.apiUrl}/${endpoint}`;
+      return this.http.post(url, data, this.options());
+    }
+
+    globalPatchRequest(endpoint: string, data: any){
+      const url = `${this.apiUrl}/${endpoint}`;
+      return this.http.patch(url, data, this.options());
+    }
+
+    globalDeleteRequest(endpoint: string){
+      const url = `${this.apiUrl}/${endpoint}`;
+      return this.http.delete(url, this.options());
+    }
 }
