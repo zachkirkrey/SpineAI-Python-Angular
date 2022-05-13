@@ -48,7 +48,7 @@
                             <td>{{user.last_name}}</td>
                             <td>{{user.username}}</td>
                             <td>{{user.role}}</td>
-                            <td>{{user.date_added}}</td>
+                            <td>{{user.date_added | date: 'dd/MMM/yyyy'}}</td>
                             <td>
                                 <div class="form-check">
                                     <input class="form-check-input center-horizontal" type="checkbox" value="">
@@ -72,10 +72,12 @@
                             <td>
                                 <ul class="user-btns-wrapper">
                                     <li>
-                                        <button type="button" class="btn btn-link">Edit</button>
+                                        <button type="button" class="btn btn-link"
+                                            (onClick)="openAddUserDialog(addUserModal, true, user)">Edit</button>
                                     </li>
                                     <li>
-                                        <button type="button" class="btn btn-link delete-user-btn">Delete</button>
+                                        <button type="button" class="btn btn-link delete-user-btn"
+                                            (onClick)="deleteUserAction(deleteUserModal, user.uuid)">Delete</button>
                                     </li>
                                 </ul>
                             </td>
@@ -87,7 +89,7 @@
     </div>
 </div>
 
-<ng-template #addUserModal let-modal>
+<ng-template #addUserModal let-modal open>
     <div class="modal-header add-user-header">
         <h4 class="modal-title bold-text color-black" id="modal-basic-title">{{editUser ? 'Edit User': 'Add User'}}</h4>
         <button type="button" class="close" aria-label="Close" (click)="closeAddUserModal()">
@@ -168,10 +170,15 @@
         </div>
 
         <div class="full-width">
-            <button type="button" class="btn btn-outline mleft-10" *ngIf="!userModalLoading"
+            <button type="button" class="btn btn-outline mleft-10" *ngIf="!userModalLoading && !editUser"
             (onClick)="createUser()" [disabled]="!addUserForm.valid || userModalSuccess">
-            {{editUser ? 'Edit User': 'Create User'}}
+            Create User
             </button>
+
+        <button type="button" class="btn btn-outline-dark mleft-10" *ngIf="!userModalLoading && editUser" (click)="editUserFun()"
+        [disabled]="!addUserForm.valid || userModelSuccess">
+            Edit User
+        </button>
         </div>
 
         <div class="alert alert-danger mtop-15" role="alert" *ngIf="userModalError">
@@ -180,6 +187,9 @@
 
         <div class="alert alert-success mtop-15" role="alert" *ngIf="userModalSuccess">
             {{editUser ? 'User successfully edited!': 'User successfully created!'}}
+            <button type="button" class="close" data-dismiss="alert" (click)="closeAddUserModal()">
+                <span aria-hidden="true">OK</span>
+            </button>
         </div>
     </div>
 </ng-template>
@@ -191,5 +201,20 @@
     <div class="modal-footer cus_btn add-patient-footer">
         <button type="button" class="btn btn-danger" (click)="deleteUser()">OK</button>
         <button type="button" class="btn btn-outline-dark" (click)="closeDelModal()">Cancel</button>
+    </div>
+    <div class="progress" *ngIf="userDeleteLoading">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="100" 
+        aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+    </div>
+
+    <div class="alert alert-danger mtop-15" role="alert" *ngIf="userDeleteError">
+        Something went wrong, Please try again
+    </div>
+
+    <div class="alert alert-success mtop-15" role="alert" *ngIf="userDeleteSuccess">
+        User deleted
+        <button type="button" class="close" data-dismiss="alert" (click)="closeDelModal()">
+            <span aria-hidden="true">OK</span>
+        </button>
     </div>
 </ng-template>

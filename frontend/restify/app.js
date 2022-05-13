@@ -40,7 +40,8 @@ server.use(restify.plugins.bodyParser());
 
 finale.initialize({
   app: server,
-  sequelize: sequelize
+  sequelize: sequelize,
+  updateMethod: 'PATCH'
 });
 
 require('./api')(finale, sequelize);

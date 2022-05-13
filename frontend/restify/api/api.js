@@ -1,7 +1,12 @@
 const config = require('config');
 const fs = require('fs');
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize(config.get('sequelize.init'));
 
 const csv = require('./csv');
+const uuid = require('uuid');
+
+let User = require('../models/user')(sequelize)
 
 
 module.exports = function (finale, sequelize) {
@@ -91,7 +96,7 @@ module.exports = function (finale, sequelize) {
     });
     let userResource = finale.resource({
         model: sequelize.models,
-        endpoints: ['/users', '/user/:uuid'],
+        endpoints: ['/users', '/users/:uuid'],
         associations: false
     });
 
@@ -232,6 +237,22 @@ module.exports = function (finale, sequelize) {
     userResource.list.fetch.before(function(req, res, context){
         console("<<<----------the context test ---------->>>")
         console.log(context);
+        return context.continue;
+    });
+
+    userResource.create.fetch(function (req, res, context) {
+        let userUuid = uuid.v4();
+        req.body.uuid = userUuid;
+        return context.continue;
+    });
+
+    userResource.delete.fetch(function(req, res, context) {
+        console.log("<<<<<<< Deleting user >>>>>>>");
+        return context.continue;
+    });
+
+    userResource.update.fetch(function(req, res, context) {
+        console.log("<<<<<< Updating user >>>>>>");
         return context.continue;
     });
 };

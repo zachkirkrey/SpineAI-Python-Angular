@@ -15,12 +15,16 @@ export class AdminUsersComponent implements OnInit {
   index_complete: boolean = false;
   index_error = '';
   users: any[] = [];
+  userUuid: string;
 
   addUserForm: FormGroup;
   userModalLoading: boolean = false;
   userModalError: boolean = false;
   userModalSuccess: boolean = false;
 
+  userDeleteLoading: boolean = false;
+  userDeleteError: boolean = false;
+  userDeleteSuccess: boolean = false;
 
   constructor(
     private modalService: NgbModal, private _api: ApiService, private _formbuilder: FormBuilder) { }
@@ -53,9 +57,10 @@ export class AdminUsersComponent implements OnInit {
     });
   }
 
-  openAddUserDialog(content, editUser: boolean = false){
+  openAddUserDialog(content, editUser: boolean = false, user: any = null){
     if (editUser){
       this.editUser = true;
+      this.editUserAction  = user.uuid;
     }
     else{
       this.editUser = false;
@@ -73,8 +78,6 @@ export class AdminUsersComponent implements OnInit {
     this._api.globalPostRequest('users', reqData).subscribe((response: any) => {
       this.userModalLoading = false;
       this.userModalSuccess = true;
-      this.delay(3000);
-      this.modalService.dismissAll();
       this.ngOnInit();
     }, (error: any) => {
       console.log(error);
@@ -85,18 +88,67 @@ export class AdminUsersComponent implements OnInit {
 
   closeAddUserModal(){
     this.modalService.dismissAll();
+    this.addUserForm.reset();
+    this.userModalError = false;
+    this.userModalLoading = false;
+    this.userModalSuccess = false;
   }
-  deleteUserAction(content){
+  deleteUserAction(content, userUuid: string){
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title'
     }).result.then((result) => {}, (reason) => {});
+    this.userUuid = userUuid
   }
 
   closeDelModal(){
+    this.userUuid = null;
     this.modalService.dismissAll();
+    this.userDeleteError = false;
+    this.userDeleteLoading = false;
+    this.userDeleteSuccess = false;
   }
 
-  deleteUserModal(){
+  deleteUser(){
+    this.userDeleteLoading = true;
+    this._api.globalDeleteRequest(`users/${this.userUuid}`).subscribe(
+      (response: any) => {
+      this.userDeleteLoading = false;
+      this.userDeleteSuccess = true;
+      this.ngOnInit();
+    }, (error: any) => {
+      console.log(error);
+      this.userDeleteLoading = false;
+      this.userDeleteError = true;
+    });
+  }
 
+  editUserAction(user) {
+    this.addUserForm = this._formbuilder.group({
+      first_name: [user.first_name, [Validators.required]],
+      last_name: [user.last_name, [Validators.required]],
+      username: [user.username, [Validators.required, Validators.email]],
+      password: [{value: user.password, disabled: true}, [Validators.required]],
+      role: [user.role]
+    });
+  }
+
+  editUserFun() {
+    this.userModalLoading = true;
+    const reqData = {
+      first_name: this.addUserForm.value['first_name'],
+      last_name: this.addUserForm.value['last_name'],
+      username: this.addUserForm.value['username'],
+      role: this.addUserForm.value['role']
+    };
+
+    this._api.globalPatchRequest(`users/${this.userUuid}`, reqData).subscribe((response: any) => {
+      this.userModalLoading = false;
+      this.userModalSuccess = true;
+      this.ngOnInit();
+    }, (error: any) => {
+      console.log(error);
+      this.userModalLoading = false;
+      this.userModalError = true;
+    });
   }
 }
