@@ -6,7 +6,7 @@ const sequelize = new Sequelize(config.get('sequelize.init'));
 const csv = require('./csv');
 const uuid = require('uuid');
 
-let User = require('../models/user')(sequelize)
+let User = require('../models/user')(sequelize);
 
 
 module.exports = function (finale, sequelize) {
@@ -234,9 +234,7 @@ module.exports = function (finale, sequelize) {
         return context.continue;
     });
 
-    userResource.list.fetch.before(function(req, res, context){
-        console("<<<----------the context test ---------->>>")
-        console.log(context);
+    userResource.list.fetch.before(function (req, res, context) {
         return context.continue;
     });
 

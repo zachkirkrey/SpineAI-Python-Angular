@@ -38,11 +38,12 @@ export class AdminUsersComponent implements OnInit {
     await new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  getUsers(){
-    this._api.globalGetRequest('users').subscribe((response: any) =>{
+  getUsers() {
+    this._api.globalGetRequest('users').subscribe((response: any) => {
       this.users = response;
     }, (error: any) => {
-    })
+      console.log(error);
+    });
   }
 
   createUserForm(){
@@ -55,32 +56,34 @@ export class AdminUsersComponent implements OnInit {
     });
   }
 
-  openAddUserDialog(content, editUser: boolean = false, user: any = null){
-    if (editUser){
+  openAddUserDialog(content, editUser: boolean = false, user: any = null) {
+    if (editUser) {
       this.editUser = true;
-      this.editUserAction  = user.uuid;
-    }
-    else{
+      this.editUserAction(user);
+      this.userUuid = user.uuid;
+    } else {
       this.editUser = false;
     }
-    this.modalService.open(content, {
-      ariaLabelledBy: 'modal-basic_title'
-    }).result.then((result) => {},
-    (reason) => {});
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      (result) => {
+      
+    }, (reason) => {
+        
+    });
   }
 
-  createUser(){
+  createUser() {
     this.userModalLoading = true;
     const reqData = this.addUserForm.value;
-
     this._api.globalPostRequest('users', reqData).subscribe((response: any) => {
       this.userModalLoading = false;
       this.userModalSuccess = true;
       this.ngOnInit();
     }, (error: any) => {
+      console.log(error);
       this.userModalLoading = false;
       this.userModalError = true;
-    })
+    });
   }
 
   closeAddUserModal(){

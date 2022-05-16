@@ -3,7 +3,7 @@
  *
  * The SpineAI database is defined in and initialized by Pony ORM in python.
  */
-const {
+ const {
     DataTypes
 } = require('sequelize');
 
@@ -123,7 +123,7 @@ module.exports = function (sequelize) {
     let History = require('./history')(sequelize);
     let OtherQuestions = require('./questions')(sequelize);
     let LogoImage = require('./logo-image')(sequelize);
-    let User = require('./user')(sequelize)
+    let User = require('./user')(sequelize);
 
     defineOneToMany(Study, Classification);
     defineOneToMany(Study, Segmentation);
