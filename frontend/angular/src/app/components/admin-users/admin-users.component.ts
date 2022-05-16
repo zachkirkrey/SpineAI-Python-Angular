@@ -41,9 +41,7 @@ export class AdminUsersComponent implements OnInit {
   getUsers(){
     this._api.globalGetRequest('users').subscribe((response: any) =>{
       this.users = response;
-      console.log(this.users);
     }, (error: any) => {
-      console.log(error);
     })
   }
 
@@ -80,7 +78,6 @@ export class AdminUsersComponent implements OnInit {
       this.userModalSuccess = true;
       this.ngOnInit();
     }, (error: any) => {
-      console.log(error);
       this.userModalLoading = false;
       this.userModalError = true;
     })
@@ -116,7 +113,6 @@ export class AdminUsersComponent implements OnInit {
       this.userDeleteSuccess = true;
       this.ngOnInit();
     }, (error: any) => {
-      console.log(error);
       this.userDeleteLoading = false;
       this.userDeleteError = true;
     });
@@ -146,7 +142,6 @@ export class AdminUsersComponent implements OnInit {
       this.userModalSuccess = true;
       this.ngOnInit();
     }, (error: any) => {
-      console.log(error);
       this.userModalLoading = false;
       this.userModalError = true;
     });

@@ -148,8 +148,8 @@
             <div class="form-group-sec">
                 <label>Assignee:</label>
                 <select name="assignee" class="act_sel_o" [(ngModel)]="assignee">
-                    <option value="Sam User">Sam User</option>
-                    <option value="David User">David User</option>
+                    <option [ngValue]="null" [disabled]="true">None</option>
+                    <option *ngFor="let user of users" value="{{user.uuid}}">{{user.first_name}} {{user.last_name}}</option>
                 </select>
 
             </div>

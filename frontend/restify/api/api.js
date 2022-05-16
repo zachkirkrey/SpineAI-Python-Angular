@@ -95,7 +95,7 @@ module.exports = function (finale, sequelize) {
         associations: false
     });
     let userResource = finale.resource({
-        model: sequelize.models,
+        model: sequelize.models.User,
         endpoints: ['/users', '/users/:uuid'],
         associations: false
     });

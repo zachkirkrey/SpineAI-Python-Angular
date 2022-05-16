@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ActionListValues } from '../../helpers/action-list.enum';
 import { typeWithParameters } from '@angular/compiler/src/render3/util';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
     selector: 'app-patient-component',
@@ -61,6 +62,7 @@ export class PatientComponentComponent implements OnInit {
     diagnosisList = ['Neck / Cervical Ridiculopathy', 'Lumbar / Ridiculopathy', 'Tumor / Trauma', 'Scoliosis / Deformity']
     archived_status: boolean = false
     showMsg: any
+    users: any[] = [];
     readonly api_url = environment.api_url;
     readonly index_url = `${environment.api_url}/studies?count=1000&scope=includeReports`;
     readonly action_fetch_url = `${environment.api_url}/action`;
@@ -68,7 +70,7 @@ export class PatientComponentComponent implements OnInit {
     @ViewChild('msgModal') msgModal: TemplateRef<any>;
     actionList = ActionListValues;
     @ViewChildren('report_rows') report_rows: QueryList<any>;
-    constructor(private router: Router, private route: ActivatedRoute, private modalService: NgbModal) {
+    constructor(private router: Router, private route: ActivatedRoute, private modalService: NgbModal, private api : ApiService) {
         this.patient_id = this.route.snapshot.params.id
     }
 
@@ -76,6 +78,7 @@ export class PatientComponentComponent implements OnInit {
         this.date_picker = new Date()
         this.token = localStorage.getItem('token')
         this.getPatientInfo()
+        this.getUsers();
     }
     navigate() {
         this.router.navigate(['studies']);
@@ -459,6 +462,14 @@ export class PatientComponentComponent implements OnInit {
     }
     toggleDisplay(event) {
         this.archived_status = event.checked
+    }
+
+    getUsers(){
+        this.api.globalGetRequest(`users`).subscribe((response: any) => {
+            this.users = response;
+        }, (error: any) => {
+            console.log(error)
+        });
     }
 
 }
