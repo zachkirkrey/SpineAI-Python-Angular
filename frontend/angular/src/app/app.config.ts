@@ -8,7 +8,8 @@ export enum PageType {
     BRANDING = 'BRANDING',
     USERS = 'USERS',
     OPTIONS = 'OPTIONS',
-    EXPORTS = 'EXPORTS'
+    EXPORTS = 'EXPORTS',
+    TRIAGE = 'TRIAGE'
 
 }
 

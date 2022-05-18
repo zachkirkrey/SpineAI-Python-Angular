@@ -36,7 +36,12 @@
                                     <button class="custom-button" [ngClass]="{'disabled' : pageType !== 'STUDIES'}"
                                         (click)="onLoadReport()">
                                         <i class="fa fa-archive"></i>
-                                        <span>MANAGE PATIENTS</span>
+                                        <span>PATIENTS</span>
+                                    </button>
+                                    <button class="custom-button" [ngClass]="{'disabled' : pageType !== 'TRIAGE'}"
+                                        (click)="redirectoPage('triage')">
+                                        <i class="fa fa-server"></i>
+                                        <span>TRIAGE</span>
                                     </button>
                                     <button *ngIf="environment.dicom_api_enabled" class="custom-button"
                                         [ngClass]="{'disabled' : pageType !== 'FETCH'}" (click)="onDICOMFetch()">
@@ -57,7 +62,7 @@
                                 </div>
                                 <!--Admin Section-->
                                 <div
-                                    *ngIf="(pageType != 'INTAKE' && pageType != 'FETCH' && pageType != 'STUDIES' && pageType != 'VIEW_REPORT')">
+                                    *ngIf="(pageType != 'INTAKE' && pageType != 'FETCH' && pageType != 'STUDIES' && pageType != 'VIEW_REPORT' && pageType != 'TRIAGE')">
                                     <button class="custom-button" [ngClass]="{'disabled' : pageType !== 'BRANDING'}"
                                         (click)="redirectoPage('admin/branding')">
                                         <i class="fa fa-archive"></i>

@@ -126,12 +126,12 @@ body {
 }
 
 
-div#reports_table_wrapper>.row:nth-child(1) {
+div#reports_table_wrapper>.row:nth-child(1), div#patients_table_wrapper>.row:nth-child(1) div {
   display: flex;
   justify-content: space-between !important;
 }
 
-div#reports_table_wrapper>.row:nth-child(1) div {
+div#reports_table_wrapper>.row:nth-child(1) div, div#patients_table_wrapper>.row:nth-child(1) div{
   width: auto;
   max-width: initial;
   flex: initial;
@@ -176,7 +176,7 @@ div#reports_table_wrapper>.row:nth-child(1) div {
 
 
 //6-1-2022
-table#reports_table {
+table#reports_table, table#patients_table{
   select {
     padding: 5px;
     border: 1px solid #ced4da;
@@ -220,11 +220,13 @@ button.calendar:active {
 }
 
 table#reports_table th:last-child,
-table#reports_table td:last-child {
+table#reports_table td:last-child,
+table#patients_table th:last-child,
+table#patients_table td:last-child {
   max-width: 120px;
 }
 
-table#reports_table select {
+table#reports_table select, table#patients_table select {
   width: 75%;
   margin-right: 10px;
 }
@@ -238,21 +240,21 @@ table#reports_table select {
   cursor: pointer;
 }
 
-div#reports_table_length select {
+div#reports_table_length select, div#patients_table_length select {
   width: 80px;
 }
 
-div#reports_table_info {
+div#reports_table_info, div#patients_table_info {
   margin-top: 25px;
 }
 
-div#reports_table_paginate {
+div#reports_table_paginate, div#patients_table_paginate {
   margin-top: 20px;
 }
 
 @media screen and (max-width: 1200px) {
-  div#reports_table_wrapper {
-    width: 100%;
+  div#reports_table_wrapper, div#patients_table_wrapper {
+    width: 100% !important;
     display: block;
   }
 
@@ -281,17 +283,17 @@ div#reports_table_paginate {
     top: 0;
   }
 
-  div#reports_table_wrapper>.row>div {
+  div#reports_table_wrapper>.row>div, div#patients_table_wrapper>.row>div {
     width: 50% !important;
     max-width: 50% !important;
     flex: 50% !important;
   }
 
-  div#reports_table_wrapper {
+  div#reports_table_wrapper, div#patients_table_wrapper {
     width: 700px;
   }
 
-  div#reports_table_wrapper>.row:first-child {
+  div#reports_table_wrapper>.row:first-child, div#patients_table_wrapper>.row:first-child {
     align-items: flex-end;
   }
 
@@ -306,8 +308,12 @@ div#reports_table_paginate {
     font-size: 12px;
   }
 
-  div#reports_table_filter input {
+  div#reports_table_filter input, div#patients_table_filter input {
     width: 140px;
+  }
+
+  table#patients_table {
+    width: 901px;
   }
 }
 
@@ -383,7 +389,7 @@ div#reports_table_paginate {
   height: 40px;
 }
 
-div#reports_table_wrapper div#reports_table_filter {
+div#reports_table_wrapper div#reports_table_filter, div#patients_table_wrapper div#patients_table_filter {
   padding-left: 120px;
 }
 
@@ -546,15 +552,15 @@ div#reports_table_wrapper .search-pacs:hover {
   font-size: 14px;
 }
 
-#reports_table tbody tr {
+#reports_table tbody tr, #patients_table tbody tr {
   background-color: #7bb5ff2e !important;
 }
 
-#reports_table tbody tr.odd {
+#reports_table tbody tr.odd, #patients_table tbody tr.odd {
   background-color: #d9e7f7 !important;
 }
 
-#reports_table tbody tr:hover {
+#reports_table tbody tr:hover, #patients_table tbody tr:hover {
   background-color: #dcedff !important;
 }
 

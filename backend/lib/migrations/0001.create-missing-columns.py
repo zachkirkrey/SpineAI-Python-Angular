@@ -44,3 +44,27 @@ step(
     "ALTER TABLE Study DROP COLUMN appointment_date",
     ignore_errors='apply',
 )
+
+step(
+    "ALTER TABLE User ADD COLUMN first_name TEXT NULL",
+    "ALTER TABLE User DROP COLUMN first_name",
+    ignore_errors='apply',
+)
+
+step(
+    "ALTER TABLE User ADD COLUMN last_name TEXT NULL",
+    "ALTER TABLE User DROP COLUMN last_name",
+    ignore_errors='apply',
+)
+
+step(
+    "ALTER TABLE User ADD COLUMN date_added DATETIME NULL",
+    "ALTER TABLE User DROP COLUMN date_added",
+    ignore_errors='apply',
+)
+
+step(
+    "ALTER TABLE User ADD COLUMN role TEXT NULL",
+    "ALTER TABLE User DROP COLUMN role",
+    ignore_errors='apply',
+)

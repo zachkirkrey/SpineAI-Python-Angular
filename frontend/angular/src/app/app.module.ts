@@ -41,6 +41,8 @@ import { AdminBrandingComponent } from './components/admin-branding/admin-brandi
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { AdminOptionsComponent } from './components/admin-options/admin-options.component';
 import { AdminExportComponent } from './components/admin-export/admin-export.component';
+import { TriageComponent } from './components/triage/triage.component';
+
 
 
 const appRoutes: Routes = [
@@ -61,6 +63,7 @@ const appRoutes: Routes = [
     { path: 'admin/users', component: AdminUsersComponent, data: { header: true } },
     { path: 'admin/option', component: AdminOptionsComponent, data: { header: true } },
     { path: 'admin/export', component: AdminExportComponent, data: { header: true } },
+    { path: 'triage', component: TriageComponent},
     {
         path: '**',
         redirectTo: '/login_pass',
@@ -90,6 +93,7 @@ const appRoutes: Routes = [
         AdminUsersComponent,
         AdminOptionsComponent,
         AdminExportComponent,
+        TriageComponent,
 
     ],
     imports: [

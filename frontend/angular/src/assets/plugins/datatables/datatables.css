@@ -228,3 +228,6 @@ div#reports_table_wrapper .col-sm-12.col-md-4:first-child {
     order: 1;
 }
 
+div#patients_table_wrapper .col-sm-12.col-md4:first-child {
+  order: 1;
+}

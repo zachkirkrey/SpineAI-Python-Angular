@@ -2,6 +2,7 @@
 
 import base64
 from datetime import datetime
+from email.policy import default
 from enum import Enum
 import io
 import logging
@@ -442,6 +443,10 @@ class User(db.Entity):
     uuid = Required(str, index=True, default=get_uuid)
     username = Required(str)
     password = Required(str)
+    first_name = Required(str)
+    last_name = Required(str)
+    date_added = Required(datetime, default=datetime.now)
+    role = Optional(str)
 
 
 class ReferralReason(db.Entity):

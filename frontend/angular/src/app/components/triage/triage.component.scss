@@ -1,0 +1,435 @@
+@import 'src/assets/sass/variables';
+
+@import 'src/assets/uplor/plugins/datatable/jquery.dataTables.min';
+@import '/src/assets/uplor/plugins/datatable/dataTables.bootstrap4.min';
+
+#page-header {
+  margin-bottom: 1em;
+
+  .custom-button {
+    padding: 0.2em 0.8em;
+    display: inline-block;
+    font-size: 0.8em;
+    margin-bottom: 0.5em;
+  }
+
+  .custom-button:hover {
+    text-decoration: none;
+  }
+
+}
+
+select.form-control.appdate {
+  color: #fff;
+  background-color: #376fb6;
+  border-color: #376fb6;
+}
+
+select.form-control.appdate option {
+  background-color: #fff;
+  border: 1px solid #fff !important;
+  font-size: 16px;
+  font-weight: 500;
+  color: #505050;
+}
+
+.Appt-date-wrap label {
+  white-space: nowrap;
+  margin: 0;
+  margin-right: 10px;
+}
+
+.table>thead>tr>th {
+  cursor: pointer;
+}
+
+.date-input {
+  ::ng-deep {
+    input {
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      height: 37px;
+    }
+
+    .mat-form-field-label-wrapper {
+      .mat-form-field-label {
+        top: 25px;
+        left: 10px;
+        color: #747d84;
+        transform: none !important;
+      }
+    }
+
+
+    .mat-form-field-underline {
+      display: none;
+    }
+  }
+}
+
+.spinner-wrapper {
+  min-height: 80px;
+}
+
+.box-spinner {
+  display: inline-block;
+  position: fixed;
+  left: calc(50% - 40px);
+  width: 80px;
+  height: 80px;
+  margin: auto;
+}
+
+.box-spinner div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 16px;
+  background: $blue;
+  animation: box-spinner 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+
+.box-spinner div:nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s;
+}
+
+.box-spinner div:nth-child(2) {
+  left: 32px;
+  animation-delay: -0.12s;
+}
+
+.box-spinner div:nth-child(3) {
+  left: 56px;
+  animation-delay: 0;
+}
+
+@keyframes box-spinner {
+  0% {
+    top: 8px;
+    height: 64px;
+  }
+
+  50%,
+  100% {
+    top: 24px;
+    height: 32px;
+  }
+}
+
+
+// 4-1-2022
+.table-responsive {
+  position: relative;
+
+  .export-wrap {
+    position: absolute;
+    right: 0;
+    display: flex;
+    display: -ms-flexbox;
+    align-items: center;
+
+    .toggle_button {
+      margin-right: 200px;
+    }
+  }
+
+}
+
+.export-wrap mat-checkbox.mat-checkbox {
+  color: #333;
+  padding-right: 10px;
+
+  label {
+    margin-bottom: 0 !important;
+  }
+}
+
+div#patients_table_wrapper>.row:nth-child(1) {
+  display: flex;
+}
+
+div#patients_table_wrapper>.row:nth-child(1) div {
+  width: auto;
+  max-width: initial;
+  flex: initial;
+}
+
+.form-group-sec {
+  margin-top: 20px;
+  width: 48% !important;
+}
+
+.table-col {
+  width: 211px;
+}
+
+@media screen and (max-width:770px) {
+
+  .form-group-sec {
+    margin-top: 10px;
+    width: 100% !important;
+  }
+
+}
+
+//column checkbox css
+.dropdown-check-list {
+  display: inline-block;
+}
+
+.dropdown-check-list .anchor {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 40px 5px 10px;
+  border: 1px solid #ccc;
+}
+
+.dropdown-check-list .anchor:after {
+  position: absolute;
+  content: "";
+  border-left: 2px solid #fff;
+  border-top: 2px solid #fff;
+  padding: 3px;
+  right: 14px;
+  transform: rotate(-135deg);
+  top: -4px;
+  margin: auto;
+  bottom: 0;
+  width: 5px;
+  height: 5px;
+}
+
+// column checkbox css ends
+/*
+.export-wrap {
+    align-items: flex-start !important;
+}*/
+
+.cols_th {
+  position: relative;
+  z-index: 1;
+  background: #376fb6;
+  padding: 4px 0;
+  border-radius: 5px;
+  margin-left: 5px;
+
+  &:hover {
+    background: #1c5297;
+  }
+
+  &:focus,
+  &:active {
+    box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 50%);
+  }
+}
+
+
+
+.dropdown-check-list .anchor {
+  border: none !important;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.cols_th input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.cols_th ul.items.ng-star-inserted {
+  background: #fff;
+  position: absolute;
+  left: 0;
+  width: 225px;
+  padding: 10px;
+  margin-top: 2px;
+  z-index: 1;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  box-shadow: #ccc 0px 3px 10px;
+}
+
+.cols_th ul.items.ng-star-inserted #control_sh {
+  color: #505050;
+  font-size: 14px;
+  font-weight: 500;
+  height: 30px;
+  line-height: 30px;
+  cursor: pointer;
+}
+
+.cols_th ul.items.ng-star-inserted #control_sh:hover {
+  opacity: 0.6;
+}
+
+.topbtno {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+  border-bottom: #ddd solid 1px !important;
+  padding-bottom: 11px;
+
+  @media (max-width: 1199px) {
+    flex-direction: column;
+  }
+}
+
+.export-btn.add-patient {
+  bottom: 0 !important;
+}
+
+.export-wrap {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+
+  @media (max-width: 1199px) {
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+.Appt-date-wrap {
+  span {
+    margin-right: 10px;
+
+    @media (max-width: 575px) {
+      display: block;
+      text-align: right;
+    }
+  }
+}
+
+.buttons-wrap,
+.checkbox-wrap {
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
+
+  .example-section {
+    width: 100%;
+
+    @media (max-width: 575px) {
+      ::ng-deep {
+        .mat-checkbox {
+          width: 100%;
+
+          label {
+            display: block;
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
+}
+
+.addpatbtno {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 15px;
+
+  @media (max-width: 1199px) {
+    justify-content: space-between;
+    width: 100%;
+    padding-right: 0;
+  }
+}
+
+td.mrn_col.sorting_1,
+td.name_col.ng-star-inserted,
+td.action_click {
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f2f0f063;
+  }
+}
+
+@media screen and (max-width:767px) {
+
+  .addpatbtno,
+  .export-wrap {
+    width: 100%;
+    //flex-direction: column;
+
+    .export-btn.mat-button {
+      margin: 10px 0 0;
+    }
+  }
+}
+
+@media screen and (max-width:477px) {
+  .export-wrap {
+    flex-wrap: wrap;
+  }
+
+  section.example-section,
+  .export-btn.mat-button,
+  .cols_th {
+    width: 100%;
+    text-align: center;
+    margin: 4px 0;
+  }
+
+  .cols_th ul.items.ng-star-inserted {
+    width: 155px;
+    //width: 100%;
+    text-align: left;
+    //left: -50px;
+  }
+
+  .cols_th ul.items.ng-star-inserted #control_sh {
+    font-size: 12px;
+  }
+}
+
+a.admin-text {
+  position: absolute;
+  left: 62%;
+  bottom: -55px;
+  z-index: 99;
+}
+
+.table-responsive-sec {
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  a.admin-text {
+    bottom: -45px;
+  }
+}
+
+@media screen and (max-width: 475.98px) {
+  .addpatbtno {
+    flex-wrap: wrap;
+  }
+
+  .Appt-date-wrap {
+    margin: 1rem 0;
+    width: 100%;
+  }
+}
+
+td.diagnosis_col {
+  font-size: 11px;
+}
+
+th#diagnosis_col_head {
+  width: 130px !important;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+  display: none !important;
+}

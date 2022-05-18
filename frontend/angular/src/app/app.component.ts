@@ -70,6 +70,9 @@ export class AppComponent {
                 else if (event.urlAfterRedirects.includes('export')) {
                     this.pageType = PageType.EXPORTS;
                 }
+                else if (event.urlAfterRedirects.includes('triage')) {
+                    this.pageType = PageType.TRIAGE;
+                }
             }
         });
     }
