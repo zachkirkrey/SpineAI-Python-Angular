@@ -80,25 +80,24 @@
                 <table id="patients_table" class="table table-striped table-bordered table-responsive-sec" data-ordering="false">
                     <thead>
                         <tr>
-                            <th (click)="sortOrder('mrn')" [style.display]="table-cell">MRN #</th>
-                            <th (click)="sortOrder('patient_name')" *ngIf="patientNameShown"
-                                [style.display]="table-cell">PATIENT NAME</th>
-                            <th (click)="sortOrder('prev_action')" [style.display]="table-cell">PREV ACTION</th>
-                            <th (click)="sortOrder('last_action')" [style.display]="table-cell">LAST ACTION</th>
-                            <th (click)="sortOrder('last_action_date')" [style.display]="table-cell">LAST ACTION DATE</th>
-                            <th (click)="sortOrder('appt_date')" [style.display]="table-cell">APPT DATE</th>
-                            <th (click)="sortOrder('to_do')" [style.display]="table-cell">TO DO</th>
+                            <th>MRN #</th>
+                            <th *ngIf="patientNameShown">PATIENT NAME</th>
+                            <th>PREV ACTION</th>
+                            <th>LAST ACTION</th>
+                            <th>LAST ACTION DATE</th>
+                            <th>APPT DATE</th>
+                            <th>TO DO</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr #patients_rows *ngFor="let patient of patients; let i=index" [attr.data-index]="i">
-                            <td [style.display]="table-cell">{{patient.mrn}}</td>
-                            <td *ngIf="patientNameShown" [style.display]="table-cell">{{patient.name}}</td>
-                            <td [style.display]="table-cell">{{patient.prev_action}}</td>
-                            <td [style.display]="table-cell">{{patient.last_action}}</td>
-                            <td [style.display]="table-cell">{{patient.last_action_date}}</td>
-                            <td [style.display]="table-cell">{{patient.appt_date}}</td>
-                            <td [style.display]="table-cell">
+                            <td>{{patient.mrn}}</td>
+                            <td *ngIf="patientNameShown">{{patient.name}}</td>
+                            <td>{{patient.prev_action}}</td>
+                            <td>{{patient.last_action}}</td>
+                            <td>{{patient.last_action_date}}</td>
+                            <td>{{patient.appt_date}}</td>
+                            <td>
                                 <button type="button" class="btn btn-link" (click)="openUpdateApptDialog(updateAppt)">
                                     UPDATE APPT
                                 </button>
@@ -147,8 +146,7 @@
                     <div class="mtop-5"></div>
                     <mat-form-field class="" fxFlex>
                         <input matInput [matDatepicker]="appt_picker" class="form-control" appearance="outlined"
-                            autocomplete="off" name="appt_picker"
-                            [ngModelOptions]="{standalone: true}">
+                            autocomplete="off" name="appt_picker">
                         <mat-datepicker-toggle matSuffix [for]="appt_picker"></mat-datepicker-toggle>
                         <mat-datepicker  #appt_picker></mat-datepicker>
                     </mat-form-field>
