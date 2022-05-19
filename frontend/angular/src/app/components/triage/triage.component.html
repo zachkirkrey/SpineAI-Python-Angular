@@ -54,19 +54,19 @@
                         <button class="export-btn" mat-button [matMenuTriggerFor]="menu">Exports</button>
                         <mat-menu class="export-btn-list custom-export-btn" #menu="matMenu">
                             <button mat-menu-item>
-                                <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&count=1000"
+                                <a href="#"
                                     target="_top" class="custom-button">
                                     <span>Area </span>
                                 </a>
                             </button>
                             <button mat-menu-item>
-                                <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_heights&count=1000"
+                                <a href="#"
                                     target="_top" class="custom-button">
                                     <span>Vertical Diameter </span>
                                 </a>
                             </button>
                             <button mat-menu-item>
-                                <a href="{{ api_url }}/reports?as=summarycsv&type=JSON&sort=-creation_datetime&csvcol=canal_widths&count=1000"
+                                <a href="#"
                                     target="_top" class="custom-button">
                                     <span>Horizontal Diameter </span>
                                 </a>
@@ -118,13 +118,6 @@
         </button>
       </div>
       <div class="modal-body">
-
-        <!-- <ul *ngIf="actions.length" class="list-actions">
-          <li *ngFor="let action of actions">
-            {{ action.creation_datetime | date:'shortDate' }} {{ action.name }}
-          </li>
-        </ul> -->
-
         <form>
             <div class="row">
                 <div class="col-md-6">
