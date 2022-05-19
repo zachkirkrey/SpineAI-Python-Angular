@@ -197,7 +197,8 @@ module.exports = function (sequelize) {
     });
     Study.addScope('includeActions', {
         include: [{
-            model: Action
+            model: Action,
+            order: [['creation_datetime', 'DESC']]
         }, ]
     });
     Study.addScope('includeLastAction', {

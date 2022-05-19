@@ -130,6 +130,11 @@ module.exports = function (finale, sequelize) {
         return context.continue;
     });
 
+    actionResource.list.fetch.before(function (req, res, context) {
+        context.shallow = true;
+        return context.continue;
+    });
+
     // Send a Report as the given type.
     function sendReportAs(res, as, report) {
         as = as.toLowerCase();

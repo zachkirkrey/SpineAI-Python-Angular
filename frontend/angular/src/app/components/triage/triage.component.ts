@@ -1,21 +1,22 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subject } from 'rxjs';
 import { ApiService } from 'src/app/services/api/api.service';
-
 
 @Component({
   selector: 'app-triage',
   templateUrl: './triage.component.html',
   styleUrls: ['./triage.component.scss']
 })
-export class TriageComponent implements OnInit {
+export class TriageComponent implements OnInit, OnDestroy {
 
   token: any;
   isLoading: boolean = false;
-  loadingPatientsError: string;
+  loadingStudiesError: string;
 
-  patients: any[] = [];
+  studies: any[] = [];
+  studiesToDisplay: any [] = [];
   appt_filter: any = '';
   show_Archived: boolean = false;
   show_doneItems: boolean = false;
@@ -29,6 +30,9 @@ export class TriageComponent implements OnInit {
     { name: 'NONE', value: 'none' }
   ];
 
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
+
   @ViewChildren('patients_rows') patients_rows: QueryList<any>;
   constructor(
     private modalService: NgbModal,
@@ -40,162 +44,103 @@ export class TriageComponent implements OnInit {
 
   ngOnInit(): void {
     this.token = localStorage.getItem('token');
-    this.tableData();
-  }
-
-  ngAfterViewInit() {
-    // Ellipsis renderer for datatables.net from
-    // https://datatables.net/blog/2016-02-26.
-    let render_ellipsis = function (cutoff, ellipsis, wordbreak, escapeHtml) {
-        var esc = function (t) {
-            return t
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;');
-        };
-
-        return function (d, type, row) {
-            // Order, search and type get the original data
-            if (type !== 'display') {
-                return d;
-            }
-
-            if (typeof d !== 'number' && typeof d !== 'string') {
-                return d;
-            }
-
-            d = d.toString(); // cast numbers
-
-            if (d.length < cutoff) {
-                return d;
-            }
-
-            var shortened = d.substr(0, cutoff - 1);
-
-            // Find the last white space character in the string
-            if (wordbreak) {
-                shortened = shortened.replace(/\s([^\s]*)$/, '');
-            }
-
-            // Protect against uncontrolled HTML input
-            if (escapeHtml) {
-                shortened = esc(shortened);
-            }
-            if (ellipsis) {
-                return '<span class="ellipsis" title="' + esc(d) + '">' + shortened + '&#8230;</span>';
-            }
-            return '<span class="ellipsis" title="' + esc(d) + '">' + shortened + '</span>';
-        };
-
-    };
-
-    this.patients_rows.changes.subscribe(t => {
-        $('#patients_table').DataTable({
-            retrieve: true,
-            pageLength: 25,
-            order: [[0, 'desc']],
-            columnDefs: [{
-                // Only render date component of Created.
-                targets: 0,
-                render: render_ellipsis(11, false, false, false)
-            }, {
-                // Render Study UID with ellipsis.
-                targets: 2,
-                render: render_ellipsis(15, true, false, false)
-            }],
-            destroy: true
-        });
-    });
-
-    $('#patients_table').DataTable({
-      retrieve: true,
+    this.dtOptions = {
       pageLength: 25,
-      order: [[0, 'desc']],
-      columnDefs: [{
-          // Only render date component of Created.
-          targets: 0,
-          render: render_ellipsis(11, false, false, false)
-      }, {
-          // Render Study UID with ellipsis.
-          targets: 2,
-          render: render_ellipsis(15, true, false, false)
-      }],
-      destroy: true
-    });
+      processing: true
+    };
+    this.getStudies();
   }
 
-  tableData() {
-    this.patients = [
-      {
-        mrn: "5555551212",
-        name: "Sam",
-        prev_action: "N/A",
-        last_action: "Neurosurgeon",
-        last_action_date: "N/A",
-        appt_date: "Apr 19, 2022",
-        todo: "UPDATE APPT"
-      },
-      {
-        mrn: "46355553",
-        name: "Nate Patient",
-        prev_action: "Scheduled for clinic",
-        last_action: "Injections",
-        last_action_date: "Apr 5, 2022",
-        appt_date: "Apr 8, 2022",
-        todo: "UPDATE APPT"
-      }
-    ];
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+
+  getStudies() {
+    this.isLoading = true;
+    this._api.globalGetRequest(`studies?scope=includeActions`).subscribe((response: any) => {
+      this.isLoading = false;
+      response.forEach(element => {
+        const actions = element['Actions'];
+        if (actions.length > 0) {
+          element['last_action'] = actions.at(-1);
+
+          if (actions.length > 1) {
+            element['prev_action'] = actions.at(-2);
+          } else {
+            element['prev_action'] = {
+              name: 'N/A',
+              creation_datetime: 'N/A'
+            }
+          }
+        } else {
+          element['last_action'] = {
+            name: 'N/A',
+            creation_datetime: 'N/A'
+          };
+          element['prev_action'] = {
+            name: 'N/A',
+            creation_datetime: 'N/A'
+          }
+        };
+
+        this.studies.push(element);
+      });
+      this.dtTrigger.next();
+    }, (error: any) => {
+      this.isLoading = false;
+      this.loadingStudiesError = error.data.toString();
+      console.log(error);
+    });
+
   }
 
   apptFilter(event) {
-    if (this.patients != undefined || this.patients.length > 0) {
+    if (this.studies != undefined || this.studies.length > 0) {
         this.appt_filter = event.target.value;
         if (event.target.value == 'today') {
-            this.tableData();
+            this.getStudies();
         } else if (event.target.value == 'last ten') {
-            this.tableData();
+            this.getStudies();
         } else if (event.target.value == 'next ten') {
-            this.tableData();
+            this.getStudies();
         } else if (event.target.value == 'none') {
-            this.tableData();
+            this.getStudies();
         } else if (event.target.value == 'all time') {
-            this.tableData();
+            this.getStudies();
         }
     }
   }
 
   showDoneItems(event) {
-    if (this.patients != undefined) {
+    if (this.studies != undefined) {
         if (event.checked == true) {
             this.show_doneItems = true
-            this.tableData();
+            this.getStudies();
         }
         else {
             this.show_doneItems = false
-            this.tableData();
+            this.getStudies();
         }
     }
   }
 
   showArchived(event) {
-    if (this.patients != undefined) {
+    if (this.studies != undefined) {
         if (event.checked == true) {
             this.show_Archived = true
-            this.tableData();
+            this.getStudies();
         }
         else {
             this.show_Archived = false
-            this.tableData();
+            this.getStudies();
         }
     }
   }
 
-  showPatientName(event){
-    if (event.checked == true){
+  showPatientName(event) {
+    if (event.checked == true) {
       this.patientNameShown = false;
-    }
-    else if(event.checked == false){
+    } else if (event.checked == false) {
       this.patientNameShown = true;
     }
   }
@@ -208,11 +153,11 @@ export class TriageComponent implements OnInit {
     });
   }
 
-  updateAppointment(){
+  updateAppointment() {
 
   }
 
-  dismissDialog(){
+  dismissDialog() {
     this.modalService.dismissAll();
   }
 }
