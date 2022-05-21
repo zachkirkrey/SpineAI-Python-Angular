@@ -1,5 +1,5 @@
 const {
-    DataTypes
+    DataTypes, Sequelize
 } = require('sequelize');
 
 module.exports = function (sequelize) {
@@ -15,7 +15,8 @@ module.exports = function (sequelize) {
         },
         creation_datetime: {
             type: DataTypes.DATE,
-            allowNull: false
+            allowNull: false,
+            defaultValues: Sequelize.NOW
         },
         study: {
             type: DataTypes.INTEGER,

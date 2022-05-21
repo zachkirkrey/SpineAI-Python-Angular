@@ -135,6 +135,12 @@ module.exports = function (finale, sequelize) {
         return context.continue;
     });
 
+    studyResource.update.fetch(function(req, res, context) {
+        console.log("<<<<<< Updating user >>>>>>");
+        console.log(req.body);
+        return context.continue;
+    });
+
     // Send a Report as the given type.
     function sendReportAs(res, as, report) {
         as = as.toLowerCase();

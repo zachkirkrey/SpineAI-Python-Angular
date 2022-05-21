@@ -83,6 +83,19 @@ module.exports = function (sequelize) {
         archived_status: {
             type: DataTypes.BOOLEAN,
             allowNull: true
+        },
+        status: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'To Schedule'
+        },
+        assignee: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: sequelize.models.User,
+                key: 'uuid'
+            }
         }
     });
 };

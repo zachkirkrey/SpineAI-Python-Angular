@@ -433,3 +433,8 @@ th#diagnosis_col_head {
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
   display: none !important;
 }
+
+ul.list-actions {
+  list-style-type: disc;
+  padding-left: 2em;
+}

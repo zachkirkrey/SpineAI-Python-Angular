@@ -9,5 +9,9 @@
     "test.ts",
     "**/*.spec.ts",
     "**/environments/*.*.ts"
+  ],
+  "files": [
+    "main.ts",
+    "polyfills.ts"
   ]
 }
