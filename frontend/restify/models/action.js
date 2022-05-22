@@ -16,7 +16,7 @@ module.exports = function (sequelize) {
         creation_datetime: {
             type: DataTypes.DATE,
             allowNull: false,
-            defaultValues: Sequelize.NOW
+            defaultValue: Sequelize.NOW
         },
         study: {
             type: DataTypes.INTEGER,

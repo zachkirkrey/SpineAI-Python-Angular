@@ -68,3 +68,15 @@ step(
     "ALTER TABLE User DROP COLUMN role",
     ignore_errors='apply',
 )
+
+step(
+    "ALTER TABLE Study ADD COLUMN assignee TEXT NULL DEFAULT ''",
+    "ALTER TABLE Study DROP COLUMN assignee",
+    ignore_errors='apply',
+)
+
+step(
+    "ALTER TABLE Study ADD COLUMN status TEXT NULL DEFAULT ''",
+    "ALTER TABLE Study DROP COLUMN status",
+    ignore_errors='apply',
+)

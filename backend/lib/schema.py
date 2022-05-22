@@ -143,6 +143,8 @@ class Study(db.Entity, StudyMixin):
     created_by = Optional(bool, default=False)
     appointment_date = Optional(datetime)
     archived_status = Optional(bool, default=False)
+    assignee = Optional(str)
+    status = Optional(str, default='To Schedule')
 
     classifications = Set('Classification')
     segmentations = Set('Segmentation')

@@ -64,7 +64,7 @@ const appRoutes: Routes = [
     { path: 'admin/users', component: AdminUsersComponent, data: { header: true } },
     { path: 'admin/option', component: AdminOptionsComponent, data: { header: true } },
     { path: 'admin/export', component: AdminExportComponent, data: { header: true } },
-    { path: 'triage', component: TriageComponent},
+    { path: 'triage', component: TriageComponent, data: { header: true } },
     {
         path: '**',
         redirectTo: '/login_pass',

@@ -126,12 +126,12 @@ body {
 }
 
 
-div#reports_table_wrapper>.row:nth-child(1), div#patients_table_wrapper>.row:nth-child(1) div {
+div#reports_table_wrapper>.row:nth-child(1), div#patients_table_wrapper>.row:nth-child(1) {
   display: flex;
   justify-content: space-between !important;
 }
 
-div#reports_table_wrapper>.row:nth-child(1) div, div#patients_table_wrapper>.row:nth-child(1) div{
+div#reports_table_wrapper>.row:nth-child(1) div, div#patients_table_wrapper>.row:nth-child(1) div {
   width: auto;
   max-width: initial;
   flex: initial;
@@ -176,7 +176,7 @@ div#reports_table_wrapper>.row:nth-child(1) div, div#patients_table_wrapper>.row
 
 
 //6-1-2022
-table#reports_table, table#patients_table{
+table#reports_table, table#patients_table {
   select {
     padding: 5px;
     border: 1px solid #ced4da;
@@ -694,6 +694,7 @@ button.svbtn {
 .float-left {
   float: left !important;
 }
+
 .display-inline {
   display: inline;
 }
@@ -702,7 +703,7 @@ button.svbtn {
   display: inline-block;
 }
 
-.display-block{
+.display-block {
   display: block;
 }
 

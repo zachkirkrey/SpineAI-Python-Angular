@@ -129,15 +129,14 @@ module.exports = function (finale, sequelize) {
         console.log(context);
         return context.continue;
     });
-
-    actionResource.list.fetch.before(function (req, res, context) {
-        context.shallow = true;
-        return context.continue;
-    });
-
     studyResource.update.fetch(function(req, res, context) {
         console.log("<<<<<< Updating user >>>>>>");
         console.log(req.body);
+        return context.continue;
+    });
+
+    actionResource.list.fetch.before(function (req, res, context) {
+        context.shallow = true;
         return context.continue;
     });
 
@@ -246,6 +245,7 @@ module.exports = function (finale, sequelize) {
     });
 
     userResource.list.fetch.before(function (req, res, context) {
+        console.log("<<<<<<< Getting users >>>>>>>");
         return context.continue;
     });
 
